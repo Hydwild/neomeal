@@ -5,9 +5,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 /**
- * Подсчёт серий (streak) выполнения норм по дням.
+ * Подсчёт серий (streak) выполнения норм по дням на основе daily_goals.
+ * Серию по коридору калорий (85–110%, с заморозками) считает [StreakCalculator].
  */
-object StreakHelper {
+object DailyGoalStreaks {
 
     private val fmt = SimpleDateFormat("yyyy-MM-dd", Locale.US)
 

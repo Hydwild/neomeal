@@ -489,9 +489,9 @@ class DashboardFragment : Fragment() {
             today     -> getString(R.string.eaten_today_lbl)
             yesterday -> getString(R.string.eaten_yesterday_lbl)
             else -> {
-                val parsed = com.nutritrack.app.utils.DateHelper.parse(date)
+                val parsed = com.nutritrack.app.utils.DateDisplay.parse(date)
                 if (parsed != null)
-                    getString(R.string.eaten_on, com.nutritrack.app.utils.DateHelper.dayMonth(parsed))
+                    getString(R.string.eaten_on, com.nutritrack.app.utils.DateDisplay.dayMonth(parsed))
                 else getString(R.string.eaten_on, date)
             }
         }
@@ -943,7 +943,7 @@ class DashboardFragment : Fragment() {
         fun updateGrams() {
             val p = selectedProduct
             if (p != null) {
-                val unit = com.nutritrack.app.utils.UnitHelper.unit(p)
+                val unit = com.nutritrack.app.utils.ProductUnits.unit(p)
                 tvGrams.text = getString(R.string.ds_grams_kcal_fmt, grams, unit, (p.calories * grams / 100f).toInt())
             } else {
                 tvGrams.text = getString(R.string.ds_grams_g_fmt, grams)
@@ -953,14 +953,14 @@ class DashboardFragment : Fragment() {
 
         btnMinus.setOnClickListener {
             val p = selectedProduct
-            val step = if (p != null) com.nutritrack.app.utils.UnitHelper.step(p, grams)
+            val step = if (p != null) com.nutritrack.app.utils.ProductUnits.step(p, grams)
             else if (grams > 100) 50 else 10
             grams = (grams - step).coerceAtLeast(10)
             updateGrams()
         }
         btnPlus.setOnClickListener {
             val p = selectedProduct
-            val step = if (p != null) com.nutritrack.app.utils.UnitHelper.step(p, grams)
+            val step = if (p != null) com.nutritrack.app.utils.ProductUnits.step(p, grams)
             else if (grams >= 100) 50 else 10
             grams += step
             updateGrams()
@@ -973,7 +973,7 @@ class DashboardFragment : Fragment() {
         val pickerAdapter = ProductPickerAdapter(
             onSelect = { product ->
                 selectedProduct = product
-                grams = com.nutritrack.app.utils.UnitHelper.defaultAmount(product)
+                grams = com.nutritrack.app.utils.ProductUnits.defaultAmount(product)
                 btnAdd.isEnabled = true; btnAdd.alpha = 1f; updateGrams()
             },
             onFavoriteToggle = { product ->
@@ -1118,7 +1118,7 @@ class DashboardFragment : Fragment() {
                 }
                 if (found != null) {
                     selectedProduct = found
-                    grams = parsed.grams ?: com.nutritrack.app.utils.UnitHelper.defaultAmount(found)
+                    grams = parsed.grams ?: com.nutritrack.app.utils.ProductUnits.defaultAmount(found)
                     btnAdd.isEnabled = true; btnAdd.alpha = 1f
                     updateGrams()
                     val gramInfo = if (parsed.grams != null) ", ${parsed.grams} г" else ""
@@ -1148,13 +1148,13 @@ class DashboardFragment : Fragment() {
                             vm.addDiaryEntry(saved, grams.toFloat()) { achievementsVm.checkAchievements() }
                             com.nutritrack.app.utils.CompanionHelper.maybeCheer(requireContext(), "food")
                             dialog.dismiss()
-                            Toast.makeText(requireContext(), getString(R.string.ds_added_fmt, saved.name, grams, com.nutritrack.app.utils.UnitHelper.unit(saved)), Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(), getString(R.string.ds_added_fmt, saved.name, grams, com.nutritrack.app.utils.ProductUnits.unit(saved)), Toast.LENGTH_SHORT).show()
                         }
                     } else {
                         vm.addDiaryEntry(product, grams.toFloat()) { achievementsVm.checkAchievements() }
                         com.nutritrack.app.utils.CompanionHelper.maybeCheer(requireContext(), "food")
                         dialog.dismiss()
-                        Toast.makeText(requireContext(), getString(R.string.ds_added_fmt, product.name, grams, com.nutritrack.app.utils.UnitHelper.unit(product)), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), getString(R.string.ds_added_fmt, product.name, grams, com.nutritrack.app.utils.ProductUnits.unit(product)), Toast.LENGTH_SHORT).show()
                     }
                     Unit
                 }

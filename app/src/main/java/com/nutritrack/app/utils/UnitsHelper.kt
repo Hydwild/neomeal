@@ -4,7 +4,10 @@ import com.nutritrack.app.R
 
 import android.content.Context
 
-/** Единицы измерения: метрические / имперские. Конвертация только при отображении — в БД всегда метрика. */
+/**
+ * Единицы измерения: метрические / имперские. Конвертация только при отображении — в БД всегда метрика.
+ * Не путать с [ProductUnits] — тот определяет «г или мл» для конкретного продукта.
+ */
 object UnitsHelper {
 
     fun isImperial(context: Context) = PrefsManager(context).units == "imperial"

@@ -10,7 +10,7 @@ import com.nutritrack.app.utils.AchievementsDefinitions
 import com.nutritrack.app.utils.CalorieCalculator
 import com.nutritrack.app.utils.DateUtils
 import com.nutritrack.app.utils.PrefsManager
-import com.nutritrack.app.utils.StreakHelper
+import com.nutritrack.app.utils.DailyGoalStreaks
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -130,9 +130,9 @@ class AchievementsViewModel(app: Application) : AndroidViewModel(app) {
 
             // Серии
             val allDays    = db.dailyGoalDao().getAllForProfile(profileId)
-            val calStreak  = StreakHelper.calorieStreak(allDays)
-            val watStreak  = StreakHelper.waterStreak(allDays)
-            val perfStreak = StreakHelper.perfectStreak(allDays)
+            val calStreak  = DailyGoalStreaks.calorieStreak(allDays)
+            val watStreak  = DailyGoalStreaks.waterStreak(allDays)
+            val perfStreak = DailyGoalStreaks.perfectStreak(allDays)
 
             // Проверка достижений
             val existing = db.achievementDao().getAllSync(profileId).associateBy { it.id }

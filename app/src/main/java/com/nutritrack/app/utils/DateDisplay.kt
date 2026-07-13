@@ -12,8 +12,10 @@ import java.util.Locale
  *
  * Русский требует родительного падежа месяца («12 мая», не «12 май») —
  * это обеспечивает паттерн "d MMMM" с русской локалью.
+ *
+ * Для строковых дат формата БД (yyyy-MM-dd) — [DateUtils].
  */
-object DateHelper {
+object DateDisplay {
 
     private fun locale(): Locale = Locale.getDefault()
 

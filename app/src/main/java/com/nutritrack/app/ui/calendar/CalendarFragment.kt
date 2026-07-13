@@ -358,18 +358,18 @@ class CalendarFragment : Fragment() {
     }
 
     private fun formatMonthHeader(month: YearMonth): String {
-        return com.nutritrack.app.utils.DateHelper.monthYear(month.year, month.monthValue)
+        return com.nutritrack.app.utils.DateDisplay.monthYear(month.year, month.monthValue)
     }
 
     private fun humanizeDate(date: String): String {
         return try {
             val d = LocalDate.parse(date)
             val today = LocalDate.now()
-            val dm = com.nutritrack.app.utils.DateHelper.dayMonth(d)
+            val dm = com.nutritrack.app.utils.DateDisplay.dayMonth(d)
             when {
                 d == today -> getString(R.string.cal_today_date, dm)
                 d == today.minusDays(1) -> getString(R.string.cal_yesterday_date, dm)
-                else -> com.nutritrack.app.utils.DateHelper.dayMonthYear(d)
+                else -> com.nutritrack.app.utils.DateDisplay.dayMonthYear(d)
             }
         } catch (_: Exception) { date }
     }
