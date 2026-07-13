@@ -82,11 +82,14 @@ class FitnessFragment : Fragment() {
     }
 
     private fun checkAndSync() {
-        if (hcManager.hasRequiredPermissions()) {
-            syncToday()
-        } else {
-            // Запускаем HC-контракт с набором health-разрешений (Set, не Array)
-            requestPermissions.launch(HealthConnectManager.PERMISSIONS)
+        // Проверка прав — suspend (IPC к Health Connect), нельзя блокировать main
+        lifecycleScope.launch {
+            if (hcManager.hasPermissions()) {
+                syncToday()
+            } else {
+                // Запускаем HC-контракт с набором health-разрешений (Set, не Array)
+                requestPermissions.launch(HealthConnectManager.PERMISSIONS)
+            }
         }
     }
 

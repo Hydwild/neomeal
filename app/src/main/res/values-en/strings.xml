@@ -3489,4 +3489,8 @@ data class Recipe(
     <string name="premium_free_badge">⭐ free for now</string>
     <string name="premium_locked_title">Premium feature</string>
     <string name="premium_locked_msg">This feature is part of NeoMeal Premium. Subscription is coming in an upcoming update.</string>
+
+    <!-- App lock (biometrics) -->
+    <string name="app_lock_title">NeoMeal is locked</string>
+    <string name="app_lock_subtitle">Confirm it\'s you</string>
 </resources>

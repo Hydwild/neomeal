@@ -7,13 +7,13 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import com.nutritrack.app.databinding.ActivityMainBinding
 import com.nutritrack.app.ui.onboarding.OnboardingActivity
 import com.nutritrack.app.utils.AchievementToast
 import com.nutritrack.app.utils.PrefsManager
 import com.nutritrack.app.viewmodel.AchievementsViewModel
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
         observeAchievementUnlocks()
 
         // Доп. проверка: если профилей нет — форсим онбординг
-        CoroutineScope(Dispatchers.IO).launch {
+        lifecycleScope.launch(Dispatchers.IO) {
             val profileCount = (application as NutriApp).database.profileDao().getProfileCount()
             if (profileCount == 0) {
                 prefs.isFirstLaunch = true
@@ -265,8 +265,8 @@ class MainActivity : AppCompatActivity() {
                 }
             })
         val info = androidx.biometric.BiometricPrompt.PromptInfo.Builder()
-            .setTitle("NeoMeal заблокирован")
-            .setSubtitle("Подтверди, что это ты")
+            .setTitle(getString(R.string.app_lock_title))
+            .setSubtitle(getString(R.string.app_lock_subtitle))
             .setAllowedAuthenticators(
                 androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_WEAK or
                         androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL

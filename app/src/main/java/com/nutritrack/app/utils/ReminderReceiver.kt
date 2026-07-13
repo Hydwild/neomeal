@@ -196,17 +196,24 @@ class ReminderReceiver : BroadcastReceiver() {
 
     private fun addWater(context: Context, ml: Int) {
         val app = context.applicationContext as NutriApp
+        // goAsync: без него процесс могут убить сразу после onReceive,
+        // не дождавшись записи в БД
+        val pending = goAsync()
         CoroutineScope(Dispatchers.IO).launch {
-            val db        = app.database
-            val profileId = db.profileDao().getActiveProfileSync()?.id ?: 1L
-            db.waterDao().insert(
-                WaterEntryEntity(
-                    amountMl  = ml,
-                    date      = DateUtils.today(),
-                    profileId = profileId,
-                    timestamp = System.currentTimeMillis()
+            try {
+                val db        = app.database
+                val profileId = db.profileDao().getActiveProfileSync()?.id ?: 1L
+                db.waterDao().insert(
+                    WaterEntryEntity(
+                        amountMl  = ml,
+                        date      = DateUtils.today(),
+                        profileId = profileId,
+                        timestamp = System.currentTimeMillis()
+                    )
                 )
-            )
+            } finally {
+                pending.finish()
+            }
         }
     }
 
@@ -262,6 +269,8 @@ class ReminderReceiver : BroadcastReceiver() {
         // Здесь же можно автоматически добавить запланированные продукты в дневник,
         // если они были указаны в плане питания
         val app = context.applicationContext as NutriApp
+        // goAsync: дождаться записи в дневник до завершения ресивера
+        val pending = goAsync()
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val db        = app.database
@@ -289,6 +298,8 @@ class ReminderReceiver : BroadcastReceiver() {
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
+            } finally {
+                pending.finish()
             }
         }
     }

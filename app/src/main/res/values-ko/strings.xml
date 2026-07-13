@@ -3473,4 +3473,8 @@
     <string name="premium_free_badge">⭐ 한시적 무료</string>
     <string name="premium_locked_title">프리미엄 기능</string>
     <string name="premium_locked_msg">이 기능은 NeoMeal Premium에 포함됩니다. 구독은 곧 업데이트로 제공됩니다.</string>
+
+    <!-- 앱 잠금 (생체 인증) -->
+    <string name="app_lock_title">NeoMeal 잠금 상태</string>
+    <string name="app_lock_subtitle">본인 확인이 필요해요</string>
 </resources>

@@ -98,7 +98,8 @@ object OpenFoodFacts {
             .addInterceptor { chain ->
                 // Open Food Facts просит указывать User-Agent приложения
                 val req = chain.request().newBuilder()
-                    .header("User-Agent", "NeoMeal/1.0 (Android)")
+                    .header("User-Agent",
+                        "NeoMeal/${com.nutritrack.app.BuildConfig.VERSION_NAME} (Android)")
                     .build()
                 chain.proceed(req)
             }

@@ -633,7 +633,7 @@ class SettingsFragment : Fragment() {
                 val app = requireActivity().application as NutriApp
                 val db  = app.database
                 val profileId = prefs.activeProfileId
-                CoroutineScope(Dispatchers.IO).launch {
+                viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
                     db.diaryDao().deleteAll()
                     db.waterDao().deleteAll()
                     // Очистка серий достижений (если метод есть)

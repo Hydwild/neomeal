@@ -187,10 +187,6 @@ class HealthConnectManager(private val context: Context) {
         } catch (_: Exception) { emptyList() }
     }
 
- /** Синхронная проверка прав (блокирующая обёртка). */
-    fun hasRequiredPermissions(): Boolean =
-        kotlinx.coroutines.runBlocking { hasPermissions() }
-
  /** Массив health-разрешений как строки. */
     fun getRequiredPermissionsArray(): Array<String> = PERMISSIONS.toTypedArray()
 

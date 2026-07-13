@@ -3498,4 +3498,8 @@
     <string name="premium_free_badge">⭐ временно бесплатно</string>
     <string name="premium_locked_title">Premium-функция</string>
     <string name="premium_locked_msg">Эта функция доступна в NeoMeal Premium. Подписка появится в одном из ближайших обновлений.</string>
+
+    <!-- Блокировка входа (биометрия) -->
+    <string name="app_lock_title">NeoMeal заблокирован</string>
+    <string name="app_lock_subtitle">Подтверди, что это ты</string>
 </resources>

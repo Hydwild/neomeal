@@ -6,11 +6,16 @@ import com.nutritrack.app.data.db.AppDatabase
 import com.nutritrack.app.utils.PrefsManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
 class NutriApp : Application() {
 
     val database: AppDatabase by lazy { AppDatabase.getInstance(this) }
+
+    // Скоуп уровня приложения для фоновой работы, не привязанной к экрану
+    // (живёт весь процесс; SupervisorJob — падение одной задачи не роняет остальные)
+    val appScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     override fun attachBaseContext(base: android.content.Context) {
         super.attachBaseContext(com.nutritrack.app.utils.LocaleHelper.wrap(base))
@@ -33,7 +38,7 @@ class NutriApp : Application() {
     }
 
     private fun checkAndRepopulateProducts() {
-        CoroutineScope(Dispatchers.IO).launch {
+        appScope.launch {
             try {
                 val db    = database
                 val prefs = PrefsManager(this@NutriApp)

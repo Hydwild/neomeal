@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<full-backup-content>
-    <!-- Исключаем базу данных из бэкапа -->
-    <exclude domain="database" path="nutritrack_db"/>
-    <exclude domain="database" path="nutritrack_db-shm"/>
-    <exclude domain="database" path="nutritrack_db-wal"/>
-    <!-- Исключаем SharedPreferences -->
-    <exclude domain="sharedpref" path="nutritrack_prefs.xml"/>
-</full-backup-content>

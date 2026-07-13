@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.nutritrack.app.MainActivity
 import com.nutritrack.app.NutriApp
 import com.nutritrack.app.R
@@ -207,7 +208,7 @@ class OnboardingActivity : AppCompatActivity() {
     }
 
     private fun finishOnboarding() {
-        CoroutineScope(Dispatchers.IO).launch {
+        lifecycleScope.launch(Dispatchers.IO) {
             // Проверяем, существует ли уже профиль (создан в prepopulate)
             val existingCount = db.profileDao().getProfileCount()
 

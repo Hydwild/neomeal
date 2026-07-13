@@ -60,6 +60,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true   // BuildConfig.VERSION_NAME для User-Agent сети
     }
     sourceSets {
         // JSON-схемы Room доступны инструментальным тестам миграций
