@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp">
+
+    <AutoCompleteTextView
+        android:id="@+id/acProduct"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:hint="@string/combo_product_hint"
+        android:textSize="14sp"
+        android:inputType="text"
+        android:completionThreshold="1"/>
+
+    <EditText
+        android:id="@+id/etGrams"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/combo_grams_hint"
+        android:textSize="14sp"
+        android:inputType="number"
+        android:layout_marginStart="8dp"/>
+
+    <ImageButton
+        android:id="@+id/btnRemove"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:src="@android:drawable/ic_menu_close_clear_cancel"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/c_delete"/>
+
+</LinearLayout>

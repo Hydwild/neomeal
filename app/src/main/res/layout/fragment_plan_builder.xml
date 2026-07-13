@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    android:clipToPadding="false"
+    android:paddingBottom="96dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lay_plan_builder"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pb_sub"
+            android:textColor="@color/text_secondary"
+            android:textSize="13sp"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Выбор цели — 4 карточки -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
+
+            <TextView android:id="@+id/goalMass"
+                style="@style/GoalChip"
+                android:text="@string/lay_goal_gain"/>
+            <Space android:layout_width="8dp" android:layout_height="1dp"/>
+            <TextView android:id="@+id/goalFit"
+                style="@style/GoalChip"
+                android:text="@string/lay_goal_maintain2"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <TextView android:id="@+id/goalLose"
+                style="@style/GoalChip"
+                android:text="@string/lay_goal_lose2"/>
+            <Space android:layout_width="8dp" android:layout_height="1dp"/>
+            <TextView android:id="@+id/goalLight"
+                style="@style/GoalChip"
+                android:text="@string/lay_light_food"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <TextView android:id="@+id/goalDry"
+                style="@style/GoalChip"
+                android:text="@string/lay_goal_cut"/>
+        </LinearLayout>
+
+        <!-- Выбор диетической группы -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pb_diet_title"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:layout_marginBottom="16dp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView android:id="@+id/dietNone"       style="@style/DietChip" android:text="@string/diet_none"/>
+                <Space android:layout_width="8dp" android:layout_height="1dp"/>
+                <TextView android:id="@+id/dietVegan"      style="@style/DietChip" android:text="@string/diet_vegan"/>
+                <Space android:layout_width="8dp" android:layout_height="1dp"/>
+                <TextView android:id="@+id/dietVegetarian" style="@style/DietChip" android:text="@string/diet_vegetarian"/>
+                <Space android:layout_width="8dp" android:layout_height="1dp"/>
+                <TextView android:id="@+id/dietNoPork"     style="@style/DietChip" android:text="@string/diet_no_pork"/>
+                <Space android:layout_width="8dp" android:layout_height="1dp"/>
+                <TextView android:id="@+id/dietNoLactose"  style="@style/DietChip" android:text="@string/diet_no_lactose"/>
+                <Space android:layout_width="8dp" android:layout_height="1dp"/>
+                <TextView android:id="@+id/dietNoGluten"   style="@style/DietChip" android:text="@string/diet_no_gluten"/>
+                <Space android:layout_width="8dp" android:layout_height="1dp"/>
+                <TextView android:id="@+id/dietPregnant"   style="@style/DietChip" android:text="@string/diet_pregnant"/>
+                <Space android:layout_width="8dp" android:layout_height="1dp"/>
+                <TextView android:id="@+id/dietNursing"    style="@style/DietChip" android:text="@string/diet_nursing"/>
+                <Space android:layout_width="8dp" android:layout_height="1dp"/>
+                <TextView android:id="@+id/dietDiabetic"   style="@style/DietChip" android:text="@string/diet_diabetic"/>
+                <Space android:layout_width="8dp" android:layout_height="1dp"/>
+                <TextView android:id="@+id/dietAllergic"   style="@style/DietChip" android:text="@string/diet_allergic"/>
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <!-- Рекомендация -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardRecommendation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/card_bg"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            android:layout_marginBottom="14dp"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView android:id="@+id/tvRecTitle"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="@string/lay_recommendation"
+                    android:textColor="@color/white" android:textSize="15sp"
+                    android:textStyle="bold" android:layout_marginBottom="6dp"/>
+
+                <TextView android:id="@+id/tvRecommendation"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:textColor="@color/text_secondary" android:textSize="13sp"
+                    android:lineSpacingExtra="3dp"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Дисклеймер о враче (для лёгкого питания) -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardDisclaimer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#3A2A1A"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            android:layout_marginBottom="14dp"
+            android:visibility="gone">
+
+            <TextView android:id="@+id/tvDisclaimer"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="@string/lay_diet_warn"
+                android:textColor="@color/accent_orange_soft" android:textSize="13sp"
+                android:lineSpacingExtra="3dp"/>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Кнопка генерации -->
+        <Button
+            android:id="@+id/btnGenerate"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:text="@string/lay_build_week_menu"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textSize="15sp"
+            android:background="@drawable/btn_gradient"
+            android:layout_marginBottom="10dp"
+            android:visibility="gone"/>
+
+        <!-- Кнопка: набор витаминов (подмешать продукты в план под нужные витамины) -->
+        <Button
+            android:id="@+id/btnVitaminSet"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/pb_vitamin_set"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textSize="14sp"
+            android:background="@drawable/btn_outline_accent"
+            android:layout_marginBottom="10dp"/>
+
+        <!-- Кнопка: собрать другое меню -->
+        <Button
+            android:id="@+id/btnReshuffle"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/lay_build_another"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textSize="14sp"
+            android:background="@drawable/btn_outline_accent"
+            android:layout_marginBottom="16dp"
+            android:visibility="gone"/>
+
+        <!-- Контейнер недельного плана -->
+        <LinearLayout
+            android:id="@+id/containerWeek"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
+
+        <!-- Подсказка как пользоваться -->
+        <TextView
+            android:id="@+id/tvHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/lay_pick_goal"
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:padding="30dp"/>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

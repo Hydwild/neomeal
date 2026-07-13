@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Активный раздел — акцентный фиолетовый -->
+    <item android:color="#B388FF" android:state_checked="true"/>
+    <!-- Неактивные — приглушённый -->
+    <item android:color="#8A8499"/>
+</selector>

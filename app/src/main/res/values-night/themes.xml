@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.NutriTrack" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="colorAccent">@color/color_accent</item>
+        <item name="android:windowBackground">#121212</item>
+        <item name="android:statusBarColor">#0D0D0D</item>
+        <item name="android:navigationBarColor">#1E1E1E</item>
+
+        <item name="bottomNavigationStyle">@style/BottomNavStyle</item>
+        <item name="chipStyle">@style/ChipStyle</item>
+        <item name="switchStyle">@style/SwitchStyle</item>
+    </style>
+
+    <style name="BottomNavStyle" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="android:background">#1E1E1E</item>
+        <item name="itemIconTint">#BDBDBD</item>
+        <item name="itemTextColor">#BDBDBD</item>
+    </style>
+
+    <style name="ChipStyle" parent="Widget.MaterialComponents.Chip.Filter">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="chipBackgroundColor">#2C2C2C</item>
+        <item name="chipStrokeColor">@color/color_accent</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="checkedIconVisible">false</item>
+    </style>
+</resources>

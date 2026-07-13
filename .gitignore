@@ -1,0 +1,33 @@
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# Секреты подписи — НЕ коммитить
+keystore.properties
+*.jks
+*.keystore
+google-services.json
+
+# Сборка / IDE
+/build
+/app/build
+/app/release
+/.gradle
+/.idea
+*.iml
+local.properties
+
+# Claude Code локальные настройки
+.claude/settings.local.json

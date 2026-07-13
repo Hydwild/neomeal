@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="@string/lay_your_goal" android:textColor="@color/white"
+        android:textSize="26sp" android:textStyle="bold" android:layout_marginBottom="8dp"/>
+
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="@string/ob_goal_sub"
+        android:textColor="@color/white" android:textSize="14sp"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- Maintain -->
+    <androidx.cardview.widget.CardView android:id="@+id/cardMaintain"
+        android:layout_width="match_parent" android:layout_height="72dp"
+        android:layout_marginBottom="10dp"
+        app:cardCornerRadius="16dp" app:cardElevation="0dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+            android:orientation="horizontal" android:padding="16dp" android:gravity="center_vertical">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="⚖️" android:textSize="28sp" android:layout_marginEnd="14dp"/>
+            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="@string/goal_maintain" android:textColor="@color/white"
+                    android:textStyle="bold" android:textSize="16sp"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="@string/goal_maintain_sub" android:textColor="@color/white"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Lose -->
+    <androidx.cardview.widget.CardView android:id="@+id/cardLose"
+        android:layout_width="match_parent" android:layout_height="72dp"
+        android:layout_marginBottom="10dp"
+        app:cardCornerRadius="16dp" app:cardElevation="0dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+            android:orientation="horizontal" android:padding="16dp" android:gravity="center_vertical">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="🔥" android:textSize="28sp" android:layout_marginEnd="14dp"/>
+            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="@string/goal_lose" android:textColor="@color/white"
+                    android:textStyle="bold" android:textSize="16sp"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="@string/goal_lose_sub" android:textColor="@color/white"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Gain -->
+    <androidx.cardview.widget.CardView android:id="@+id/cardGain"
+        android:layout_width="match_parent" android:layout_height="72dp"
+        android:layout_marginBottom="10dp"
+        app:cardCornerRadius="16dp" app:cardElevation="0dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+            android:orientation="horizontal" android:padding="16dp" android:gravity="center_vertical">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="💪" android:textSize="28sp" android:layout_marginEnd="14dp"/>
+            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="@string/goal_gain" android:textColor="@color/white"
+                    android:textStyle="bold" android:textSize="16sp"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="@string/goal_gain_sub" android:textColor="@color/white"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Healthy -->
+    <androidx.cardview.widget.CardView android:id="@+id/cardHealthy"
+        android:layout_width="match_parent" android:layout_height="72dp"
+        app:cardCornerRadius="16dp" app:cardElevation="0dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+            android:orientation="horizontal" android:padding="16dp" android:gravity="center_vertical">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="🥗" android:textSize="28sp" android:layout_marginEnd="14dp"/>
+            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="@string/goal_healthy" android:textColor="@color/white"
+                    android:textStyle="bold" android:textSize="16sp"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="@string/goal_healthy_sub" android:textColor="@color/white"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

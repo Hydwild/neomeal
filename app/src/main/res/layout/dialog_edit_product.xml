@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bottom_sheet_bg">
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:padding="16dp">
+
+        <TextView android:id="@+id/tvTitle" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="@string/epr_add_product"
+            android:textColor="@color/white" android:textSize="18sp"
+            android:textStyle="bold" android:layout_marginBottom="12dp"/>
+
+        <ImageView android:id="@+id/ivProductPhoto" android:layout_width="80dp"
+            android:layout_height="80dp" android:layout_gravity="center"
+            android:src="@drawable/ic_food_placeholder" android:background="@drawable/circle_bg"
+            android:scaleType="centerCrop" android:layout_marginBottom="12dp"
+            android:foreground="?android:attr/selectableItemBackgroundBorderless"/>
+
+        <EditText android:id="@+id/etName" android:layout_width="match_parent"
+            android:layout_height="48dp" android:hint="@string/epr_name"
+            android:background="@drawable/input_bg" android:textColor="@color/white"
+            android:textColorHint="@color/text_secondary" android:padding="12dp"
+            android:layout_marginBottom="8dp"/>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <EditText android:id="@+id/etCalories" android:layout_width="0dp"
+                android:layout_weight="1" android:layout_height="48dp"
+                android:hint="@string/epr_kcal" android:background="@drawable/input_bg"
+                android:textColor="@color/white" android:textColorHint="@color/text_secondary"
+                android:padding="12dp" android:inputType="numberDecimal"
+                android:layout_marginEnd="4dp" android:layout_marginBottom="8dp"/>
+            <EditText android:id="@+id/etProtein" android:layout_width="0dp"
+                android:layout_weight="1" android:layout_height="48dp"
+                android:hint="@string/an_macro_protein" android:background="@drawable/input_bg"
+                android:textColor="@color/white" android:textColorHint="@color/text_secondary"
+                android:padding="12dp" android:inputType="numberDecimal"
+                android:layout_marginStart="4dp" android:layout_marginBottom="8dp"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <EditText android:id="@+id/etFat" android:layout_width="0dp"
+                android:layout_weight="1" android:layout_height="48dp"
+                android:hint="@string/an_macro_fat" android:background="@drawable/input_bg"
+                android:textColor="@color/white" android:textColorHint="@color/text_secondary"
+                android:padding="12dp" android:inputType="numberDecimal"
+                android:layout_marginEnd="4dp" android:layout_marginBottom="8dp"/>
+            <EditText android:id="@+id/etCarbs" android:layout_width="0dp"
+                android:layout_weight="1" android:layout_height="48dp"
+                android:hint="@string/an_macro_carbs" android:background="@drawable/input_bg"
+                android:textColor="@color/white" android:textColorHint="@color/text_secondary"
+                android:padding="12dp" android:inputType="numberDecimal"
+                android:layout_marginStart="4dp" android:layout_marginBottom="8dp"/>
+        </LinearLayout>
+
+        <EditText android:id="@+id/etCategory" android:layout_width="match_parent"
+            android:layout_height="48dp" android:hint="@string/epr_category"
+            android:background="@drawable/input_bg" android:textColor="@color/white"
+            android:textColorHint="@color/text_secondary" android:padding="12dp"
+            android:layout_marginBottom="8dp"/>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:layout_marginTop="4dp" android:layout_marginBottom="8dp">
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="💰" android:textSize="20sp" android:layout_marginEnd="8dp"/>
+
+            <EditText android:id="@+id/etPrice" android:layout_width="0dp" android:layout_weight="1"
+                android:layout_height="48dp" android:hint="@string/epr_price"
+                android:background="@drawable/input_bg" android:textColor="@color/white"
+                android:textColorHint="@color/text_secondary" android:padding="12dp"
+                android:inputType="numberDecimal"/>
+        </LinearLayout>
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="@string/epr_price_hint"
+            android:textColor="@color/text_secondary" android:textSize="11sp"
+            android:layout_marginStart="4dp" android:layout_marginBottom="10dp"/>
+
+        <Button android:id="@+id/btnSave" android:layout_width="match_parent"
+            android:layout_height="52dp" android:background="@drawable/btn_gradient"
+            android:text="@string/c_save" android:textColor="@color/white" android:textStyle="bold"/>
+    </LinearLayout>
+</ScrollView>

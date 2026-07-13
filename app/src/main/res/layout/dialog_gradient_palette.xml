@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Живое превью градиента -->
+        <View
+            android:id="@+id/gradientPreview"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- Переключатель: какой цвет редактируем -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp">
+            <Button
+                android:id="@+id/btnColorStart"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/grad_color_start"
+                android:textSize="13sp"/>
+            <Space android:layout_width="10dp" android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/btnColorEnd"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/grad_color_end"
+                android:textSize="13sp"/>
+        </LinearLayout>
+
+        <!-- R -->
+        <TextView android:id="@+id/lblR" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="R" android:textStyle="bold"
+            android:textColor="#E53935"/>
+        <SeekBar android:id="@+id/seekR" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:max="255"/>
+
+        <!-- G -->
+        <TextView android:id="@+id/lblG" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="G" android:textStyle="bold"
+            android:textColor="#43A047"/>
+        <SeekBar android:id="@+id/seekG" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:max="255"/>
+
+        <!-- B -->
+        <TextView android:id="@+id/lblB" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="B" android:textStyle="bold"
+            android:textColor="#1E88E5"/>
+        <SeekBar android:id="@+id/seekB" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:max="255"/>
+
+        <!-- HEX-поле -->
+        <EditText
+            android:id="@+id/etHex"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="#667eea"
+            android:maxLength="7"
+            android:inputType="textNoSuggestions"
+            android:textSize="14sp"/>
+
+    </LinearLayout>
+</ScrollView>

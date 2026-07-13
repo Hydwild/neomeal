@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/ivMealPhoto"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="centerCrop"
+            android:layout_marginEnd="10dp"
+            android:contentDescription="Фото блюда"
+            android:visibility="gone"/>
+
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+            android:layout_weight="1" android:orientation="vertical">
+            <TextView android:id="@+id/tvName" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:textColor="@color/white"
+                android:textSize="14sp" android:textStyle="bold"/>
+            <TextView android:id="@+id/tvDetails" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:textColor="@color/text_secondary"
+                android:textSize="12sp"/>
+            <TextView android:id="@+id/tvCombo" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:textColor="@color/color_accent"
+                android:textSize="11sp" android:visibility="gone"/>
+        </LinearLayout>
+
+        <TextView android:id="@+id/tvCalories" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:textColor="@color/color_accent"
+            android:textSize="14sp" android:textStyle="bold" android:layout_marginEnd="8dp"/>
+
+        <TextView
+            android:id="@+id/btnRate"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:text="😊"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:alpha="0.55"
+            android:background="?android:attr/selectableItemBackgroundBorderless"/>
+
+        <TextView
+            android:id="@+id/btnPhoto"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:text="📷"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:alpha="0.55"
+            android:background="?android:attr/selectableItemBackgroundBorderless"/>
+
+        <ImageButton android:id="@+id/btnDelete" android:layout_width="32dp"
+            android:layout_height="32dp" android:background="@android:color/transparent"
+            android:src="@drawable/ic_delete" android:tint="@color/text_secondary"/>
+    </LinearLayout>
+
+    <!-- Предупреждение о превышении дневной нормы категории -->
+    <TextView
+        android:id="@+id/tvWarning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#FFB74D"
+        android:textSize="11sp"
+        android:layout_marginTop="4dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:background="@drawable/warning_chip_bg"
+        android:visibility="gone"/>
+
+</LinearLayout>

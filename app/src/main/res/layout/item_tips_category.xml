@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    app:cardBackgroundColor="@color/card_bg"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="0dp">
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!-- Цветная полоска-акцент -->
+        <View android:id="@+id/accentBar"
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:background="@color/color_accent"/>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Header -->
+            <LinearLayout android:id="@+id/headerRow"
+                android:layout_width="match_parent" android:layout_height="64dp"
+                android:orientation="horizontal" android:paddingStart="14dp" android:paddingEnd="16dp"
+                android:gravity="center_vertical"
+                android:background="?android:attr/selectableItemBackground">
+
+                <!-- Эмодзи в кружке -->
+                <TextView android:id="@+id/tvCategoryEmoji"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:background="@drawable/tip_emoji_circle"
+                    android:layout_marginEnd="12dp"/>
+
+                <TextView android:id="@+id/tvCategoryTitle" android:layout_width="0dp"
+                    android:layout_weight="1" android:layout_height="wrap_content"
+                    android:textColor="@color/white" android:textSize="15sp" android:textStyle="bold"/>
+
+                <TextView android:id="@+id/tvTipsCount" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:textColor="@color/color_accent"
+                    android:textSize="11sp" android:textStyle="bold"
+                    android:background="@drawable/stat_chip_bg"
+                    android:paddingStart="9dp" android:paddingEnd="9dp"
+                    android:paddingTop="4dp" android:paddingBottom="4dp"
+                    android:layout_marginEnd="10dp"/>
+
+                <ImageView android:id="@+id/ivArrow" android:layout_width="20dp"
+                    android:layout_height="20dp" android:src="@drawable/ic_arrow_right"
+                    android:tint="@color/text_secondary"/>
+            </LinearLayout>
+
+            <!-- Tips list (expandable) -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvTips"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="10dp"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

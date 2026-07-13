@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Талисман NeoMeal «Капелька» — водяная капля с лицом.
+  Это собственный персонаж, нарисованный вектором (не копия чужого маскота).
+  Залит водно-фиолетовым градиентом в цветах приложения.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+
+    <!-- Тело капли -->
+    <path
+        android:pathData="M60,14
+            C60,14 96,58 96,80
+            C96,100 80,112 60,112
+            C40,112 24,100 24,80
+            C24,58 60,14 60,14 Z">
+        <aapt:attr name="android:fillColor" xmlns:aapt="http://schemas.android.com/aapt">
+            <gradient
+                android:type="linear"
+                android:startX="24" android:startY="14"
+                android:endX="96" android:endY="112">
+                <item android:offset="0.0" android:color="#40C4FF"/>
+                <item android:offset="1.0" android:color="#B39DDB"/>
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Блик -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.45"
+        android:pathData="M44,52
+            C40,62 39,72 43,80
+            C45,84 41,72 48,60
+            C51,54 48,46 44,52 Z"/>
+
+    <!-- Глаза -->
+    <path android:fillColor="#1B2A4A" android:pathData="M50,76 m-5,0 a5,5 0 1,0 10,0 a5,5 0 1,0 -10,0"/>
+    <path android:fillColor="#1B2A4A" android:pathData="M74,76 m-5,0 a5,5 0 1,0 10,0 a5,5 0 1,0 -10,0"/>
+    <!-- Блики в глазах -->
+    <path android:fillColor="#FFFFFF" android:pathData="M52,74 m-1.6,0 a1.6,1.6 0 1,0 3.2,0 a1.6,1.6 0 1,0 -3.2,0"/>
+    <path android:fillColor="#FFFFFF" android:pathData="M76,74 m-1.6,0 a1.6,1.6 0 1,0 3.2,0 a1.6,1.6 0 1,0 -3.2,0"/>
+
+    <!-- Улыбка -->
+    <path
+        android:strokeColor="#1B2A4A"
+        android:strokeWidth="3.5"
+        android:strokeLineCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M54,90 C58,95 66,95 70,90"/>
+</vector>

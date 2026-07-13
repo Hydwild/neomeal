@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="84dp"
+    android:layout_margin="5dp"
+    android:clickable="true" android:focusable="true">
+    <View android:id="@+id/gradientPreview"
+        android:layout_width="match_parent" android:layout_height="match_parent"/>
+    <TextView android:id="@+id/tvGradientName"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start" android:layout_margin="8dp"
+        android:textColor="@color/white" android:textSize="12sp" android:textStyle="bold"
+        android:shadowColor="#000000" android:shadowDx="0" android:shadowDy="1" android:shadowRadius="3"/>
+    <TextView android:id="@+id/tvSelectedMark"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="top|end" android:layout_margin="6dp"
+        android:text="✓" android:textColor="@color/white" android:textSize="16sp"
+        android:textStyle="bold" android:visibility="gone"/>
+</FrameLayout>

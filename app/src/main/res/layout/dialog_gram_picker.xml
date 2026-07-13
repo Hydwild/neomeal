@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="@color/bottom_sheet_bg">
+
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="@string/gp_choose_amount" android:textColor="@color/white"
+        android:textSize="17sp" android:textStyle="bold" android:layout_marginBottom="16dp"/>
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:gravity="center" android:layout_marginBottom="16dp">
+        <ImageButton android:id="@+id/btnMinus" android:layout_width="48dp"
+            android:layout_height="48dp" android:background="@drawable/btn_round"
+            android:src="@drawable/ic_minus"/>
+        <TextView android:id="@+id/tvGrams" android:layout_width="120dp"
+            android:layout_height="wrap_content" android:gravity="center"
+            android:text="@string/lay_100_g" android:textColor="@color/white"
+            android:textSize="24sp" android:textStyle="bold"/>
+        <ImageButton android:id="@+id/btnPlus" android:layout_width="48dp"
+            android:layout_height="48dp" android:background="@drawable/btn_round"
+            android:src="@drawable/ic_plus"/>
+    </LinearLayout>
+
+    <!-- Витамины и минералы в выбранной порции (пересчёт + % от нормы) -->
+    <TextView android:id="@+id/tvVitTitle"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="@string/gp_vitamins_title" android:textColor="@color/white"
+        android:textSize="14sp" android:textStyle="bold"
+        android:layout_marginBottom="6dp" android:visibility="gone"/>
+
+    <ScrollView
+        android:id="@+id/scrollVit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxHeight="220dp"
+        android:layout_marginBottom="12dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/vitContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
+    </ScrollView>
+
+    <Button android:id="@+id/btnAdd" android:layout_width="match_parent"
+        android:layout_height="52dp" android:background="@drawable/btn_gradient"
+        android:text="@string/gp_add_to_diary" android:textColor="@color/white"
+        android:textStyle="bold"/>
+</LinearLayout>

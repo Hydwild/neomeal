@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="@color/bottom_sheet_bg">
+
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="@string/cm_title" android:textColor="@color/white"
+        android:textSize="18sp" android:textStyle="bold" android:layout_marginBottom="16dp"/>
+
+    <EditText android:id="@+id/etMealName" android:layout_width="match_parent"
+        android:layout_height="48dp" android:hint="@string/cm_name_hint"
+        android:background="@drawable/input_bg" android:textColor="@color/white"
+        android:textColorHint="@color/text_secondary" android:padding="12dp"
+        android:layout_marginBottom="12dp"/>
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:gravity="center_vertical"
+        android:layout_marginBottom="16dp">
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="@string/lay_time_label" android:textColor="@color/text_secondary" android:textSize="15sp"
+            android:layout_marginEnd="12dp"/>
+        <TextView android:id="@+id/tvTime" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="08:00"
+            android:textColor="@color/color_accent" android:textSize="20sp"
+            android:textStyle="bold" android:padding="8dp"
+            android:background="@drawable/btn_outline"
+            android:foreground="?android:attr/selectableItemBackground"/>
+    </LinearLayout>
+
+    <Button android:id="@+id/btnSave" android:layout_width="match_parent"
+        android:layout_height="52dp" android:background="@drawable/btn_gradient"
+        android:text="@string/c_save" android:textColor="@color/white" android:textStyle="bold"/>
+</LinearLayout>

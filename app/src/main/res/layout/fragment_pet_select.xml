@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:paddingBottom="96dp"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pet_screen_title"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pet_screen_sub"
+            android:textColor="#E6FFFFFF"
+            android:textSize="13sp"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Живое превью выбранного питомца -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:background="@drawable/pet_preview_bg"
+            android:layout_marginBottom="16dp">
+
+            <com.nutritrack.app.pets.PetView
+                android:id="@+id/petPreview"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:id="@+id/petPreviewHint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/pet_preview_hint"
+                android:textColor="#CCFFFFFF"
+                android:textSize="13sp"
+                android:visibility="gone"/>
+        </FrameLayout>
+
+        <!-- Сюда фрагмент добавляет карточки питомцев -->
+        <LinearLayout
+            android:id="@+id/petContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
+
+    </LinearLayout>
+</ScrollView>

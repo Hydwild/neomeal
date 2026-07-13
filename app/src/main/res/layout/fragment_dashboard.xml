@@ -1,0 +1,812 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    android:id="@+id/dashboardScroll"
+    android:clipToPadding="false"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:id="@+id/dashboardContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="92dp">
+
+        <!-- Шапка: приветствие + аватар -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="18dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvGreetingTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lay_greet_default"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/tvGreeting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/greet_hi_lay"
+                    android:textColor="@color/white"
+                    android:textSize="26sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/tvGreetingSub"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/greet_ready_lay"
+                    android:textColor="@color/white"
+                    android:textSize="13sp"
+                    android:layout_marginTop="2dp"/>
+
+                <TextView
+                    android:id="@+id/tvStreak"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lay_streak_0"
+                    android:textColor="#FFB74D"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:background="@drawable/stat_chip_bg"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:layout_marginTop="6dp"
+                    android:visibility="gone"/>
+            </LinearLayout>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ivDashboardAvatar"
+                android:layout_width="56dp"
+                android:layout_height="52dp"
+                android:src="@drawable/ic_profile_placeholder"
+                app:civ_border_width="2dp"
+                app:civ_border_color="@color/color_primary"/>
+        </LinearLayout>
+
+        <!-- Калории -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:cardBackgroundColor="@color/card_bg"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="10dp"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="2dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lay_calories"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="13sp"/>
+
+                    <ImageButton
+                        android:id="@+id/btnCalorieMode"
+                        android:layout_width="34dp"
+                        android:layout_height="34dp"
+                        android:background="@drawable/btn_round"
+                        android:src="@drawable/ic_settings"
+                        android:tint="@color/text_secondary"
+                        android:contentDescription="Режим"/>
+                </LinearLayout>
+
+                <!-- Круговой режим -->
+                <LinearLayout
+                    android:id="@+id/layoutCircular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="16dp"
+                    android:visibility="visible">
+
+                    <com.nutritrack.app.ui.custom.CircularCalorieView
+                        android:id="@+id/circularCalorieView"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginEnd="24dp"
+                        android:layout_marginTop="4dp"/>
+                </LinearLayout>
+
+                <!-- Горизонтальный режим -->
+                <LinearLayout
+                    android:id="@+id/layoutHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:visibility="gone">
+
+                    <ProgressBar
+                        android:id="@+id/progressCalories"
+                        style="@android:style/Widget.ProgressBar.Horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="18dp"
+                        android:layout_marginBottom="8dp"
+                        android:max="2000"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/progress_calories"/>
+
+                    <TextView
+                        android:id="@+id/tvCaloriesValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lay_cal_0_2000"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="14dp"/>
+                </LinearLayout>
+
+                <!-- КБЖУ-плашки: общие для обоих режимов -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:baselineAligned="false"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="16dp">
+
+                    <LinearLayout android:layout_width="0dp" android:layout_weight="1"
+                        android:layout_height="wrap_content" android:orientation="vertical"
+                        android:gravity="center" android:background="@drawable/macro_chip_protein"
+                        android:paddingTop="12dp" android:paddingBottom="12dp"
+                        android:layout_marginEnd="6dp">
+                        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:orientation="horizontal" android:gravity="center_vertical">
+                            <View android:layout_width="8dp" android:layout_height="8dp"
+                                android:background="@drawable/macro_dot_protein" android:layout_marginEnd="6dp"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:text="@string/lay_macro_protein" android:textColor="@color/white" android:textSize="12sp" android:alpha="0.75"/>
+                        </LinearLayout>
+                        <TextView android:id="@+id/tvProtein" android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:text="@string/lay_0_g"
+                            android:textColor="@color/color_protein" android:textStyle="bold" android:textSize="20sp"
+                            android:layout_marginTop="4dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout android:layout_width="0dp" android:layout_weight="1"
+                        android:layout_height="wrap_content" android:orientation="vertical"
+                        android:gravity="center" android:background="@drawable/macro_chip_fat"
+                        android:paddingTop="12dp" android:paddingBottom="12dp"
+                        android:layout_marginStart="3dp" android:layout_marginEnd="3dp">
+                        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:orientation="horizontal" android:gravity="center_vertical">
+                            <View android:layout_width="8dp" android:layout_height="8dp"
+                                android:background="@drawable/macro_dot_fat" android:layout_marginEnd="6dp"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:text="@string/lay_macro_fat" android:textColor="@color/white" android:textSize="12sp" android:alpha="0.75"/>
+                        </LinearLayout>
+                        <TextView android:id="@+id/tvFat" android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:text="@string/lay_0_g"
+                            android:textColor="@color/color_fat" android:textStyle="bold" android:textSize="20sp"
+                            android:layout_marginTop="4dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout android:layout_width="0dp" android:layout_weight="1"
+                        android:layout_height="wrap_content" android:orientation="vertical"
+                        android:gravity="center" android:background="@drawable/macro_chip_carbs"
+                        android:paddingTop="12dp" android:paddingBottom="12dp"
+                        android:layout_marginStart="6dp">
+                        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:orientation="horizontal" android:gravity="center_vertical">
+                            <View android:layout_width="8dp" android:layout_height="8dp"
+                                android:background="@drawable/macro_dot_carbs" android:layout_marginEnd="6dp"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:text="@string/lay_macro_carbs" android:textColor="@color/white" android:textSize="12sp" android:alpha="0.75"/>
+                        </LinearLayout>
+                        <TextView android:id="@+id/tvCarbs" android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:text="@string/lay_0_g"
+                            android:textColor="@color/color_carbs" android:textStyle="bold" android:textSize="20sp"
+                            android:layout_marginTop="4dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Подсказки: чем добить норму / усилить блюдо -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardSuggestions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardBackgroundColor="@color/card_bg"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp"
+            android:visibility="gone">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp">
+                <!-- Заголовок-переключатель -->
+                <LinearLayout android:id="@+id/rowSuggestHeader"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true" android:focusable="true">
+                    <TextView android:id="@+id/tvSuggestTitle"
+                        android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
+                        android:text="@string/sug_card_title"
+                        android:textColor="@color/white" android:textStyle="bold" android:textSize="16sp"/>
+                    <TextView android:id="@+id/tvSuggestArrow"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="▸" android:textColor="@color/color_accent" android:textSize="18sp"/>
+                </LinearLayout>
+                <!-- Сворачиваемое тело -->
+                <LinearLayout android:id="@+id/suggestBody"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:visibility="gone">
+                    <TextView android:id="@+id/tvSuggestSub"
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="@string/sug_card_title"
+                        android:textColor="@color/text_secondary" android:textSize="12sp"
+                        android:layout_marginTop="6dp"/>
+                    <LinearLayout android:id="@+id/containerSuggest"
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="vertical" android:layout_marginTop="10dp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="@string/sug_disclaimer"
+                        android:textColor="@color/text_secondary" android:textSize="10sp"
+                        android:layout_marginTop="10dp" android:alpha="0.8"/>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Вода -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:cardBackgroundColor="@color/card_bg"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <!-- Шапка: заголовок + шестерёнка + колокольчик -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="6dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lay_water"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textSize="15sp"/>
+
+                    <View android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1"/>
+
+                    <ImageButton
+                        android:id="@+id/btnWaterMode"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="?android:attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_settings"
+                        android:contentDescription="@string/ds_water_mode_title"
+                        app:tint="@color/text_secondary"/>
+
+                    <ImageButton
+                        android:id="@+id/btnWaterReminder"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginStart="2dp"
+                        android:background="?android:attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_bell"
+                        android:contentDescription="Напоминания"
+                        app:tint="@color/color_water"/>
+                </LinearLayout>
+
+                <!-- ЖИВОЙ режим: кольцо + талисман -->
+                <LinearLayout
+                    android:id="@+id/layoutWaterLive"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:baselineAligned="false">
+
+                    <FrameLayout
+                        android:layout_width="74dp"
+                        android:layout_height="74dp"
+                        android:layout_marginEnd="14dp">
+
+                        <ProgressBar
+                            android:id="@+id/progressWater"
+                            style="@android:style/Widget.ProgressBar.Horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:max="2000"
+                            android:progress="0"
+                            android:indeterminate="false"
+                            android:progressDrawable="@drawable/progress_water_ring"/>
+
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_water_mascot"
+                            android:contentDescription="@string/lay_water"/>
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:baselineAligned="true">
+
+                            <TextView
+                                android:id="@+id/tvWaterValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/lay_0_ml"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"
+                                android:textSize="26sp"/>
+
+                            <TextView
+                                android:id="@+id/tvWaterGoal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="6dp"
+                                android:layout_gravity="bottom"
+                                android:paddingBottom="3dp"
+                                android:text="@string/lay_water_goal_ml"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="14sp"/>
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tvWaterRemaining"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/lay_water_left"
+                            android:textColor="@color/color_water"
+                            android:textSize="13sp"/>
+                    </LinearLayout>
+
+                    <FrameLayout
+                        android:id="@+id/waterMascotContainer"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp">
+
+                        <!-- Статичный талисман (показан, только если питомец не выбран). -->
+                        <ImageView
+                            android:id="@+id/imgWaterMascot"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="10dp"
+                            android:src="@drawable/ic_water_mascot"
+                            android:contentDescription="@string/lay_water"/>
+                    </FrameLayout>
+                </LinearLayout>
+
+                <!-- Анимированный питомец: отдельная просторная строка по центру -->
+                <FrameLayout
+                    android:id="@+id/petWaterContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp"
+                    android:layout_marginTop="8dp"
+                    android:visibility="gone">
+
+                    <com.nutritrack.app.pets.PetView
+                        android:id="@+id/petWater"
+                        android:layout_width="140dp"
+                        android:layout_height="140dp"
+                        android:layout_gravity="center"/>
+                </FrameLayout>
+
+                <!-- КЛАССИЧЕСКИЙ режим: горизонтальная полоса -->
+                <LinearLayout
+                    android:id="@+id/layoutWaterClassic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="8dp">
+
+                        <View android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1"/>
+
+                        <TextView
+                            android:id="@+id/tvWaterValueClassic"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/lay_0_ml"
+                            android:textColor="@color/color_water"
+                            android:textStyle="bold"
+                            android:textSize="14sp"/>
+
+                        <TextView
+                            android:id="@+id/tvWaterGoalClassic"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/lay_water_goal_ml"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="13sp"/>
+                    </LinearLayout>
+
+                    <ProgressBar
+                        android:id="@+id/progressWaterBar"
+                        style="@android:style/Widget.ProgressBar.Horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="12dp"
+                        android:max="2000"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/progress_water"
+                        android:layout_marginBottom="6dp"/>
+
+                    <TextView
+                        android:id="@+id/tvWaterRemainingClassic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lay_water_left"
+                        android:textColor="@color/color_water"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+
+                <!-- Подпись «Пора пить» -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="@string/lay_hold_glass"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="11sp"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvWaterCups"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="12dp"/>
+
+                <!-- Чипы быстрого добавления -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnWater100"
+                        android:layout_width="0dp" android:layout_height="44dp" android:layout_weight="1"
+                        android:layout_marginEnd="4dp" android:text="+100"
+                        android:textColor="@color/color_water" android:textSize="13sp"
+                        app:cornerRadius="22dp"
+                        app:backgroundTint="@color/card_bg" app:strokeColor="@color/color_water" app:strokeWidth="1dp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnWater200"
+                        android:layout_width="0dp" android:layout_height="44dp" android:layout_weight="1"
+                        android:layout_marginStart="4dp" android:layout_marginEnd="4dp" android:text="+200"
+                        android:textColor="@color/color_water" android:textSize="13sp"
+                        app:cornerRadius="22dp"
+                        app:backgroundTint="@color/card_bg" app:strokeColor="@color/color_water" app:strokeWidth="1dp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnWater300"
+                        android:layout_width="0dp" android:layout_height="44dp" android:layout_weight="1"
+                        android:layout_marginStart="4dp" android:layout_marginEnd="4dp" android:text="+300"
+                        android:textColor="@color/color_water" android:textSize="13sp"
+                        app:cornerRadius="22dp"
+                        app:backgroundTint="@color/card_bg" app:strokeColor="@color/color_water" app:strokeWidth="1dp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnWater500"
+                        android:layout_width="0dp" android:layout_height="44dp" android:layout_weight="1"
+                        android:layout_marginStart="4dp" android:text="+500"
+                        android:textColor="@color/color_water" android:textSize="13sp"
+                        app:cornerRadius="22dp"
+                        app:backgroundTint="@color/card_bg" app:strokeColor="@color/color_water" app:strokeWidth="1dp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Таймер голодания (виден только при активной сессии) -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardFastingTimer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardBackgroundColor="@color/card_bg"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp"
+            android:visibility="gone"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="12dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lay_fasting"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/tvFastingProtocolName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/color_success"
+                        android:textSize="13sp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/tvFastingTimerBig"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="00:00:00"
+                        android:textColor="@color/white"
+                        android:textSize="30sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/tvFastingPercentBig"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0%"
+                        android:textColor="@color/color_success"
+                        android:textSize="20sp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
+                <ProgressBar
+                    android:id="@+id/progressFastingDash"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:max="100"
+                    android:progress="0"
+                    android:progressTint="@color/color_success"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="6dp"/>
+
+                <TextView
+                    android:id="@+id/tvFastingPhaseDash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/text_secondary"
+                    android:textSize="13sp"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Кнопка добавить еду -->
+        <Button
+            android:id="@+id/btnAddFood"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/btn_gradient"
+            android:text="@string/lay_add_food"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+
+        <!-- ДНЕВНИК (фикс. высота + свой скролл) -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/card_bg"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:id="@+id/rowDiaryHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="2dp"
+                    android:layout_marginBottom="8dp">
+
+                    <TextView
+                        android:id="@+id/tvDiaryDateLabel"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lay_eaten_today"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        android:textStyle="bold"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/stat_chip_bg"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="📅"
+                            android:textSize="15sp"
+                            android:layout_marginEnd="5dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/lay_calendar"
+                            android:textColor="@color/color_accent"
+                            android:textSize="13sp"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Суммарная стоимость съеденного за день -->
+                <TextView
+                    android:id="@+id/tvDayCost"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_success"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="6dp"
+                    android:visibility="gone"/>
+
+                <!-- Подсказка: как редактировать запись -->
+                <TextView
+                    android:id="@+id/tvDiaryHint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lay_hold_entry"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="11sp"
+                    android:layout_marginBottom="6dp"
+                    android:visibility="gone"/>
+
+                <!-- Контейнер фикс. высоты: список листается внутри -->
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="340dp">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvDiary"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:nestedScrollingEnabled="true"
+                        android:overScrollMode="ifContentScrolls"/>
+
+                    <!-- Пустое состояние -->
+                    <LinearLayout
+                        android:id="@+id/tvDiaryEmpty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:paddingTop="24dp"
+                        android:paddingBottom="24dp"
+                        android:visibility="gone">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="🍽️"
+                            android:textSize="44sp"
+                            android:alpha="0.85"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/diary_empty_title"
+                            android:textColor="@color/white"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="10dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/diary_empty_sub"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="12sp"
+                            android:layout_marginTop="4dp"
+                            android:gravity="center"/>
+                    </LinearLayout>
+
+                </FrameLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

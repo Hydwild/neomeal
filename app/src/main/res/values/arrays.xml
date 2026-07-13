@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="cheer_water">
+        <item>Отлично, организм скажет спасибо 💧</item>
+        <item>Так держать! Вода — это жизнь 🌊</item>
+        <item>Молодец, что не забываешь пить 👏</item>
+        <item>Глоток за глотком к цели 💪</item>
+        <item>Супер! Гидратация — основа всего ✨</item>
+    </string-array>
+    <string-array name="cheer_food">
+        <item>Записано! Честный учёт — половина успеха 📝</item>
+        <item>Отлично, что ведёшь дневник 👏</item>
+        <item>Молодец! Осознанное питание — это сила 💚</item>
+        <item>Так держать — каждая запись приближает к цели 🎯</item>
+        <item>Записал(а) — значит контролируешь 💪</item>
+    </string-array>
+    <string-array name="cheer_weight">
+        <item>Замер записан! Регулярность — ключ к прогрессу 📈</item>
+        <item>Отлично, что следишь за динамикой 👏</item>
+        <item>Молодец! Цифры покажут твой путь 🛤️</item>
+    </string-array>
+    <string-array name="cheer_plan">
+        <item>План — это уже полпути! 🗺️</item>
+        <item>Отличная организованность 👏</item>
+    </string-array>
+</resources>

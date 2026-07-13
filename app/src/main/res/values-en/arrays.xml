@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="cheer_water">
+        <item>Nice, your body will thank you 💧</item>
+        <item>Keep it up! Water is life 🌊</item>
+        <item>Great that you remember to drink 👏</item>
+        <item>Sip by sip toward your goal 💪</item>
+        <item>Super! Hydration is the foundation ✨</item>
+    </string-array>
+    <string-array name="cheer_food">
+        <item>Logged! Honest tracking is half the battle 📝</item>
+        <item>Great that you keep a diary 👏</item>
+        <item>Well done! Mindful eating is power 💚</item>
+        <item>Keep it up — every entry gets you closer 🎯</item>
+        <item>Logged it — so you\'re in control 💪</item>
+    </string-array>
+    <string-array name="cheer_weight">
+        <item>Weigh-in saved! Consistency is the key to progress 📈</item>
+        <item>Great that you track your trend 👏</item>
+        <item>Well done! Numbers will show your path 🛤️</item>
+    </string-array>
+    <string-array name="cheer_plan">
+        <item>A plan is already half the way! 🗺️</item>
+        <item>Great organization 👏</item>
+    </string-array>
+</resources>

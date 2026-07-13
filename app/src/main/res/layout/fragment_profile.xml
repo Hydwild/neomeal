@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    android:clipToPadding="false"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="92dp">
+
+        <!-- Карточка профиля -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            app:cardBackgroundColor="@color/card_bg"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp"
+                android:gravity="center">
+
+                <!-- Аватар с рамкой и опциональным бейджем уровня в углу -->
+                <FrameLayout
+                    android:layout_width="108dp"
+                    android:layout_height="108dp"
+                    android:layout_marginBottom="14dp">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/ivAvatar"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_profile_placeholder"
+                        app:civ_border_width="3dp"
+                        app:civ_border_color="@color/color_accent"/>
+
+                    <com.nutritrack.app.ui.custom.AnimatedFrameView
+                        android:id="@+id/avatarFrame"
+                        android:layout_width="108dp"
+                        android:layout_height="108dp"
+                        android:layout_gravity="center"
+                        android:visibility="gone"/>
+
+                    <TextView
+                        android:id="@+id/tvAvatarLevel"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="bottom|end"
+                        android:gravity="center"
+                        android:text="1"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textSize="13sp"
+                        android:background="@drawable/level_badge_bg"
+                        android:visibility="gone"/>
+                </FrameLayout>
+
+                <!-- Имя -->
+                <TextView
+                    android:id="@+id/tvName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/profile_user"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    android:textStyle="bold"/>
+
+                <!-- Бейдж уровня (тап экран уровней) -->
+                <LinearLayout
+                    android:id="@+id/rowLevelBadge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/chip_bg"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:layout_marginTop="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackgroundBorderless">
+                    <TextView
+                        android:id="@+id/tvLevelChip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/level_title"
+                        android:textColor="@color/color_accent"
+                        android:textSize="13sp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="›"
+                        android:textColor="@color/color_accent"
+                        android:textSize="16sp"
+                        android:layout_marginStart="6dp"/>
+                </LinearLayout>
+
+                <!-- ЗНАЧКИ ДОСТИЖЕНИЙ (под именем) -->
+                <LinearLayout
+                    android:id="@+id/layoutBadges"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginTop="18dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackgroundBorderless">
+                    <!-- Значки добавляются программно -->
+                </LinearLayout>
+
+                <!-- Прогресс достижений -->
+                <TextView
+                    android:id="@+id/tvAchievementProgress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lay_ach_0_0_arrow"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp"
+                    android:layout_marginTop="10dp"/>
+
+                <!-- Статистика рост/вес/возраст в ряд -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="20dp">
+
+                    <LinearLayout android:layout_width="0dp" android:layout_weight="1"
+                        android:layout_height="wrap_content" android:orientation="vertical" android:gravity="center">
+                        <TextView android:id="@+id/tvStatHeight" android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:text="—"
+                            android:textColor="@color/white" android:textSize="18sp" android:textStyle="bold"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="@string/unit_cm" android:textColor="@color/text_secondary" android:textSize="11sp"/>
+                    </LinearLayout>
+
+                    <View android:layout_width="1dp" android:layout_height="36dp"
+                        android:layout_gravity="center" android:background="#3D2F6A"/>
+
+                    <LinearLayout android:layout_width="0dp" android:layout_weight="1"
+                        android:layout_height="wrap_content" android:orientation="vertical" android:gravity="center">
+                        <TextView android:id="@+id/tvStatWeight" android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:text="—"
+                            android:textColor="@color/white" android:textSize="18sp" android:textStyle="bold"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="@string/unit_kg" android:textColor="@color/text_secondary" android:textSize="11sp"/>
+                    </LinearLayout>
+
+                    <View android:layout_width="1dp" android:layout_height="36dp"
+                        android:layout_gravity="center" android:background="#3D2F6A"/>
+
+                    <LinearLayout android:layout_width="0dp" android:layout_weight="1"
+                        android:layout_height="wrap_content" android:orientation="vertical" android:gravity="center">
+                        <TextView android:id="@+id/tvStatAge" android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:text="—"
+                            android:textColor="@color/white" android:textSize="18sp" android:textStyle="bold"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="@string/unit_years" android:textColor="@color/text_secondary" android:textSize="11sp"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnEditProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginTop="18dp"
+                    android:text="@string/pr_edit"
+                    android:textColor="@color/color_accent"
+                    app:cornerRadius="14dp"
+                    app:backgroundTint="@color/card_bg"
+                    app:strokeColor="@color/color_accent"
+                    app:strokeWidth="1dp"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAllergensDiet"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/pr_allergens_diet"
+                    android:textColor="@color/color_accent"
+                    app:cornerRadius="14dp"
+                    app:backgroundTint="@color/card_bg"
+                    app:strokeColor="@color/color_accent"
+                    app:strokeWidth="1dp"
+                    app:icon="@android:drawable/ic_menu_edit"
+                    app:iconTint="@color/color_accent"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- НАСТРОЙКИ (под кнопкой редактирования) -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            app:cardBackgroundColor="@color/card_bg"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp">
+
+            <LinearLayout android:id="@+id/rowSettings"
+                android:layout_width="match_parent" android:layout_height="58dp"
+                android:orientation="horizontal" android:gravity="center_vertical"
+                android:paddingStart="18dp" android:paddingEnd="18dp"
+                android:background="?android:attr/selectableItemBackground">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="⚙️" android:textSize="20sp" android:layout_marginEnd="16dp"/>
+                <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
+                    android:text="@string/profile_settings" android:textColor="@color/white" android:textSize="15sp"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="›" android:textColor="@color/text_secondary" android:textSize="22sp"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Профили -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            app:cardBackgroundColor="@color/card_bg"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pr_profiles"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:layout_marginBottom="10dp"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvProfiles"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAddProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/pr_new"
+                    android:textColor="@color/white"
+                    app:cornerRadius="14dp"
+                    app:backgroundTint="@color/color_primary"
+                    style="@style/Widget.MaterialComponents.Button"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

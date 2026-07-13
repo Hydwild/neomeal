@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:paddingBottom="92dp">
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="@string/level_progress_title" android:textColor="@color/white"
+            android:textSize="24sp" android:textStyle="bold" android:layout_marginBottom="14dp"/>
+
+        <!-- Прогресс уровня -->
+        <androidx.cardview.widget.CardView android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginBottom="12dp"
+            app:cardBackgroundColor="@android:color/transparent" app:cardCornerRadius="20dp" app:cardElevation="0dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical" android:padding="18dp"
+                android:background="@drawable/bg_level_hero">
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical">
+                    <TextView android:layout_width="0dp" android:layout_weight="1"
+                        android:layout_height="wrap_content" android:text="@string/level_title"
+                        android:textColor="@android:color/white" android:textStyle="bold" android:textSize="16sp"/>
+                    <TextView android:id="@+id/tvLevelBadge" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:text="@string/level_title"
+                        android:background="@drawable/bg_level_badge"
+                        android:paddingStart="14dp" android:paddingEnd="14dp"
+                        android:paddingTop="6dp" android:paddingBottom="6dp"
+                        android:textColor="@android:color/white" android:textStyle="bold" android:textSize="18sp"/>
+                </LinearLayout>
+
+                <ProgressBar android:id="@+id/progressXp"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent" android:layout_height="12dp"
+                    android:layout_marginTop="14dp"
+                    android:progressDrawable="@drawable/progress_xp"/>
+
+                <TextView android:id="@+id/tvXp" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:text="@string/level_xp_fmt"
+                    android:textColor="#CCFFFFFF" android:textSize="12sp"
+                    android:layout_marginTop="6dp"/>
+
+                <!-- Переключатель: уровень на аватаре -->
+                <View android:layout_width="match_parent" android:layout_height="1dp"
+                    android:layout_marginTop="14dp" android:background="#33FFFFFF"/>
+                <LinearLayout android:id="@+id/rowShowLevel"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical"
+                    android:paddingTop="14dp">
+                    <LinearLayout android:layout_width="0dp" android:layout_weight="1"
+                        android:layout_height="wrap_content" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="@string/level_show_on_avatar" android:textColor="@android:color/white" android:textSize="15sp"/>
+                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:text="@string/level_show_on_avatar_desc" android:textColor="#B3FFFFFF"
+                            android:textSize="12sp" android:layout_marginTop="2dp"/>
+                    </LinearLayout>
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/switchShowLevel"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Рамки -->
+        <androidx.cardview.widget.CardView android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginBottom="12dp"
+            app:cardBackgroundColor="@color/card_bg" app:cardCornerRadius="20dp" app:cardElevation="0dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical" android:padding="16dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="@string/level_section_frames" android:textColor="@color/white"
+                    android:textStyle="bold" android:textSize="15sp"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/premium_free_badge" android:textColor="#FFD54F" android:textSize="11sp" android:layout_marginTop="2dp"/>
+                <HorizontalScrollView android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:scrollbars="none" android:layout_marginTop="10dp">
+                    <LinearLayout android:id="@+id/rowFrames" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:orientation="horizontal"/>
+                </HorizontalScrollView>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Компаньоны -->
+        <androidx.cardview.widget.CardView android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/card_bg" app:cardCornerRadius="20dp" app:cardElevation="0dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical" android:padding="16dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="@string/level_section_companions" android:textColor="@color/white"
+                    android:textStyle="bold" android:textSize="15sp"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/premium_free_badge" android:textColor="#FFD54F" android:textSize="11sp" android:layout_marginTop="2dp"/>
+                <HorizontalScrollView android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:scrollbars="none" android:layout_marginTop="10dp">
+                    <LinearLayout android:id="@+id/rowCompanions" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:orientation="horizontal"/>
+                </HorizontalScrollView>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

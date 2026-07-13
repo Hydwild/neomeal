@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/dashboardFragment">
+
+    <!-- Нижняя навигация -->
+    <fragment android:id="@+id/dashboardFragment"
+        android:name="com.nutritrack.app.ui.dashboard.DashboardFragment"
+        android:label="Dashboard"/>
+
+    <fragment android:id="@+id/productsFragment"
+        android:name="com.nutritrack.app.ui.products.ProductsFragment"
+        android:label="Products"/>
+
+    <fragment
+        android:id="@+id/waterReminderFragment"
+        android:name="com.nutritrack.app.ui.water.WaterReminderFragment"
+        android:label="Напоминания о воде" />
+
+    <fragment android:id="@+id/mealPlanFragment"
+        android:name="com.nutritrack.app.ui.mealplan.MealPlanFragment"
+        android:label="MealPlan"/>
+
+    <fragment android:id="@+id/analyticsFragment"
+        android:name="com.nutritrack.app.ui.analytics.AnalyticsFragment"
+        android:label="Analytics"/>
+
+    <fragment android:id="@+id/profileFragment"
+        android:name="com.nutritrack.app.ui.profile.ProfileFragment"
+        android:label="Profile"/>
+
+    <!-- Дополнительные экраны (из профиля) -->
+    <fragment android:id="@+id/achievementsFragment"
+        android:name="com.nutritrack.app.ui.achievements.AchievementsFragment"
+        android:label="Achievements"/>
+
+    <fragment android:id="@+id/levelFragment"
+        android:name="com.nutritrack.app.ui.level.LevelFragment"
+        android:label="Level"/>
+
+    <fragment android:id="@+id/whatsNewFragment"
+        android:name="com.nutritrack.app.ui.whatsnew.WhatsNewFragment"
+        android:label="WhatsNew"/>
+
+    <fragment android:id="@+id/faqFragment"
+        android:name="com.nutritrack.app.ui.faq.FaqFragment"
+        android:label="FAQ"/>
+
+    <fragment android:id="@+id/tipsFragment"
+        android:name="com.nutritrack.app.ui.tips.TipsFragment"
+        android:label="Tips"/>
+
+    <fragment android:id="@+id/fitnessFragment"
+        android:name="com.nutritrack.app.ui.fitness.FitnessFragment"
+        android:label="Fitness"/>
+
+    <fragment android:id="@+id/calendarFragment"
+        android:name="com.nutritrack.app.ui.calendar.CalendarFragment"
+        android:label="Calendar"/>
+
+    <fragment android:id="@+id/settingsFragment"
+        android:name="com.nutritrack.app.ui.settings.SettingsFragment"
+        android:label="Settings"/>
+
+    <fragment android:id="@+id/planBuilderFragment"
+        android:name="com.nutritrack.app.ui.planbuilder.PlanBuilderFragment"
+        android:label="PlanBuilder"/>
+
+    <fragment android:id="@+id/fastingModeFragment"
+        android:name="com.nutritrack.app.ui.fasting.FastingModeFragment"
+        android:label="FastingMode"/>
+
+    <!-- Голодание — открывается из Аналитики -->
+    <fragment android:id="@+id/fastingFragment"
+        android:name="com.nutritrack.app.ui.fasting.FastingFragment"
+        android:label="Fasting"/>
+
+    <!-- Журнал замеров тела -->
+    <fragment android:id="@+id/measurementsFragment"
+        android:name="com.nutritrack.app.ui.measurements.MeasurementsFragment"
+        android:label="Measurements"/>
+
+    <!-- Раздел "Ещё" -->
+    <fragment android:id="@+id/moreFragment"
+        android:name="com.nutritrack.app.ui.more.MoreFragment"
+        android:label="More"/>
+
+    <!-- Аналитика замеров -->
+    <fragment android:id="@+id/measurementAnalyticsFragment"
+        android:name="com.nutritrack.app.ui.measurements.MeasurementAnalyticsFragment"
+        android:label="MeasurementAnalytics"/>
+
+    <!-- Фото прогресса -->
+    <fragment android:id="@+id/progressPhotosFragment"
+        android:name="com.nutritrack.app.ui.photos.ProgressPhotosFragment"
+        android:label="ProgressPhotos"/>
+
+    <fragment android:id="@+id/micronutrientsFragment"
+        android:name="com.nutritrack.app.ui.micronutrients.MicronutrientsFragment"
+        android:label="Micronutrients"/>
+
+    <fragment android:id="@+id/nutrientGoalFragment"
+        android:name="com.nutritrack.app.ui.micronutrients.NutrientGoalFragment"
+        android:label="NutrientGoal"/>
+
+    <fragment android:id="@+id/petSelectFragment"
+        android:name="com.nutritrack.app.ui.pets.PetSelectFragment"
+        android:label="Pet"/>
+
+</navigation>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Brand -->
+    <color name="color_primary">#7C4DFF</color>
+    <color name="color_primary_dark">#5C35CC</color>
+    <color name="color_accent">#B39DDB</color>
+    <color name="color_secondary">#512DA8</color>
+
+    <!-- Gradient -->
+    <color name="gradient_start">#1A0533</color>
+    <color name="gradient_mid">#12094D</color>
+    <color name="gradient_end">#0D0D2B</color>
+
+    <!-- Cards -->
+    <color name="card_bg">#22193C</color>
+    <color name="bottom_sheet_bg">#1E1435</color>
+    <color name="input_bg">#2A1F4A</color>
+
+    <!-- Text -->
+    <color name="white">#FFFFFF</color>
+    <color name="text_secondary">#9E9EB0</color>
+    <color name="transparent">#00000000</color>
+
+    <!-- Macros -->
+    <color name="color_protein">#69F0AE</color>
+    <color name="color_fat">#FFD740</color>
+    <color name="color_carbs">#FF6E40</color>
+    <color name="color_water">#40C4FF</color>
+
+    <!-- Nav -->
+    <color name="nav_background">#15102A</color>
+    <color name="nav_selected">#B39DDB</color>
+    <color name="nav_unselected">#6E6E8A</color>
+
+    <!-- Status -->
+    <color name="color_success">#69F0AE</color>
+    <color name="color_warning">#FFD740</color>
+    <color name="color_error">#FF5252</color>
+    <!-- Акцентные оттенки (голодание, предупреждения) -->
+    <color name="accent_orange">#FF9E80</color>
+    <color name="accent_orange_soft">#FFCC80</color>
+    <color name="accent_orange_deep">#FF7043</color>
+    <color name="ic_launcher_bg">#FFFFFF</color>
+</resources>
