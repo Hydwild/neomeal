@@ -29,7 +29,9 @@ import kotlinx.coroutines.launch
         com.nutritrack.app.data.db.entity.MealFeedbackEntity::class
     ],
     version = 19,
-    exportSchema = false
+    // Схемы пишутся в app/schemas (см. room.schemaLocation в build.gradle) —
+    // без них невозможно тестировать миграции. Коммитить вместе с кодом.
+    exportSchema = true
 )
 abstract class AppDatabase : RoomDatabase() {
 
@@ -76,7 +78,7 @@ abstract class AppDatabase : RoomDatabase() {
                         }
                     }
                 })
-                .addMigrations(M_1_2, M_2_3, M_3_4, M_4_5, M_5_6, M_6_7, M_7_8, M_8_9, M_9_10, M_10_11, M_11_12, M_12_13, M_13_14, M_14_15, M_15_16, M_16_17, M_17_18, M_18_19)
+                .addMigrations(*ALL_MIGRATIONS)
                 .build()
         }
 
@@ -322,5 +324,12 @@ abstract class AppDatabase : RoomDatabase() {
                 }
             }
         }
+
+        // Полная цепочка. Общая для приложения и тестов миграций (MigrationTest).
+        val ALL_MIGRATIONS = arrayOf(
+            M_1_2, M_2_3, M_3_4, M_4_5, M_5_6, M_6_7, M_7_8, M_8_9, M_9_10,
+            M_10_11, M_11_12, M_12_13, M_13_14, M_14_15, M_15_16, M_16_17,
+            M_17_18, M_18_19
+        )
     }
 }

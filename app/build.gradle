@@ -61,6 +61,16 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    sourceSets {
+        // JSON-схемы Room доступны инструментальным тестам миграций
+        androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
+    }
+}
+
+kapt {
+    arguments {
+        arg("room.schemaLocation", "$projectDir/schemas".toString())
+    }
 }
 
 dependencies {
@@ -137,6 +147,8 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    // Тесты миграций Room (использует JSON-схемы из app/schemas)
+    androidTestImplementation("androidx.room:room-testing:2.6.1")
 
     // SwipeRefresh
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
