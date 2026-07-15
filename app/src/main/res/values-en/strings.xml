@@ -3493,4 +3493,14 @@ data class Recipe(
     <!-- App lock (biometrics) -->
     <string name="app_lock_title">NeoMeal is locked</string>
     <string name="app_lock_subtitle">Confirm it\'s you</string>
+
+    <!-- Shopping list -->
+    <string name="sl_title">Shopping list</string>
+    <string name="sl_sub_fmt">From meal plan: %1$s – %2$s</string>
+    <string name="sl_empty">No meals in this week\'s plan yet.\nAdd them in the builder and the list will assemble itself.</string>
+    <string name="sl_open_builder">Open builder</string>
+    <string name="sl_share">Share</string>
+    <string name="sl_other_cat">Other</string>
+    <string name="sl_done_fmt">Bought: %1$d of %2$d</string>
+    <string name="plan_shopping_sub">All week\'s groceries in one checklist</string>
 </resources>

@@ -22,6 +22,11 @@
         android:name="com.nutritrack.app.ui.mealplan.MealPlanFragment"
         android:label="MealPlan"/>
 
+    <!-- Список покупок — открывается из Плана питания -->
+    <fragment android:id="@+id/shoppingListFragment"
+        android:name="com.nutritrack.app.ui.shopping.ShoppingListFragment"
+        android:label="ShoppingList"/>
+
     <fragment android:id="@+id/analyticsFragment"
         android:name="com.nutritrack.app.ui.analytics.AnalyticsFragment"
         android:label="Analytics"/>

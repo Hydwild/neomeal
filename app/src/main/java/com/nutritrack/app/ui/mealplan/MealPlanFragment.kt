@@ -110,6 +110,12 @@ class MealPlanFragment : Fragment() {
                 .navigateAnim(com.nutritrack.app.R.id.planBuilderFragment)
         }
 
+        // Список покупок: агрегат продуктов плана на 7 дней вперёд
+        binding.btnShoppingList.setOnClickListener {
+            androidx.navigation.fragment.NavHostFragment.findNavController(this)
+                .navigateAnim(com.nutritrack.app.R.id.shoppingListFragment)
+        }
+
         // Секретное достижение: долгое нажатие на заголовок
         binding.tvMealTitle.setOnLongClickListener {
             achievementsVm.unlockSecret("secret_pivca")

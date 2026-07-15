@@ -53,6 +53,14 @@ interface MealPlanDao {
     @Query("DELETE FROM meal_items WHERE mealPlanId = :mealPlanId")
     suspend fun deleteItemsForMeal(mealPlanId: Long)
 
+    // Список покупок: планы за период и их продукты одним запросом
+
+    @Query("SELECT * FROM meal_plans WHERE date BETWEEN :start AND :end AND profileId = :profileId")
+    suspend fun getPlansForRange(start: String, end: String, profileId: Long): List<MealPlanEntity>
+
+    @Query("SELECT * FROM meal_items WHERE mealPlanId IN (:planIds)")
+    suspend fun getItemsForPlansSync(planIds: List<Long>): List<MealItemEntity>
+
     @Query("SELECT * FROM meal_plans")
     suspend fun dumpAllPlans(): List<MealPlanEntity>
 

@@ -3502,4 +3502,14 @@
     <!-- Блокировка входа (биометрия) -->
     <string name="app_lock_title">NeoMeal заблокирован</string>
     <string name="app_lock_subtitle">Подтверди, что это ты</string>
+
+    <!-- Список покупок -->
+    <string name="sl_title">Список покупок</string>
+    <string name="sl_sub_fmt">Из плана питания: %1$s – %2$s</string>
+    <string name="sl_empty">В плане на неделю пока нет блюд.\nДобавь их в конструкторе — и список соберётся сам.</string>
+    <string name="sl_open_builder">Открыть конструктор</string>
+    <string name="sl_share">Поделиться</string>
+    <string name="sl_other_cat">Прочее</string>
+    <string name="sl_done_fmt">Куплено: %1$d из %2$d</string>
+    <string name="plan_shopping_sub">Все продукты недели одним чек-листом</string>
 </resources>

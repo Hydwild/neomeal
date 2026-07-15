@@ -3477,4 +3477,14 @@
     <!-- 앱 잠금 (생체 인증) -->
     <string name="app_lock_title">NeoMeal 잠금 상태</string>
     <string name="app_lock_subtitle">본인 확인이 필요해요</string>
+
+    <!-- 쇼핑 리스트 -->
+    <string name="sl_title">쇼핑 리스트</string>
+    <string name="sl_sub_fmt">식단 계획 기준: %1$s – %2$s</string>
+    <string name="sl_empty">이번 주 식단에 아직 메뉴가 없어요.\n플래너에서 추가하면 리스트가 자동으로 만들어져요.</string>
+    <string name="sl_open_builder">플래너 열기</string>
+    <string name="sl_share">공유</string>
+    <string name="sl_other_cat">기타</string>
+    <string name="sl_done_fmt">구매: %2$d개 중 %1$d개</string>
+    <string name="plan_shopping_sub">일주일 식재료를 체크리스트 하나로</string>
 </resources>
