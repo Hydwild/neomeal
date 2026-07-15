@@ -3503,4 +3503,8 @@ data class Recipe(
     <string name="sl_other_cat">Other</string>
     <string name="sl_done_fmt">Bought: %1$d of %2$d</string>
     <string name="plan_shopping_sub">All week\'s groceries in one checklist</string>
+
+    <!-- Fiber and sugar -->
+    <string name="ds_fiber_fmt">🌾 Fiber %1$d g</string>
+    <string name="ds_sugar_fmt">🍬 Sugar %1$d g</string>
 </resources>

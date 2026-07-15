@@ -18,5 +18,8 @@ data class DiaryEntryEntity(
     val mealType: String = "other",
     val profileId: Long = 1,
     val timestamp: Long = System.currentTimeMillis(),  // момент добавления — для night_owl / early_bird
-    val photoUri: String? = null                        // 📷 фото блюда (опционально)
+    val photoUri: String? = null,                       // 📷 фото блюда (опционально)
+    // Клетчатка и сахар порции, г. null = у продукта не было данных (v20).
+    val fiber: Float? = null,
+    val sugar: Float? = null
 )

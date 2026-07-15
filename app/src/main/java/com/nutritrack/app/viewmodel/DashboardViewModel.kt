@@ -80,6 +80,8 @@ class DashboardViewModel(app: Application) : AndroidViewModel(app) {
             protein     = product.protein * factor,
             fat         = product.fat * factor,
             carbs       = product.carbs * factor,
+            fiber       = product.fiber?.times(factor),
+            sugar       = product.sugar?.times(factor),
             date        = today,
             profileId   = profile.id
         ))

@@ -173,7 +173,9 @@ class AddFoodSheet(
                                 fat      = (p.nutriments?.fat100g ?: 0.0).toFloat(),
                                 carbs    = (p.nutriments?.carbs100g ?: 0.0).toFloat(),
                                 category = getString(R.string.cat_internet),
-                                isCustom = true
+                                isCustom = true,
+                                fiber = p.nutriments?.fiber100g?.toFloat(),
+                                sugar = p.nutriments?.sugars100g?.toFloat()
                             )
                         }
                         .filter { it.name.removePrefix("🌐 ").lowercase().trim() !in localNames }

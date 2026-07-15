@@ -39,5 +39,9 @@ data class ProductEntity(
     val selenium: Float? = null, // мкг
 
     // Состав комбо: "имя:граммы;имя:граммы" (только для комбо-продуктов). nullable.
-    val comboItems: String? = null
+    val comboItems: String? = null,
+
+    // Клетчатка и сахар на 100 г. null = данных нет (v20).
+    val fiber: Float? = null,   // г
+    val sugar: Float? = null    // г
 )

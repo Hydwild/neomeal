@@ -63,7 +63,9 @@ data class OffNutriments(
     @SerializedName("energy-kcal_100g") val energyKcal100g: Double? = null,
     @SerializedName("proteins_100g")    val proteins100g: Double? = null,
     @SerializedName("fat_100g")         val fat100g: Double? = null,
-    @SerializedName("carbohydrates_100g") val carbs100g: Double? = null
+    @SerializedName("carbohydrates_100g") val carbs100g: Double? = null,
+    @SerializedName("fiber_100g")       val fiber100g: Double? = null,
+    @SerializedName("sugars_100g")      val sugars100g: Double? = null
 )
 
 // Retrofit-интерфейс
@@ -75,7 +77,7 @@ interface OpenFoodFactsService {
     suspend fun getProductByBarcode(
         @Path("barcode") barcode: String,
         @Query("fields") fields: String =
-            "product_name,product_name_ru,brands,nutriments,image_url,code"
+            "product_name,product_name_ru,brands,nutriments,image_url,code,serving_size,serving_quantity"
     ): OffProductResponse
 
     // Поиск по названию — полный URL (строим в коде, надёжнее для search_terms)

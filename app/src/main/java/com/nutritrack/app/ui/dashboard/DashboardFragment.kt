@@ -526,6 +526,16 @@ class DashboardFragment : Fragment() {
             binding.tvProtein.text = getString(R.string.ds_g_fmt, prot.toInt())
             binding.tvFat.text     = getString(R.string.ds_g_fmt, fat.toInt())
             binding.tvCarbs.text   = getString(R.string.ds_g_fmt, carbs.toInt())
+
+            // Клетчатка и сахар — только когда у съеденного есть данные
+            val fiber = entries.mapNotNull { it.fiber }.sum()
+            val sugar = entries.mapNotNull { it.sugar }.sum()
+            val parts = buildList {
+                if (fiber >= 1f) add(getString(R.string.ds_fiber_fmt, fiber.toInt()))
+                if (sugar >= 1f) add(getString(R.string.ds_sugar_fmt, sugar.toInt()))
+            }
+            binding.tvFiberSugar.visibility = if (parts.isEmpty()) View.GONE else View.VISIBLE
+            binding.tvFiberSugar.text = parts.joinToString("  ·  ")
             updateSuggestions((goal - cal.toInt()), entries.isNotEmpty())
             updateDayCost(entries)
         }
@@ -813,6 +823,8 @@ class DashboardFragment : Fragment() {
                         protein  = (n.proteins100g ?: 0.0).toFloat(),
                         fat      = (n.fat100g ?: 0.0).toFloat(),
                         carbs    = (n.carbs100g ?: 0.0).toFloat(),
+                        fiber    = n.fiber100g?.toFloat(),
+                        sugar    = n.sugars100g?.toFloat(),
                         startGrams = p.servingGrams() ?: 100
                     )
                 } else {
@@ -829,6 +841,7 @@ class DashboardFragment : Fragment() {
 
     private fun showFoundProductDialog(
         name: String, calories: Float, protein: Float, fat: Float, carbs: Float,
+        fiber: Float? = null, sugar: Float? = null,
         startGrams: Int = 100
     ) {
         val input = EditText(requireContext()).apply {
@@ -852,7 +865,8 @@ class DashboardFragment : Fragment() {
                     db.productDao().insertProduct(
                         ProductEntity(
                             name = name, calories = calories, protein = protein,
-                            fat = fat, carbs = carbs, category = "Сканер", isCustom = true
+                            fat = fat, carbs = carbs, category = "Сканер", isCustom = true,
+                            fiber = fiber, sugar = sugar
                         )
                     )
                     // Пишем в дневник
@@ -861,6 +875,7 @@ class DashboardFragment : Fragment() {
                             productId = 0, productName = name, grams = grams,
                             calories = calories * factor, protein = protein * factor,
                             fat = fat * factor, carbs = carbs * factor,
+                            fiber = fiber?.times(factor), sugar = sugar?.times(factor),
                             date = DateUtils.today(), profileId = profile.id
                         )
                     )

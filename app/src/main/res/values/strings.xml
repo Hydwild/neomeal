@@ -3512,4 +3512,8 @@
     <string name="sl_other_cat">Прочее</string>
     <string name="sl_done_fmt">Куплено: %1$d из %2$d</string>
     <string name="plan_shopping_sub">Все продукты недели одним чек-листом</string>
+
+    <!-- Клетчатка и сахар -->
+    <string name="ds_fiber_fmt">🌾 Клетчатка %1$d г</string>
+    <string name="ds_sugar_fmt">🍬 Сахар %1$d г</string>
 </resources>
