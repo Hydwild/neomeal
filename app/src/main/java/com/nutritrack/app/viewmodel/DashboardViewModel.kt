@@ -72,7 +72,7 @@ class DashboardViewModel(app: Application) : AndroidViewModel(app) {
     fun addDiaryEntry(product: ProductEntity, grams: Float, onDone: (() -> Unit)? = null) = viewModelScope.launch {
         val profile = profileRepo.getActiveSync() ?: return@launch
         val factor = grams / 100f
-        diaryRepo.insert(DiaryEntryEntity(
+        val entry = DiaryEntryEntity(
             productId   = product.id,
             productName = product.name,
             grams       = grams,
@@ -84,7 +84,9 @@ class DashboardViewModel(app: Application) : AndroidViewModel(app) {
             sugar       = product.sugar?.times(factor),
             date        = today,
             profileId   = profile.id
-        ))
+        )
+        diaryRepo.insert(entry)
+        com.nutritrack.app.utils.HealthConnectWriter.writeDiaryEntry(getApplication(), entry)
         refreshWidget()
         // Запись сохранена — теперь безопасно проверять достижения
         onDone?.invoke()
@@ -92,6 +94,7 @@ class DashboardViewModel(app: Application) : AndroidViewModel(app) {
 
     fun deleteDiaryEntry(entry: DiaryEntryEntity) = viewModelScope.launch {
         diaryRepo.delete(entry)
+        com.nutritrack.app.utils.HealthConnectWriter.deleteDiaryEntry(getApplication(), entry)
         refreshWidget()
     }
 
@@ -135,12 +138,14 @@ class DashboardViewModel(app: Application) : AndroidViewModel(app) {
  /** Быстро добавить продукт по образцу прошлой записи (тот же вес и КБЖУ). */
     fun quickAddFromEntry(sample: DiaryEntryEntity, onDone: (() -> Unit)? = null) = viewModelScope.launch {
         val profile = profileRepo.getActiveSync() ?: return@launch
-        diaryRepo.insert(sample.copy(
+        val entry = sample.copy(
             id = 0,
             date = _selectedDate.value ?: today,
             profileId = profile.id,
             timestamp = System.currentTimeMillis()
-        ))
+        )
+        diaryRepo.insert(entry)
+        com.nutritrack.app.utils.HealthConnectWriter.writeDiaryEntry(getApplication(), entry)
         refreshWidget()
         onDone?.invoke()
     }
@@ -155,10 +160,12 @@ class DashboardViewModel(app: Application) : AndroidViewModel(app) {
 
         val entries = db.diaryDao().getEntriesForDateAndProfile(yesterday, profile.id)
         entries.forEach { e ->
-            diaryRepo.insert(e.copy(
+            val copy = e.copy(
                 id = 0, date = target, profileId = profile.id,
                 timestamp = System.currentTimeMillis()
-            ))
+            )
+            diaryRepo.insert(copy)
+            com.nutritrack.app.utils.HealthConnectWriter.writeDiaryEntry(getApplication(), copy)
         }
         refreshWidget()
         onDone?.invoke(entries.size)
@@ -166,13 +173,16 @@ class DashboardViewModel(app: Application) : AndroidViewModel(app) {
 
     fun addWater(ml: Int, onDone: (() -> Unit)? = null) = viewModelScope.launch {
         val profile = profileRepo.getActiveSync() ?: return@launch
-        waterRepo.insert(WaterEntryEntity(amountMl = ml, date = today, profileId = profile.id))
+        val entry = WaterEntryEntity(amountMl = ml, date = today, profileId = profile.id)
+        waterRepo.insert(entry)
+        com.nutritrack.app.utils.HealthConnectWriter.writeWater(getApplication(), entry)
         refreshWidget()
         onDone?.invoke()
     }
 
     fun deleteWater(entry: WaterEntryEntity) = viewModelScope.launch {
         waterRepo.delete(entry)
+        com.nutritrack.app.utils.HealthConnectWriter.deleteWater(getApplication(), entry)
         refreshWidget()
     }
 }

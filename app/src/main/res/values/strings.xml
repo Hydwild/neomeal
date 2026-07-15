@@ -3516,4 +3516,10 @@
     <!-- Клетчатка и сахар -->
     <string name="ds_fiber_fmt">🌾 Клетчатка %1$d г</string>
     <string name="ds_sugar_fmt">🍬 Сахар %1$d г</string>
+
+    <!-- Запись в Health Connect -->
+    <string name="set_hc_write">Запись в Health Connect</string>
+    <string name="set_hc_write_sub">Еда, вода и вес будут видны другим приложениям здоровья</string>
+    <string name="set_hc_write_denied">Нет разрешений на запись — включить не удалось</string>
+    <string name="set_hc_unavailable">Health Connect недоступен на этом устройстве</string>
 </resources>

@@ -3507,4 +3507,10 @@ data class Recipe(
     <!-- Fiber and sugar -->
     <string name="ds_fiber_fmt">🌾 Fiber %1$d g</string>
     <string name="ds_sugar_fmt">🍬 Sugar %1$d g</string>
+
+    <!-- Health Connect write -->
+    <string name="set_hc_write">Write to Health Connect</string>
+    <string name="set_hc_write_sub">Meals, water and weight become visible to other health apps</string>
+    <string name="set_hc_write_denied">Write permissions not granted — could not enable</string>
+    <string name="set_hc_unavailable">Health Connect is not available on this device</string>
 </resources>

@@ -29,6 +29,10 @@ class ProfileViewModel(app: Application) : AndroidViewModel(app) {
         val profile = repo.getActiveSync() ?: return@launch
         repo.insertWeight(WeightEntryEntity(weight = weight, date = DateUtils.today(), profileId = profile.id))
         repo.update(profile.copy(weight = weight))
+        // Ручной ввод веса дублируем в Health Connect (импорт из HC назад не пишем)
+        com.nutritrack.app.utils.HealthConnectWriter.writeWeight(
+            getApplication(), weight, DateUtils.today(), profile.id
+        )
         onDone?.invoke()
     }
 

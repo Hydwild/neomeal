@@ -206,6 +206,11 @@ class PrefsManager(context: Context) {
         get() = prefs.getBoolean("pets_enabled", true)
         set(v) = prefs.edit().putBoolean("pets_enabled", v).apply()
 
+    // Запись питания/воды/веса в Health Connect (по умолчанию выключена)
+    var hcWriteEnabled: Boolean
+        get() = prefs.getBoolean("hc_write_enabled", false)
+        set(v) = prefs.edit().putBoolean("hc_write_enabled", v).apply()
+
     // Универсальные геттеры / сеттеры
     // Используются для динамических ключей (напр. уведомления плана питания)
 

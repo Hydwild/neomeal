@@ -869,16 +869,16 @@ class DashboardFragment : Fragment() {
                             fiber = fiber, sugar = sugar
                         )
                     )
-                    // Пишем в дневник
-                    db.diaryDao().insert(
-                        DiaryEntryEntity(
-                            productId = 0, productName = name, grams = grams,
-                            calories = calories * factor, protein = protein * factor,
-                            fat = fat * factor, carbs = carbs * factor,
-                            fiber = fiber?.times(factor), sugar = sugar?.times(factor),
-                            date = DateUtils.today(), profileId = profile.id
-                        )
+                    // Пишем в дневник (+ дублируем в Health Connect, если включено)
+                    val entry = DiaryEntryEntity(
+                        productId = 0, productName = name, grams = grams,
+                        calories = calories * factor, protein = protein * factor,
+                        fat = fat * factor, carbs = carbs * factor,
+                        fiber = fiber?.times(factor), sugar = sugar?.times(factor),
+                        date = DateUtils.today(), profileId = profile.id
                     )
+                    db.diaryDao().insert(entry)
+                    com.nutritrack.app.utils.HealthConnectWriter.writeDiaryEntry(requireContext().applicationContext, entry)
                     withContext(Dispatchers.Main) {
                         Toast.makeText(requireContext(),
                             getString(R.string.ds_added2_fmt, name, grams.toInt()), Toast.LENGTH_SHORT).show()

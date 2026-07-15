@@ -41,6 +41,17 @@ class SettingsFragment : Fragment() {
         androidx.activity.result.contract.ActivityResultContracts.GetContent()
     ) { uri -> uri?.let { applyCustomImage(it) } }
 
+    // Запрос write-разрешений Health Connect (для тумблера «Запись в HC»)
+    private val hcWritePermLauncher = registerForActivityResult(
+        androidx.health.connect.client.PermissionController.createRequestPermissionResultContract()
+    ) { granted ->
+        val ok = granted.containsAll(com.nutritrack.app.utils.HealthConnectWriter.WRITE_PERMISSIONS)
+        prefs.hcWriteEnabled = ok
+        _binding?.switchHcWrite?.isChecked = ok
+        if (!ok) android.widget.Toast.makeText(requireContext(),
+            getString(R.string.set_hc_write_denied), android.widget.Toast.LENGTH_LONG).show()
+    }
+
     private val languages = listOf(
         "auto" to "🌐 Авто",
         "ru"   to "🇷🇺 Русский",
@@ -154,6 +165,33 @@ class SettingsFragment : Fragment() {
             com.nutritrack.app.utils.StreakFreeze.requestFreeze(
                 requireContext(), prefs, binding.root
             ) { /* на экране настроек обновлять нечего */ }
+        }
+
+        // Запись питания/воды/веса в Health Connect
+        binding.switchHcWrite.isChecked = prefs.hcWriteEnabled
+        binding.rowHcWrite.setOnClickListener {
+            val hc = com.nutritrack.app.utils.HealthConnectManager(requireContext())
+            if (!hc.isAvailable()) {
+                android.widget.Toast.makeText(requireContext(),
+                    getString(R.string.set_hc_unavailable), android.widget.Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+            if (prefs.hcWriteEnabled) {
+                // Выключаем без вопросов
+                prefs.hcWriteEnabled = false
+                binding.switchHcWrite.isChecked = false
+            } else {
+                // Включаем: если права уже есть — сразу, иначе запрашиваем
+                viewLifecycleOwner.lifecycleScope.launch {
+                    if (com.nutritrack.app.utils.HealthConnectWriter.hasWritePermissions(requireContext())) {
+                        prefs.hcWriteEnabled = true
+                        _binding?.switchHcWrite?.isChecked = true
+                    } else {
+                        hcWritePermLauncher.launch(
+                            com.nutritrack.app.utils.HealthConnectWriter.WRITE_PERMISSIONS)
+                    }
+                }
+            }
         }
 
         binding.rowDarkTheme.setOnClickListener {

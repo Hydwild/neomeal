@@ -3491,4 +3491,10 @@
     <!-- 식이섬유·당류 -->
     <string name="ds_fiber_fmt">🌾 식이섬유 %1$dg</string>
     <string name="ds_sugar_fmt">🍬 당류 %1$dg</string>
+
+    <!-- Health Connect 기록 -->
+    <string name="set_hc_write">Health Connect에 기록</string>
+    <string name="set_hc_write_sub">식사·수분·체중을 다른 건강 앱에서 볼 수 있어요</string>
+    <string name="set_hc_write_denied">쓰기 권한이 없어 켤 수 없었어요</string>
+    <string name="set_hc_unavailable">이 기기에서는 Health Connect를 사용할 수 없어요</string>
 </resources>
