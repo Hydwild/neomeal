@@ -173,6 +173,55 @@
                         android:textOn=""
                         android:textOff=""/>
                 </LinearLayout>
+
+                <!-- Material You (только Android 12+, скрывается кодом) -->
+                <LinearLayout
+                    android:id="@+id/rowDynamicColors"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="18dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🎨"
+                        android:textSize="20sp"
+                        android:layout_marginEnd="16dp"/>
+
+                    <LinearLayout android:layout_width="0dp" android:layout_weight="1"
+                        android:layout_height="wrap_content" android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/set_dynamic_colors"
+                            android:textColor="?attr/appTextPrimary"
+                            android:textSize="15sp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/set_dynamic_colors_sub"
+                            android:textColor="?attr/appTextSecondary"
+                            android:textSize="11sp"/>
+                    </LinearLayout>
+
+                    <Switch
+                        android:id="@+id/switchDynamicColors"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="56dp"
+                        android:minHeight="32dp"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:textOn=""
+                        android:textOff=""/>
+                </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

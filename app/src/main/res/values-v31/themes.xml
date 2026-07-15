@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Material You (Android 12+): оверлей перекрашивает семантические токены
+    в системные цвета, вычисленные из обоев. Применяется поверх основной
+    темы из MainActivity, когда включена настройка «Цвета из обоев».
+
+    system_neutral1/2 — нейтральные тона с подмесом оттенка обоев,
+    system_accent1 — акцент обоев (кнопки диалогов, Material-виджеты).
+-->
+<resources>
+    <style name="ThemeOverlay.NutriTrack.Dynamic" parent="">
+        <item name="appCardBg">@android:color/system_neutral1_800</item>
+        <item name="appBottomSheetBg">@android:color/system_neutral1_900</item>
+        <item name="appTextSecondary">@android:color/system_neutral2_200</item>
+        <!-- appTextPrimary остаётся белым: фон всегда тёмный -->
+        <item name="colorPrimary">@android:color/system_accent1_300</item>
+        <item name="colorAccent">@android:color/system_accent1_200</item>
+    </style>
+</resources>

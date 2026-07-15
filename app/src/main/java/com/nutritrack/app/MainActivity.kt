@@ -44,6 +44,11 @@ class MainActivity : AppCompatActivity() {
             // "system" — оставляем базовую тему (системный шрифт)
         }
 
+        // Material You: цвета обоев поверх токенов темы (Android 12+)
+        if (android.os.Build.VERSION.SDK_INT >= 31 && prefs.dynamicColors) {
+            theme.applyStyle(R.style.ThemeOverlay_NutriTrack_Dynamic, true)
+        }
+
         // Тема до создания UI
         AppCompatDelegate.setDefaultNightMode(
             if (prefs.isDarkTheme) AppCompatDelegate.MODE_NIGHT_YES

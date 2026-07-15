@@ -3522,4 +3522,8 @@
     <string name="set_hc_write_sub">Еда, вода и вес будут видны другим приложениям здоровья</string>
     <string name="set_hc_write_denied">Нет разрешений на запись — включить не удалось</string>
     <string name="set_hc_unavailable">Health Connect недоступен на этом устройстве</string>
+
+    <!-- Material You -->
+    <string name="set_dynamic_colors">Цвета из обоев (Material You)</string>
+    <string name="set_dynamic_colors_sub">Поверхности и акценты подстраиваются под обои</string>
 </resources>

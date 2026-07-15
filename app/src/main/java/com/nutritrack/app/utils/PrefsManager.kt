@@ -211,6 +211,11 @@ class PrefsManager(context: Context) {
         get() = prefs.getBoolean("hc_write_enabled", false)
         set(v) = prefs.edit().putBoolean("hc_write_enabled", v).apply()
 
+    // Material You: поверхности/акцент из цветов обоев (Android 12+)
+    var dynamicColors: Boolean
+        get() = prefs.getBoolean("dynamic_colors", false)
+        set(v) = prefs.edit().putBoolean("dynamic_colors", v).apply()
+
     // Универсальные геттеры / сеттеры
     // Используются для динамических ключей (напр. уведомления плана питания)
 

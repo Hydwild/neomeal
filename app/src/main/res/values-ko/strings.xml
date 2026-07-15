@@ -3497,4 +3497,8 @@
     <string name="set_hc_write_sub">식사·수분·체중을 다른 건강 앱에서 볼 수 있어요</string>
     <string name="set_hc_write_denied">쓰기 권한이 없어 켤 수 없었어요</string>
     <string name="set_hc_unavailable">이 기기에서는 Health Connect를 사용할 수 없어요</string>
+
+    <!-- Material You -->
+    <string name="set_dynamic_colors">배경화면 색상 (Material You)</string>
+    <string name="set_dynamic_colors_sub">배경화면에 맞춰 색상이 바뀌어요</string>
 </resources>

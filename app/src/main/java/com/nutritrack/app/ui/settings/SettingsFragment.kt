@@ -167,6 +167,20 @@ class SettingsFragment : Fragment() {
             ) { /* на экране настроек обновлять нечего */ }
         }
 
+        // Material You: только Android 12+ (system_* цвета)
+        if (android.os.Build.VERSION.SDK_INT >= 31) {
+            binding.rowDynamicColors.visibility = View.VISIBLE
+            binding.switchDynamicColors.isChecked = prefs.dynamicColors
+            binding.rowDynamicColors.setOnClickListener {
+                binding.switchDynamicColors.isChecked = !binding.switchDynamicColors.isChecked
+            }
+            binding.switchDynamicColors.setOnCheckedChangeListener { _, checked ->
+                if (prefs.dynamicColors == checked) return@setOnCheckedChangeListener
+                prefs.dynamicColors = checked
+                requireActivity().recreate()   // тема применяется в MainActivity.onCreate
+            }
+        }
+
         // Запись питания/воды/веса в Health Connect
         binding.switchHcWrite.isChecked = prefs.hcWriteEnabled
         binding.rowHcWrite.setOnClickListener {

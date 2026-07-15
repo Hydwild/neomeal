@@ -3513,4 +3513,8 @@ data class Recipe(
     <string name="set_hc_write_sub">Meals, water and weight become visible to other health apps</string>
     <string name="set_hc_write_denied">Write permissions not granted — could not enable</string>
     <string name="set_hc_unavailable">Health Connect is not available on this device</string>
+
+    <!-- Material You -->
+    <string name="set_dynamic_colors">Wallpaper colors (Material You)</string>
+    <string name="set_dynamic_colors_sub">Surfaces and accents adapt to your wallpaper</string>
 </resources>
