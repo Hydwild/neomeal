@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Тёмная тема в фирменных фиолетовых тонах.
+    Раньше здесь была нейтрально-серая палитра (#2C2C2C/#1E1E1E) — тёмный
+    режим терял бренд. Оттенки чуть глубже и холоднее базовых (values/),
+    градиент согласован с gradient_mid/end (#12094D → #0D0D2B).
+-->
 <resources>
-    <color name="card_bg">#2C2C2C</color>
-    <color name="nav_background">#1E1E1E</color>
-    <color name="gradient_start">#121212</color>
-    <color name="text_secondary">#BDBDBD</color>
+    <color name="card_bg">#1E1733</color>
+    <color name="nav_background">#131022</color>
+    <color name="gradient_start">#0F0A1E</color>
+    <color name="text_secondary">#A9A3C2</color>
     <color name="white">#FFFFFF</color>
-    <color name="bottom_sheet_bg">#1E1E1E</color>
+    <color name="bottom_sheet_bg">#191230</color>
 </resources>
