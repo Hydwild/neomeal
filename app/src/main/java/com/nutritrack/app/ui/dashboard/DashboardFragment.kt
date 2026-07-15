@@ -2,9 +2,7 @@ package com.nutritrack.app.ui.dashboard
 import com.nutritrack.app.utils.navigateAnim
 
 import android.os.Bundle
-import android.text.Editable
 import android.text.InputType
-import android.text.TextWatcher
 import android.view.*
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
@@ -14,22 +12,15 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.nutritrack.app.NutriApp
 import com.nutritrack.app.R
 import com.nutritrack.app.adapter.DiaryAdapter
-import com.nutritrack.app.adapter.ProductPickerAdapter
-import com.nutritrack.app.adapter.WaterCupsAdapter
-import com.nutritrack.app.data.api.OpenFoodFacts
 import com.nutritrack.app.data.db.entity.DiaryEntryEntity
 import com.nutritrack.app.data.db.entity.ProductEntity
 import com.nutritrack.app.databinding.FragmentDashboardBinding
 import com.nutritrack.app.ui.scanner.BarcodeScannerActivity
 import com.nutritrack.app.utils.DateUtils
-import com.nutritrack.app.utils.GramInputHelper
 import com.nutritrack.app.utils.PrefsManager
 import com.nutritrack.app.viewmodel.AchievementsViewModel
 import com.nutritrack.app.viewmodel.DashboardViewModel
@@ -48,11 +39,10 @@ class DashboardFragment : Fragment() {
     private val fastingVm: com.nutritrack.app.viewmodel.FastingViewModel by activityViewModels()
 
     private lateinit var diaryAdapter: DiaryAdapter
-    private lateinit var cupsAdapter: WaterCupsAdapter
     private lateinit var prefs: PrefsManager
+    private lateinit var waterCard: WaterCardController
 
     private var isCircularMode = true
-    private var isLiveWaterMode = false
 
     // Сканер штрихкодов — получает результат из BarcodeScannerActivity
     private val scanLauncher = registerForActivityResult(
@@ -120,7 +110,6 @@ class DashboardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         prefs = PrefsManager(requireContext())
         isCircularMode = prefs.isCircularCalorieMode
-        isLiveWaterMode = prefs.isLiveWaterMode
 
         // Отступ сверху = статус-бар, чтобы приветствие не налезало на часы
         androidx.core.view.ViewCompat.setOnApplyWindowInsetsListener(binding.dashboardContent) { v, insets ->
@@ -136,19 +125,23 @@ class DashboardFragment : Fragment() {
             })
 
         setupDiaryList()
-        setupWaterCups()
+        waterCard = WaterCardController(
+            fragment = this,
+            binding = binding,
+            vm = vm,
+            onAchievementCheck = { deferAchievementCheck() },
+            onGoalReached = { celebrateOncePerDay("confetti_water") }
+        )
         applyDisplayMode(animate = false)
-        applyWaterMode(animate = false)
+        waterCard.setup()
         observeData()
-        setupWaterButtons()
-        setupPet()
         observeFastingTimer()
 
         binding.btnAddFood.setOnClickListener { com.nutritrack.app.utils.HapticHelper.tap(it); showAddFoodDialog() }
         // Применяем выбранный шрифт к кнопке (она не наследует его из темы)
         com.nutritrack.app.utils.FontHelper.apply(binding.btnAddFood)
         binding.btnCalorieMode.setOnClickListener { showModePicker() }
-        binding.btnWaterMode.setOnClickListener { showWaterModePicker() }
+        binding.btnWaterMode.setOnClickListener { waterCard.showModePicker() }
 
         // Колокольчик на карточке воды экран настроек напоминаний
         binding.btnWaterReminder.setOnClickListener {
@@ -262,8 +255,8 @@ class DashboardFragment : Fragment() {
         binding.dashboardContent.scheduleLayoutAnimation()
 
         // Питомец мог измениться на экране выбора — перечитываем.
-        // setupPet сам зафиксирует текущий уровень воды как базовый.
-        setupPet()
+        // refreshPet сам зафиксирует текущий уровень воды как базовый.
+        waterCard.refreshPet()
     }
 
  /** Карточка голодания на главной: видна только при активной сессии. */
@@ -294,9 +287,7 @@ class DashboardFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        waterAnimator?.cancel()
-        waterAnimator = null
-        binding.petWater.release()
+        waterCard.release()
         _binding = null
     }
 
@@ -363,10 +354,8 @@ class DashboardFragment : Fragment() {
  /** Диалог изменения количества грамм у записи дневника. */
     private fun showEditEntryDialog(entry: com.nutritrack.app.data.db.entity.DiaryEntryEntity) {
         // Определяем единицу по названию (напиток мл)
-        val liquidKeywords = listOf("сок","вода","кофе","чай","молоко","кефир","морс","компот",
-            "лимонад","кола","напиток","смузи","коктейль","пиво","вино","квас","какао",
-            "латте","капучино","айран","ряженка")
-        val unit = if (liquidKeywords.any { entry.productName.lowercase().contains(it) }) "мл" else "г"
+        val isLiquid = com.nutritrack.app.utils.ProductUnits.isLiquidName(entry.productName)
+        val unit = getString(if (isLiquid) R.string.u_ml else R.string.u_g)
 
         val input = android.widget.EditText(requireContext()).apply {
             inputType = android.text.InputType.TYPE_CLASS_NUMBER or
@@ -381,7 +370,7 @@ class DashboardFragment : Fragment() {
         }
         androidx.appcompat.app.AlertDialog.Builder(requireContext())
             .setTitle(getString(R.string.ds_edit_title_fmt, entry.productName))
-            .setMessage(if (unit == getString(R.string.u_ml)) getString(R.string.ds_how_much_ml) else getString(R.string.ds_how_much_g))
+            .setMessage(if (isLiquid) getString(R.string.ds_how_much_ml) else getString(R.string.ds_how_much_g))
             .setView(container)
             .setPositiveButton(getString(R.string.c_save)) { _, _ ->
                 val newGrams = input.text.toString().toFloatOrNull()
@@ -497,21 +486,6 @@ class DashboardFragment : Fragment() {
         }
     }
 
-    private fun setupWaterCups() {
-        cupsAdapter = WaterCupsAdapter { entry ->
-            androidx.appcompat.app.AlertDialog.Builder(requireContext())
-                .setTitle(getString(R.string.ds_del_water_fmt, entry.amountMl))
-                .setPositiveButton(getString(R.string.c_delete)) { _, _ -> vm.deleteWater(entry) }
-                .setNegativeButton(getString(R.string.c_cancel), null)
-                .show()
-        }
-        binding.rvWaterCups.apply {
-            layoutManager = GridLayoutManager(requireContext(), 5)
-            adapter = cupsAdapter
-            isNestedScrollingEnabled = false
-        }
-    }
-
     private fun observeData() {
         vm.activeProfile.observe(viewLifecycleOwner) { profile ->
             updateHeader(profile?.name, profile?.photoUri)
@@ -557,82 +531,11 @@ class DashboardFragment : Fragment() {
         }
 
         vm.todayWater.observe(viewLifecycleOwner) { entries ->
-            cupsAdapter.submitList(entries)
-            val total = entries.sumOf { it.amountMl }
-            val goal  = vm.waterGoal.value ?: 2000
-            reactPetToWater(total, goal)
-            binding.progressWater.max = goal
-            binding.progressWaterBar.max = goal
-            animateWaterProgress(total.coerceAtMost(goal))
-
-            val valueText = getString(R.string.ds_water_value_fmt, total)
-            val goalText  = getString(R.string.ds_water_goal_fmt, goal)
-            binding.tvWaterValue.text        = valueText
-            binding.tvWaterGoal.text         = goalText
-            binding.tvWaterValueClassic.text = valueText
-            binding.tvWaterGoalClassic.text  = goalText
-
-            val left = (goal - total).coerceAtLeast(0)
-            val remainingText = if (left == 0) getString(R.string.ds_water_done) else getString(R.string.ds_water_left_fmt, left)
-            val remainingColor = if (left == 0) requireContext().getColor(R.color.color_success)
-                                 else requireContext().getColor(R.color.color_water)
-            binding.tvWaterRemaining.text = remainingText
-            binding.tvWaterRemaining.setTextColor(remainingColor)
-            binding.tvWaterRemainingClassic.text = remainingText
-            binding.tvWaterRemainingClassic.setTextColor(remainingColor)
-
-            if (left == 0 && total > 0) celebrateOncePerDay("confetti_water")
+            waterCard.bind(entries)
         }
 
         vm.waterGoal.observe(viewLifecycleOwner) { goal ->
-            binding.progressWater.max = goal
-            binding.progressWaterBar.max = goal
-        }
-    }
-
- /** Системный множитель анимаций (0 = «убрать анимации» в спец.возможностях). */
-    private fun animationsEnabled(): Boolean =
-        android.provider.Settings.Global.getFloat(
-            requireContext().contentResolver,
-            android.provider.Settings.Global.ANIMATOR_DURATION_SCALE, 1f
-        ) > 0f
-
- /** Плавно дотягивает кольцо воды до нового значения + лёгкий «подскок» талисмана. */
-    private var lastWaterShown = 0
-    private var waterAnimator: android.animation.ValueAnimator? = null
-    private fun animateWaterProgress(target: Int) {
-        if (!animationsEnabled()) {
-            _binding?.progressWater?.progress = target
-            _binding?.progressWaterBar?.progress = target
-            lastWaterShown = target
-            return
-        }
-        waterAnimator?.cancel()
-        waterAnimator = android.animation.ValueAnimator.ofInt(lastWaterShown, target).apply {
-            duration = 600
-            interpolator = android.view.animation.DecelerateInterpolator()
-            addUpdateListener {
-                val b = _binding ?: return@addUpdateListener
-                val v = it.animatedValue as Int
-                b.progressWater.progress = v
-                b.progressWaterBar.progress = v
-            }
-            start()
-        }
-        lastWaterShown = target
-
-        // Талисман подпрыгивает только в живом режиме (в классическом он скрыт).
-        // Если активен анимированный питомец — у него своя реакция, статичный маскот не трогаем.
-        if (isLiveWaterMode && !petLoaded) {
-            _binding?.imgWaterMascot?.animate()
-                ?.translationY(-8f)?.setDuration(160)
-                ?.withEndAction {
-                    _binding?.imgWaterMascot?.animate()
-                        ?.translationY(0f)?.setDuration(220)
-                        ?.setInterpolator(android.view.animation.OvershootInterpolator())
-                        ?.start()
-                }
-                ?.start()
+            waterCard.setGoalMax(goal)
         }
     }
 
@@ -662,45 +565,6 @@ class DashboardFragment : Fragment() {
         }
     }
 
-    private fun showWaterModePicker() {
-        val checked = if (isLiveWaterMode) 0 else 1
-        val items = arrayOf(
-            getString(R.string.ds_water_mode_live),
-            getString(R.string.ds_water_mode_classic)
-        )
-        androidx.appcompat.app.AlertDialog.Builder(requireContext())
-            .setTitle(getString(R.string.ds_water_mode_title))
-            .setSingleChoiceItems(items, checked) { dialog, which ->
-                isLiveWaterMode = (which == 0)
-                prefs.isLiveWaterMode = isLiveWaterMode
-                applyWaterMode(animate = true)
-                dialog.dismiss()
-            }
-            .setNegativeButton(getString(R.string.c_cancel), null)
-            .show()
-    }
-
-    private fun applyWaterMode(animate: Boolean) {
-        val live    = binding.layoutWaterLive
-        val classic = binding.layoutWaterClassic
-        if (isLiveWaterMode) {
-            live.visibility = View.VISIBLE; classic.visibility = View.GONE
-            // питомец — только в живом режиме и только если загружен
-            binding.petWaterContainer.visibility =
-                if (petLoaded) View.VISIBLE else View.GONE
-            if (animate) { live.alpha = 0f; live.animate().alpha(1f).setDuration(350).start() }
-        } else {
-            classic.visibility = View.VISIBLE; live.visibility = View.GONE
-            binding.petWaterContainer.visibility = View.GONE
-            if (animate) { classic.alpha = 0f; classic.animate().alpha(1f).setDuration(350).start() }
-        }
-    }
-
-    // ===== Питомец у воды =====
-    private var petLoaded = false
-    private var lastWaterTotal = -1
-    private var petGoalCelebrated = false
-
     // Карта цен продуктов (id → цена за 100 г) для подсчёта стоимости дня
     private var dayPriceMap: Map<Long, Float?> = emptyMap()
 
@@ -717,69 +581,6 @@ class DashboardFragment : Fragment() {
         } else {
             b.tvDayCost.visibility = View.GONE
         }
-    }
-
-    private fun setupPet() {
-        val prefs = com.nutritrack.app.utils.PrefsManager(requireContext())
-        if (!prefs.petsEnabled) { hidePet(); return }
-        val storage = com.nutritrack.app.pets.PetStorage(requireContext())
-        val id = prefs.selectedPet
-        petLoaded = if (storage.isInstalled(id)) binding.petWater.load(id) else false
-        if (petLoaded) {
-            // питомец виден только в живом режиме воды
-            binding.petWaterContainer.visibility =
-                if (isLiveWaterMode) View.VISIBLE else View.GONE
-            binding.waterMascotContainer.visibility = View.GONE
-            // Тап по питомцу — весёлая реакция (подпрыгивание/радость)
-            binding.petWater.setOnClickListener {
-                com.nutritrack.app.utils.HapticHelper.tap(it)
-                val act = if (com.nutritrack.app.pets.PetStorage(requireContext())
-                        .hasAction(prefs.selectedPet, "jump")) "jump" else "happy"
-                binding.petWater.play(act)
-            }
-            // Базовый уровень воды фиксируем по текущему значению, чтобы
-            // следующее РЕАЛЬНОЕ добавление вызвало реакцию (а не съелось как «первое»).
-            val cur = vm.todayWater.value?.sumOf { it.amountMl } ?: 0
-            val goal = vm.waterGoal.value ?: 2000
-            lastWaterTotal = cur
-            petGoalCelebrated = goal in 1..cur
-        } else {
-            hidePet()
-        }
-    }
-
-    private fun hidePet() {
-        petLoaded = false
-        binding.petWaterContainer.visibility = View.GONE
-        binding.waterMascotContainer.visibility = View.VISIBLE
-    }
-
-    private fun reactPetToWater(total: Int, goal: Int) {
-        if (!petLoaded) { lastWaterTotal = total; return }
-        // база ещё не инициализирована (питомец только что появился) — без реакции
-        if (lastWaterTotal < 0) {
-            lastWaterTotal = total
-            petGoalCelebrated = goal in 1..total
-            return
-        }
-        if (total > lastWaterTotal) {
-            // вода добавилась
-            if (goal in 1..total && !petGoalCelebrated) {
-                petGoalCelebrated = true
-                binding.petWater.play("happy")
-            } else {
-                binding.petWater.play("drink")
-            }
-        }
-        if (total < goal) petGoalCelebrated = false
-        lastWaterTotal = total
-    }
-
-    private fun setupWaterButtons() {
-        binding.btnWater100.setOnClickListener { com.nutritrack.app.utils.HapticHelper.tap(it); com.nutritrack.app.utils.CompanionHelper.maybeCheer(requireContext(), "water"); vm.addWater(100) { deferAchievementCheck() } }
-        binding.btnWater200.setOnClickListener { com.nutritrack.app.utils.HapticHelper.tap(it); vm.addWater(200) { deferAchievementCheck() } }
-        binding.btnWater300.setOnClickListener { com.nutritrack.app.utils.HapticHelper.tap(it); com.nutritrack.app.utils.CompanionHelper.maybeCheer(requireContext(), "water"); vm.addWater(300) { deferAchievementCheck() } }
-        binding.btnWater500.setOnClickListener { com.nutritrack.app.utils.HapticHelper.tap(it); vm.addWater(500) { deferAchievementCheck() } }
     }
 
  /** Проверку достижений запускаем после отрисовки кадра — иначе первый показ
@@ -905,353 +706,20 @@ class DashboardFragment : Fragment() {
         }
     }
 
-    @Suppress("DEPRECATION") // SOFT_INPUT_ADJUST_RESIZE — рабочий способ для диалога с клавиатурой
+ /** Bottom-sheet добавления еды — логика вынесена в AddFoodSheet. */
     private fun showAddFoodDialog() {
-        val dialog    = BottomSheetDialog(requireContext(), R.style.BottomSheetStyle)
-        val sheetView = layoutInflater.inflate(R.layout.dialog_add_food, null)
-        dialog.setContentView(sheetView)
-
-        dialog.setOnShowListener {
-            val sheet = (it as BottomSheetDialog).findViewById<FrameLayout>(
-                com.google.android.material.R.id.design_bottom_sheet
-            )
-            sheet?.let { fl ->
-                val behavior = BottomSheetBehavior.from(fl)
-                fl.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
-                behavior.state = BottomSheetBehavior.STATE_EXPANDED
-                behavior.skipCollapsed = true
-            }
-        }
-        dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-
-        val etSearch   = sheetView.findViewById<EditText>(R.id.etSearch)
-        val rvProducts = sheetView.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.rvProducts)
-        val tvGrams    = sheetView.findViewById<TextView>(R.id.tvGrams)
-        val btnMinus   = sheetView.findViewById<ImageButton>(R.id.btnMinus)
-        val btnPlus    = sheetView.findViewById<ImageButton>(R.id.btnPlus)
-        val btnAdd     = sheetView.findViewById<Button>(R.id.btnAdd)
-
-        // Кнопка сканирования штрихкода (если есть в layout)
-        sheetView.findViewById<ImageButton>(R.id.btnScan)?.setOnClickListener {
-            dialog.dismiss()
-            scanLauncher.launch(android.content.Intent(requireContext(), BarcodeScannerActivity::class.java))
-        }
-
-        var selectedProduct: ProductEntity? = null
-        var grams = 100
-
-        fun updateGrams() {
-            val p = selectedProduct
-            if (p != null) {
-                val unit = com.nutritrack.app.utils.ProductUnits.unit(p)
-                tvGrams.text = getString(R.string.ds_grams_kcal_fmt, grams, unit, (p.calories * grams / 100f).toInt())
-            } else {
-                tvGrams.text = getString(R.string.ds_grams_g_fmt, grams)
-            }
-        }
-        updateGrams()
-
-        btnMinus.setOnClickListener {
-            val p = selectedProduct
-            val step = if (p != null) com.nutritrack.app.utils.ProductUnits.step(p, grams)
-            else if (grams > 100) 50 else 10
-            grams = (grams - step).coerceAtLeast(10)
-            updateGrams()
-        }
-        btnPlus.setOnClickListener {
-            val p = selectedProduct
-            val step = if (p != null) com.nutritrack.app.utils.ProductUnits.step(p, grams)
-            else if (grams >= 100) 50 else 10
-            grams += step
-            updateGrams()
-        }
-        tvGrams.setOnClickListener {
-            GramInputHelper.showInputDialog(requireContext(), grams) { newGrams -> grams = newGrams; updateGrams() }
-        }
-
-        val db = (requireActivity().application as NutriApp).database
-        val pickerAdapter = ProductPickerAdapter(
-            onSelect = { product ->
-                selectedProduct = product
-                grams = com.nutritrack.app.utils.ProductUnits.defaultAmount(product)
-                btnAdd.isEnabled = true; btnAdd.alpha = 1f; updateGrams()
+        AddFoodSheet(
+            fragment = this,
+            vm = vm,
+            onScanRequest = {
+                scanLauncher.launch(android.content.Intent(requireContext(), BarcodeScannerActivity::class.java))
             },
-            onFavoriteToggle = { product ->
-                // Переключаем избранное локально + в БД
-                viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
-                    val updated = product.copy(isFavorite = !product.isFavorite)
-                    db.productDao().updateProduct(updated)
-                }
-            }
-        )
-        rvProducts.layoutManager = LinearLayoutManager(requireContext())
-        rvProducts.adapter       = pickerAdapter
-
-        // Кэш загруженного списка — фильтруем его (LiveData.value бывает null)
-        var allProducts: List<com.nutritrack.app.data.db.entity.ProductEntity> = emptyList()
-
-        // Автопоиск в Open Food Facts, когда локально пусто (с дебаунсом)
-        var webSearchJob: kotlinx.coroutines.Job? = null
-
-        fun webSearch(query: String, localResults: List<com.nutritrack.app.data.db.entity.ProductEntity>) {
-            webSearchJob?.cancel()
-            webSearchJob = viewLifecycleOwner.lifecycleScope.launch {
-                kotlinx.coroutines.delay(500)   // дебаунс
-                try {
-                    val svc = com.nutritrack.app.data.api.OpenFoodFacts.service
-                    val enc = java.net.URLEncoder.encode(query, "UTF-8")
-                    fun buildUrl(host: String) =
-                        "https://$host/cgi/search.pl?search_terms=$enc" +
-                                "&search_simple=1&action=process&json=1&page_size=30" +
-                                "&sort_by=unique_scans_n&fields=product_name,product_name_ru,brands,nutriments,image_url,code"
-
-                    val products = withContext(Dispatchers.IO) {
-                        val acc = LinkedHashMap<String, com.nutritrack.app.data.api.OffProduct>()
-                        try {
-                            svc.searchByUrl(buildUrl("ru.openfoodfacts.org")).products.forEach { p ->
-                                val key = p.code ?: p.bestName()
-                                if (p.hasName()) acc.putIfAbsent(key, p)
-                            }
-                        } catch (e: Exception) { com.nutritrack.app.utils.AppLog.e("OFF ru search failed", e) }
-                        try {
-                            svc.searchByUrl(buildUrl("world.openfoodfacts.org")).products.forEach { p ->
-                                val key = p.code ?: p.bestName()
-                                if (p.hasName()) acc.putIfAbsent(key, p)
-                            }
-                        } catch (e: Exception) { com.nutritrack.app.utils.AppLog.e("OFF world search failed", e) }
-                        acc.values.toList()
-                    }
-                    if (etSearch.text.toString().trim() != query) return@launch
-
-                    // имена локальных продуктов — чтобы не дублировать в интернет-части
-                    val localNames = localResults.map { it.name.lowercase().trim() }.toSet()
-
-                    val found = products
-                        .filter { (it.nutriments?.energyKcal100g ?: 0.0) > 0.0 }
-                        .map { p ->
-                            val brand = p.brands?.split(",")?.firstOrNull()?.trim()
-                            val label = if (!brand.isNullOrBlank() && !p.bestName().contains(brand, true))
-                                "${p.bestName()} · $brand" else p.bestName()
-                            com.nutritrack.app.data.db.entity.ProductEntity(
-                                id = 0L,
-                                name = "🌐 $label",
-                                calories = (p.nutriments?.energyKcal100g ?: 0.0).toFloat(),
-                                protein  = (p.nutriments?.proteins100g ?: 0.0).toFloat(),
-                                fat      = (p.nutriments?.fat100g ?: 0.0).toFloat(),
-                                carbs    = (p.nutriments?.carbs100g ?: 0.0).toFloat(),
-                                category = getString(R.string.cat_internet),
-                                isCustom = true
-                            )
-                        }
-                        .filter { it.name.removePrefix("🌐 ").lowercase().trim() !in localNames }
-                        .distinctBy { it.name }
-                        .take(30)
-
-                    // запрос мог измениться, пока грузилось
-                    if (etSearch.text.toString().trim() != query) return@launch
-
-                    // Локальные — сверху, интернет — снизу
-                    val combined = ArrayList<com.nutritrack.app.data.db.entity.ProductEntity>()
-                    combined.addAll(localResults)
-                    combined.addAll(found)
-                    pickerAdapter.submitList(combined)
-
-                    if (found.isNotEmpty()) {
-                        Toast.makeText(requireContext(),
-                            getString(R.string.ds_found_online_fmt, found.size), Toast.LENGTH_SHORT).show()
-                    } else if (localResults.isEmpty()) {
-                        Toast.makeText(requireContext(),
-                            getString(R.string.ds_nothing_found), Toast.LENGTH_SHORT).show()
-                    }
-                } catch (_: kotlinx.coroutines.CancellationException) {
-                } catch (e: Exception) {
-                    // нет сети — оставляем локальные (уже показаны)
-                    com.nutritrack.app.utils.AppLog.e("online food search failed", e)
-                }
-            }
-        }
-
-        fun applyFilter() {
-            val q = etSearch.text.toString().trim()
-            val sorted = allProducts.sortedWith(
-                compareByDescending<com.nutritrack.app.data.db.entity.ProductEntity> { it.isFavorite }
-                    .thenBy { it.name }
-            )
-            val result = if (q.isEmpty()) sorted
-            else sorted.filter { it.name.contains(q, ignoreCase = true) }
-            pickerAdapter.submitList(ArrayList(result))
-
-            // При осмысленном запросе ищем в Open Food Facts и дописываем СНИЗУ
-            // (локальные продукты остаются сверху, интернет дополняет).
-            if (q.length >= 3) webSearch(q, result)
-            else webSearchJob?.cancel()
-        }
-
-        // Слушатель ввода — навешиваем сразу
-        etSearch.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) { applyFilter() }
-            override fun beforeTextChanged(s: CharSequence?, st: Int, c: Int, a: Int) {}
-            override fun onTextChanged(s: CharSequence?, st: Int, b: Int, c: Int) {}
-        })
-
-        // Загрузка списка
-        db.productDao().getAllProducts().observe(viewLifecycleOwner) { all ->
-            allProducts = all
-            applyFilter()
-        }
-
-        btnAdd.isEnabled = false
-        btnAdd.alpha     = 0.5f
-
-        // Голосовой ввод: распознать разобрать на продукт + граммы найти и выбрать
-        sheetView.findViewById<ImageButton>(R.id.btnVoice)?.setOnClickListener {
-            onVoiceResult = handler@{ spoken ->
-                val parsed = com.nutritrack.app.utils.VoiceFoodParser.parse(spoken)
-                // Подставляем название в поиск
-                etSearch.setText(parsed.query)
-                applyFilter()
-                // Пытаемся сразу найти лучший продукт
-                val found = allProducts.firstOrNull {
-                    it.name.equals(parsed.query, ignoreCase = true)
-                } ?: allProducts.firstOrNull {
-                    it.name.contains(parsed.query, ignoreCase = true)
-                }
-                if (found != null) {
-                    selectedProduct = found
-                    grams = parsed.grams ?: com.nutritrack.app.utils.ProductUnits.defaultAmount(found)
-                    btnAdd.isEnabled = true; btnAdd.alpha = 1f
-                    updateGrams()
-                    val gramInfo = if (parsed.grams != null) ", ${parsed.grams} г" else ""
-                    android.widget.Toast.makeText(requireContext(),
-                        getString(R.string.ds_voice_added_fmt, found.name, gramInfo), android.widget.Toast.LENGTH_SHORT).show()
-                } else {
-                    // Не нашли — просто оставляем текст в поиске, пусть выберет вручную
-                    if (parsed.grams != null) { grams = parsed.grams; updateGrams() }
-                    android.widget.Toast.makeText(requireContext(),
-                        getString(R.string.ds_pick_from_list), android.widget.Toast.LENGTH_SHORT).show()
-                }
-            }
-            ensureMicAndStartVoice()
-        }
-        btnAdd.setOnClickListener {
-            selectedProduct?.let { product ->
-                // Действие добавления (исходная логика, обёрнута для переиспользования)
-                val doAdd = {
-                    if (product.id == 0L) {
-                        viewLifecycleOwner.lifecycleScope.launch {
-                            val clean = product.copy(name = product.name.removePrefix("🌐 ").trim())
-                            val newId = withContext(Dispatchers.IO) {
-                                val db2 = (requireActivity().application as NutriApp).database
-                                db2.productDao().insertProduct(clean)
-                            }
-                            val saved = clean.copy(id = newId)
-                            vm.addDiaryEntry(saved, grams.toFloat()) { achievementsVm.checkAchievements() }
-                            com.nutritrack.app.utils.CompanionHelper.maybeCheer(requireContext(), "food")
-                            dialog.dismiss()
-                            Toast.makeText(requireContext(), getString(R.string.ds_added_fmt, saved.name, grams, com.nutritrack.app.utils.ProductUnits.unit(saved)), Toast.LENGTH_SHORT).show()
-                        }
-                    } else {
-                        vm.addDiaryEntry(product, grams.toFloat()) { achievementsVm.checkAchievements() }
-                        com.nutritrack.app.utils.CompanionHelper.maybeCheer(requireContext(), "food")
-                        dialog.dismiss()
-                        Toast.makeText(requireContext(), getString(R.string.ds_added_fmt, product.name, grams, com.nutritrack.app.utils.ProductUnits.unit(product)), Toast.LENGTH_SHORT).show()
-                    }
-                    Unit
-                }
-                // Проверка на аллергены профиля
-                val profile = vm.activeProfile.value
-                val userAllergens = com.nutritrack.app.utils.AllergenData.parse(profile?.allergens)
-                val hits = if (userAllergens.isEmpty()) emptyList()
-                    else com.nutritrack.app.utils.AllergenData.detect(product.name).filter { it in userAllergens }
-                if (hits.isNotEmpty()) {
-                    val names = hits.joinToString(", ") { com.nutritrack.app.utils.AllergenData.title(requireContext(), it) }
-                    val d = com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
-                        .setTitle(getString(R.string.allergen_warn_title))
-                        .setMessage(getString(R.string.allergen_warn_msg_fmt, names))
-                        .setPositiveButton(getString(R.string.allergen_warn_add)) { _, _ -> doAdd() }
-                        .setNegativeButton(getString(R.string.dlg_cancel), null)
-                        .create()
-                    d.setOnShowListener { com.nutritrack.app.utils.DialogHelper.tint(d, requireContext()) }
-                    d.show()
-                } else {
-                    doAdd()
-                }
-            }
-        }
-
-        // Быстрый доступ: повторить вчера + недавние/частые
-        val quickRow = sheetView.findViewById<LinearLayout>(R.id.quickRow)
-        viewLifecycleOwner.lifecycleScope.launch {
-            quickRow.removeAllViews()
-
-            // Кнопка "Повторить вчера"
-            quickRow.addView(makeQuickChip(getString(R.string.ds_repeat_yesterday), accent = true) {
-                vm.repeatYesterday { count ->
-                    val msg = if (count > 0) "✅ Скопировано из вчера: $count" else "Вчера записей нет"
-                    Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
-                    achievementsVm.checkAchievements()
-                }
-                dialog.dismiss()
-            })
-
-            // Недавние (последние уникальные продукты)
-            val recent = vm.getRecent()
-            if (recent.isNotEmpty()) {
-                quickRow.addView(makeQuickLabel("⏱️"))
-                recent.forEach { entry ->
-                    val unit = if (isLiquidNameLocal(entry.productName)) "мл" else "г"
-                    quickRow.addView(makeQuickChip("${entry.productName} ${entry.grams.toInt()}$unit") {
-                        vm.quickAddFromEntry(entry) { achievementsVm.checkAchievements() }
-                        dialog.dismiss()
-                        Toast.makeText(requireContext(),
-                            getString(R.string.ds_entry_ok_fmt, entry.productName), Toast.LENGTH_SHORT).show()
-                    })
-                }
-            }
-        }
-
-        dialog.show()
-    }
-
- /** Чип быстрого доступа. */
-    private fun makeQuickChip(text: String, accent: Boolean = false, onClick: () -> Unit): TextView {
-        return TextView(requireContext()).apply {
-            this.text = text
-            setTextColor(android.graphics.Color.WHITE)
-            textSize = 13f
-            setPadding(dp(14), dp(9), dp(14), dp(9))
-            setBackgroundResource(
-                if (accent) R.drawable.chip_selected else R.drawable.chip_bg
-            )
-            isClickable = true
-            isFocusable = true
-            val lp = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply { setMargins(0, 0, dp(8), 0) }
-            layoutParams = lp
-            maxLines = 1
-            setOnClickListener { onClick() }
-        }
-    }
-
-    private fun makeQuickLabel(text: String): TextView {
-        return TextView(requireContext()).apply {
-            this.text = text
-            setTextColor(android.graphics.Color.parseColor("#9E9EB0"))
-            textSize = 16f
-            gravity = android.view.Gravity.CENTER_VERTICAL
-            val lp = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT
-            ).apply { setMargins(dp(4), 0, dp(8), 0) }
-            layoutParams = lp
-        }
-    }
-
-    private fun isLiquidNameLocal(name: String): Boolean {
-        val n = name.lowercase()
-        return listOf("сок","вода","кофе","чай","молоко","кефир","морс","компот","лимонад",
-            "кола","напиток","смузи","коктейль","пиво","вино","квас","какао","латте","капучино",
-            "айран","ряженка").any { n.contains(it) }
+            onVoiceRequest = { handler ->
+                onVoiceResult = handler
+                ensureMicAndStartVoice()
+            },
+            onAchievementsCheck = { achievementsVm.checkAchievements() }
+        ).show()
     }
 
     private fun dp(v: Int): Int = (v * resources.displayMetrics.density).toInt()
@@ -1327,12 +795,9 @@ class DashboardFragment : Fragment() {
     private fun lookupBarcode(barcode: String) {
         viewLifecycleOwner.lifecycleScope.launch {
             try {
-                val resp = withContext(Dispatchers.IO) {
-                    OpenFoodFacts.service.getProductByBarcode(barcode)
-                }
-                val p = resp.product
+                val p = com.nutritrack.app.data.repository.FoodSearchRepository.byBarcode(barcode)
                 val n = p?.nutriments
-                if (resp.status == 1 && p != null && n != null) {
+                if (p != null && n != null) {
                     showFoundProductDialog(
                         name     = p.bestName(),
                         calories = (n.energyKcal100g ?: 0.0).toFloat(),

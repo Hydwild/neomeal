@@ -27,8 +27,13 @@ object ProductUnits {
  /** true если продукт измеряется в мл. */
     fun isLiquid(product: ProductEntity): Boolean {
         if (product.category in LIQUID_CATEGORIES) return true
-        val name = product.name.lowercase()
-        return LIQUID_KEYWORDS.any { name.contains(it) }
+        return isLiquidName(product.name)
+    }
+
+ /** true если по названию продукт похож на напиток (когда ProductEntity недоступен). */
+    fun isLiquidName(name: String): Boolean {
+        val n = name.lowercase()
+        return LIQUID_KEYWORDS.any { n.contains(it) }
     }
 
  /** Единица: "мл" или "г". */
