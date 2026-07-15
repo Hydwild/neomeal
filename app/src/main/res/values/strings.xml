@@ -3526,4 +3526,13 @@
     <!-- Material You -->
     <string name="set_dynamic_colors">Цвета из обоев (Material You)</string>
     <string name="set_dynamic_colors_sub">Поверхности и акценты подстраиваются под обои</string>
+
+    <!-- Что нового 1.4.0 -->
+    <string name="whatsnew_140_title">Покупки, Health Connect и Material You</string>
+    <string name="whatsnew_140_1">🛒 Список покупок: все продукты из плана питания на неделю одним чек-листом — с отметками и отправкой в мессенджер.</string>
+    <string name="whatsnew_140_2">🌾 Клетчатка и сахар теперь видны под КБЖУ — данные приходят из Open Food Facts при поиске и сканировании.</string>
+    <string name="whatsnew_140_3">❤️ Запись в Health Connect: еда, вода и вес могут передаваться другим приложениям здоровья (включается в настройках).</string>
+    <string name="whatsnew_140_4">❄️ Заморозка стрика — прямо с главного экрана: просто коснись серии дней.</string>
+    <string name="whatsnew_140_5">🎨 Material You: карточки и акценты подстраиваются под обои (Android 12+, включается в настройках).</string>
+    <string name="whatsnew_140_6">🌙 Тёмная тема стала фирменной фиолетовой, а приложение — быстрее и стабильнее.</string>
 </resources>

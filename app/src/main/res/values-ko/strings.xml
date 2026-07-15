@@ -3501,4 +3501,13 @@
     <!-- Material You -->
     <string name="set_dynamic_colors">배경화면 색상 (Material You)</string>
     <string name="set_dynamic_colors_sub">배경화면에 맞춰 색상이 바뀌어요</string>
+
+    <!-- 새로운 기능 1.4.0 -->
+    <string name="whatsnew_140_title">쇼핑 리스트, Health Connect, Material You</string>
+    <string name="whatsnew_140_1">🛒 쇼핑 리스트: 일주일 식단의 모든 재료를 체크리스트 하나로 — 체크하고 공유하세요.</string>
+    <string name="whatsnew_140_2">🌾 식이섬유와 당류가 영양소 아래에 표시돼요 — 검색·스캔 시 Open Food Facts에서 가져와요.</string>
+    <string name="whatsnew_140_3">❤️ Health Connect 기록: 식사·수분·체중을 다른 건강 앱과 공유할 수 있어요 (설정에서 켜기).</string>
+    <string name="whatsnew_140_4">❄️ 홈 화면에서 바로 스트릭 얼리기 — 연속 기록을 탭하세요.</string>
+    <string name="whatsnew_140_5">🎨 Material You: 카드와 강조색이 배경화면에 맞춰져요 (Android 12+, 설정에서 켜기).</string>
+    <string name="whatsnew_140_6">🌙 다크 테마가 브랜드 퍼플로 바뀌고, 앱이 더 빠르고 안정적이 되었어요.</string>
 </resources>

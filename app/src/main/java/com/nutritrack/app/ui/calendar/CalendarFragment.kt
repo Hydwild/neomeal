@@ -333,10 +333,10 @@ class CalendarFragment : Fragment() {
                     orientation = LinearLayout.HORIZONTAL
                     setPadding(0, dp(6), 0, dp(6))
                 }
-                val liquidKw = listOf("сок","вода","кофе","чай","молоко","кефир","морс","компот",
-                    "лимонад","кола","напиток","смузи","коктейль","пиво","вино","квас","какао",
-                    "латте","капучино","айран","ряженка")
-                val u = if (liquidKw.any { e.productName.lowercase().contains(it) }) "мл" else "г"
+                val u = getString(
+                    if (com.nutritrack.app.utils.ProductUnits.isLiquidName(e.productName))
+                        R.string.u_ml else R.string.u_g
+                )
                 val name = TextView(requireContext()).apply {
                     text = "${e.productName} · ${e.grams.toInt()}$u"
                     setTextColor(resources.getColor(R.color.white, null))

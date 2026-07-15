@@ -3517,4 +3517,13 @@ data class Recipe(
     <!-- Material You -->
     <string name="set_dynamic_colors">Wallpaper colors (Material You)</string>
     <string name="set_dynamic_colors_sub">Surfaces and accents adapt to your wallpaper</string>
+
+    <!-- What's new 1.4.0 -->
+    <string name="whatsnew_140_title">Groceries, Health Connect &amp; Material You</string>
+    <string name="whatsnew_140_1">🛒 Shopping list: all groceries from your weekly meal plan in one checklist — check items off and share it.</string>
+    <string name="whatsnew_140_2">🌾 Fiber and sugar now show under your macros — data comes from Open Food Facts via search and the scanner.</string>
+    <string name="whatsnew_140_3">❤️ Health Connect writing: meals, water and weight can be shared with other health apps (enable in Settings).</string>
+    <string name="whatsnew_140_4">❄️ Streak freeze right from the home screen — just tap your day streak.</string>
+    <string name="whatsnew_140_5">🎨 Material You: cards and accents adapt to your wallpaper (Android 12+, enable in Settings).</string>
+    <string name="whatsnew_140_6">🌙 The dark theme went brand purple, and the app got faster and more stable.</string>
 </resources>
