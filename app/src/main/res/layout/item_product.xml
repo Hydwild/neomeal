@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
-    app:cardBackgroundColor="@color/card_bg"
+    app:cardBackgroundColor="?attr/appCardBg"
     app:cardCornerRadius="16dp"
     app:cardElevation="0dp">
 
@@ -37,7 +37,7 @@
                 android:id="@+id/tvName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:textColor="?attr/appTextPrimary"
                 android:textSize="15sp"
                 android:textStyle="bold"/>
 
@@ -45,7 +45,7 @@
                 android:id="@+id/tvCategory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/text_secondary"
+                android:textColor="?attr/appTextSecondary"
                 android:textSize="11sp"
                 android:layout_marginTop="1dp"/>
 
@@ -53,7 +53,7 @@
                 android:id="@+id/tvMacros"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/text_secondary"
+                android:textColor="?attr/appTextSecondary"
                 android:textSize="11sp"
                 android:layout_marginTop="1dp"/>
 
@@ -122,7 +122,7 @@
                 android:layout_height="36dp"
                 android:background="@android:color/transparent"
                 android:src="@drawable/ic_edit"
-                android:tint="@color/text_secondary"
+                android:tint="?attr/appTextSecondary"
                 android:contentDescription="Редактировать"/>
 
         </LinearLayout>

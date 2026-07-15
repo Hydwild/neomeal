@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/pet_screen_title"
-            android:textColor="@color/white"
+            android:textColor="?attr/appTextPrimary"
             android:textSize="22sp"
             android:textStyle="bold"
             android:layout_marginBottom="4dp"/>

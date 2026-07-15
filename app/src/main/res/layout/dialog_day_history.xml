@@ -4,13 +4,13 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="20dp"
-    android:background="@color/bottom_sheet_bg">
+    android:background="?attr/appBottomSheetBg">
 
     <TextView
         android:id="@+id/tvDayDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
+        android:textColor="?attr/appTextPrimary"
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_marginBottom="8dp"/>
@@ -19,7 +19,7 @@
         android:id="@+id/tvDaySummary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/text_secondary"
+        android:textColor="?attr/appTextSecondary"
         android:textSize="13sp"
         android:lineSpacingExtra="3dp"
         android:layout_marginBottom="12dp"
@@ -30,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/lay_eaten_day"
-        android:textColor="@color/white"
+        android:textColor="?attr/appTextPrimary"
         android:textStyle="bold"
         android:layout_marginBottom="8dp"/>
 
@@ -39,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/dh_no_records"
-        android:textColor="@color/text_secondary"
+        android:textColor="?attr/appTextSecondary"
         android:visibility="gone"/>
 
     <androidx.recyclerview.widget.RecyclerView

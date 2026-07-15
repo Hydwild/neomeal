@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/bottom_sheet_bg">
+    android:background="?attr/appBottomSheetBg">
 
     <!-- Прокручиваемая часть: занимает всё место кроме кнопки -->
     <androidx.core.widget.NestedScrollView
@@ -17,7 +17,7 @@
 
             <TextView android:id="@+id/tvTitle" android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:text="@string/ep_new_profile"
-                android:textColor="@color/white" android:textSize="18sp"
+                android:textColor="?attr/appTextPrimary" android:textSize="18sp"
                 android:textStyle="bold" android:layout_marginBottom="12dp"/>
 
             <de.hdodenhof.circleimageview.CircleImageView android:id="@+id/ivAvatar"
@@ -38,73 +38,73 @@
 
             <EditText android:id="@+id/etName" android:layout_width="match_parent"
                 android:layout_height="48dp" android:hint="@string/ep_name"
-                android:background="@drawable/input_bg" android:textColor="@color/white"
-                android:textColorHint="@color/text_secondary" android:padding="12dp"
+                android:background="@drawable/input_bg" android:textColor="?attr/appTextPrimary"
+                android:textColorHint="?attr/appTextSecondary" android:padding="12dp"
                 android:layout_marginBottom="8dp"/>
 
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <EditText android:id="@+id/etAge" android:layout_width="0dp" android:layout_weight="1"
                     android:layout_height="48dp" android:hint="@string/ep_age"
-                    android:background="@drawable/input_bg" android:textColor="@color/white"
-                    android:textColorHint="@color/text_secondary" android:padding="12dp"
+                    android:background="@drawable/input_bg" android:textColor="?attr/appTextPrimary"
+                    android:textColorHint="?attr/appTextSecondary" android:padding="12dp"
                     android:inputType="number" android:layout_marginEnd="4dp" android:layout_marginBottom="8dp"/>
                 <EditText android:id="@+id/etHeight" android:layout_width="0dp" android:layout_weight="1"
                     android:layout_height="48dp" android:hint="@string/ep_height"
-                    android:background="@drawable/input_bg" android:textColor="@color/white"
-                    android:textColorHint="@color/text_secondary" android:padding="12dp"
+                    android:background="@drawable/input_bg" android:textColor="?attr/appTextPrimary"
+                    android:textColorHint="?attr/appTextSecondary" android:padding="12dp"
                     android:inputType="numberDecimal" android:layout_marginStart="4dp" android:layout_marginBottom="8dp"/>
             </LinearLayout>
 
             <EditText android:id="@+id/etWeight" android:layout_width="match_parent"
                 android:layout_height="48dp" android:hint="@string/ep_weight"
-                android:background="@drawable/input_bg" android:textColor="@color/white"
-                android:textColorHint="@color/text_secondary" android:padding="12dp"
+                android:background="@drawable/input_bg" android:textColor="?attr/appTextPrimary"
+                android:textColorHint="?attr/appTextSecondary" android:padding="12dp"
                 android:inputType="numberDecimal" android:layout_marginBottom="8dp"/>
 
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="@string/ep_gender" android:textColor="@color/text_secondary" android:layout_marginBottom="4dp"/>
+                android:text="@string/ep_gender" android:textColor="?attr/appTextSecondary" android:layout_marginBottom="4dp"/>
             <RadioGroup android:id="@+id/rgGender" android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:orientation="horizontal"
                 android:layout_marginBottom="8dp">
                 <RadioButton android:id="@+id/rbMale" android:layout_width="0dp"
                     android:layout_weight="1" android:layout_height="wrap_content"
-                    android:text="@string/ep_male" android:textColor="@color/white" android:checked="true"/>
+                    android:text="@string/ep_male" android:textColor="?attr/appTextPrimary" android:checked="true"/>
                 <RadioButton android:id="@+id/rbFemale" android:layout_width="0dp"
                     android:layout_weight="1" android:layout_height="wrap_content"
-                    android:text="@string/ep_female" android:textColor="@color/white"/>
+                    android:text="@string/ep_female" android:textColor="?attr/appTextPrimary"/>
             </RadioGroup>
 
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="@string/ep_goal" android:textColor="@color/text_secondary" android:layout_marginBottom="4dp"/>
+                android:text="@string/ep_goal" android:textColor="?attr/appTextSecondary" android:layout_marginBottom="4dp"/>
             <RadioGroup android:id="@+id/rgGoal" android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:layout_marginBottom="8dp">
                 <RadioButton android:id="@+id/rbMaintain" android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:text="@string/lay_goal_maintain"
-                    android:textColor="@color/white" android:checked="true"/>
+                    android:textColor="?attr/appTextPrimary" android:checked="true"/>
                 <RadioButton android:id="@+id/rbLose" android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:text="@string/lay_goal_lose" android:textColor="@color/white"/>
+                    android:layout_height="wrap_content" android:text="@string/lay_goal_lose" android:textColor="?attr/appTextPrimary"/>
                 <RadioButton android:id="@+id/rbGain" android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:text="@string/lay_goal_gain2" android:textColor="@color/white"/>
+                    android:layout_height="wrap_content" android:text="@string/lay_goal_gain2" android:textColor="?attr/appTextPrimary"/>
                 <RadioButton android:id="@+id/rbHealthy" android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:text="@string/lay_goal_healthy" android:textColor="@color/white"/>
+                    android:layout_height="wrap_content" android:text="@string/lay_goal_healthy" android:textColor="?attr/appTextPrimary"/>
             </RadioGroup>
 
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="@string/ep_activity" android:textColor="@color/text_secondary" android:layout_marginBottom="4dp"/>
+                android:text="@string/ep_activity" android:textColor="?attr/appTextSecondary" android:layout_marginBottom="4dp"/>
             <RadioGroup android:id="@+id/rgActivity" android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:layout_marginBottom="12dp">
                 <RadioButton android:id="@+id/rbSedentary" android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:text="@string/lay_act_sedentary" android:textColor="@color/white"/>
+                    android:layout_height="wrap_content" android:text="@string/lay_act_sedentary" android:textColor="?attr/appTextPrimary"/>
                 <RadioButton android:id="@+id/rbLight" android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:text="@string/lay_act_light" android:textColor="@color/white"/>
+                    android:layout_height="wrap_content" android:text="@string/lay_act_light" android:textColor="?attr/appTextPrimary"/>
                 <RadioButton android:id="@+id/rbModerate" android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:text="@string/lay_act_moderate"
-                    android:textColor="@color/white" android:checked="true"/>
+                    android:textColor="?attr/appTextPrimary" android:checked="true"/>
                 <RadioButton android:id="@+id/rbActive" android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:text="@string/lay_act_active" android:textColor="@color/white"/>
+                    android:layout_height="wrap_content" android:text="@string/lay_act_active" android:textColor="?attr/appTextPrimary"/>
                 <RadioButton android:id="@+id/rbVeryActive" android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:text="@string/lay_act_veryactive" android:textColor="@color/white"/>
+                    android:layout_height="wrap_content" android:text="@string/lay_act_veryactive" android:textColor="?attr/appTextPrimary"/>
             </RadioGroup>
 
         </LinearLayout>
@@ -113,6 +113,6 @@
     <!-- Закреплённая кнопка внизу (вне прокрутки) -->
     <Button android:id="@+id/btnSave" android:layout_width="match_parent"
         android:layout_height="52dp" android:background="@drawable/btn_gradient"
-        android:text="@string/c_save" android:textColor="@color/white" android:textStyle="bold"
+        android:text="@string/c_save" android:textColor="?attr/appTextPrimary" android:textStyle="bold"
         android:layout_margin="16dp"/>
 </LinearLayout>

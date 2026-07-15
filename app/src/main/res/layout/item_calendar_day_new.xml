@@ -5,7 +5,7 @@
     android:layout_width="90dp"
     android:layout_height="160dp"
     android:layout_margin="4dp"
-    app:cardBackgroundColor="@color/card_bg"
+    app:cardBackgroundColor="?attr/appCardBg"
     app:cardCornerRadius="16dp"
     app:cardElevation="0dp">
 
@@ -21,12 +21,12 @@
         <!-- Day name (Mon, Tue...) -->
         <TextView android:id="@+id/tvDayName"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:textColor="@color/text_secondary" android:textSize="11sp"/>
+            android:textColor="?attr/appTextSecondary" android:textSize="11sp"/>
 
         <!-- Day number -->
         <TextView android:id="@+id/tvDayNum"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:textColor="@color/white" android:textSize="22sp" android:textStyle="bold"/>
+            android:textColor="?attr/appTextPrimary" android:textSize="22sp" android:textStyle="bold"/>
 
         <!-- Progress bar -->
         <ProgressBar android:id="@+id/progressDay"
@@ -38,7 +38,7 @@
         <!-- Calories consumed -->
         <TextView android:id="@+id/tvConsumed"
             android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:textColor="@color/white" android:textSize="11sp"
+            android:textColor="?attr/appTextPrimary" android:textSize="11sp"
             android:gravity="center" android:textStyle="bold"/>
 
         <!-- Deficit/surplus -->

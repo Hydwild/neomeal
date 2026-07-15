@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     app:cardCornerRadius="20dp"
     app:cardElevation="8dp"
-    app:cardBackgroundColor="@color/card_bg">
+    app:cardBackgroundColor="?attr/appCardBg">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/toast_title_ph"
-                android:textColor="@color/white"
+                android:textColor="?attr/appTextPrimary"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_marginTop="2dp"/>
@@ -53,7 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/toast_desc_ph"
-                android:textColor="@color/text_secondary"
+                android:textColor="?attr/appTextSecondary"
                 android:textSize="12sp"
                 android:maxLines="2"
                 android:layout_marginTop="1dp"/>

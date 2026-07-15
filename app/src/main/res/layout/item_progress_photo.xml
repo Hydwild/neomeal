@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
-    app:cardBackgroundColor="@color/card_bg"
+    app:cardBackgroundColor="?attr/appCardBg"
     app:cardCornerRadius="16dp"
     app:cardElevation="0dp">
 
@@ -37,7 +37,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textColor="@color/white"
+                    android:textColor="?attr/appTextPrimary"
                     android:textSize="14sp"
                     android:textStyle="bold"/>
                 <TextView
@@ -45,7 +45,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textColor="@color/text_secondary"
+                    android:textColor="?attr/appTextSecondary"
                     android:textSize="12sp"/>
             </LinearLayout>
 

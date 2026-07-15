@@ -2,14 +2,14 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/bottom_sheet_bg">
+    android:background="?attr/appBottomSheetBg">
 
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="vertical" android:padding="16dp">
 
         <TextView android:id="@+id/tvTitle" android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:text="@string/epr_add_product"
-            android:textColor="@color/white" android:textSize="18sp"
+            android:textColor="?attr/appTextPrimary" android:textSize="18sp"
             android:textStyle="bold" android:layout_marginBottom="12dp"/>
 
         <ImageView android:id="@+id/ivProductPhoto" android:layout_width="80dp"
@@ -20,8 +20,8 @@
 
         <EditText android:id="@+id/etName" android:layout_width="match_parent"
             android:layout_height="48dp" android:hint="@string/epr_name"
-            android:background="@drawable/input_bg" android:textColor="@color/white"
-            android:textColorHint="@color/text_secondary" android:padding="12dp"
+            android:background="@drawable/input_bg" android:textColor="?attr/appTextPrimary"
+            android:textColorHint="?attr/appTextSecondary" android:padding="12dp"
             android:layout_marginBottom="8dp"/>
 
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -29,13 +29,13 @@
             <EditText android:id="@+id/etCalories" android:layout_width="0dp"
                 android:layout_weight="1" android:layout_height="48dp"
                 android:hint="@string/epr_kcal" android:background="@drawable/input_bg"
-                android:textColor="@color/white" android:textColorHint="@color/text_secondary"
+                android:textColor="?attr/appTextPrimary" android:textColorHint="?attr/appTextSecondary"
                 android:padding="12dp" android:inputType="numberDecimal"
                 android:layout_marginEnd="4dp" android:layout_marginBottom="8dp"/>
             <EditText android:id="@+id/etProtein" android:layout_width="0dp"
                 android:layout_weight="1" android:layout_height="48dp"
                 android:hint="@string/an_macro_protein" android:background="@drawable/input_bg"
-                android:textColor="@color/white" android:textColorHint="@color/text_secondary"
+                android:textColor="?attr/appTextPrimary" android:textColorHint="?attr/appTextSecondary"
                 android:padding="12dp" android:inputType="numberDecimal"
                 android:layout_marginStart="4dp" android:layout_marginBottom="8dp"/>
         </LinearLayout>
@@ -45,21 +45,21 @@
             <EditText android:id="@+id/etFat" android:layout_width="0dp"
                 android:layout_weight="1" android:layout_height="48dp"
                 android:hint="@string/an_macro_fat" android:background="@drawable/input_bg"
-                android:textColor="@color/white" android:textColorHint="@color/text_secondary"
+                android:textColor="?attr/appTextPrimary" android:textColorHint="?attr/appTextSecondary"
                 android:padding="12dp" android:inputType="numberDecimal"
                 android:layout_marginEnd="4dp" android:layout_marginBottom="8dp"/>
             <EditText android:id="@+id/etCarbs" android:layout_width="0dp"
                 android:layout_weight="1" android:layout_height="48dp"
                 android:hint="@string/an_macro_carbs" android:background="@drawable/input_bg"
-                android:textColor="@color/white" android:textColorHint="@color/text_secondary"
+                android:textColor="?attr/appTextPrimary" android:textColorHint="?attr/appTextSecondary"
                 android:padding="12dp" android:inputType="numberDecimal"
                 android:layout_marginStart="4dp" android:layout_marginBottom="8dp"/>
         </LinearLayout>
 
         <EditText android:id="@+id/etCategory" android:layout_width="match_parent"
             android:layout_height="48dp" android:hint="@string/epr_category"
-            android:background="@drawable/input_bg" android:textColor="@color/white"
-            android:textColorHint="@color/text_secondary" android:padding="12dp"
+            android:background="@drawable/input_bg" android:textColor="?attr/appTextPrimary"
+            android:textColorHint="?attr/appTextSecondary" android:padding="12dp"
             android:layout_marginBottom="8dp"/>
 
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -71,18 +71,18 @@
 
             <EditText android:id="@+id/etPrice" android:layout_width="0dp" android:layout_weight="1"
                 android:layout_height="48dp" android:hint="@string/epr_price"
-                android:background="@drawable/input_bg" android:textColor="@color/white"
-                android:textColorHint="@color/text_secondary" android:padding="12dp"
+                android:background="@drawable/input_bg" android:textColor="?attr/appTextPrimary"
+                android:textColorHint="?attr/appTextSecondary" android:padding="12dp"
                 android:inputType="numberDecimal"/>
         </LinearLayout>
 
         <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
             android:text="@string/epr_price_hint"
-            android:textColor="@color/text_secondary" android:textSize="11sp"
+            android:textColor="?attr/appTextSecondary" android:textSize="11sp"
             android:layout_marginStart="4dp" android:layout_marginBottom="10dp"/>
 
         <Button android:id="@+id/btnSave" android:layout_width="match_parent"
             android:layout_height="52dp" android:background="@drawable/btn_gradient"
-            android:text="@string/c_save" android:textColor="@color/white" android:textStyle="bold"/>
+            android:text="@string/c_save" android:textColor="?attr/appTextPrimary" android:textStyle="bold"/>
     </LinearLayout>
 </ScrollView>

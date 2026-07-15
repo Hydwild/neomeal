@@ -17,20 +17,20 @@
     <TextView android:id="@+id/tvDayName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/text_secondary"
+        android:textColor="?attr/appTextSecondary"
         android:textSize="11sp"/>
 
     <TextView android:id="@+id/tvDayNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
+        android:textColor="?attr/appTextPrimary"
         android:textSize="22sp"
         android:textStyle="bold"/>
 
     <TextView android:id="@+id/tvCalories"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/text_secondary"
+        android:textColor="?attr/appTextSecondary"
         android:textSize="10sp"
         android:gravity="center"
         android:layout_marginTop="4dp"/>

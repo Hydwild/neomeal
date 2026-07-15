@@ -28,7 +28,7 @@
                 android:layout_height="40dp"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:src="@android:drawable/ic_media_previous"
-                android:tint="@color/white"
+                android:tint="?attr/appTextPrimary"
                 android:contentDescription="Прошлый месяц"/>
 
             <TextView
@@ -37,7 +37,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="@string/cal_month_ph"
-                android:textColor="@color/white"
+                android:textColor="?attr/appTextPrimary"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:gravity="center"/>
@@ -48,7 +48,7 @@
                 android:layout_height="40dp"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:src="@android:drawable/ic_media_next"
-                android:tint="@color/white"
+                android:tint="?attr/appTextPrimary"
                 android:contentDescription="Следующий месяц"/>
         </LinearLayout>
 
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="@string/calendar_today"
-            android:textColor="@color/white"
+            android:textColor="?attr/appTextPrimary"
             android:textSize="13sp"
             android:padding="6dp"
             android:background="?android:attr/selectableItemBackgroundBorderless"
@@ -112,7 +112,7 @@
                 android:layout_marginEnd="4dp"/>
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:text="@string/cal_norm"
-                android:textColor="@color/text_secondary" android:textSize="11sp"
+                android:textColor="?attr/appTextSecondary" android:textSize="11sp"
                 android:layout_marginEnd="14dp"/>
 
             <View android:layout_width="8dp" android:layout_height="8dp"
@@ -120,7 +120,7 @@
                 android:layout_marginEnd="4dp"/>
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:text="@string/cal_close"
-                android:textColor="@color/text_secondary" android:textSize="11sp"
+                android:textColor="?attr/appTextSecondary" android:textSize="11sp"
                 android:layout_marginEnd="14dp"/>
 
             <View android:layout_width="8dp" android:layout_height="8dp"
@@ -128,14 +128,14 @@
                 android:layout_marginEnd="4dp"/>
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:text="@string/cal_miss"
-                android:textColor="@color/text_secondary" android:textSize="11sp"/>
+                android:textColor="?attr/appTextSecondary" android:textSize="11sp"/>
         </LinearLayout>
 
         <!-- Мини-чарт калорий за месяц -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/card_bg"
+            app:cardBackgroundColor="?attr/appCardBg"
             app:cardCornerRadius="16dp"
             app:cardElevation="2dp"
             android:layout_marginBottom="14dp"
@@ -159,7 +159,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="@string/lay_cal_month"
-                        android:textColor="@color/white"
+                        android:textColor="?attr/appTextPrimary"
                         android:textSize="14sp"
                         android:textStyle="bold"/>
 
@@ -184,7 +184,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/card_bg"
+            app:cardBackgroundColor="?attr/appCardBg"
             app:cardCornerRadius="20dp"
             app:cardElevation="4dp"
             xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -200,7 +200,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/cal_today"
-                    android:textColor="@color/white"
+                    android:textColor="?attr/appTextPrimary"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:layout_marginBottom="14dp"/>
@@ -211,7 +211,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/lay_cal_0_0"
-                    android:textColor="@color/white"
+                    android:textColor="?attr/appTextPrimary"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:layout_marginBottom="4dp"/>
@@ -238,7 +238,7 @@
                         android:gravity="center">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                             android:text="@string/lay_protein"
-                            android:textColor="@color/text_secondary" android:textSize="11sp"/>
+                            android:textColor="?attr/appTextSecondary" android:textSize="11sp"/>
                         <TextView android:id="@+id/tvProtein"
                             android:layout_width="wrap_content" android:layout_height="wrap_content"
                             android:text="@string/lay_0_g"
@@ -250,7 +250,7 @@
                         android:gravity="center">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                             android:text="@string/lay_fat"
-                            android:textColor="@color/text_secondary" android:textSize="11sp"/>
+                            android:textColor="?attr/appTextSecondary" android:textSize="11sp"/>
                         <TextView android:id="@+id/tvFat"
                             android:layout_width="wrap_content" android:layout_height="wrap_content"
                             android:text="@string/lay_0_g"
@@ -262,7 +262,7 @@
                         android:gravity="center">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                             android:text="@string/lay_carbs"
-                            android:textColor="@color/text_secondary" android:textSize="11sp"/>
+                            android:textColor="?attr/appTextSecondary" android:textSize="11sp"/>
                         <TextView android:id="@+id/tvCarbs"
                             android:layout_width="wrap_content" android:layout_height="wrap_content"
                             android:text="@string/lay_0_g"
@@ -283,7 +283,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="@string/lay_water_0_0"
-                        android:textColor="@color/white"
+                        android:textColor="?attr/appTextPrimary"
                         android:textSize="14sp"/>
 
                     <TextView
@@ -292,7 +292,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text=""
-                        android:textColor="@color/white"
+                        android:textColor="?attr/appTextPrimary"
                         android:textSize="14sp"
                         android:gravity="end"/>
                 </LinearLayout>
@@ -302,7 +302,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/lay_eaten_that_day"
-                    android:textColor="@color/text_secondary"
+                    android:textColor="?attr/appTextSecondary"
                     android:textSize="12sp"
                     android:layout_marginBottom="6dp"/>
 
@@ -318,7 +318,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/cal_no_records"
-                    android:textColor="@color/text_secondary"
+                    android:textColor="?attr/appTextSecondary"
                     android:textSize="13sp"
                     android:gravity="center"
                     android:padding="12dp"
@@ -330,7 +330,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
                     android:text="@string/lay_open_diary"
-                    android:textColor="@color/white"
+                    android:textColor="?attr/appTextPrimary"
                     android:textAllCaps="false"
                     android:background="@drawable/btn_gradient"/>
 

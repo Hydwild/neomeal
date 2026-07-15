@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/lay_water_reminders"
-            android:textColor="@color/white"
+            android:textColor="?attr/appTextPrimary"
             android:textSize="24sp"
             android:textStyle="bold"
             android:layout_marginBottom="18dp"/>
@@ -25,7 +25,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:layout_marginBottom="14dp"
-            app:cardBackgroundColor="@color/card_bg" app:cardCornerRadius="20dp" app:cardElevation="0dp">
+            app:cardBackgroundColor="?attr/appCardBg" app:cardCornerRadius="20dp" app:cardElevation="0dp">
 
             <LinearLayout
                 android:id="@+id/rowEnable"
@@ -38,7 +38,7 @@
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:text="🔔" android:textSize="22sp" android:layout_marginEnd="16dp"/>
                 <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
-                    android:text="@string/wr_remind" android:textColor="@color/white" android:textSize="16sp"/>
+                    android:text="@string/wr_remind" android:textColor="?attr/appTextPrimary" android:textSize="16sp"/>
                 <Switch
                     android:id="@+id/switchWaterReminder"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -57,14 +57,14 @@
             <!-- Интервал -->
             <TextView
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="@string/wr_interval" android:textColor="@color/text_secondary"
+                android:text="@string/wr_interval" android:textColor="?attr/appTextSecondary"
                 android:textSize="11sp" android:letterSpacing="0.1"
                 android:layout_marginStart="6dp" android:layout_marginBottom="8dp"/>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:cardBackgroundColor="@color/card_bg" app:cardCornerRadius="20dp" app:cardElevation="0dp">
+                app:cardBackgroundColor="?attr/appCardBg" app:cardCornerRadius="20dp" app:cardElevation="0dp">
 
                 <RadioGroup
                     android:id="@+id/rgInterval"
@@ -73,30 +73,30 @@
 
                     <RadioButton android:id="@+id/rb60"  android:layout_width="match_parent"
                         android:layout_height="52dp" android:text="@string/wr_every_hour"
-                        android:textColor="@color/white" android:paddingStart="10dp"/>
+                        android:textColor="?attr/appTextPrimary" android:paddingStart="10dp"/>
                     <RadioButton android:id="@+id/rb90"  android:layout_width="match_parent"
                         android:layout_height="52dp" android:text="@string/wr_every_15"
-                        android:textColor="@color/white" android:paddingStart="10dp"/>
+                        android:textColor="?attr/appTextPrimary" android:paddingStart="10dp"/>
                     <RadioButton android:id="@+id/rb120" android:layout_width="match_parent"
                         android:layout_height="52dp" android:text="@string/wr_every_2"
-                        android:textColor="@color/white" android:paddingStart="10dp" android:checked="true"/>
+                        android:textColor="?attr/appTextPrimary" android:paddingStart="10dp" android:checked="true"/>
                     <RadioButton android:id="@+id/rb180" android:layout_width="match_parent"
                         android:layout_height="52dp" android:text="@string/wr_every_3"
-                        android:textColor="@color/white" android:paddingStart="10dp"/>
+                        android:textColor="?attr/appTextPrimary" android:paddingStart="10dp"/>
                 </RadioGroup>
             </androidx.cardview.widget.CardView>
 
             <!-- Время активности -->
             <TextView
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="@string/wr_times" android:textColor="@color/text_secondary"
+                android:text="@string/wr_times" android:textColor="?attr/appTextSecondary"
                 android:textSize="11sp" android:letterSpacing="0.1"
                 android:layout_marginStart="6dp" android:layout_marginBottom="8dp"/>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:cardBackgroundColor="@color/card_bg" app:cardCornerRadius="20dp" app:cardElevation="0dp">
+                app:cardBackgroundColor="?attr/appCardBg" app:cardCornerRadius="20dp" app:cardElevation="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -109,7 +109,7 @@
                         android:background="?android:attr/selectableItemBackground"
                         android:clickable="true" android:focusable="true">
                         <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
-                            android:text="@string/lay_start" android:textColor="@color/white" android:textSize="15sp"/>
+                            android:text="@string/lay_start" android:textColor="?attr/appTextPrimary" android:textSize="15sp"/>
                         <TextView android:id="@+id/tvStartTime" android:layout_width="wrap_content"
                             android:layout_height="wrap_content" android:text="09:00"
                             android:textColor="@color/color_accent" android:textSize="16sp" android:textStyle="bold"/>
@@ -125,7 +125,7 @@
                         android:background="?android:attr/selectableItemBackground"
                         android:clickable="true" android:focusable="true">
                         <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
-                            android:text="@string/lay_end" android:textColor="@color/white" android:textSize="15sp"/>
+                            android:text="@string/lay_end" android:textColor="?attr/appTextPrimary" android:textSize="15sp"/>
                         <TextView android:id="@+id/tvEndTime" android:layout_width="wrap_content"
                             android:layout_height="wrap_content" android:text="21:00"
                             android:textColor="@color/color_accent" android:textSize="16sp" android:textStyle="bold"/>
@@ -138,7 +138,7 @@
                 android:id="@+id/tvSummary"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text=""
-                android:textColor="@color/text_secondary" android:textSize="13sp"
+                android:textColor="?attr/appTextSecondary" android:textSize="13sp"
                 android:gravity="center" android:padding="12dp"/>
 
             <!-- Умное напоминание -->
@@ -158,11 +158,11 @@
                     <TextView
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="@string/smart_water_toggle"
-                        android:textColor="@color/white" android:textSize="15sp"/>
+                        android:textColor="?attr/appTextPrimary" android:textSize="15sp"/>
                     <TextView
                         android:layout_width="match_parent" android:layout_height="wrap_content"
                         android:text="@string/smart_water_toggle_desc"
-                        android:textColor="@color/text_secondary" android:textSize="12sp"
+                        android:textColor="?attr/appTextSecondary" android:textSize="12sp"
                         android:layout_marginTop="2dp"/>
                 </LinearLayout>
 
@@ -175,7 +175,7 @@
             <TextView
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:text="@string/lay_notif_battery_warn"
-                android:textColor="@color/text_secondary" android:textSize="12sp"
+                android:textColor="?attr/appTextSecondary" android:textSize="12sp"
                 android:lineSpacingExtra="2dp"
                 android:layout_marginTop="8dp" android:layout_marginStart="6dp"
                 android:layout_marginEnd="6dp"/>
@@ -184,7 +184,7 @@
                 android:id="@+id/btnBatterySettings"
                 android:layout_width="match_parent" android:layout_height="52dp"
                 android:text="@string/lay_battery_settings"
-                android:textColor="@color/white" android:textAllCaps="false"
+                android:textColor="?attr/appTextPrimary" android:textAllCaps="false"
                 android:background="@drawable/btn_gradient"
                 android:layout_marginTop="10dp"/>
 

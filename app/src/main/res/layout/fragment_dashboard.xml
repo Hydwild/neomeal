@@ -38,7 +38,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/lay_greet_default"
-                    android:textColor="@color/white"
+                    android:textColor="?attr/appTextPrimary"
                     android:textSize="14sp"/>
 
                 <TextView
@@ -46,7 +46,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/greet_hi_lay"
-                    android:textColor="@color/white"
+                    android:textColor="?attr/appTextPrimary"
                     android:textSize="26sp"
                     android:textStyle="bold"/>
 
@@ -55,7 +55,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/greet_ready_lay"
-                    android:textColor="@color/white"
+                    android:textColor="?attr/appTextPrimary"
                     android:textSize="13sp"
                     android:layout_marginTop="2dp"/>
 
@@ -90,7 +90,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            app:cardBackgroundColor="@color/card_bg"
+            app:cardBackgroundColor="?attr/appCardBg"
             app:cardCornerRadius="20dp"
             app:cardElevation="0dp">
 
@@ -114,7 +114,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="@string/lay_calories"
-                        android:textColor="@color/text_secondary"
+                        android:textColor="?attr/appTextSecondary"
                         android:textSize="13sp"/>
 
                     <ImageButton
@@ -123,7 +123,7 @@
                         android:layout_height="34dp"
                         android:background="@drawable/btn_round"
                         android:src="@drawable/ic_settings"
-                        android:tint="@color/text_secondary"
+                        android:tint="?attr/appTextSecondary"
                         android:contentDescription="Режим"/>
                 </LinearLayout>
 
@@ -169,7 +169,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/lay_cal_0_2000"
-                        android:textColor="@color/white"
+                        android:textColor="?attr/appTextPrimary"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:layout_marginBottom="14dp"/>
@@ -195,7 +195,7 @@
                             <View android:layout_width="8dp" android:layout_height="8dp"
                                 android:background="@drawable/macro_dot_protein" android:layout_marginEnd="6dp"/>
                             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                android:text="@string/lay_macro_protein" android:textColor="@color/white" android:textSize="12sp" android:alpha="0.75"/>
+                                android:text="@string/lay_macro_protein" android:textColor="?attr/appTextPrimary" android:textSize="12sp" android:alpha="0.75"/>
                         </LinearLayout>
                         <TextView android:id="@+id/tvProtein" android:layout_width="wrap_content"
                             android:layout_height="wrap_content" android:text="@string/lay_0_g"
@@ -213,7 +213,7 @@
                             <View android:layout_width="8dp" android:layout_height="8dp"
                                 android:background="@drawable/macro_dot_fat" android:layout_marginEnd="6dp"/>
                             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                android:text="@string/lay_macro_fat" android:textColor="@color/white" android:textSize="12sp" android:alpha="0.75"/>
+                                android:text="@string/lay_macro_fat" android:textColor="?attr/appTextPrimary" android:textSize="12sp" android:alpha="0.75"/>
                         </LinearLayout>
                         <TextView android:id="@+id/tvFat" android:layout_width="wrap_content"
                             android:layout_height="wrap_content" android:text="@string/lay_0_g"
@@ -231,7 +231,7 @@
                             <View android:layout_width="8dp" android:layout_height="8dp"
                                 android:background="@drawable/macro_dot_carbs" android:layout_marginEnd="6dp"/>
                             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                android:text="@string/lay_macro_carbs" android:textColor="@color/white" android:textSize="12sp" android:alpha="0.75"/>
+                                android:text="@string/lay_macro_carbs" android:textColor="?attr/appTextPrimary" android:textSize="12sp" android:alpha="0.75"/>
                         </LinearLayout>
                         <TextView android:id="@+id/tvCarbs" android:layout_width="wrap_content"
                             android:layout_height="wrap_content" android:text="@string/lay_0_g"
@@ -246,7 +246,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textColor="@color/text_secondary"
+                    android:textColor="?attr/appTextSecondary"
                     android:textSize="12sp"
                     android:paddingBottom="12dp"
                     android:visibility="gone"/>
@@ -259,7 +259,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            app:cardBackgroundColor="@color/card_bg"
+            app:cardBackgroundColor="?attr/appCardBg"
             app:cardCornerRadius="20dp"
             app:cardElevation="0dp"
             android:visibility="gone">
@@ -277,7 +277,7 @@
                     <TextView android:id="@+id/tvSuggestTitle"
                         android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
                         android:text="@string/sug_card_title"
-                        android:textColor="@color/white" android:textStyle="bold" android:textSize="16sp"/>
+                        android:textColor="?attr/appTextPrimary" android:textStyle="bold" android:textSize="16sp"/>
                     <TextView android:id="@+id/tvSuggestArrow"
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="▸" android:textColor="@color/color_accent" android:textSize="18sp"/>
@@ -289,14 +289,14 @@
                     <TextView android:id="@+id/tvSuggestSub"
                         android:layout_width="match_parent" android:layout_height="wrap_content"
                         android:text="@string/sug_card_title"
-                        android:textColor="@color/text_secondary" android:textSize="12sp"
+                        android:textColor="?attr/appTextSecondary" android:textSize="12sp"
                         android:layout_marginTop="6dp"/>
                     <LinearLayout android:id="@+id/containerSuggest"
                         android:layout_width="match_parent" android:layout_height="wrap_content"
                         android:orientation="vertical" android:layout_marginTop="10dp"/>
                     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
                         android:text="@string/sug_disclaimer"
-                        android:textColor="@color/text_secondary" android:textSize="10sp"
+                        android:textColor="?attr/appTextSecondary" android:textSize="10sp"
                         android:layout_marginTop="10dp" android:alpha="0.8"/>
                 </LinearLayout>
             </LinearLayout>
@@ -307,7 +307,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            app:cardBackgroundColor="@color/card_bg"
+            app:cardBackgroundColor="?attr/appCardBg"
             app:cardCornerRadius="24dp"
             app:cardElevation="0dp">
 
@@ -329,7 +329,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/lay_water"
-                        android:textColor="@color/white"
+                        android:textColor="?attr/appTextPrimary"
                         android:textStyle="bold"
                         android:textSize="15sp"/>
 
@@ -342,7 +342,7 @@
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:src="@drawable/ic_settings"
                         android:contentDescription="@string/ds_water_mode_title"
-                        app:tint="@color/text_secondary"/>
+                        app:tint="?attr/appTextSecondary"/>
 
                     <ImageButton
                         android:id="@+id/btnWaterReminder"
@@ -404,7 +404,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/lay_0_ml"
-                                android:textColor="@color/white"
+                                android:textColor="?attr/appTextPrimary"
                                 android:textStyle="bold"
                                 android:textSize="26sp"/>
 
@@ -416,7 +416,7 @@
                                 android:layout_gravity="bottom"
                                 android:paddingBottom="3dp"
                                 android:text="@string/lay_water_goal_ml"
-                                android:textColor="@color/text_secondary"
+                                android:textColor="?attr/appTextSecondary"
                                 android:textSize="14sp"/>
                         </LinearLayout>
 
@@ -491,7 +491,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/lay_water_goal_ml"
-                            android:textColor="@color/text_secondary"
+                            android:textColor="?attr/appTextSecondary"
                             android:textSize="13sp"/>
                     </LinearLayout>
 
@@ -520,7 +520,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
                     android:text="@string/lay_hold_glass"
-                    android:textColor="@color/text_secondary"
+                    android:textColor="?attr/appTextSecondary"
                     android:textSize="11sp"/>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -543,7 +543,7 @@
                         android:layout_marginEnd="4dp" android:text="+100"
                         android:textColor="@color/color_water" android:textSize="13sp"
                         app:cornerRadius="22dp"
-                        app:backgroundTint="@color/card_bg" app:strokeColor="@color/color_water" app:strokeWidth="1dp"
+                        app:backgroundTint="?attr/appCardBg" app:strokeColor="@color/color_water" app:strokeWidth="1dp"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
 
                     <com.google.android.material.button.MaterialButton
@@ -552,7 +552,7 @@
                         android:layout_marginStart="4dp" android:layout_marginEnd="4dp" android:text="+200"
                         android:textColor="@color/color_water" android:textSize="13sp"
                         app:cornerRadius="22dp"
-                        app:backgroundTint="@color/card_bg" app:strokeColor="@color/color_water" app:strokeWidth="1dp"
+                        app:backgroundTint="?attr/appCardBg" app:strokeColor="@color/color_water" app:strokeWidth="1dp"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
 
                     <com.google.android.material.button.MaterialButton
@@ -561,7 +561,7 @@
                         android:layout_marginStart="4dp" android:layout_marginEnd="4dp" android:text="+300"
                         android:textColor="@color/color_water" android:textSize="13sp"
                         app:cornerRadius="22dp"
-                        app:backgroundTint="@color/card_bg" app:strokeColor="@color/color_water" app:strokeWidth="1dp"
+                        app:backgroundTint="?attr/appCardBg" app:strokeColor="@color/color_water" app:strokeWidth="1dp"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
 
                     <com.google.android.material.button.MaterialButton
@@ -570,7 +570,7 @@
                         android:layout_marginStart="4dp" android:text="+500"
                         android:textColor="@color/color_water" android:textSize="13sp"
                         app:cornerRadius="22dp"
-                        app:backgroundTint="@color/card_bg" app:strokeColor="@color/color_water" app:strokeWidth="1dp"
+                        app:backgroundTint="?attr/appCardBg" app:strokeColor="@color/color_water" app:strokeWidth="1dp"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
                 </LinearLayout>
             </LinearLayout>
@@ -582,7 +582,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            app:cardBackgroundColor="@color/card_bg"
+            app:cardBackgroundColor="?attr/appCardBg"
             app:cardCornerRadius="20dp"
             app:cardElevation="0dp"
             android:visibility="gone"
@@ -608,7 +608,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="@string/lay_fasting"
-                        android:textColor="@color/white"
+                        android:textColor="?attr/appTextPrimary"
                         android:textSize="16sp"
                         android:textStyle="bold"/>
 
@@ -634,7 +634,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="00:00:00"
-                        android:textColor="@color/white"
+                        android:textColor="?attr/appTextPrimary"
                         android:textSize="30sp"
                         android:textStyle="bold"/>
 
@@ -664,7 +664,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textColor="@color/text_secondary"
+                    android:textColor="?attr/appTextSecondary"
                     android:textSize="13sp"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -677,7 +677,7 @@
             android:layout_marginBottom="12dp"
             android:background="@drawable/btn_gradient"
             android:text="@string/lay_add_food"
-            android:textColor="@color/white"
+            android:textColor="?attr/appTextPrimary"
             android:textSize="16sp"
             android:textStyle="bold"/>
 
@@ -685,7 +685,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/card_bg"
+            app:cardBackgroundColor="?attr/appCardBg"
             app:cardCornerRadius="20dp"
             app:cardElevation="0dp">
 
@@ -713,7 +713,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="@string/lay_eaten_today"
-                        android:textColor="@color/white"
+                        android:textColor="?attr/appTextPrimary"
                         android:textSize="15sp"
                         android:textStyle="bold"/>
 
@@ -762,7 +762,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/lay_hold_entry"
-                    android:textColor="@color/text_secondary"
+                    android:textColor="?attr/appTextSecondary"
                     android:textSize="11sp"
                     android:layout_marginBottom="6dp"
                     android:visibility="gone"/>
@@ -800,7 +800,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/diary_empty_title"
-                            android:textColor="@color/white"
+                            android:textColor="?attr/appTextPrimary"
                             android:textSize="15sp"
                             android:textStyle="bold"
                             android:layout_marginTop="10dp"/>
@@ -808,7 +808,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/diary_empty_sub"
-                            android:textColor="@color/text_secondary"
+                            android:textColor="?attr/appTextSecondary"
                             android:textSize="12sp"
                             android:layout_marginTop="4dp"
                             android:gravity="center"/>

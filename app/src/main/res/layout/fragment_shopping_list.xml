@@ -29,7 +29,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="@string/sl_title"
-                android:textColor="@color/white"
+                android:textColor="?attr/appTextPrimary"
                 android:textSize="24sp"
                 android:textStyle="bold"/>
 
@@ -41,14 +41,14 @@
                 android:contentDescription="@string/sl_share"
                 android:src="@android:drawable/ic_menu_share"
                 android:scaleType="centerInside"
-                app:tint="@color/white"/>
+                app:tint="?attr/appTextPrimary"/>
         </LinearLayout>
 
         <TextView
             android:id="@+id/tvShoppingSub"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/text_secondary"
+            android:textColor="?attr/appTextSecondary"
             android:textSize="13sp"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="6dp"/>
@@ -90,7 +90,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/sl_empty"
-                android:textColor="@color/text_secondary"
+                android:textColor="?attr/appTextSecondary"
                 android:textSize="14sp"
                 android:gravity="center"
                 android:layout_marginBottom="20dp"/>
@@ -100,7 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/sl_open_builder"
-                android:textColor="@color/white"
+                android:textColor="?attr/appTextPrimary"
                 android:background="@drawable/btn_gradient"
                 android:paddingStart="24dp"
                 android:paddingEnd="24dp"/>

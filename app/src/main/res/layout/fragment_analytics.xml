@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/lay_analytics"
-            android:textColor="@color/white"
+            android:textColor="?attr/appTextPrimary"
             android:textSize="24sp"
             android:textStyle="bold"
             android:layout_marginBottom="2dp"/>
@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/analytics_subtitle"
-            android:textColor="@color/white"
+            android:textColor="?attr/appTextPrimary"
             android:textSize="13sp"
             android:layout_marginBottom="16dp"/>
 
@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            app:cardBackgroundColor="@color/card_bg"
+            app:cardBackgroundColor="?attr/appCardBg"
             app:cardCornerRadius="20dp"
             app:cardElevation="0dp">
 
@@ -60,7 +60,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="@string/rep_title"
-                        android:textColor="@color/white"
+                        android:textColor="?attr/appTextPrimary"
                         android:textStyle="bold"
                         android:textSize="16sp"/>
 
@@ -91,7 +91,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            app:cardBackgroundColor="@color/card_bg"
+            app:cardBackgroundColor="?attr/appCardBg"
             app:cardCornerRadius="20dp"
             app:cardElevation="0dp">
 
@@ -105,7 +105,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/lay_cal_by_day"
-                    android:textColor="@color/white"
+                    android:textColor="?attr/appTextPrimary"
                     android:textStyle="bold"
                     android:textSize="15sp"
                     android:layout_marginBottom="4dp"/>
@@ -114,7 +114,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/lay_cal_legend"
-                    android:textColor="@color/text_secondary"
+                    android:textColor="?attr/appTextSecondary"
                     android:textSize="11sp"
                     android:layout_marginBottom="8dp"/>
 
@@ -130,7 +130,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            app:cardBackgroundColor="@color/card_bg"
+            app:cardBackgroundColor="?attr/appCardBg"
             app:cardCornerRadius="20dp"
             app:cardElevation="0dp">
 
@@ -144,7 +144,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/an_weight_history"
-                    android:textColor="@color/white"
+                    android:textColor="?attr/appTextPrimary"
                     android:textStyle="bold"
                     android:textSize="15sp"
                     android:layout_marginBottom="8dp"/>
@@ -162,7 +162,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="@string/lay_dash_kg"
-                        android:textColor="@color/white"
+                        android:textColor="?attr/appTextPrimary"
                         android:textSize="28sp"
                         android:textStyle="bold"/>
 
@@ -192,8 +192,8 @@
                         android:layout_height="48dp"
                         android:hint="@string/an_new_weight"
                         android:background="@drawable/input_bg"
-                        android:textColor="@color/white"
-                        android:textColorHint="@color/text_secondary"
+                        android:textColor="?attr/appTextPrimary"
+                        android:textColorHint="?attr/appTextSecondary"
                         android:padding="12dp"
                         android:inputType="numberDecimal"
                         android:imeOptions="actionDone"/>
@@ -204,7 +204,7 @@
                         android:layout_height="48dp"
                         android:layout_marginStart="8dp"
                         android:text="@string/save"
-                        android:textColor="@color/white"
+                        android:textColor="?attr/appTextPrimary"
                         app:backgroundTint="@color/color_primary"
                         style="@style/Widget.MaterialComponents.Button"/>
                 </LinearLayout>
@@ -222,7 +222,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:text="@string/an_goal_not_set"
-                    android:textColor="@color/text_secondary"
+                    android:textColor="?attr/appTextSecondary"
                     android:textSize="14sp"
                     android:lineSpacingExtra="2dp"/>
 
@@ -246,7 +246,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            app:cardBackgroundColor="@color/card_bg"
+            app:cardBackgroundColor="?attr/appCardBg"
             app:cardCornerRadius="20dp"
             app:cardElevation="0dp">
 
@@ -260,7 +260,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/lay_macros_week"
-                    android:textColor="@color/white"
+                    android:textColor="?attr/appTextPrimary"
                     android:textStyle="bold"
                     android:textSize="15sp"
                     android:layout_marginBottom="8dp"/>
@@ -285,7 +285,7 @@
                             android:layout_height="wrap_content" android:text="--"
                             android:textColor="@color/accent_orange" android:textStyle="bold" android:textSize="20sp"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="@string/an_avg_cal" android:textColor="@color/text_secondary" android:textSize="11sp"
+                            android:text="@string/an_avg_cal" android:textColor="?attr/appTextSecondary" android:textSize="11sp"
                             android:layout_marginTop="2dp"/>
                     </LinearLayout>
 
@@ -297,7 +297,7 @@
                             android:layout_height="wrap_content" android:text="--"
                             android:textColor="@color/color_water" android:textStyle="bold" android:textSize="20sp"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="@string/an_avg_water" android:textColor="@color/text_secondary" android:textSize="11sp"
+                            android:text="@string/an_avg_water" android:textColor="?attr/appTextSecondary" android:textSize="11sp"
                             android:layout_marginTop="2dp"/>
                     </LinearLayout>
                 </LinearLayout>
@@ -313,7 +313,7 @@
                             android:layout_height="wrap_content" android:text="--"
                             android:textColor="@color/color_protein" android:textStyle="bold" android:textSize="18sp"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="@string/an_protein" android:textColor="@color/text_secondary" android:textSize="11sp"
+                            android:text="@string/an_protein" android:textColor="?attr/appTextSecondary" android:textSize="11sp"
                             android:layout_marginTop="2dp"/>
                     </LinearLayout>
                     <LinearLayout android:layout_width="0dp" android:layout_weight="1"
@@ -324,7 +324,7 @@
                             android:layout_height="wrap_content" android:text="--"
                             android:textColor="@color/color_fat" android:textStyle="bold" android:textSize="18sp"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="@string/an_fat" android:textColor="@color/text_secondary" android:textSize="11sp"
+                            android:text="@string/an_fat" android:textColor="?attr/appTextSecondary" android:textSize="11sp"
                             android:layout_marginTop="2dp"/>
                     </LinearLayout>
                     <LinearLayout android:layout_width="0dp" android:layout_weight="1"
@@ -335,7 +335,7 @@
                             android:layout_height="wrap_content" android:text="--"
                             android:textColor="@color/color_carbs" android:textStyle="bold" android:textSize="18sp"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="@string/an_carbs" android:textColor="@color/text_secondary" android:textSize="11sp"
+                            android:text="@string/an_carbs" android:textColor="?attr/appTextSecondary" android:textSize="11sp"
                             android:layout_marginTop="2dp"/>
                     </LinearLayout>
                 </LinearLayout>
@@ -348,16 +348,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:cardBackgroundColor="@color/card_bg"
+            app:cardBackgroundColor="?attr/appCardBg"
             app:cardCornerRadius="20dp"
             app:cardElevation="0dp">
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="vertical" android:padding="16dp">
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="@string/lay_food_expenses" android:textColor="@color/white"
+                    android:text="@string/lay_food_expenses" android:textColor="?attr/appTextPrimary"
                     android:textStyle="bold" android:textSize="15sp" android:layout_marginBottom="8dp"/>
                 <TextView android:id="@+id/tvBudgetStats" android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:textColor="@color/white"
+                    android:layout_height="wrap_content" android:textColor="?attr/appTextPrimary"
                     android:textSize="14sp" android:lineSpacingExtra="3dp"/>
 
                 <View android:layout_width="match_parent" android:layout_height="1dp"
@@ -367,7 +367,7 @@
                 <TextView android:id="@+id/tvTopSpendingTitle"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:text="@string/an_top_spent"
-                    android:textColor="@color/text_secondary" android:textSize="12sp"
+                    android:textColor="?attr/appTextSecondary" android:textSize="12sp"
                     android:layout_marginBottom="6dp"/>
 
                 <LinearLayout android:id="@+id/containerTopSpending"

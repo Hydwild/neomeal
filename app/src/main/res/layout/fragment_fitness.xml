@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/lay_activity2"
-            android:textColor="@color/white"
+            android:textColor="?attr/appTextPrimary"
             android:textSize="24sp"
             android:textStyle="bold"
             android:layout_marginBottom="12dp"/>
@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            app:cardBackgroundColor="@color/card_bg"
+            app:cardBackgroundColor="?attr/appCardBg"
             app:cardCornerRadius="20dp"
             app:cardElevation="0dp">
 
@@ -49,7 +49,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="🔗 Health Connect"
-                        android:textColor="@color/white"
+                        android:textColor="?attr/appTextPrimary"
                         android:textStyle="bold"
                         android:textSize="16sp"/>
 
@@ -59,7 +59,7 @@
                         android:layout_height="36dp"
                         android:background="@drawable/btn_gradient"
                         android:text="@string/fit_sync"
-                        android:textColor="@color/white"
+                        android:textColor="?attr/appTextPrimary"
                         android:textSize="13sp"/>
                 </LinearLayout>
 
@@ -68,7 +68,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/fit_tap_sync"
-                    android:textColor="@color/text_secondary"
+                    android:textColor="?attr/appTextSecondary"
                     android:textSize="12sp"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:text="@string/lay_hc_unavail"
-            android:textColor="@color/text_secondary"
+            android:textColor="?attr/appTextSecondary"
             android:textSize="13sp"
             android:visibility="gone"/>
 
@@ -88,7 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            app:cardBackgroundColor="@color/card_bg"
+            app:cardBackgroundColor="?attr/appCardBg"
             app:cardCornerRadius="20dp"
             app:cardElevation="0dp">
 
@@ -109,7 +109,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="@string/lay_steps_today"
-                        android:textColor="@color/text_secondary"
+                        android:textColor="?attr/appTextSecondary"
                         android:textSize="13sp"/>
 
                     <TextView
@@ -126,7 +126,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:textColor="@color/white"
+                    android:textColor="?attr/appTextPrimary"
                     android:textSize="36sp"
                     android:textStyle="bold"
                     android:layout_marginTop="4dp"
@@ -143,7 +143,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/fit_goal_steps"
-                    android:textColor="@color/text_secondary"
+                    android:textColor="?attr/appTextSecondary"
                     android:textSize="11sp"
                     android:layout_marginTop="4dp"/>
             </LinearLayout>
@@ -162,7 +162,7 @@
                 android:layout_weight="1"
                 android:layout_height="100dp"
                 android:layout_marginEnd="5dp"
-                app:cardBackgroundColor="@color/card_bg"
+                app:cardBackgroundColor="?attr/appCardBg"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp">
 
@@ -192,7 +192,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/fit_burned"
-                        android:textColor="@color/text_secondary"
+                        android:textColor="?attr/appTextSecondary"
                         android:textSize="11sp"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -203,7 +203,7 @@
                 android:layout_weight="1"
                 android:layout_height="100dp"
                 android:layout_marginStart="5dp"
-                app:cardBackgroundColor="@color/card_bg"
+                app:cardBackgroundColor="?attr/appCardBg"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp">
 
@@ -234,7 +234,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="—"
-                        android:textColor="@color/text_secondary"
+                        android:textColor="?attr/appTextSecondary"
                         android:textSize="11sp"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -252,7 +252,7 @@
                 android:layout_weight="1"
                 android:layout_height="80dp"
                 android:layout_marginEnd="5dp"
-                app:cardBackgroundColor="@color/card_bg"
+                app:cardBackgroundColor="?attr/appCardBg"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp">
 
@@ -267,14 +267,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="—"
-                        android:textColor="@color/white"
+                        android:textColor="?attr/appTextPrimary"
                         android:textStyle="bold"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/lay_distance"
-                        android:textColor="@color/text_secondary"
+                        android:textColor="?attr/appTextSecondary"
                         android:textSize="11sp"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -285,7 +285,7 @@
                 android:layout_weight="1"
                 android:layout_height="80dp"
                 android:layout_marginStart="5dp"
-                app:cardBackgroundColor="@color/card_bg"
+                app:cardBackgroundColor="?attr/appCardBg"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp">
 
@@ -300,14 +300,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="—"
-                        android:textColor="@color/white"
+                        android:textColor="?attr/appTextPrimary"
                         android:textStyle="bold"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/lay_activity"
-                        android:textColor="@color/text_secondary"
+                        android:textColor="?attr/appTextSecondary"
                         android:textSize="11sp"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -318,7 +318,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            app:cardBackgroundColor="@color/card_bg"
+            app:cardBackgroundColor="?attr/appCardBg"
             app:cardCornerRadius="20dp"
             app:cardElevation="0dp">
 
@@ -332,7 +332,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/lay_week"
-                    android:textColor="@color/white"
+                    android:textColor="?attr/appTextPrimary"
                     android:textStyle="bold"
                     android:layout_marginBottom="8dp"/>
 
@@ -341,7 +341,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/fit_avg_steps"
-                    android:textColor="@color/text_secondary"
+                    android:textColor="?attr/appTextSecondary"
                     android:textSize="14sp"/>
 
                 <TextView
@@ -349,7 +349,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/fit_total"
-                    android:textColor="@color/text_secondary"
+                    android:textColor="?attr/appTextSecondary"
                     android:textSize="14sp"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -359,7 +359,7 @@
             android:id="@+id/cardManual"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/card_bg"
+            app:cardBackgroundColor="?attr/appCardBg"
             app:cardCornerRadius="20dp"
             app:cardElevation="0dp">
 
@@ -380,14 +380,14 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="@string/lay_enter_manual"
-                        android:textColor="@color/white"
+                        android:textColor="?attr/appTextPrimary"
                         android:textStyle="bold"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="▼"
-                        android:textColor="@color/text_secondary"/>
+                        android:textColor="?attr/appTextSecondary"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -404,8 +404,8 @@
                         android:layout_height="52dp"
                         android:hint="@string/fit_steps"
                         android:background="@drawable/input_bg"
-                        android:textColor="@color/white"
-                        android:textColorHint="@color/text_secondary"
+                        android:textColor="?attr/appTextPrimary"
+                        android:textColorHint="?attr/appTextSecondary"
                         android:padding="12dp"
                         android:inputType="number"
                         android:layout_marginBottom="8dp"/>
@@ -416,8 +416,8 @@
                         android:layout_height="52dp"
                         android:hint="@string/fit_burned_kcal"
                         android:background="@drawable/input_bg"
-                        android:textColor="@color/white"
-                        android:textColorHint="@color/text_secondary"
+                        android:textColor="?attr/appTextPrimary"
+                        android:textColorHint="?attr/appTextSecondary"
                         android:padding="12dp"
                         android:inputType="numberDecimal"
                         android:layout_marginBottom="8dp"/>
@@ -428,8 +428,8 @@
                         android:layout_height="52dp"
                         android:hint="@string/fit_avg_pulse"
                         android:background="@drawable/input_bg"
-                        android:textColor="@color/white"
-                        android:textColorHint="@color/text_secondary"
+                        android:textColor="?attr/appTextPrimary"
+                        android:textColorHint="?attr/appTextSecondary"
                         android:padding="12dp"
                         android:inputType="number"
                         android:layout_marginBottom="12dp"/>
@@ -440,7 +440,7 @@
                         android:layout_height="52dp"
                         android:background="@drawable/btn_gradient"
                         android:text="@string/c_save"
-                        android:textColor="@color/white"/>
+                        android:textColor="?attr/appTextPrimary"/>
                 </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>

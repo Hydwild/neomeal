@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:background="@color/bottom_sheet_bg">
+    android:background="?attr/appBottomSheetBg">
 
     <!-- Заголовок (закреплён сверху) -->
     <TextView
@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/af_add_product"
-        android:textColor="@color/white"
+        android:textColor="?attr/appTextPrimary"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
@@ -26,7 +26,7 @@
         android:layout_height="52dp"
         android:background="@drawable/btn_gradient"
         android:text="@string/af_add"
-        android:textColor="@color/white"
+        android:textColor="?attr/appTextPrimary"
         android:textStyle="bold"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -40,8 +40,8 @@
         android:layout_height="48dp"
         android:hint="@string/lay_search_product"
         android:background="@drawable/input_bg"
-        android:textColor="@color/white"
-        android:textColorHint="@color/text_secondary"
+        android:textColor="?attr/appTextPrimary"
+        android:textColorHint="?attr/appTextSecondary"
         android:padding="12dp"
         android:inputType="text"
         android:imeOptions="actionSearch"
@@ -94,7 +94,7 @@
             android:layout_height="44dp"
             android:gravity="center"
             android:text="@string/lay_100_g"
-            android:textColor="@color/white"
+            android:textColor="?attr/appTextPrimary"
             android:textSize="18sp"
             android:textStyle="bold"
             android:background="@drawable/grams_clickable_bg"

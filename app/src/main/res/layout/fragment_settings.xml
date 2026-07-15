@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/set_title"
-            android:textColor="@color/white"
+            android:textColor="?attr/appTextPrimary"
             android:textSize="24sp"
             android:textStyle="bold"
             android:layout_marginBottom="18dp"/>
@@ -34,15 +34,15 @@
             <LinearLayout android:layout_width="0dp" android:layout_weight="1"
                 android:layout_height="wrap_content" android:orientation="vertical">
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="@string/set_sec_main" android:textColor="@color/white"
+                    android:text="@string/set_sec_main" android:textColor="?attr/appTextPrimary"
                     android:textSize="15sp" android:textStyle="bold"/>
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="@string/set_sub_main" android:textColor="@color/text_secondary"
+                    android:text="@string/set_sub_main" android:textColor="?attr/appTextSecondary"
                     android:textSize="12sp" android:layout_marginTop="1dp"/>
             </LinearLayout>
             <TextView android:id="@+id/tvChevronMain"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="▸" android:textColor="@color/text_secondary" android:textSize="18sp"/>
+                android:text="▸" android:textColor="?attr/appTextSecondary" android:textSize="18sp"/>
         </LinearLayout>
 
         <androidx.cardview.widget.CardView
@@ -50,7 +50,7 @@
             android:visibility="gone"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            app:cardBackgroundColor="@color/card_bg" app:cardCornerRadius="20dp" app:cardElevation="0dp">
+            app:cardBackgroundColor="?attr/appCardBg" app:cardCornerRadius="20dp" app:cardElevation="0dp">
 
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -64,13 +64,13 @@
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="🌍" android:textSize="20sp" android:layout_marginEnd="16dp"/>
                     <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
-                        android:text="@string/settings_language" android:textColor="@color/white" android:textSize="15sp"/>
+                        android:text="@string/settings_language" android:textColor="?attr/appTextPrimary" android:textSize="15sp"/>
                     <TextView android:id="@+id/tvCurrentLang" android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:text="@string/set_lang_ru"
-                        android:textColor="@color/text_secondary" android:textSize="13sp"
+                        android:textColor="?attr/appTextSecondary" android:textSize="13sp"
                         android:layout_marginEnd="6dp"/>
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="›" android:textColor="@color/text_secondary" android:textSize="22sp"/>
+                        android:text="›" android:textColor="?attr/appTextSecondary" android:textSize="22sp"/>
                 </LinearLayout>
 
                 <!-- Начало недели -->
@@ -83,13 +83,13 @@
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="📅" android:textSize="20sp" android:layout_marginEnd="16dp"/>
                     <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
-                        android:text="@string/set_week_start" android:textColor="@color/white" android:textSize="15sp"/>
+                        android:text="@string/set_week_start" android:textColor="?attr/appTextPrimary" android:textSize="15sp"/>
                     <TextView android:id="@+id/tvCurrentWeekStart" android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:text="@string/set_monday"
-                        android:textColor="@color/text_secondary" android:textSize="13sp"
+                        android:textColor="?attr/appTextSecondary" android:textSize="13sp"
                         android:layout_marginEnd="6dp"/>
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="›" android:textColor="@color/text_secondary" android:textSize="22sp"/>
+                        android:text="›" android:textColor="?attr/appTextSecondary" android:textSize="22sp"/>
                 </LinearLayout>
 
                 <!-- Единицы измерения -->
@@ -102,13 +102,13 @@
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="⚖️" android:textSize="20sp" android:layout_marginEnd="16dp"/>
                     <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
-                        android:text="@string/set_units" android:textColor="@color/white" android:textSize="15sp"/>
+                        android:text="@string/set_units" android:textColor="?attr/appTextPrimary" android:textSize="15sp"/>
                     <TextView android:id="@+id/tvCurrentUnits" android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:text="@string/set_units_metric"
-                        android:textColor="@color/text_secondary" android:textSize="13sp"
+                        android:textColor="?attr/appTextSecondary" android:textSize="13sp"
                         android:layout_marginEnd="6dp"/>
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="›" android:textColor="@color/text_secondary" android:textSize="22sp"/>
+                        android:text="›" android:textColor="?attr/appTextSecondary" android:textSize="22sp"/>
                 </LinearLayout>
 
                 <View android:layout_width="match_parent" android:layout_height="1dp"
@@ -123,13 +123,13 @@
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="💱" android:textSize="20sp" android:layout_marginEnd="16dp"/>
                     <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
-                        android:text="@string/set_currency" android:textColor="@color/white" android:textSize="15sp"/>
+                        android:text="@string/set_currency" android:textColor="?attr/appTextPrimary" android:textSize="15sp"/>
                     <TextView android:id="@+id/tvCurrentCurrency" android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:text="@string/set_currency_auto"
-                        android:textColor="@color/text_secondary" android:textSize="13sp"
+                        android:textColor="?attr/appTextSecondary" android:textSize="13sp"
                         android:layout_marginEnd="6dp"/>
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="›" android:textColor="@color/text_secondary" android:textSize="22sp"/>
+                        android:text="›" android:textColor="?attr/appTextSecondary" android:textSize="22sp"/>
                 </LinearLayout>
 
                 <View android:layout_width="match_parent" android:layout_height="1dp"
@@ -159,7 +159,7 @@
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_dark_theme"
-                        android:textColor="@color/white"
+                        android:textColor="?attr/appTextPrimary"
                         android:textSize="15sp"/>
 
                     <Switch
@@ -189,15 +189,15 @@
             <LinearLayout android:layout_width="0dp" android:layout_weight="1"
                 android:layout_height="wrap_content" android:orientation="vertical">
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="@string/set_sec_ui" android:textColor="@color/white"
+                    android:text="@string/set_sec_ui" android:textColor="?attr/appTextPrimary"
                     android:textSize="15sp" android:textStyle="bold"/>
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="@string/set_sub_ui" android:textColor="@color/text_secondary"
+                    android:text="@string/set_sub_ui" android:textColor="?attr/appTextSecondary"
                     android:textSize="12sp" android:layout_marginTop="1dp"/>
             </LinearLayout>
             <TextView android:id="@+id/tvChevronUi"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="▸" android:textColor="@color/text_secondary" android:textSize="18sp"/>
+                android:text="▸" android:textColor="?attr/appTextSecondary" android:textSize="18sp"/>
         </LinearLayout>
 
         <androidx.cardview.widget.CardView
@@ -205,7 +205,7 @@
             android:visibility="gone"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            app:cardBackgroundColor="@color/card_bg" app:cardCornerRadius="20dp" app:cardElevation="0dp">
+            app:cardBackgroundColor="?attr/appCardBg" app:cardCornerRadius="20dp" app:cardElevation="0dp">
 
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -219,13 +219,13 @@
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="🔤" android:textSize="20sp" android:layout_marginEnd="16dp"/>
                     <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
-                        android:text="@string/settings_font" android:textColor="@color/white" android:textSize="15sp"/>
+                        android:text="@string/settings_font" android:textColor="?attr/appTextPrimary" android:textSize="15sp"/>
                     <TextView android:id="@+id/tvCurrentFont" android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:text="@string/set_lang_system"
-                        android:textColor="@color/text_secondary" android:textSize="13sp"
+                        android:textColor="?attr/appTextSecondary" android:textSize="13sp"
                         android:layout_marginEnd="6dp"/>
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="›" android:textColor="@color/text_secondary" android:textSize="22sp"/>
+                        android:text="›" android:textColor="?attr/appTextSecondary" android:textSize="22sp"/>
                 </LinearLayout>
 
                 <!-- Акцентный цвет -->
@@ -238,13 +238,13 @@
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="🎨" android:textSize="20sp" android:layout_marginEnd="16dp"/>
                     <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
-                        android:text="@string/set_accent" android:textColor="@color/white" android:textSize="15sp"/>
+                        android:text="@string/set_accent" android:textColor="?attr/appTextPrimary" android:textSize="15sp"/>
                     <TextView android:id="@+id/tvCurrentAccent" android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:text="@string/lay_purple"
-                        android:textColor="@color/text_secondary" android:textSize="13sp"
+                        android:textColor="?attr/appTextSecondary" android:textSize="13sp"
                         android:layout_marginEnd="6dp"/>
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="›" android:textColor="@color/text_secondary" android:textSize="22sp"/>
+                        android:text="›" android:textColor="?attr/appTextSecondary" android:textSize="22sp"/>
                 </LinearLayout>
 
                 <!-- Фоновое оформление -->
@@ -257,13 +257,13 @@
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="🖼️" android:textSize="20sp" android:layout_marginEnd="16dp"/>
                     <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
-                        android:text="@string/set_background" android:textColor="@color/white" android:textSize="15sp"/>
+                        android:text="@string/set_background" android:textColor="?attr/appTextPrimary" android:textSize="15sp"/>
                     <TextView android:id="@+id/tvCurrentBackground" android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/text_secondary" android:textSize="13sp"
+                        android:textColor="?attr/appTextSecondary" android:textSize="13sp"
                         android:layout_marginEnd="6dp"/>
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="›" android:textColor="@color/text_secondary" android:textSize="22sp"/>
+                        android:text="›" android:textColor="?attr/appTextSecondary" android:textSize="22sp"/>
                 </LinearLayout>
 
                 <LinearLayout android:id="@+id/rowHaptic"
@@ -275,7 +275,7 @@
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="📳" android:textSize="20sp" android:layout_marginEnd="16dp"/>
                     <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
-                        android:text="@string/set_haptic" android:textColor="@color/white" android:textSize="15sp"/>
+                        android:text="@string/set_haptic" android:textColor="?attr/appTextPrimary" android:textSize="15sp"/>
                     <Switch android:id="@+id/switchHaptic"
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:minWidth="56dp" android:minHeight="32dp"
@@ -296,7 +296,7 @@
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                             android:text="📱" android:textSize="20sp" android:layout_marginEnd="16dp"/>
                         <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
-                            android:text="@string/set_statusbar_dim" android:textColor="@color/white" android:textSize="15sp"/>
+                            android:text="@string/set_statusbar_dim" android:textColor="?attr/appTextPrimary" android:textSize="15sp"/>
                         <TextView android:id="@+id/tvStatusBarValue"
                             android:layout_width="wrap_content" android:layout_height="wrap_content"
                             android:text="0%" android:textColor="@color/color_accent" android:textSize="14sp"
@@ -317,7 +317,7 @@
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="🎉" android:textSize="20sp" android:layout_marginEnd="16dp"/>
                     <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
-                        android:text="@string/set_confetti" android:textColor="@color/white" android:textSize="15sp"/>
+                        android:text="@string/set_confetti" android:textColor="?attr/appTextPrimary" android:textSize="15sp"/>
                     <Switch android:id="@+id/switchConfetti"
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:minWidth="56dp" android:minHeight="32dp"
@@ -348,20 +348,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/set_sec_streak"
-                    android:textColor="@color/white"
+                    android:textColor="?attr/appTextPrimary"
                     android:textSize="15sp"
                     android:textStyle="bold" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/set_sub_streak"
-                    android:textColor="@color/text_secondary"
+                    android:textColor="?attr/appTextSecondary"
                     android:textSize="12sp"
                     android:layout_marginTop="1dp" />
             </LinearLayout>
             <TextView android:id="@+id/tvChevronStreak"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="▸" android:textColor="@color/text_secondary" android:textSize="18sp"/>
+                android:text="▸" android:textColor="?attr/appTextSecondary" android:textSize="18sp"/>
         </LinearLayout>
 
         <androidx.cardview.widget.CardView
@@ -369,7 +369,7 @@
             android:visibility="gone"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            app:cardBackgroundColor="@color/card_bg" app:cardCornerRadius="20dp" app:cardElevation="0dp">
+            app:cardBackgroundColor="?attr/appCardBg" app:cardCornerRadius="20dp" app:cardElevation="0dp">
 
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -385,9 +385,9 @@
                     <LinearLayout android:layout_width="0dp" android:layout_weight="1"
                         android:layout_height="wrap_content" android:orientation="vertical">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="@string/set_vacation" android:textColor="@color/white" android:textSize="15sp"/>
+                            android:text="@string/set_vacation" android:textColor="?attr/appTextPrimary" android:textSize="15sp"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="@string/set_vacation_sub" android:textColor="@color/white"
+                            android:text="@string/set_vacation_sub" android:textColor="?attr/appTextPrimary"
                             android:textSize="11sp" android:alpha="0.7"/>
                     </LinearLayout>
                     <Switch android:id="@+id/switchVacation"
@@ -408,13 +408,13 @@
                     <LinearLayout android:layout_width="0dp" android:layout_weight="1"
                         android:layout_height="wrap_content" android:orientation="vertical">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="@string/set_freeze" android:textColor="@color/white" android:textSize="15sp"/>
+                            android:text="@string/set_freeze" android:textColor="?attr/appTextPrimary" android:textSize="15sp"/>
                         <TextView android:id="@+id/tvFreezeHint" android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="@string/set_freeze_sub" android:textColor="@color/white"
+                            android:text="@string/set_freeze_sub" android:textColor="?attr/appTextPrimary"
                             android:textSize="11sp" android:alpha="0.7"/>
                     </LinearLayout>
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="›" android:textColor="@color/text_secondary" android:textSize="22sp"/>
+                        android:text="›" android:textColor="?attr/appTextSecondary" android:textSize="22sp"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -433,15 +433,15 @@
             <LinearLayout android:layout_width="0dp" android:layout_weight="1"
                 android:layout_height="wrap_content" android:orientation="vertical">
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="@string/set_sec_security" android:textColor="@color/white"
+                    android:text="@string/set_sec_security" android:textColor="?attr/appTextPrimary"
                     android:textSize="15sp" android:textStyle="bold"/>
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="@string/set_sub_security" android:textColor="@color/text_secondary"
+                    android:text="@string/set_sub_security" android:textColor="?attr/appTextSecondary"
                     android:textSize="12sp" android:layout_marginTop="1dp"/>
             </LinearLayout>
             <TextView android:id="@+id/tvChevronSec"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="▸" android:textColor="@color/text_secondary" android:textSize="18sp"/>
+                android:text="▸" android:textColor="?attr/appTextSecondary" android:textSize="18sp"/>
         </LinearLayout>
 
         <androidx.cardview.widget.CardView
@@ -449,7 +449,7 @@
             android:visibility="gone"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            app:cardBackgroundColor="@color/card_bg" app:cardCornerRadius="20dp" app:cardElevation="0dp">
+            app:cardBackgroundColor="?attr/appCardBg" app:cardCornerRadius="20dp" app:cardElevation="0dp">
 
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -465,9 +465,9 @@
                     <LinearLayout android:layout_width="0dp" android:layout_weight="1"
                         android:layout_height="wrap_content" android:orientation="vertical">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="@string/set_applock" android:textColor="@color/white" android:textSize="15sp"/>
+                            android:text="@string/set_applock" android:textColor="?attr/appTextPrimary" android:textSize="15sp"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="@string/set_applock_sub" android:textColor="@color/white"
+                            android:text="@string/set_applock_sub" android:textColor="?attr/appTextPrimary"
                             android:textSize="11sp" android:alpha="0.7"/>
                     </LinearLayout>
                     <Switch android:id="@+id/switchAppLock"
@@ -493,15 +493,15 @@
             <LinearLayout android:layout_width="0dp" android:layout_weight="1"
                 android:layout_height="wrap_content" android:orientation="vertical">
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="@string/set_sec_coach" android:textColor="@color/white"
+                    android:text="@string/set_sec_coach" android:textColor="?attr/appTextPrimary"
                     android:textSize="15sp" android:textStyle="bold"/>
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="@string/set_sub_coach" android:textColor="@color/text_secondary"
+                    android:text="@string/set_sub_coach" android:textColor="?attr/appTextSecondary"
                     android:textSize="12sp" android:layout_marginTop="1dp"/>
             </LinearLayout>
             <TextView android:id="@+id/tvChevronCoach"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="▸" android:textColor="@color/text_secondary" android:textSize="18sp"/>
+                android:text="▸" android:textColor="?attr/appTextSecondary" android:textSize="18sp"/>
         </LinearLayout>
 
         <androidx.cardview.widget.CardView
@@ -509,7 +509,7 @@
             android:visibility="gone"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            app:cardBackgroundColor="@color/card_bg" app:cardCornerRadius="20dp" app:cardElevation="0dp">
+            app:cardBackgroundColor="?attr/appCardBg" app:cardCornerRadius="20dp" app:cardElevation="0dp">
 
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -525,9 +525,9 @@
                     <LinearLayout android:layout_width="0dp" android:layout_weight="1"
                         android:layout_height="wrap_content" android:orientation="vertical">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="@string/set_coach_auto" android:textColor="@color/white" android:textSize="15sp"/>
+                            android:text="@string/set_coach_auto" android:textColor="?attr/appTextPrimary" android:textSize="15sp"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="@string/set_coach_sub" android:textColor="@color/white"
+                            android:text="@string/set_coach_sub" android:textColor="?attr/appTextPrimary"
                             android:textSize="11sp" android:alpha="0.7"/>
                     </LinearLayout>
                     <Switch android:id="@+id/switchCoach"
@@ -546,10 +546,10 @@
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="⚙️" android:textSize="20sp" android:layout_marginEnd="16dp"/>
                     <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
-                        android:text="@string/set_coach_current" android:textColor="@color/white" android:textSize="15sp"/>
+                        android:text="@string/set_coach_current" android:textColor="?attr/appTextPrimary" android:textSize="15sp"/>
                     <TextView android:id="@+id/tvCoachAdj" android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:text="@string/lay_0_kcal"
-                        android:textColor="@color/text_secondary" android:textSize="13sp"/>
+                        android:textColor="?attr/appTextSecondary" android:textSize="13sp"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -568,15 +568,15 @@
             <LinearLayout android:layout_width="0dp" android:layout_weight="1"
                 android:layout_height="wrap_content" android:orientation="vertical">
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="@string/set_sec_data" android:textColor="@color/white"
+                    android:text="@string/set_sec_data" android:textColor="?attr/appTextPrimary"
                     android:textSize="15sp" android:textStyle="bold"/>
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="@string/set_sub_data" android:textColor="@color/text_secondary"
+                    android:text="@string/set_sub_data" android:textColor="?attr/appTextSecondary"
                     android:textSize="12sp" android:layout_marginTop="1dp"/>
             </LinearLayout>
             <TextView android:id="@+id/tvChevronData"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="▸" android:textColor="@color/text_secondary" android:textSize="18sp"/>
+                android:text="▸" android:textColor="?attr/appTextSecondary" android:textSize="18sp"/>
         </LinearLayout>
 
         <androidx.cardview.widget.CardView
@@ -584,7 +584,7 @@
             android:visibility="gone"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            app:cardBackgroundColor="@color/card_bg" app:cardCornerRadius="20dp" app:cardElevation="0dp">
+            app:cardBackgroundColor="?attr/appCardBg" app:cardCornerRadius="20dp" app:cardElevation="0dp">
 
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -601,9 +601,9 @@
                     <LinearLayout android:layout_width="0dp" android:layout_weight="1"
                         android:layout_height="wrap_content" android:orientation="vertical">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="@string/set_hc_write" android:textColor="@color/white" android:textSize="15sp"/>
+                            android:text="@string/set_hc_write" android:textColor="?attr/appTextPrimary" android:textSize="15sp"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="@string/set_hc_write_sub" android:textColor="@color/white"
+                            android:text="@string/set_hc_write_sub" android:textColor="?attr/appTextPrimary"
                             android:textSize="11sp" android:alpha="0.7"/>
                     </LinearLayout>
                     <Switch android:id="@+id/switchHcWrite"
@@ -628,13 +628,13 @@
                     <LinearLayout android:layout_width="0dp" android:layout_weight="1"
                         android:layout_height="wrap_content" android:orientation="vertical">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="@string/pdf_export_title" android:textColor="@color/white" android:textSize="15sp"/>
+                            android:text="@string/pdf_export_title" android:textColor="?attr/appTextPrimary" android:textSize="15sp"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/premium_free_badge" android:textColor="#FFD54F" android:textSize="11sp"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="@string/pdf_export_desc" android:textColor="@color/text_secondary" android:textSize="12sp"/>
+                            android:text="@string/pdf_export_desc" android:textColor="?attr/appTextSecondary" android:textSize="12sp"/>
                     </LinearLayout>
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="›" android:textColor="@color/text_secondary" android:textSize="22sp"/>
+                        android:text="›" android:textColor="?attr/appTextSecondary" android:textSize="22sp"/>
                 </LinearLayout>
 
                 <View android:layout_width="match_parent" android:layout_height="1dp"
@@ -648,9 +648,9 @@
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="📤" android:textSize="20sp" android:layout_marginEnd="16dp"/>
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="@string/settings_export" android:textColor="@color/white" android:textSize="15sp"/>
+                        android:text="@string/settings_export" android:textColor="?attr/appTextPrimary" android:textSize="15sp"/>
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="›" android:textColor="@color/text_secondary" android:textSize="22sp"/>
+                        android:text="›" android:textColor="?attr/appTextSecondary" android:textSize="22sp"/>
                 </LinearLayout>
 
                 <View android:layout_width="match_parent" android:layout_height="1dp"
@@ -664,9 +664,9 @@
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="📥" android:textSize="20sp" android:layout_marginEnd="16dp"/>
                     <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
-                        android:text="@string/set_restore" android:textColor="@color/white" android:textSize="15sp"/>
+                        android:text="@string/set_restore" android:textColor="?attr/appTextPrimary" android:textSize="15sp"/>
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="›" android:textColor="@color/text_secondary" android:textSize="22sp"/>
+                        android:text="›" android:textColor="?attr/appTextSecondary" android:textSize="22sp"/>
                 </LinearLayout>
 
                 <View android:layout_width="match_parent" android:layout_height="1dp"
@@ -680,9 +680,9 @@
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="📄" android:textSize="20sp" android:layout_marginEnd="16dp"/>
                     <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
-                        android:text="@string/set_export_diary" android:textColor="@color/white" android:textSize="15sp"/>
+                        android:text="@string/set_export_diary" android:textColor="?attr/appTextPrimary" android:textSize="15sp"/>
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="›" android:textColor="@color/text_secondary" android:textSize="22sp"/>
+                        android:text="›" android:textColor="?attr/appTextSecondary" android:textSize="22sp"/>
                 </LinearLayout>
 
                 <View android:layout_width="match_parent" android:layout_height="1dp"
@@ -696,9 +696,9 @@
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="📐" android:textSize="20sp" android:layout_marginEnd="16dp"/>
                     <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
-                        android:text="@string/set_export_measure" android:textColor="@color/white" android:textSize="15sp"/>
+                        android:text="@string/set_export_measure" android:textColor="?attr/appTextPrimary" android:textSize="15sp"/>
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="›" android:textColor="@color/text_secondary" android:textSize="22sp"/>
+                        android:text="›" android:textColor="?attr/appTextSecondary" android:textSize="22sp"/>
                 </LinearLayout>
 
                 <View android:layout_width="match_parent" android:layout_height="1dp"
@@ -714,7 +714,7 @@
                     <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
                         android:text="@string/settings_clear_data" android:textColor="@color/color_error" android:textSize="15sp"/>
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="›" android:textColor="@color/text_secondary" android:textSize="22sp"/>
+                        android:text="›" android:textColor="?attr/appTextSecondary" android:textSize="22sp"/>
                 </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -732,15 +732,15 @@
             <LinearLayout android:layout_width="0dp" android:layout_weight="1"
                 android:layout_height="wrap_content" android:orientation="vertical">
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="@string/set_sec_about" android:textColor="@color/white"
+                    android:text="@string/set_sec_about" android:textColor="?attr/appTextPrimary"
                     android:textSize="15sp" android:textStyle="bold"/>
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="@string/set_sub_about" android:textColor="@color/text_secondary"
+                    android:text="@string/set_sub_about" android:textColor="?attr/appTextSecondary"
                     android:textSize="12sp" android:layout_marginTop="1dp"/>
             </LinearLayout>
             <TextView android:id="@+id/tvChevronAbout"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="▸" android:textColor="@color/text_secondary" android:textSize="18sp"/>
+                android:text="▸" android:textColor="?attr/appTextSecondary" android:textSize="18sp"/>
         </LinearLayout>
 
         <androidx.cardview.widget.CardView
@@ -748,7 +748,7 @@
             android:visibility="gone"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            app:cardBackgroundColor="@color/card_bg" app:cardCornerRadius="20dp" app:cardElevation="0dp">
+            app:cardBackgroundColor="?attr/appCardBg" app:cardCornerRadius="20dp" app:cardElevation="0dp">
 
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -761,9 +761,9 @@
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="⭐" android:textSize="20sp" android:layout_marginEnd="16dp"/>
                     <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
-                        android:text="@string/settings_rate" android:textColor="@color/white" android:textSize="15sp"/>
+                        android:text="@string/settings_rate" android:textColor="?attr/appTextPrimary" android:textSize="15sp"/>
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="›" android:textColor="@color/text_secondary" android:textSize="22sp"/>
+                        android:text="›" android:textColor="?attr/appTextSecondary" android:textSize="22sp"/>
                 </LinearLayout>
 
                 <View android:layout_width="match_parent" android:layout_height="1dp"
@@ -777,9 +777,9 @@
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="✉️" android:textSize="20sp" android:layout_marginEnd="16dp"/>
                     <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
-                        android:text="@string/settings_feedback" android:textColor="@color/white" android:textSize="15sp"/>
+                        android:text="@string/settings_feedback" android:textColor="?attr/appTextPrimary" android:textSize="15sp"/>
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="›" android:textColor="@color/text_secondary" android:textSize="22sp"/>
+                        android:text="›" android:textColor="?attr/appTextSecondary" android:textSize="22sp"/>
                 </LinearLayout>
 
                 <View android:layout_width="match_parent" android:layout_height="1dp"
@@ -793,16 +793,16 @@
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="🔒" android:textSize="20sp" android:layout_marginEnd="16dp"/>
                     <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
-                        android:text="@string/settings_privacy" android:textColor="@color/white" android:textSize="15sp"/>
+                        android:text="@string/settings_privacy" android:textColor="?attr/appTextPrimary" android:textSize="15sp"/>
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="›" android:textColor="@color/text_secondary" android:textSize="22sp"/>
+                        android:text="›" android:textColor="?attr/appTextSecondary" android:textSize="22sp"/>
                 </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <TextView
             android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:text="NeoMeal v1.3" android:textColor="@color/text_secondary"
+            android:text="NeoMeal v1.3" android:textColor="?attr/appTextSecondary"
             android:textSize="12sp" android:gravity="center" android:layout_marginTop="8dp"/>
 
     </LinearLayout>

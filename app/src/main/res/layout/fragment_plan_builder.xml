@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/lay_plan_builder"
-            android:textColor="@color/white"
+            android:textColor="?attr/appTextPrimary"
             android:textSize="24sp"
             android:textStyle="bold"
             android:layout_marginBottom="4dp"/>
@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/pb_sub"
-            android:textColor="@color/text_secondary"
+            android:textColor="?attr/appTextSecondary"
             android:textSize="13sp"
             android:layout_marginBottom="16dp"/>
 
@@ -79,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/pb_diet_title"
-            android:textColor="@color/white"
+            android:textColor="?attr/appTextPrimary"
             android:textSize="15sp"
             android:textStyle="bold"
             android:layout_marginBottom="8dp"/>
@@ -120,7 +120,7 @@
             android:id="@+id/cardRecommendation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/card_bg"
+            app:cardBackgroundColor="?attr/appCardBg"
             app:cardCornerRadius="16dp"
             app:cardElevation="2dp"
             android:layout_marginBottom="14dp"
@@ -135,12 +135,12 @@
                 <TextView android:id="@+id/tvRecTitle"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:text="@string/lay_recommendation"
-                    android:textColor="@color/white" android:textSize="15sp"
+                    android:textColor="?attr/appTextPrimary" android:textSize="15sp"
                     android:textStyle="bold" android:layout_marginBottom="6dp"/>
 
                 <TextView android:id="@+id/tvRecommendation"
                     android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:textColor="@color/text_secondary" android:textSize="13sp"
+                    android:textColor="?attr/appTextSecondary" android:textSize="13sp"
                     android:lineSpacingExtra="3dp"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -170,7 +170,7 @@
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:text="@string/lay_build_week_menu"
-            android:textColor="@color/white"
+            android:textColor="?attr/appTextPrimary"
             android:textAllCaps="false"
             android:textSize="15sp"
             android:background="@drawable/btn_gradient"
@@ -183,7 +183,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:text="@string/pb_vitamin_set"
-            android:textColor="@color/white"
+            android:textColor="?attr/appTextPrimary"
             android:textAllCaps="false"
             android:textSize="14sp"
             android:background="@drawable/btn_outline_accent"
@@ -195,7 +195,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:text="@string/lay_build_another"
-            android:textColor="@color/white"
+            android:textColor="?attr/appTextPrimary"
             android:textAllCaps="false"
             android:textSize="14sp"
             android:background="@drawable/btn_outline_accent"
@@ -215,7 +215,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/lay_pick_goal"
-            android:textColor="@color/text_secondary"
+            android:textColor="?attr/appTextSecondary"
             android:textSize="14sp"
             android:gravity="center"
             android:padding="30dp"/>

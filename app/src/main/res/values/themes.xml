@@ -12,6 +12,12 @@
         <item name="bottomNavigationStyle">@style/BottomNavStyle</item>
         <item name="chipStyle">@style/ChipStyle</item>
         <item name="switchStyle">@style/SwitchStyle</item>
+
+        <!-- Семантические токены (см. attrs.xml) -->
+        <item name="appCardBg">@color/card_bg</item>
+        <item name="appBottomSheetBg">@color/bottom_sheet_bg</item>
+        <item name="appTextPrimary">@color/white</item>
+        <item name="appTextSecondary">@color/text_secondary</item>
     </style>
 
     <!-- Варианты темы с разными шрифтами (применяются из MainActivity) -->

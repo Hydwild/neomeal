@@ -7,17 +7,17 @@
     android:padding="16dp">
 
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:text="@string/lay_achievements" android:textColor="@color/white"
+        android:text="@string/lay_achievements" android:textColor="?attr/appTextPrimary"
         android:textSize="24sp" android:textStyle="bold" android:layout_marginBottom="2dp"/>
 
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:text="@string/ach_collect"
-        android:textColor="@color/text_secondary" android:textSize="13sp"
+        android:textColor="?attr/appTextSecondary" android:textSize="13sp"
         android:layout_marginBottom="14dp"/>
 
     <androidx.cardview.widget.CardView android:layout_width="match_parent"
         android:layout_height="wrap_content" android:layout_marginBottom="12dp"
-        app:cardBackgroundColor="@color/card_bg" app:cardCornerRadius="16dp" app:cardElevation="0dp">
+        app:cardBackgroundColor="?attr/appCardBg" app:cardCornerRadius="16dp" app:cardElevation="0dp">
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="vertical" android:padding="16dp">
 
@@ -27,10 +27,10 @@
                     android:layout_height="wrap_content" android:orientation="vertical">
                     <TextView android:id="@+id/tvProgress" android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:text="@string/lay_ach_0_40"
-                        android:textColor="@color/white" android:textStyle="bold" android:textSize="16sp"/>
+                        android:textColor="?attr/appTextPrimary" android:textStyle="bold" android:textSize="16sp"/>
                     <TextView android:id="@+id/tvProgressHint" android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:text="@string/ach_start"
-                        android:textColor="@color/text_secondary" android:textSize="12sp"
+                        android:textColor="?attr/appTextSecondary" android:textSize="12sp"
                         android:layout_marginTop="2dp"/>
                 </LinearLayout>
                 <TextView android:id="@+id/tvProgressPercent" android:layout_width="wrap_content"
@@ -54,7 +54,7 @@
                     <TextView android:id="@+id/tvCommon" android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="0" android:textColor="#B0BEC5" android:textStyle="bold" android:textSize="16sp"/>
                     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:text="@string/lay_common_pl" android:textColor="@color/text_secondary" android:textSize="9sp"
+                        android:text="@string/lay_common_pl" android:textColor="?attr/appTextSecondary" android:textSize="9sp"
                         android:gravity="center" android:maxLines="1" android:ellipsize="end"/>
                 </LinearLayout>
                 <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
                     <TextView android:id="@+id/tvRare" android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="0" android:textColor="#42A5F5" android:textStyle="bold" android:textSize="16sp"/>
                     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:text="@string/lay_rare_pl" android:textColor="@color/text_secondary" android:textSize="9sp"
+                        android:text="@string/lay_rare_pl" android:textColor="?attr/appTextSecondary" android:textSize="9sp"
                         android:gravity="center" android:maxLines="1" android:ellipsize="end"/>
                 </LinearLayout>
                 <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
@@ -70,7 +70,7 @@
                     <TextView android:id="@+id/tvEpic" android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="0" android:textColor="#AB47BC" android:textStyle="bold" android:textSize="16sp"/>
                     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:text="@string/lay_epic_pl" android:textColor="@color/text_secondary" android:textSize="9sp"
+                        android:text="@string/lay_epic_pl" android:textColor="?attr/appTextSecondary" android:textSize="9sp"
                         android:gravity="center" android:maxLines="1" android:ellipsize="end"/>
                 </LinearLayout>
                 <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
                     <TextView android:id="@+id/tvLegendary" android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="0" android:textColor="#FFB300" android:textStyle="bold" android:textSize="16sp"/>
                     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-                        android:text="@string/lay_legend_pl" android:textColor="@color/text_secondary" android:textSize="9sp"
+                        android:text="@string/lay_legend_pl" android:textColor="?attr/appTextSecondary" android:textSize="9sp"
                         android:gravity="center" android:maxLines="1" android:ellipsize="end"/>
                 </LinearLayout>
             </LinearLayout>

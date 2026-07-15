@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ob_result_title"
-        android:textColor="@color/white"
+        android:textColor="?attr/appTextPrimary"
         android:textSize="28sp"
         android:textStyle="bold"
         android:gravity="center"/>
@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ob_result_sub"
-        android:textColor="@color/white"
+        android:textColor="?attr/appTextPrimary"
         android:textSize="14sp"
         android:alpha="0.75"
         android:gravity="center"
@@ -39,7 +39,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/card_bg"
+        app:cardBackgroundColor="?attr/appCardBg"
         app:cardCornerRadius="20dp"
         app:cardElevation="0dp"
         android:layout_marginBottom="14dp">
@@ -54,7 +54,7 @@
             <LinearLayout android:layout_width="0dp" android:layout_weight="1"
                 android:layout_height="wrap_content" android:orientation="vertical">
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="@string/ob_result_cal" android:textColor="@color/white"
+                    android:text="@string/ob_result_cal" android:textColor="?attr/appTextPrimary"
                     android:textSize="13sp" android:alpha="0.7"/>
                 <TextView android:id="@+id/tvResultCalories" android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:text="@string/lay_0_kcal"
@@ -67,7 +67,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/card_bg"
+        app:cardBackgroundColor="?attr/appCardBg"
         app:cardCornerRadius="20dp"
         app:cardElevation="0dp"
         android:layout_marginBottom="24dp">
@@ -82,7 +82,7 @@
             <LinearLayout android:layout_width="0dp" android:layout_weight="1"
                 android:layout_height="wrap_content" android:orientation="vertical">
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="@string/ob_result_water" android:textColor="@color/white"
+                    android:text="@string/ob_result_water" android:textColor="?attr/appTextPrimary"
                     android:textSize="13sp" android:alpha="0.7"/>
                 <TextView android:id="@+id/tvResultWater" android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:text="@string/lay_0_ml"
@@ -95,7 +95,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ob_result_note"
-        android:textColor="@color/white"
+        android:textColor="?attr/appTextPrimary"
         android:textSize="12sp"
         android:alpha="0.6"
         android:gravity="center"/>

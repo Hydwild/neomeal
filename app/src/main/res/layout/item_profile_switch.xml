@@ -23,7 +23,7 @@
         android:layout_weight="1"
         android:layout_height="wrap_content"
         android:text="@string/ps_name_ph"
-        android:textColor="@color/white"
+        android:textColor="?attr/appTextPrimary"
         android:textSize="15sp"
         android:maxLines="1"
         android:ellipsize="end"/>

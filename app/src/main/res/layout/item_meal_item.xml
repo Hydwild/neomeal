@@ -20,7 +20,7 @@
             android:id="@+id/tvItemName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:textColor="?attr/appTextPrimary"
             android:textSize="13sp"
             android:textStyle="bold"/>
 
@@ -28,7 +28,7 @@
             android:id="@+id/tvItemMacros"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/text_secondary"
+            android:textColor="?attr/appTextSecondary"
             android:textSize="11sp"
             android:layout_marginTop="1dp"/>
     </LinearLayout>
@@ -48,7 +48,7 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:src="@drawable/ic_delete"
-        android:tint="@color/text_secondary"
+        android:tint="?attr/appTextSecondary"
         android:alpha="0.5"
         android:layout_marginStart="8dp"
         android:contentDescription="Удержи для удаления"/>

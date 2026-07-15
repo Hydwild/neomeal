@@ -6,12 +6,12 @@
     android:padding="16dp">
 
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:text="@string/lay_tips" android:textColor="@color/white"
+        android:text="@string/lay_tips" android:textColor="?attr/appTextPrimary"
         android:textSize="24sp" android:textStyle="bold" android:layout_marginBottom="4dp"/>
 
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:text="@string/tips_tap_cat"
-        android:textColor="@color/white" android:textSize="13sp"
+        android:textColor="?attr/appTextPrimary" android:textSize="13sp"
         android:layout_marginBottom="14dp"/>
 
     <androidx.recyclerview.widget.RecyclerView

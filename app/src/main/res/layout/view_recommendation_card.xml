@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="12dp"
-    app:cardBackgroundColor="@color/card_bg"
+    app:cardBackgroundColor="?attr/appCardBg"
     app:cardCornerRadius="20dp"
     app:cardElevation="0dp">
 
@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/lay_left_0_kcal"
-            android:textColor="@color/white"
+            android:textColor="?attr/appTextPrimary"
             android:textSize="16sp"
             android:textStyle="bold"/>
 
@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text=""
-            android:textColor="@color/text_secondary"
+            android:textColor="?attr/appTextSecondary"
             android:textSize="13sp"
             android:layout_marginTop="4dp"
             android:lineSpacingExtra="2dp"/>

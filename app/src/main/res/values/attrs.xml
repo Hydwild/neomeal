@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Семантические токены темы. Layout'ы ссылаются на ?attr/app*,
+    а не на @color напрямую — это позволяет темам (включая Material You
+    оверлей) переопределять поверхности и текст без правки разметки.
+
+    Виджеты (widget_*.xml) — исключение: RemoteViews не умеют ?attr,
+    там остаются прямые @color.
+-->
+<resources>
+    <attr name="appCardBg" format="color|reference"/>
+    <attr name="appBottomSheetBg" format="color|reference"/>
+    <attr name="appTextPrimary" format="color|reference"/>
+    <attr name="appTextSecondary" format="color|reference"/>
+</resources>

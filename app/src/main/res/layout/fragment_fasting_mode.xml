@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/lay_fast_mode"
-            android:textColor="@color/white"
+            android:textColor="?attr/appTextPrimary"
             android:textSize="24sp"
             android:textStyle="bold"
             android:layout_marginBottom="4dp"/>
@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/fast_mode_sub"
-            android:textColor="@color/text_secondary"
+            android:textColor="?attr/appTextSecondary"
             android:textSize="13sp"
             android:layout_marginBottom="16dp"/>
 
@@ -36,7 +36,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/card_bg"
+            app:cardBackgroundColor="?attr/appCardBg"
             app:cardCornerRadius="20dp"
             app:cardElevation="3dp"
             android:layout_marginBottom="14dp">
@@ -63,7 +63,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/fast_mode_title"
-                            android:textColor="@color/white"
+                            android:textColor="?attr/appTextPrimary"
                             android:textSize="16sp"
                             android:textStyle="bold"/>
                         <TextView
@@ -71,7 +71,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/fast_off"
-                            android:textColor="@color/text_secondary"
+                            android:textColor="?attr/appTextSecondary"
                             android:textSize="13sp"/>
                     </LinearLayout>
 
@@ -107,10 +107,10 @@
                             android:padding="8dp"
                             android:background="?android:attr/selectableItemBackground">
                             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                android:text="@string/fast_start" android:textColor="@color/text_secondary" android:textSize="12sp"/>
+                                android:text="@string/fast_start" android:textColor="?attr/appTextSecondary" android:textSize="12sp"/>
                             <TextView android:id="@+id/tvStartDate"
                                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                android:text="—" android:textColor="@color/white" android:textSize="16sp" android:textStyle="bold"/>
+                                android:text="—" android:textColor="?attr/appTextPrimary" android:textSize="16sp" android:textStyle="bold"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -122,10 +122,10 @@
                             android:padding="8dp"
                             android:background="?android:attr/selectableItemBackground">
                             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                android:text="@string/fast_end" android:textColor="@color/text_secondary" android:textSize="12sp"/>
+                                android:text="@string/fast_end" android:textColor="?attr/appTextSecondary" android:textSize="12sp"/>
                             <TextView android:id="@+id/tvEndDate"
                                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                android:text="—" android:textColor="@color/white" android:textSize="16sp" android:textStyle="bold"/>
+                                android:text="—" android:textColor="?attr/appTextPrimary" android:textSize="16sp" android:textStyle="bold"/>
                         </LinearLayout>
                     </LinearLayout>
 
@@ -141,7 +141,7 @@
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:text="@string/lay_remind_fast"
-                            android:textColor="@color/white"
+                            android:textColor="?attr/appTextPrimary"
                             android:textSize="14sp"/>
                         <Switch
                             android:id="@+id/switchFastingReminder"
@@ -176,7 +176,7 @@
                 <TextView android:id="@+id/tvCounterSub"
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:text="@string/fast_left_ph"
-                    android:textColor="@color/white" android:textSize="14sp"
+                    android:textColor="?attr/appTextPrimary" android:textSize="14sp"
                     android:layout_marginTop="4dp"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -186,7 +186,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/lay_fast_note"
-            android:textColor="@color/text_secondary"
+            android:textColor="?attr/appTextSecondary"
             android:textSize="12sp"
             android:lineSpacingExtra="2dp"
             android:layout_marginBottom="18dp"/>
@@ -197,7 +197,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/lay_lenten"
-            android:textColor="@color/white"
+            android:textColor="?attr/appTextPrimary"
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginBottom="10dp"/>

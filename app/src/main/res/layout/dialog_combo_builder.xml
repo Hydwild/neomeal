@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
             android:text="@string/combo_ingredients"
-            android:textColor="@color/white"
+            android:textColor="?attr/appTextPrimary"
             android:textStyle="bold"
             android:textSize="14sp"/>
 
@@ -45,7 +45,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/text_secondary"
+            android:background="?attr/appTextSecondary"
             android:alpha="0.2"
             android:layout_marginTop="12dp"
             android:layout_marginBottom="12dp"/>
@@ -55,7 +55,7 @@
             android:id="@+id/tvComboTotal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:textColor="?attr/appTextPrimary"
             android:textSize="15sp"
             android:textStyle="bold"/>
 
@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="@string/combo_per100_note"
-            android:textColor="@color/text_secondary"
+            android:textColor="?attr/appTextSecondary"
             android:textSize="12sp"/>
 
     </LinearLayout>

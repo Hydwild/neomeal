@@ -13,7 +13,7 @@
         android:paddingBottom="92dp">
 
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="@string/level_progress_title" android:textColor="@color/white"
+            android:text="@string/level_progress_title" android:textColor="?attr/appTextPrimary"
             android:textSize="24sp" android:textStyle="bold" android:layout_marginBottom="14dp"/>
 
         <!-- Прогресс уровня -->
@@ -73,11 +73,11 @@
         <!-- Рамки -->
         <androidx.cardview.widget.CardView android:layout_width="match_parent"
             android:layout_height="wrap_content" android:layout_marginBottom="12dp"
-            app:cardBackgroundColor="@color/card_bg" app:cardCornerRadius="20dp" app:cardElevation="0dp">
+            app:cardBackgroundColor="?attr/appCardBg" app:cardCornerRadius="20dp" app:cardElevation="0dp">
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="vertical" android:padding="16dp">
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="@string/level_section_frames" android:textColor="@color/white"
+                    android:text="@string/level_section_frames" android:textColor="?attr/appTextPrimary"
                     android:textStyle="bold" android:textSize="15sp"/>
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/premium_free_badge" android:textColor="#FFD54F" android:textSize="11sp" android:layout_marginTop="2dp"/>
                 <HorizontalScrollView android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -91,11 +91,11 @@
         <!-- Компаньоны -->
         <androidx.cardview.widget.CardView android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/card_bg" app:cardCornerRadius="20dp" app:cardElevation="0dp">
+            app:cardBackgroundColor="?attr/appCardBg" app:cardCornerRadius="20dp" app:cardElevation="0dp">
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="vertical" android:padding="16dp">
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="@string/level_section_companions" android:textColor="@color/white"
+                    android:text="@string/level_section_companions" android:textColor="?attr/appTextPrimary"
                     android:textStyle="bold" android:textSize="15sp"/>
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/premium_free_badge" android:textColor="#FFD54F" android:textSize="11sp" android:layout_marginTop="2dp"/>
                 <HorizontalScrollView android:layout_width="match_parent" android:layout_height="wrap_content"

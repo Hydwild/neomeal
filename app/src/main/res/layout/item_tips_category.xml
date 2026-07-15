@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
-    app:cardBackgroundColor="@color/card_bg"
+    app:cardBackgroundColor="?attr/appCardBg"
     app:cardCornerRadius="18dp"
     app:cardElevation="0dp">
 
@@ -39,7 +39,7 @@
 
                 <TextView android:id="@+id/tvCategoryTitle" android:layout_width="0dp"
                     android:layout_weight="1" android:layout_height="wrap_content"
-                    android:textColor="@color/white" android:textSize="15sp" android:textStyle="bold"/>
+                    android:textColor="?attr/appTextPrimary" android:textSize="15sp" android:textStyle="bold"/>
 
                 <TextView android:id="@+id/tvTipsCount" android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:textColor="@color/color_accent"
@@ -51,7 +51,7 @@
 
                 <ImageView android:id="@+id/ivArrow" android:layout_width="20dp"
                     android:layout_height="20dp" android:src="@drawable/ic_arrow_right"
-                    android:tint="@color/text_secondary"/>
+                    android:tint="?attr/appTextSecondary"/>
             </LinearLayout>
 
             <!-- Tips list (expandable) -->
