@@ -149,33 +149,11 @@ class SettingsFragment : Fragment() {
             }
         }
 
-        // Заморозка вчерашнего дня (раз в 7 дней)
+        // Заморозка вчерашнего дня (раз в 7 дней) — логика в StreakFreeze
         binding.rowFreeze.setOnClickListener {
-            val fmt = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd")
-            val today = java.time.LocalDate.now()
-            val last = prefs.lastFreezeDate
-            val canFreeze = last.isEmpty() ||
-                    java.time.temporal.ChronoUnit.DAYS.between(java.time.LocalDate.parse(last, fmt), today) >= 7
-            if (!canFreeze) {
-                val next = java.time.LocalDate.parse(last, fmt).plusDays(7)
-                android.widget.Toast.makeText(requireContext(),
-                    getString(R.string.freeze_available, next.format(java.time.format.DateTimeFormatter.ofPattern("dd.MM"))),
-                    android.widget.Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            val yesterday = today.minusDays(1).format(fmt)
-            androidx.appcompat.app.AlertDialog.Builder(requireContext())
-                .setTitle(getString(R.string.freeze_title))
-                .setMessage(getString(R.string.freeze_msg))
-                .setPositiveButton(getString(R.string.freeze_btn)) { _, _ ->
-                    prefs.frozenDates = prefs.frozenDates + yesterday
-                    prefs.lastFreezeDate = today.format(fmt)
-                    com.nutritrack.app.utils.HapticHelper.success(binding.root)
-                    android.widget.Toast.makeText(requireContext(),
-                        getString(R.string.freeze_done), android.widget.Toast.LENGTH_LONG).show()
-                }
-                .setNegativeButton(getString(R.string.dlg_cancel), null)
-                .show()
+            com.nutritrack.app.utils.StreakFreeze.requestFreeze(
+                requireContext(), prefs, binding.root
+            ) { /* на экране настроек обновлять нечего */ }
         }
 
         binding.rowDarkTheme.setOnClickListener {

@@ -645,6 +645,8 @@ class DashboardFragment : Fragment() {
 
             withContext(kotlinx.coroutines.Dispatchers.Main) {
                 val b = _binding ?: return@withContext
+                // ❄️ показывает, что вчера уже спасён заморозкой
+                val frostMark = if (com.nutritrack.app.utils.StreakFreeze.isYesterdayFrozen(prefs)) " ❄️" else ""
                 when {
                     vacationOn -> {
                         b.tvStreak.visibility = View.VISIBLE
@@ -652,9 +654,16 @@ class DashboardFragment : Fragment() {
                     }
                     shown >= 2 -> {
                         b.tvStreak.visibility = View.VISIBLE
-                        b.tvStreak.text = getString(R.string.ds_streak_fmt, shown, daysWord(shown))
+                        b.tvStreak.text = getString(R.string.ds_streak_fmt, shown, daysWord(shown)) + frostMark
                     }
                     else -> b.tvStreak.visibility = View.GONE
+                }
+                // Тап по стрику — заморозка вчерашнего дня прямо с главного
+                b.tvStreak.setOnClickListener {
+                    if (prefs.vacationMode) return@setOnClickListener
+                    com.nutritrack.app.utils.StreakFreeze.requestFreeze(
+                        requireContext(), prefs, it
+                    ) { loadStreak() }
                 }
             }
         }
