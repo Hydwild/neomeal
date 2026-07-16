@@ -59,6 +59,7 @@ class MainWidgetProvider : AppWidgetProvider() {
                     // Локаль: виджет должен следовать выбранному языку приложения
                     val locCtx = com.nutritrack.app.utils.LocaleHelper.wrap(context.applicationContext)
                     val views = RemoteViews(context.packageName, R.layout.widget_main).apply {
+                        WidgetTheme.apply(context, this)
                         setTextViewText(R.id.widgetCalories, locCtx.getString(R.string.widget_cal_fmt, cal, calGoal))
                         setProgressBar(R.id.widgetCalProgress, 100, calPct, false)
                         setTextViewText(R.id.widgetWater, locCtx.getString(R.string.widget_water_fmt, water, waterGoal))

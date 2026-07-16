@@ -3605,4 +3605,6 @@ data class Recipe(
     <string name="cd_delete">Delete</string>
     <string name="cd_minus">Decrease amount</string>
     <string name="cd_plus">Increase amount</string>
+
+    <string name="pdf_fiber_sugar_fmt">Fiber %1$d g · Sugar %2$d g</string>
 </resources>

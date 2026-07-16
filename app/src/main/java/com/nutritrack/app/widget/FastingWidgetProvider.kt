@@ -40,6 +40,7 @@ class FastingWidgetProvider : AppWidgetProvider() {
                 val session = db.fastingDao().getActiveSessionSync(pid)
 
                 val views = RemoteViews(context.packageName, R.layout.widget_fasting)
+                WidgetTheme.apply(context, views)
                 val locCtx = com.nutritrack.app.utils.LocaleHelper.wrap(context.applicationContext)
 
                 if (session != null) {

@@ -177,6 +177,9 @@ class SettingsFragment : Fragment() {
             binding.switchDynamicColors.setOnCheckedChangeListener { _, checked ->
                 if (prefs.dynamicColors == checked) return@setOnCheckedChangeListener
                 prefs.dynamicColors = checked
+                // Виджеты тоже перекрашиваются (WidgetTheme читает эту опцию)
+                com.nutritrack.app.widget.MainWidgetProvider.updateAll(requireContext())
+                com.nutritrack.app.widget.FastingWidgetProvider.updateAll(requireContext())
                 requireActivity().recreate()   // тема применяется в MainActivity.onCreate
             }
         }

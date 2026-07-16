@@ -62,7 +62,8 @@ object PdfReportExporter {
             val end = dates.last()
 
             // Сбор данных по дням
-            data class Day(val date: String, val cal: Float, val prot: Float, val fat: Float, val carb: Float, val water: Int)
+            data class Day(val date: String, val cal: Float, val prot: Float, val fat: Float, val carb: Float, val water: Int,
+                           val fiber: Float, val sugar: Float)
             val days = dates.map { d ->
                 val entries = db.diaryDao().getEntriesForDateSync(d, profileId)
                 Day(
@@ -71,7 +72,9 @@ object PdfReportExporter {
                     entries.sumOf { it.protein.toDouble() }.toFloat(),
                     entries.sumOf { it.fat.toDouble() }.toFloat(),
                     entries.sumOf { it.carbs.toDouble() }.toFloat(),
-                    db.waterDao().getTotalWaterSync(d, profileId)
+                    db.waterDao().getTotalWaterSync(d, profileId),
+                    entries.mapNotNull { it.fiber }.sum(),
+                    entries.mapNotNull { it.sugar }.sum()
                 )
             }
             val withFood = days.filter { it.cal > 0f }
@@ -80,6 +83,9 @@ object PdfReportExporter {
             val sumFat = days.sumOf { it.fat.toDouble() }.toInt()
             val sumCarb = days.sumOf { it.carb.toDouble() }.toInt()
             val avgWater = if (days.isNotEmpty()) days.map { it.water }.average().toInt() else 0
+            // Клетчатка/сахар за период (0 = данных не было — строка не рисуется)
+            val sumFiber = days.sumOf { it.fiber.toDouble() }.toInt()
+            val sumSugar = days.sumOf { it.sugar.toDouble() }.toInt()
 
             // Все записи за период — для частых продуктов и интервалов
             val allEntries = db.diaryDao().getEntriesForRange(start, end, profileId)
@@ -261,6 +267,11 @@ object PdfReportExporter {
                 p.color = C_CARB;   c.drawText(context.getString(R.string.pdf_carb_fmt, sumCarb), col2, top + 62f, p)
                 val col3 = MARGIN + 360f
                 p.color = C_WATER;  c.drawText(context.getString(R.string.pdf_avg_water_fmt, avgWater), col3, top + 44f, p)
+                // Клетчатка и сахар — только если у съеденного были данные
+                if (sumFiber > 0 || sumSugar > 0) {
+                    p.color = C_ACCENT
+                    c.drawText(context.getString(R.string.pdf_fiber_sugar_fmt, sumFiber, sumSugar), col3, top + 62f, p)
+                }
             }
             y += 14f
 

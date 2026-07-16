@@ -3589,4 +3589,6 @@
     <string name="cd_delete">삭제</string>
     <string name="cd_minus">양 줄이기</string>
     <string name="cd_plus">양 늘리기</string>
+
+    <string name="pdf_fiber_sugar_fmt">식이섬유 %1$dg · 당류 %2$dg</string>
 </resources>

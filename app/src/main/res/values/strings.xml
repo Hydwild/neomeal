@@ -3614,4 +3614,6 @@
     <string name="cd_delete">Удалить</string>
     <string name="cd_minus">Уменьшить количество</string>
     <string name="cd_plus">Увеличить количество</string>
+
+    <string name="pdf_fiber_sugar_fmt">Клетчатка %1$d г · Сахар %2$d г</string>
 </resources>
