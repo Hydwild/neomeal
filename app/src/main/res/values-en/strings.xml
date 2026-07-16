@@ -3607,4 +3607,41 @@ data class Recipe(
     <string name="cd_plus">Increase amount</string>
 
     <string name="pdf_fiber_sugar_fmt">Fiber %1$d g · Sugar %2$d g</string>
+
+    <!-- Plan builder: goals -->
+    <string name="pbg_goal_mass">Muscle gain</string>
+    <string name="pbg_goal_fit">Staying fit</string>
+    <string name="pbg_goal_lose">Weight loss</string>
+    <string name="pbg_goal_dry">Cutting</string>
+    <string name="pbg_goal_light">Light meals</string>
+    <string name="pbg_goal_default">Meal plan</string>
+
+    <!-- Plan builder: goal recommendations -->
+    <string name="pbg_rec_mass">Gaining muscle needs a calorie surplus and enough protein (≈1.6–2 g per kg of body weight). Eat regularly and add snacks. Strength training + nutrition = muscle growth.</string>
+    <string name="pbg_rec_fit">To stay in shape, keep your macros balanced and calories steady. Combine protein, complex carbs and healthy fats in every meal.</string>
+    <string name="pbg_rec_lose">Losing weight takes a moderate calorie deficit (≈10–20%). Focus on protein and vegetables — they keep you full at low calories. Don\'t starve yourself — it\'s harmful and ineffective.</string>
+    <string name="pbg_rec_dry">Cutting means losing fat while keeping muscle: high protein (≈2–2.5 g per kg), few fast carbs, calorie deficit. Suited for experienced lifters. It\'s a demanding regimen — consult a specialist if you have health issues.</string>
+    <string name="pbg_rec_light">Light meals are soft, simple dishes most people find comfortable. This is NOT a therapeutic diet. If you have pain, discomfort or chronic digestive issues — see a doctor. Self-treating with food can be dangerous.</string>
+
+    <!-- Plan builder: diet recommendations -->
+    <string name="pbg_dietrec_vegan">Vegan menu: plant foods only. Watch your protein (legumes, tofu, nuts), vitamin B12 and iron — consider supplementing them.</string>
+    <string name="pbg_dietrec_vegetarian">Vegetarian menu: no meat or fish. Eggs and dairy stay — they provide protein and B12.</string>
+    <string name="pbg_dietrec_no_pork">Menu without pork and its derivatives.</string>
+    <string name="pbg_dietrec_no_lactose">Dairy-free menu — for those who don\'t tolerate lactose well.</string>
+    <string name="pbg_dietrec_no_gluten">Gluten-free menu. Note: traces of gluten are possible in processed foods — check the labels.</string>
+    <string name="pbg_dietrec_pregnant">Pregnancy nutrition: alcohol, raw fish and potentially risky foods are excluded. Folic acid, iron and calcium matter. This is NOT medical advice — always align your diet with your doctor.</string>
+    <string name="pbg_dietrec_nursing">Breastfeeding nutrition: alcohol excluded, common allergens limited. Needs are individual — this is NOT medical advice, consult your doctor.</string>
+    <string name="pbg_dietrec_diabetic">Menu limiting fast carbs and sugar. This does NOT replace your doctor\'s prescriptions — with diabetes, only a specialist determines your diet.</string>
+    <string name="pbg_dietrec_allergic">The most common allergens are removed (nuts, seafood, eggs, milk, soy and others). This is NOT a safety guarantee — always check ingredients and consult your allergist.</string>
+
+    <!-- Plan builder: week screen -->
+    <string name="pb_week_menu_fmt">📅 Weekly menu — %1$s</string>
+    <string name="pb_menu_hint">💡 This is a sample menu. Make it yours — swap dishes, adjust portions.</string>
+    <string name="pb_day_totals_fmt">~%1$d kcal · protein %2$d g</string>
+    <string name="pb_load_day">📥 Load this day into my plan</string>
+    <string name="pb_meal_kcal_fmt">🔥 %1$d kcal · P %2$d g</string>
+    <string name="pb_dlg_time_fmt">⏱️ %1$d min · %2$d serv.\n</string>
+    <string name="pb_dlg_kcal_fmt">🔥 %1$d kcal · P %2$d / </string>
+    <string name="pb_ingredients_hdr">🛒 Ingredients:\n</string>
+    <string name="pb_steps_hdr">\n👨‍🍳 Preparation:\n</string>
 </resources>

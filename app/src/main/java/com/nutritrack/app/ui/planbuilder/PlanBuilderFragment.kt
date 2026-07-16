@@ -189,8 +189,8 @@ class PlanBuilderFragment : Fragment() {
     private fun updateRecommendationAndDisclaimer() {
         val goal = selectedGoal
         val parts = mutableListOf<String>()
-        if (goal != null) parts.add(MealPlanGenerator.recommendation(goal))
-        val dietRec = MealPlanGenerator.dietRecommendation(selectedDiet)
+        if (goal != null) parts.add(MealPlanGenerator.recommendation(requireContext(), goal))
+        val dietRec = MealPlanGenerator.dietRecommendation(requireContext(), selectedDiet)
         if (dietRec.isNotBlank()) parts.add(dietRec)
 
         if (parts.isNotEmpty()) {
@@ -212,7 +212,8 @@ class PlanBuilderFragment : Fragment() {
         binding.containerWeek.removeAllViews()
 
         val header = TextView(requireContext()).apply {
-            text = "📅 Меню на неделю — ${plan.goalLabel}"
+            text = getString(R.string.pb_week_menu_fmt,
+                MealPlanGenerator.goalLabel(requireContext(), plan.goal))
             setTextColor(android.graphics.Color.WHITE)
             textSize = 17f
             setTypeface(typeface, android.graphics.Typeface.BOLD)
@@ -225,8 +226,7 @@ class PlanBuilderFragment : Fragment() {
         }
 
         val note = TextView(requireContext()).apply {
-            text = "💡 Это примерное меню. Подстраивай под себя — заменяй блюда, меняй порции. " +
-                    getString(R.string.pb_tap_dish)
+            text = getString(R.string.pb_menu_hint) + " " + getString(R.string.pb_tap_dish)
             setTextColor(android.graphics.Color.parseColor("#9E9EB0"))
             textSize = 12f
             setPadding(dp(4), dp(12), dp(4), dp(20))
@@ -260,7 +260,7 @@ class PlanBuilderFragment : Fragment() {
         inner.addView(dayHeader)
 
         val daySummary = TextView(requireContext()).apply {
-            text = "~${day.totalCalories} ккал · белок ${day.totalProtein} г"
+            text = getString(R.string.pb_day_totals_fmt, day.totalCalories, day.totalProtein)
             setTextColor(android.graphics.Color.parseColor("#B39DDB"))
             textSize = 12f
             setPadding(0, 0, 0, dp(10))
@@ -274,7 +274,7 @@ class PlanBuilderFragment : Fragment() {
 
         // Кнопка загрузки именно этого дня
         val loadBtn = TextView(requireContext()).apply {
-            text = "📥 Загрузить этот день в план"
+            text = getString(R.string.pb_load_day)
             setTextColor(android.graphics.Color.parseColor("#B388FF"))
             textSize = 13f
             setTypeface(typeface, android.graphics.Typeface.BOLD)
@@ -353,7 +353,7 @@ class PlanBuilderFragment : Fragment() {
             textSize = 14f
         }
         val kcalTv = TextView(requireContext()).apply {
-            text = "🔥 ${recipe.caloriesPerServing} ккал · Б ${recipe.proteinPerServing} г"
+            text = getString(R.string.pb_meal_kcal_fmt, recipe.caloriesPerServing, recipe.proteinPerServing)
             setTextColor(android.graphics.Color.parseColor("#9E9EB0"))
             textSize = 11f
         }
@@ -375,17 +375,17 @@ class PlanBuilderFragment : Fragment() {
 
     private fun showRecipeDialog(recipe: Recipe) {
         val sb = StringBuilder()
-        sb.append("⏱️ ${recipe.timeMinutes} мин · ${recipe.servings} порц.\n")
-        sb.append("🔥 ${recipe.caloriesPerServing} ккал · Б ${recipe.proteinPerServing} / ")
+        sb.append(getString(R.string.pb_dlg_time_fmt, recipe.timeMinutes, recipe.servings))
+        sb.append(getString(R.string.pb_dlg_kcal_fmt, recipe.caloriesPerServing, recipe.proteinPerServing))
         sb.append(getString(R.string.pb_macro_serving, recipe.fatPerServing.toString(), recipe.carbsPerServing.toString()))
 
-        sb.append("🛒 Ингредиенты:\n")
+        sb.append(getString(R.string.pb_ingredients_hdr))
         recipe.ingredients.forEach { sb.append("  • ${com.nutritrack.app.utils.RecipeLabel.tr(requireContext(), it.name)} — ${it.amount}\n") }
 
-        sb.append("\n👨‍🍳 Приготовление:\n")
+        sb.append(getString(R.string.pb_steps_hdr))
         recipe.steps.forEachIndexed { i, step -> sb.append("  ${i + 1}. ${com.nutritrack.app.utils.RecipeLabel.tr(requireContext(), step)}\n") }
 
-        recipe.tip?.let { sb.append("\n💡 $it") }
+        recipe.tip?.let { sb.append("\n💡 ${com.nutritrack.app.utils.RecipeLabel.tr(requireContext(), it)}") }
 
         androidx.appcompat.app.AlertDialog.Builder(requireContext())
             .setTitle("${recipe.emoji} ${com.nutritrack.app.utils.RecipeLabel.tr(requireContext(), recipe.name)}")

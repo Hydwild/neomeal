@@ -3591,4 +3591,41 @@
     <string name="cd_plus">양 늘리기</string>
 
     <string name="pdf_fiber_sugar_fmt">식이섬유 %1$dg · 당류 %2$dg</string>
+
+    <!-- 플랜 빌더: 목표 -->
+    <string name="pbg_goal_mass">근육 증가</string>
+    <string name="pbg_goal_fit">체형 유지</string>
+    <string name="pbg_goal_lose">체중 감량</string>
+    <string name="pbg_goal_dry">컷팅</string>
+    <string name="pbg_goal_light">가벼운 식사</string>
+    <string name="pbg_goal_default">식단 플랜</string>
+
+    <!-- 플랜 빌더: 목표별 추천 -->
+    <string name="pbg_rec_mass">근육을 늘리려면 칼로리 잉여와 충분한 단백질(체중 1kg당 약 1.6–2g)이 필요해요. 규칙적으로 먹고 간식을 더하세요. 근력 운동 + 식사 = 근육 성장.</string>
+    <string name="pbg_rec_fit">체형 유지를 위해 영양소 균형과 일정한 칼로리를 지키세요. 매 끼니에 단백질, 복합 탄수화물, 좋은 지방을 함께 드세요.</string>
+    <string name="pbg_rec_lose">체중 감량에는 적당한 칼로리 적자(약 10–20%)가 필요해요. 단백질과 채소 위주로 — 낮은 칼로리로도 포만감이 좋아요. 급격한 단식은 해롭고 효과도 없어요.</string>
+    <string name="pbg_rec_dry">컷팅은 근육을 지키며 지방을 줄이는 것: 고단백(1kg당 약 2–2.5g), 적은 당질, 칼로리 적자. 운동 경험자에게 적합해요. 건강 문제가 있다면 전문가와 상의하세요.</string>
+    <string name="pbg_rec_light">가벼운 식사는 부드럽고 단순한 요리예요. 치료용 식단이 아니에요. 통증·불편감·만성 소화 문제가 있다면 꼭 의사와 상담하세요.</string>
+
+    <!-- 플랜 빌더: 식단별 추천 -->
+    <string name="pbg_dietrec_vegan">비건 메뉴: 식물성 식품만. 단백질(콩류, 두부, 견과), 비타민 B12와 철분을 챙기세요 — 보충이 필요할 수 있어요.</string>
+    <string name="pbg_dietrec_vegetarian">채식 메뉴: 고기·생선 제외. 달걀과 유제품은 유지 — 단백질과 B12를 공급해요.</string>
+    <string name="pbg_dietrec_no_pork">돼지고기와 그 가공품이 없는 메뉴.</string>
+    <string name="pbg_dietrec_no_lactose">유제품이 없는 메뉴 — 유당이 잘 안 맞는 분들을 위해.</string>
+    <string name="pbg_dietrec_no_gluten">글루텐 프리 메뉴. 주의: 가공식품에는 글루텐 흔적이 있을 수 있어요 — 라벨을 확인하세요.</string>
+    <string name="pbg_dietrec_pregnant">임신 중 식사: 알코올, 날생선, 위험 가능성이 있는 식품 제외. 엽산·철분·칼슘이 중요해요. 의학적 조언이 아니에요 — 반드시 의사와 상의하세요.</string>
+    <string name="pbg_dietrec_nursing">수유 중 식사: 알코올 제외, 흔한 알레르겐 제한. 필요량은 개인차가 커요 — 의학적 조언이 아니니 의사와 상담하세요.</string>
+    <string name="pbg_dietrec_diabetic">당질과 설탕을 제한한 메뉴. 의사 처방을 대신하지 않아요 — 당뇨는 전문가만 식단을 결정해요.</string>
+    <string name="pbg_dietrec_allergic">가장 흔한 알레르겐(견과, 해산물, 달걀, 우유, 콩 등)을 뺀 메뉴. 안전 보장이 아니에요 — 성분을 직접 확인하고 알레르기 전문의와 상의하세요.</string>
+
+    <!-- 플랜 빌더: 주간 화면 -->
+    <string name="pb_week_menu_fmt">📅 주간 메뉴 — %1$s</string>
+    <string name="pb_menu_hint">💡 예시 메뉴예요. 요리를 바꾸고 양을 조절해 나에게 맞추세요.</string>
+    <string name="pb_day_totals_fmt">~%1$d kcal · 단백질 %2$dg</string>
+    <string name="pb_load_day">📥 이 날을 내 플랜에 담기</string>
+    <string name="pb_meal_kcal_fmt">🔥 %1$d kcal · P %2$dg</string>
+    <string name="pb_dlg_time_fmt">⏱️ %1$d분 · %2$d인분\n</string>
+    <string name="pb_dlg_kcal_fmt">🔥 %1$d kcal · P %2$d / </string>
+    <string name="pb_ingredients_hdr">🛒 재료:\n</string>
+    <string name="pb_steps_hdr">\n👨‍🍳 조리법:\n</string>
 </resources>
