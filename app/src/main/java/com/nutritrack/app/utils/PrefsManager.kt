@@ -52,9 +52,10 @@ class PrefsManager(context: Context) {
         get() = prefs.getBoolean("background_manual", false)
         set(v) = prefs.edit().putBoolean("background_manual", v).apply()
 
-    // Прозрачность таб-бара: 0 = прозрачный, 100 = плотный (по умолчанию)
+    // Прозрачность таб-бара: 0 = прозрачный, 100 = плотный. Дефолт 72 —
+    // полупрозрачное «стекло» (просьба пользователя, было 100)
     var bottomBarAlpha: Int
-        get() = prefs.getInt("bottom_bar_alpha", 100)
+        get() = prefs.getInt("bottom_bar_alpha", 72)
         set(v) = prefs.edit().putInt("bottom_bar_alpha", v.coerceIn(0, 100)).apply()
 
     // Пользовательский градиент: HEX-цвета через запятую ("#FF5733,#33C1FF")

@@ -29,6 +29,35 @@ object WhatsNewData {
             )
         ),
         Release(
+            version = "1.3.2",
+            titleRes = R.string.whatsnew_132_title,
+            itemRes = listOf(
+                R.string.whatsnew_132_1,
+                R.string.whatsnew_132_2
+            )
+        ),
+        Release(
+            version = "1.3.1",
+            titleRes = R.string.whatsnew_131_title,
+            itemRes = listOf(
+                R.string.whatsnew_131_1,
+                R.string.whatsnew_131_2,
+                R.string.whatsnew_131_3,
+                R.string.whatsnew_131_4
+            )
+        ),
+        Release(
+            version = "1.3.0",
+            titleRes = R.string.whatsnew_130_title,
+            itemRes = listOf(
+                R.string.whatsnew_130_1,
+                R.string.whatsnew_130_2,
+                R.string.whatsnew_130_3,
+                R.string.whatsnew_130_4,
+                R.string.whatsnew_130_5
+            )
+        ),
+        Release(
             version = "1.2.1",
             titleRes = R.string.whatsnew_121_title,
             itemRes = listOf(R.string.whatsnew_121_1)

@@ -3510,4 +3510,22 @@
     <string name="whatsnew_140_4">❄️ 홈 화면에서 바로 스트릭 얼리기 — 연속 기록을 탭하세요.</string>
     <string name="whatsnew_140_5">🎨 Material You: 카드와 강조색이 배경화면에 맞춰져요 (Android 12+, 설정에서 켜기).</string>
     <string name="whatsnew_140_6">🌙 다크 테마가 브랜드 퍼플로 바뀌고, 앱이 더 빠르고 안정적이 되었어요.</string>
+
+    <!-- 새로운 기능 1.3.x (CHANGELOG에서 복원) -->
+    <string name="whatsnew_130_title">NeoMeal: 펫과 비타민</string>
+    <string name="whatsnew_130_1">🦊 수분 트래커 옆 펫 친구 — 여우, 고양이, 판다 등이 레벨로 잠금 해제돼요.</string>
+    <string name="whatsnew_130_2">💊 제품 카드에 비타민·미네랄과 일일 권장량 % — 맞춤 식품 추천까지.</string>
+    <string name="whatsnew_130_3">🧾 일기 속 콤보 요리 구성과 하루 식비.</string>
+    <string name="whatsnew_130_4">📄 PDF 리포트 섹션 선택: 식사, 수분, 체중, 신체 치수, 지출, 미량 영양소.</string>
+    <string name="whatsnew_130_5">⚖️ Health Connect에서 체중 가져오기 (Zepp Life/Google Fit 스마트 체중계).</string>
+
+    <string name="whatsnew_131_title">스플래시, 위젯, 언어</string>
+    <string name="whatsnew_131_1">✨ 실행 스플래시 화면과 Android 13+ 테마용 모노크롬 아이콘.</string>
+    <string name="whatsnew_131_2">🐾 위젯 속 펫: 하루 수분 진행도에 따라 자세가 바뀌어요.</string>
+    <string name="whatsnew_131_3">🌐 Android 13+ 시스템 설정에서 앱 언어 선택.</string>
+    <string name="whatsnew_131_4">📱 Edge-to-edge와 predictive back — 더 현대적인 느낌.</string>
+
+    <string name="whatsnew_132_title">안정성과 스타일</string>
+    <string name="whatsnew_132_1">📷 바코드 스캐너와 온라인 식품 검색을 고쳤어요.</string>
+    <string name="whatsnew_132_2">💅 앱 전체 버튼·칩 스타일 통일.</string>
 </resources>

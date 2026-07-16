@@ -3535,4 +3535,22 @@
     <string name="whatsnew_140_4">❄️ Заморозка стрика — прямо с главного экрана: просто коснись серии дней.</string>
     <string name="whatsnew_140_5">🎨 Material You: карточки и акценты подстраиваются под обои (Android 12+, включается в настройках).</string>
     <string name="whatsnew_140_6">🌙 Тёмная тема стала фирменной фиолетовой, а приложение — быстрее и стабильнее.</string>
+
+    <!-- Что нового 1.3.x (восстановлено из CHANGELOG) -->
+    <string name="whatsnew_130_title">NeoMeal: питомцы и витамины</string>
+    <string name="whatsnew_130_1">🦊 Питомец-компаньон у трекера воды — лис, кот, панда и другие открываются по уровням.</string>
+    <string name="whatsnew_130_2">💊 Витамины и минералы в карточке продукта с процентом от дневной нормы — и подбор продуктов под них.</string>
+    <string name="whatsnew_130_3">🧾 Состав комбо-блюд в дневнике и стоимость рациона за день.</string>
+    <string name="whatsnew_130_4">📄 Разделы PDF-отчёта на выбор: питание, вода, вес, замеры, расходы, микроэлементы.</string>
+    <string name="whatsnew_130_5">⚖️ Импорт веса из Health Connect (умные весы через Zepp Life/Google Fit).</string>
+
+    <string name="whatsnew_131_title">Заставка, виджеты и языки</string>
+    <string name="whatsnew_131_1">✨ Заставка при запуске и монохромная иконка для тем Android 13+.</string>
+    <string name="whatsnew_131_2">🐾 Питомец в виджете: поза зависит от прогресса воды за день.</string>
+    <string name="whatsnew_131_3">🌐 Выбор языка приложения в системных настройках Android 13+.</string>
+    <string name="whatsnew_131_4">📱 Edge-to-edge и predictive back — приложение ощущается современнее.</string>
+
+    <string name="whatsnew_132_title">Стабильность и стиль</string>
+    <string name="whatsnew_132_1">📷 Починены сканер штрихкодов и онлайн-поиск продуктов.</string>
+    <string name="whatsnew_132_2">💅 Единый стиль кнопок и чипов по всему приложению.</string>
 </resources>

@@ -3526,4 +3526,22 @@ data class Recipe(
     <string name="whatsnew_140_4">❄️ Streak freeze right from the home screen — just tap your day streak.</string>
     <string name="whatsnew_140_5">🎨 Material You: cards and accents adapt to your wallpaper (Android 12+, enable in Settings).</string>
     <string name="whatsnew_140_6">🌙 The dark theme went brand purple, and the app got faster and more stable.</string>
+
+    <!-- What's new 1.3.x (restored from CHANGELOG) -->
+    <string name="whatsnew_130_title">NeoMeal: pets &amp; vitamins</string>
+    <string name="whatsnew_130_1">🦊 A companion pet by the water tracker — fox, cat, panda and more unlock with levels.</string>
+    <string name="whatsnew_130_2">💊 Vitamins and minerals on product cards with % of daily value — plus food suggestions for them.</string>
+    <string name="whatsnew_130_3">🧾 Combo-dish composition in the diary and daily food cost.</string>
+    <string name="whatsnew_130_4">📄 Pick your PDF report sections: nutrition, water, weight, measurements, spending, micronutrients.</string>
+    <string name="whatsnew_130_5">⚖️ Weight import from Health Connect (smart scales via Zepp Life/Google Fit).</string>
+
+    <string name="whatsnew_131_title">Splash, widgets &amp; languages</string>
+    <string name="whatsnew_131_1">✨ Launch splash screen and a monochrome icon for Android 13+ themes.</string>
+    <string name="whatsnew_131_2">🐾 The pet lives in the widget: its pose follows your daily water progress.</string>
+    <string name="whatsnew_131_3">🌐 App language selection in Android 13+ system settings.</string>
+    <string name="whatsnew_131_4">📱 Edge-to-edge and predictive back — the app feels more modern.</string>
+
+    <string name="whatsnew_132_title">Stability &amp; style</string>
+    <string name="whatsnew_132_1">📷 Fixed the barcode scanner and online food search.</string>
+    <string name="whatsnew_132_2">💅 Unified button and chip styling across the app.</string>
 </resources>

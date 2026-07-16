@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.nutritrack.app.NutriApp
 import com.nutritrack.app.R
+import com.nutritrack.app.data.RecipeData
 import com.nutritrack.app.databinding.FragmentShoppingListBinding
 import com.nutritrack.app.utils.CategoryLabel
 import com.nutritrack.app.utils.DateDisplay
@@ -22,18 +23,27 @@ import com.nutritrack.app.utils.HapticHelper
 import com.nutritrack.app.utils.PrefsManager
 import com.nutritrack.app.utils.ProductNameLabel
 import com.nutritrack.app.utils.ProductUnits
+import com.nutritrack.app.utils.RecipeLabel
 import com.nutritrack.app.utils.navigateAnim
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.time.LocalDate
+import kotlin.math.roundToInt
 
 /**
- * Список покупок: все продукты из плана питания на 7 дней вперёд,
- * сгруппированные по категориям, с чек-боксами «куплено».
+ * Список покупок: продукты из плана питания на 7 дней вперёд.
  *
- * Отметки хранятся в prefs и живут, пока не сменится период списка
- * (ключ — дата начала периода).
+ * Блюда раскрываются до ингредиентов:
+ *  - рецепты конструктора (productId == -1) — по списку ингредиентов RecipeData;
+ *  - комбо-продукты — по составу comboItems ("имя:граммы;…"), пропорционально порции;
+ *  - обычные продукты — как есть.
+ *
+ * Одинаковые ингредиенты с одинаковой единицей суммируются. Количества
+ * рецептов бывают не в граммах («2 шт», «1 ст.л.») — такие складываются
+ * по числу перед единицей, а вовсе без числа («по вкусу») — считаются разами.
+ *
+ * Отметки «куплено» хранятся в prefs до смены периода (ключ — имя+единица).
  */
 class ShoppingListFragment : Fragment() {
 
@@ -42,8 +52,20 @@ class ShoppingListFragment : Fragment() {
 
     private lateinit var prefs: PrefsManager
 
-    /** Одна позиция списка: имя, граммы суммарно, категория. */
-    private data class Item(val name: String, val grams: Int, val category: String)
+    /**
+     * Позиция списка. [name] — русское имя-ключ (стабильное, для отметок),
+     * [qty]+[unit] — количество ("г"/"мл"/"шт"/"ст.л."…); если количество
+     * не распарсилось, qty == null и [count] — сколько раз встретилось.
+     */
+    private data class Item(
+        val name: String,
+        val unit: String,
+        val qty: Float?,
+        val count: Int,
+        val category: String,
+    ) {
+        val checkKey: String get() = "$name|$unit"
+    }
 
     private var items: List<Item> = emptyList()
     private var checked: MutableSet<String> = mutableSetOf()
@@ -89,6 +111,8 @@ class ShoppingListFragment : Fragment() {
         _binding = null
     }
 
+    // Сборка списка
+
     private fun loadItems() {
         val db = (requireActivity().application as NutriApp).database
         val profileId = prefs.activeProfileId
@@ -97,28 +121,104 @@ class ShoppingListFragment : Fragment() {
                 val plans = db.mealPlanDao().getPlansForRange(periodStart, periodEnd, profileId)
                 if (plans.isEmpty()) return@withContext emptyList()
                 val mealItems = db.mealPlanDao().getItemsForPlansSync(plans.map { it.id })
-                // Категории берём из справочника продуктов (по id, иначе по имени)
+
                 val products = db.productDao().getAllProductsSync()
                 val byId = products.associateBy { it.id }
                 val byName = products.associateBy { it.name.lowercase().trim() }
+                val recipesByName = RecipeData.all.associateBy { it.name }
 
-                mealItems
-                    .groupBy { it.productName.trim() }
-                    .map { (name, group) ->
-                        val product = byId[group.first().productId]
-                            ?: byName[name.lowercase()]
-                        Item(
-                            name = name,
-                            grams = group.sumOf { it.grams.toDouble() }.toInt(),
-                            category = product?.category ?: ""
-                        )
+                // Аккумулятор: (имя+единица) -> [qty, count]
+                data class Acc(var qty: Float, var parsed: Boolean, var count: Int, val category: String)
+                val acc = LinkedHashMap<String, Acc>()
+
+                fun add(name: String, unit: String, qty: Float?, times: Int = 1) {
+                    val clean = name.trim()
+                    val category = (byName[clean.lowercase()])?.category ?: ""
+                    val key = "$clean|$unit"
+                    val a = acc.getOrPut(key) { Acc(0f, qty != null, 0, category) }
+                    if (qty != null) a.qty += qty
+                    a.count += times
+                }
+
+                // Граммы/миллилитры обычного продукта или компонента комбо
+                fun addProductGrams(name: String, grams: Float) {
+                    val unit = if (ProductUnits.isLiquidName(name)) UNIT_ML else UNIT_G
+                    add(name, unit, grams)
+                }
+
+                for (mi in mealItems) {
+                    val itemName = mi.productName.trim()
+                    val recipe = if (mi.productId <= 0L) recipesByName[itemName] else null
+                    val product = byId[mi.productId] ?: byName[itemName.lowercase()]
+
+                    when {
+                        // Рецепт конструктора: раскрываем по ингредиентам.
+                        // grams=100 — «одна порция»; ингредиенты рецепта даны
+                        // на ВСЕ порции (servings), пересчитываем.
+                        recipe != null -> {
+                            val portions = (mi.grams / 100f).roundToInt().coerceAtLeast(1)
+                            for (ing in recipe.ingredients) {
+                                val parsed = parseAmount(ing.amount)
+                                if (parsed != null) {
+                                    val (num, unit) = parsed
+                                    add(ing.name, unit, num * portions / recipe.servings)
+                                } else {
+                                    add(ing.name, ing.amount, null, times = portions)
+                                }
+                            }
+                        }
+
+                        // Комбо-продукт: состав "имя:граммы;…" на всё блюдо,
+                        // масштабируем на фактическую порцию.
+                        product?.comboItems != null -> {
+                            val parts = product.comboItems!!.split(";").mapNotNull { p ->
+                                val i = p.lastIndexOf(':')
+                                if (i <= 0) return@mapNotNull null
+                                val g = p.substring(i + 1).toFloatOrNull() ?: return@mapNotNull null
+                                p.substring(0, i) to g
+                            }
+                            val total = parts.sumOf { it.second.toDouble() }.toFloat()
+                            if (total > 0f) {
+                                val k = mi.grams / total
+                                parts.forEach { (n, g) -> addProductGrams(n, g * k) }
+                            } else {
+                                addProductGrams(itemName, mi.grams)
+                            }
+                        }
+
+                        // Обычный продукт
+                        else -> addProductGrams(itemName, mi.grams)
                     }
-                    .sortedBy { it.name }
+                }
+
+                acc.map { (key, a) ->
+                    val name = key.substringBeforeLast('|')
+                    Item(
+                        name = name,
+                        unit = key.substringAfterLast('|'),
+                        qty = if (a.parsed) a.qty else null,
+                        count = a.count,
+                        category = a.category
+                    )
+                }.sortedBy { it.name }
             }
             items = list
             if (_binding != null) render()
         }
     }
+
+ /**
+ * Разбирает количество рецепта: "200 г" → 200+"г", "2 шт" → 2+"шт",
+ * "1 ст.л." → 1+"ст.л.", "300 мл" → 300+"мл". Без числа впереди — null.
+ */
+    private fun parseAmount(amount: String): Pair<Float, String>? {
+        val m = Regex("""^(\d+(?:[.,]\d+)?)\s*(.*)$""").find(amount.trim()) ?: return null
+        val num = m.groupValues[1].replace(',', '.').toFloatOrNull() ?: return null
+        val unit = m.groupValues[2].trim().ifEmpty { UNIT_PCS }
+        return num to unit
+    }
+
+    // Отрисовка
 
     private fun render() {
         val b = binding
@@ -143,7 +243,7 @@ class ShoppingListFragment : Fragment() {
     }
 
     private fun updateProgress() {
-        val done = items.count { it.name in checked }
+        val done = items.count { it.checkKey in checked }
         binding.tvShoppingProgress.visibility = View.VISIBLE
         binding.tvShoppingProgress.text = getString(R.string.sl_done_fmt, done, items.size)
     }
@@ -153,7 +253,7 @@ class ShoppingListFragment : Fragment() {
         val card = CardView(ctx).apply {
             radius = dp(14).toFloat()
             cardElevation = 0f
-            setCardBackgroundColor(ctx.getColor(R.color.card_bg))
+            setCardBackgroundColor(cardColor())
             layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
             ).apply { setMargins(0, 0, 0, dp(10)) }
@@ -175,27 +275,55 @@ class ShoppingListFragment : Fragment() {
         return card
     }
 
+ /** Цвет карточки из токена темы (fallback на ресурс). */
+    private fun cardColor(): Int {
+        val tv = android.util.TypedValue()
+        return if (requireContext().theme.resolveAttribute(R.attr.appCardBg, tv, true)) tv.data
+        else requireContext().getColor(R.color.card_bg)
+    }
+
+ /** "250 г" / "2 шт" / "по вкусу ×2" */
+    private fun amountLabel(item: Item): String {
+        val q = item.qty
+        return if (q != null) {
+            val num = if (q % 1f == 0f) q.toInt().toString()
+                      else String.format("%.1f", q)
+            val unit = when (item.unit) {
+                UNIT_G  -> getString(R.string.u_g)
+                UNIT_ML -> getString(R.string.u_ml)
+                else    -> item.unit
+            }
+            "$num $unit"
+        } else {
+            item.unit + if (item.count > 1) " ×${item.count}" else ""
+        }
+    }
+
+ /** Имя для показа: продуктовые имена и ингредиенты рецептов переводятся. */
+    private fun displayName(item: Item): String {
+        val ctx = requireContext()
+        val viaProducts = ProductNameLabel.of(ctx, item.name)
+        return if (viaProducts != item.name) viaProducts else RecipeLabel.tr(ctx, item.name)
+    }
+
     private fun makeRow(item: Item): View {
         val ctx = requireContext()
         val row = LinearLayout(ctx).apply {
             orientation = LinearLayout.HORIZONTAL
             gravity = android.view.Gravity.CENTER_VERTICAL
         }
-        val unit = getString(
-            if (ProductUnits.isLiquidName(item.name)) R.string.u_ml else R.string.u_g
-        )
-        val label = "${ProductNameLabel.of(ctx, item.name)} — ${item.grams} $unit"
+        val label = "${displayName(item)} — ${amountLabel(item)}"
 
         val checkBox = CheckBox(ctx).apply {
             text = label
             setTextColor(ctx.getColor(R.color.white))
             textSize = 14f
-            isChecked = item.name in checked
+            isChecked = item.checkKey in checked
             applyStrike(this)
             layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
             setOnCheckedChangeListener { cb, isChecked ->
                 HapticHelper.tap(cb)
-                if (isChecked) checked.add(item.name) else checked.remove(item.name)
+                if (isChecked) checked.add(item.checkKey) else checked.remove(item.checkKey)
                 prefs.setString(KEY_CHECKED, checked.joinToString(SEP))
                 applyStrike(cb as CheckBox)
                 updateProgress()
@@ -227,13 +355,10 @@ class ShoppingListFragment : Fragment() {
                         else CategoryLabel.of(ctx, category))
                 .append(":\n")
             group.forEach { item ->
-                val unit = getString(
-                    if (ProductUnits.isLiquidName(item.name)) R.string.u_ml else R.string.u_g
-                )
-                val mark = if (item.name in checked) "☑" else "☐"
+                val mark = if (item.checkKey in checked) "☑" else "☐"
                 sb.append(mark).append(' ')
-                    .append(ProductNameLabel.of(ctx, item.name))
-                    .append(" — ").append(item.grams).append(' ').append(unit).append('\n')
+                    .append(displayName(item))
+                    .append(" — ").append(amountLabel(item)).append('\n')
             }
         }
         startActivity(Intent.createChooser(
@@ -252,5 +377,8 @@ class ShoppingListFragment : Fragment() {
         private const val KEY_CHECKED = "shopping_checked"
         // Разделитель имён в prefs — управляющий символ, в названиях не встречается
         private const val SEP = "\u001F"
+        private const val UNIT_G = "г"
+        private const val UNIT_ML = "мл"
+        private const val UNIT_PCS = "шт"
     }
 }
