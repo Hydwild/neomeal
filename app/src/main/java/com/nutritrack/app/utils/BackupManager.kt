@@ -50,13 +50,15 @@ object BackupManager {
         return javax.crypto.spec.SecretKeySpec(key, "AES")
     }
 
+    // java.util.Base64 (API 26+) вместо android.util — крипта тестируется
+    // обычными юнит-тестами без эмулятора (BackupCryptoTest)
     private fun b64(bytes: ByteArray): String =
-        android.util.Base64.encodeToString(bytes, android.util.Base64.NO_WRAP)
+        java.util.Base64.getEncoder().encodeToString(bytes)
 
     private fun unb64(s: String): ByteArray =
-        android.util.Base64.decode(s, android.util.Base64.NO_WRAP)
+        java.util.Base64.getDecoder().decode(s)
 
-    private fun encrypt(json: String, password: String): String {
+    internal fun encrypt(json: String, password: String): String {
         val salt = ByteArray(16).also { java.security.SecureRandom().nextBytes(it) }
         val iv = ByteArray(12).also { java.security.SecureRandom().nextBytes(it) }
         val cipher = javax.crypto.Cipher.getInstance("AES/GCM/NoPadding")
@@ -69,7 +71,7 @@ object BackupManager {
         return gson.toJson(Envelope(salt = b64(salt), iv = b64(iv), data = b64(encrypted)))
     }
 
-    private fun decrypt(envelopeJson: String, password: String): String {
+    internal fun decrypt(envelopeJson: String, password: String): String {
         val env = gson.fromJson(envelopeJson, Envelope::class.java)
         val cipher = javax.crypto.Cipher.getInstance("AES/GCM/NoPadding")
         cipher.init(

@@ -169,7 +169,7 @@ class ShoppingListFragment : Fragment() {
                         recipe != null -> {
                             val portions = (mi.grams / 100f).roundToInt().coerceAtLeast(1)
                             for (ing in recipe.ingredients) {
-                                val parsed = parseAmount(ing.amount)
+                                val parsed = com.nutritrack.app.utils.AmountParser.parse(ing.amount)
                                 if (parsed != null) {
                                     val (num, unit) = parsed
                                     add(ing.name, unit, num * portions / recipe.servings)
@@ -216,17 +216,6 @@ class ShoppingListFragment : Fragment() {
             items = list
             if (_binding != null) render()
         }
-    }
-
- /**
- * Разбирает количество рецепта: "200 г" → 200+"г", "2 шт" → 2+"шт",
- * "1 ст.л." → 1+"ст.л.", "300 мл" → 300+"мл". Без числа впереди — null.
- */
-    private fun parseAmount(amount: String): Pair<Float, String>? {
-        val m = Regex("""^(\d+(?:[.,]\d+)?)\s*(.*)$""").find(amount.trim()) ?: return null
-        val num = m.groupValues[1].replace(',', '.').toFloatOrNull() ?: return null
-        val unit = m.groupValues[2].trim().ifEmpty { UNIT_PCS }
-        return num to unit
     }
 
     // Отрисовка
@@ -394,6 +383,5 @@ class ShoppingListFragment : Fragment() {
         private const val SEP = "\u001F"
         private const val UNIT_G = "г"
         private const val UNIT_ML = "мл"
-        private const val UNIT_PCS = "шт"
     }
 }
