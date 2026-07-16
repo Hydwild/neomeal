@@ -3693,4 +3693,28 @@
     <string name="mr_reason_nuts">полезные жиры (немного)</string>
     <string name="mr_reason_dairy">белок и кальций</string>
     <string name="mr_reason_default">хороший выбор для твоей цели</string>
+
+    <!-- Поиск в списке покупок -->
+    <string name="sl_search_hint">🔍 Найти продукт…</string>
+
+    <!-- Экспорт CSV -->
+    <string name="set_export_csv">Экспорт в CSV</string>
+    <string name="set_export_csv_sub">Дневник, вода, вес или замеры — для Excel</string>
+    <string name="csv_pick_title">Что экспортировать?</string>
+    <string name="csv_diary">🍽️ Дневник питания</string>
+    <string name="csv_water">💧 Вода</string>
+    <string name="csv_weight">⚖️ Вес</string>
+    <string name="csv_measures">📐 Замеры тела</string>
+    <string name="csv_h_date">Дата</string>
+    <string name="csv_h_product">Продукт</string>
+    <string name="csv_h_grams">Граммы</string>
+    <string name="csv_h_calories">Калории</string>
+    <string name="csv_h_protein">Белки</string>
+    <string name="csv_h_fat">Жиры</string>
+    <string name="csv_h_carbs">Углеводы</string>
+    <string name="csv_h_meal">Приём</string>
+    <string name="csv_h_bodypart">Часть тела</string>
+    <string name="csv_h_value_cm">Значение (см)</string>
+    <string name="csv_h_water_ml">Вода (мл)</string>
+    <string name="csv_h_weight_kg">Вес (кг)</string>
 </resources>

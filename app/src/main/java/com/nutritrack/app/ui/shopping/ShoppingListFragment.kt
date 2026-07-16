@@ -69,6 +69,7 @@ class ShoppingListFragment : Fragment() {
 
     private var items: List<Item> = emptyList()
     private var checked: MutableSet<String> = mutableSetOf()
+    private var searchQuery: String = ""
     private lateinit var periodStart: String
     private lateinit var periodEnd: String
 
@@ -102,6 +103,16 @@ class ShoppingListFragment : Fragment() {
             findNavController().navigateAnim(R.id.planBuilderFragment)
         }
         binding.btnShare.setOnClickListener { shareList() }
+
+        // Поиск: фильтрует секции на лету (ищет и по переводу, и по исходному имени)
+        binding.etShoppingSearch.addTextChangedListener(object : android.text.TextWatcher {
+            override fun afterTextChanged(s: android.text.Editable?) {
+                searchQuery = s?.toString()?.trim() ?: ""
+                render()
+            }
+            override fun beforeTextChanged(s: CharSequence?, st: Int, c: Int, a: Int) {}
+            override fun onTextChanged(s: CharSequence?, st: Int, b: Int, c: Int) {}
+        })
 
         loadItems()
     }
@@ -227,14 +238,22 @@ class ShoppingListFragment : Fragment() {
             b.layoutEmpty.visibility = View.VISIBLE
             b.tvShoppingProgress.visibility = View.GONE
             b.btnShare.visibility = View.GONE
+            b.etShoppingSearch.visibility = View.GONE
             return
         }
         b.layoutEmpty.visibility = View.GONE
         b.btnShare.visibility = View.VISIBLE
+        // Поиск имеет смысл, когда позиций достаточно много
+        b.etShoppingSearch.visibility = if (items.size >= 8) View.VISIBLE else View.GONE
         updateProgress()
 
+        val visible = if (searchQuery.isEmpty()) items else items.filter {
+            it.name.contains(searchQuery, ignoreCase = true) ||
+                displayName(it).contains(searchQuery, ignoreCase = true)
+        }
+
         // Группируем по категориям; пустая категория — «Прочее» в конец
-        val groups = items.groupBy { it.category }
+        val groups = visible.groupBy { it.category }
             .toSortedMap(compareBy({ it.isEmpty() }, { it }))
 
         for ((category, group) in groups) {

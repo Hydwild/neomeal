@@ -347,14 +347,7 @@ class SettingsFragment : Fragment() {
             openBackupLauncher.launch(arrayOf("application/json"))
         }
         binding.rowClearData.setOnClickListener { confirmClearData() }
-        binding.rowExportDiaryCsv.setOnClickListener {
-            csvType = "diary"
-            createCsvLauncher.launch("neomeal_diary_${com.nutritrack.app.utils.DateUtils.today()}.csv")
-        }
-        binding.rowExportMeasuresCsv.setOnClickListener {
-            csvType = "measures"
-            createCsvLauncher.launch("neomeal_measurements_${com.nutritrack.app.utils.DateUtils.today()}.csv")
-        }
+        binding.rowExportDiaryCsv.setOnClickListener { showCsvPicker() }
         binding.rowRate.setOnClickListener { openRate() }
         binding.rowFeedback.setOnClickListener { openFeedback() }
         binding.rowPrivacy.setOnClickListener { openPrivacyPolicy() }
@@ -403,16 +396,39 @@ class SettingsFragment : Fragment() {
         }
     }
 
+ /** Выбор набора данных для CSV: дневник / вода / вес / замеры. */
+    private fun showCsvPicker() {
+        val types  = listOf("diary", "water", "weight", "measures")
+        val labels = arrayOf(
+            getString(R.string.csv_diary), getString(R.string.csv_water),
+            getString(R.string.csv_weight), getString(R.string.csv_measures)
+        )
+        val d = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.csv_pick_title))
+            .setItems(labels) { _, which ->
+                csvType = types[which]
+                createCsvLauncher.launch(
+                    "neomeal_${csvType}_${com.nutritrack.app.utils.DateUtils.today()}.csv")
+            }
+            .setNegativeButton(getString(R.string.dlg_cancel), null)
+            .create()
+        d.setOnShowListener { com.nutritrack.app.utils.DialogHelper.tint(d, requireContext()) }
+        d.show()
+    }
+
     private fun doExportCsv(uri: android.net.Uri) {
         viewLifecycleOwner.lifecycleScope.launch {
             try {
                 val db = (requireActivity().application as com.nutritrack.app.NutriApp).database
                 val prefs = com.nutritrack.app.utils.PrefsManager(requireContext())
                 val pid = prefs.activeProfileId
-                val csv = if (csvType == "measures")
-                    com.nutritrack.app.utils.CsvExporter.measurementsCsv(db, pid)
-                else
-                    com.nutritrack.app.utils.CsvExporter.diaryCsv(db, pid)
+                val ctx = requireContext()
+                val csv = when (csvType) {
+                    "measures" -> com.nutritrack.app.utils.CsvExporter.measurementsCsv(ctx, db, pid)
+                    "water"    -> com.nutritrack.app.utils.CsvExporter.waterCsv(ctx, db, pid)
+                    "weight"   -> com.nutritrack.app.utils.CsvExporter.weightCsv(ctx, db, pid)
+                    else       -> com.nutritrack.app.utils.CsvExporter.diaryCsv(ctx, db, pid)
+                }
                 requireContext().contentResolver.openOutputStream(uri)?.use { out ->
                     // BOM для корректной кириллицы в Excel
                     out.write(0xEF); out.write(0xBB); out.write(0xBF)

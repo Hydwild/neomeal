@@ -3668,4 +3668,28 @@
     <string name="mr_reason_nuts">좋은 지방 (조금만)</string>
     <string name="mr_reason_dairy">단백질과 칼슘</string>
     <string name="mr_reason_default">목표에 잘 맞는 선택</string>
+
+    <!-- 쇼핑 리스트 검색 -->
+    <string name="sl_search_hint">🔍 항목 찾기…</string>
+
+    <!-- CSV 내보내기 -->
+    <string name="set_export_csv">CSV로 내보내기</string>
+    <string name="set_export_csv_sub">일기·수분·체중·신체 치수 — Excel용</string>
+    <string name="csv_pick_title">무엇을 내보낼까요?</string>
+    <string name="csv_diary">🍽️ 식사 일기</string>
+    <string name="csv_water">💧 수분</string>
+    <string name="csv_weight">⚖️ 체중</string>
+    <string name="csv_measures">📐 신체 치수</string>
+    <string name="csv_h_date">날짜</string>
+    <string name="csv_h_product">제품</string>
+    <string name="csv_h_grams">그램</string>
+    <string name="csv_h_calories">칼로리</string>
+    <string name="csv_h_protein">단백질</string>
+    <string name="csv_h_fat">지방</string>
+    <string name="csv_h_carbs">탄수화물</string>
+    <string name="csv_h_meal">끼니</string>
+    <string name="csv_h_bodypart">부위</string>
+    <string name="csv_h_value_cm">값 (cm)</string>
+    <string name="csv_h_water_ml">수분 (ml)</string>
+    <string name="csv_h_weight_kg">체중 (kg)</string>
 </resources>

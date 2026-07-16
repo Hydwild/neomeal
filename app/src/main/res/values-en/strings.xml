@@ -3684,4 +3684,28 @@ data class Recipe(
     <string name="mr_reason_nuts">healthy fats (a little)</string>
     <string name="mr_reason_dairy">protein and calcium</string>
     <string name="mr_reason_default">a good pick for your goal</string>
+
+    <!-- Shopping list search -->
+    <string name="sl_search_hint">🔍 Find an item…</string>
+
+    <!-- CSV export -->
+    <string name="set_export_csv">Export to CSV</string>
+    <string name="set_export_csv_sub">Diary, water, weight or measurements — for Excel</string>
+    <string name="csv_pick_title">What to export?</string>
+    <string name="csv_diary">🍽️ Food diary</string>
+    <string name="csv_water">💧 Water</string>
+    <string name="csv_weight">⚖️ Weight</string>
+    <string name="csv_measures">📐 Body measurements</string>
+    <string name="csv_h_date">Date</string>
+    <string name="csv_h_product">Product</string>
+    <string name="csv_h_grams">Grams</string>
+    <string name="csv_h_calories">Calories</string>
+    <string name="csv_h_protein">Protein</string>
+    <string name="csv_h_fat">Fat</string>
+    <string name="csv_h_carbs">Carbs</string>
+    <string name="csv_h_meal">Meal</string>
+    <string name="csv_h_bodypart">Body part</string>
+    <string name="csv_h_value_cm">Value (cm)</string>
+    <string name="csv_h_water_ml">Water (ml)</string>
+    <string name="csv_h_weight_kg">Weight (kg)</string>
 </resources>
