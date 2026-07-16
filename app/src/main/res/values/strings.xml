@@ -3607,4 +3607,11 @@
     <string name="sb_deleted_fmt">Удалено: %1$s</string>
     <string name="sb_water_deleted_fmt">Удалено: %1$d мл воды</string>
     <string name="c_undo">Отменить</string>
+
+    <!-- Доступность: описания икон-кнопок -->
+    <string name="cd_close">Закрыть</string>
+    <string name="cd_edit">Изменить</string>
+    <string name="cd_delete">Удалить</string>
+    <string name="cd_minus">Уменьшить количество</string>
+    <string name="cd_plus">Увеличить количество</string>
 </resources>

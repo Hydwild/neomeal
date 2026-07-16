@@ -3598,4 +3598,11 @@ data class Recipe(
     <string name="sb_deleted_fmt">Deleted: %1$s</string>
     <string name="sb_water_deleted_fmt">Deleted: %1$d ml of water</string>
     <string name="c_undo">Undo</string>
+
+    <!-- Accessibility: icon button descriptions -->
+    <string name="cd_close">Close</string>
+    <string name="cd_edit">Edit</string>
+    <string name="cd_delete">Delete</string>
+    <string name="cd_minus">Decrease amount</string>
+    <string name="cd_plus">Increase amount</string>
 </resources>

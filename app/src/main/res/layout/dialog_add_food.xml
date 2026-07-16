@@ -7,6 +7,17 @@
     android:padding="16dp"
     android:background="?attr/appBottomSheetBg">
 
+    <!-- Ручка перетаскивания (сигнал «шторку можно смахнуть») -->
+    <View
+        android:id="@+id/sheetHandle"
+        android:layout_width="36dp"
+        android:layout_height="4dp"
+        android:background="@drawable/sheet_drag_handle"
+        android:importantForAccessibility="no"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <!-- Заголовок (закреплён сверху) -->
     <TextView
         android:id="@+id/tvSheetTitle"
@@ -16,7 +27,8 @@
         android:textColor="?attr/appTextPrimary"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/sheetHandle"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <!-- Кнопка добавить (закреплена внизу) -->

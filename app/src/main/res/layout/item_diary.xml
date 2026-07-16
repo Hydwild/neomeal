@@ -57,7 +57,7 @@
             android:alpha="0.55"
             android:background="?android:attr/selectableItemBackgroundBorderless"/>
 
-        <ImageButton android:id="@+id/btnDelete" android:layout_width="32dp"
+        <ImageButton android:id="@+id/btnDelete" android:contentDescription="@string/cd_delete" android:layout_width="32dp"
             android:layout_height="32dp" android:background="@android:color/transparent"
             android:src="@drawable/ic_delete" android:tint="?attr/appTextSecondary"/>
     </LinearLayout>

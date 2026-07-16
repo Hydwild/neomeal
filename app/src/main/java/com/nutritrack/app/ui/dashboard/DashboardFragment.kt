@@ -151,6 +151,12 @@ class DashboardFragment : Fragment() {
         // Заголовок дневника — тап для выбора даты (история прошлых дней)
         binding.rowDiaryHeader.setOnClickListener { showDatePicker() }
 
+        // Пустой дневник — тап открывает добавление еды (empty state как действие)
+        binding.tvDiaryEmpty.setOnClickListener {
+            com.nutritrack.app.utils.HapticHelper.tap(it)
+            showAddFoodDialog()
+        }
+
         // Слушаем дату, выбранную в календаре, — крепится один раз к жизненному циклу
         findNavController().currentBackStackEntry
             ?.savedStateHandle

@@ -3582,4 +3582,11 @@
     <string name="sb_deleted_fmt">삭제됨: %1$s</string>
     <string name="sb_water_deleted_fmt">물 %1$dml 삭제됨</string>
     <string name="c_undo">실행 취소</string>
+
+    <!-- 접근성: 아이콘 버튼 설명 -->
+    <string name="cd_close">닫기</string>
+    <string name="cd_edit">수정</string>
+    <string name="cd_delete">삭제</string>
+    <string name="cd_minus">양 줄이기</string>
+    <string name="cd_plus">양 늘리기</string>
 </resources>
