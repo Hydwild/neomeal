@@ -66,6 +66,9 @@ class MainActivity : AppCompatActivity() {
 
         // Edge-to-edge: контент и фон-градиент рисуются под системными барами,
         // отступы контента задаём вручную через insets ниже.
+        // ЕДИНСТВЕННЫЙ листенер на root: системные бары + клавиатура вместе.
+        // (Второй setOnApplyWindowInsetsListener на ту же view затирает первый —
+        // раньше из-за этого отступ бара от системной навигации не применялся.)
         androidx.core.view.WindowCompat.setDecorFitsSystemWindows(window, false)
         val navBase = (6 * resources.displayMetrics.density).toInt()
         val backBase = (74 * resources.displayMetrics.density).toInt()
@@ -75,6 +78,9 @@ class MainActivity : AppCompatActivity() {
             (binding.bottomNavigation.layoutParams as android.widget.FrameLayout.LayoutParams).bottomMargin = navBase + bars.bottom
             (binding.btnGlobalBack.layoutParams as android.widget.FrameLayout.LayoutParams).bottomMargin = backBase + bars.bottom
             binding.bottomNavigation.requestLayout()
+            // Клавиатура открыта — прячем нижний бар (иначе он перекрывает поля ввода)
+            imeVisible = insets.isVisible(androidx.core.view.WindowInsetsCompat.Type.ime())
+            applyBottomNavVisibility()
             insets
         }
         com.nutritrack.app.utils.BackgroundHelper.syncWithTheme(this)
@@ -82,11 +88,15 @@ class MainActivity : AppCompatActivity() {
         com.nutritrack.app.utils.BackgroundHelper.applyScrim(binding.backgroundScrim)
         applyStatusBar()
 
-        // Блокировка входа (раз за запуск процесса)
-        if (prefs.appLockEnabled && !appUnlocked) {
-            binding.root.visibility = android.view.View.INVISIBLE
-            showAppLock()
+        // При включённой блокировке содержимое не попадает в скриншоты
+        // и миниатюру «недавних» (вес, фото прогресса — чувствительные данные)
+        if (prefs.appLockEnabled) {
+            window.setFlags(
+                android.view.WindowManager.LayoutParams.FLAG_SECURE,
+                android.view.WindowManager.LayoutParams.FLAG_SECURE
+            )
         }
+        // Сама блокировка — в onStart (срабатывает и при возврате из фона)
 
         setupNavigation()
         observeAchievementUnlocks()
@@ -99,6 +109,36 @@ class MainActivity : AppCompatActivity() {
                 withContext(Dispatchers.Main) { goToOnboarding() }
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        maybeLock()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        // Обновляем метку при уходе в фон (если разблокированы) — таймаут
+        // отсчитывает время В ФОНЕ, а не с момента разблокировки
+        if (prefs.appLockEnabled && ::binding.isInitialized &&
+            binding.root.visibility == android.view.View.VISIBLE && lastUnlockMs > 0L) {
+            lastUnlockMs = System.currentTimeMillis()
+        }
+    }
+
+ /**
+ * Блокировка при запуске И при возврате из фона (раньше — раз на процесс).
+ * Быстрые переключения приложений (< 1 мин после разблокировки) не дёргают
+ * биометрию заново.
+ */
+    private fun maybeLock() {
+        if (!prefs.appLockEnabled) return
+        if (!::binding.isInitialized) return   // ветка ухода на онбординг
+        if (lockPromptShowing) return
+        if (System.currentTimeMillis() - lastUnlockMs <= LOCK_TIMEOUT_MS) return
+        binding.root.visibility = android.view.View.INVISIBLE
+        lockPromptShowing = true
+        showAppLock()
     }
 
     override fun onResume() {
@@ -176,14 +216,7 @@ class MainActivity : AppCompatActivity() {
             if (!navController.popBackStack()) onBackPressedDispatcher.onBackPressed()
         }
 
-        // Прячем нижний бар, когда открыта клавиатура (иначе он залезает на неё
-        // и перекрывает поля ввода, например ввод веса на Аналитике).
-        androidx.core.view.ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
-            imeVisible = insets.isVisible(androidx.core.view.WindowInsetsCompat.Type.ime())
-            applyBottomNavVisibility()
-            insets
-        }
-
+        // Скрытие бара при клавиатуре — в общем insets-листенере в onCreate
         maybeShowWhatsNew(navController)
     }
 
@@ -257,15 +290,19 @@ class MainActivity : AppCompatActivity() {
 
     //  Блокировка входа
 
+    private var lockPromptShowing = false
+
     private fun showAppLock() {
         val executor = androidx.core.content.ContextCompat.getMainExecutor(this)
         val prompt = androidx.biometric.BiometricPrompt(this, executor,
             object : androidx.biometric.BiometricPrompt.AuthenticationCallback() {
                 override fun onAuthenticationSucceeded(result: androidx.biometric.BiometricPrompt.AuthenticationResult) {
-                    appUnlocked = true
+                    lastUnlockMs = System.currentTimeMillis()
+                    lockPromptShowing = false
                     binding.root.visibility = android.view.View.VISIBLE
                 }
                 override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    lockPromptShowing = false
                     finish()
                 }
             })
@@ -281,6 +318,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        private var appUnlocked = false
+        // Момент последней успешной разблокировки (на процесс). 0 = не разблокировано.
+        private var lastUnlockMs = 0L
+        // Возврат из фона в течение минуты не требует повторной биометрии
+        private const val LOCK_TIMEOUT_MS = 60_000L
     }
 }
