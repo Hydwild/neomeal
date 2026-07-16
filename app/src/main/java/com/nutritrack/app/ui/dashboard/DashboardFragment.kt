@@ -272,11 +272,11 @@ class DashboardFragment : Fragment() {
                 binding.tvFastingPercentBig.text = "${state.progressPercent}%"
                 binding.progressFastingDash.progress = state.progressPercent
                 binding.tvFastingPhaseDash.text = when (state.phase) {
-                    com.nutritrack.app.utils.FastingPhase.EARLY          -> "🍽️ Переваривание"
-                    com.nutritrack.app.utils.FastingPhase.KETOSIS        -> "⚡ Кетоз"
-                    com.nutritrack.app.utils.FastingPhase.AUTOPHAGY      -> "🧹 Аутофагия"
-                    com.nutritrack.app.utils.FastingPhase.DEEP_AUTOPHAGY -> "🧬 Глубокая аутофагия"
-                    com.nutritrack.app.utils.FastingPhase.COMPLETE       -> "🏆 Завершено!"
+                    com.nutritrack.app.utils.FastingPhase.EARLY          -> getString(R.string.ds_fast_early)
+                    com.nutritrack.app.utils.FastingPhase.KETOSIS        -> getString(R.string.ds_fast_ketosis)
+                    com.nutritrack.app.utils.FastingPhase.AUTOPHAGY     -> getString(R.string.ds_fast_autophagy)
+                    com.nutritrack.app.utils.FastingPhase.DEEP_AUTOPHAGY -> getString(R.string.ds_fast_deep)
+                    com.nutritrack.app.utils.FastingPhase.COMPLETE       -> getString(R.string.ds_fast_complete)
                     com.nutritrack.app.utils.FastingPhase.NOT_STARTED    -> ""
                 }
             } else {
@@ -911,18 +911,19 @@ class DashboardFragment : Fragment() {
                 if (s == null) { prefs.lastCoachCheck = today.format(fmt); return@withContext }
                 val sign = if (s.deltaKcal > 0) "+" else ""
                 androidx.appcompat.app.AlertDialog.Builder(requireContext())
-                    .setTitle("🤖 Умный тренер")
-                    .setMessage(s.message + "\n\nНовая норма: ${(vm.calorieGoal.value ?: 2000) + s.deltaKcal} ккал/день.")
-                    .setPositiveButton("Применить $sign${s.deltaKcal} ккал") { _, _ ->
+                    .setTitle(getString(R.string.ds_coach_title))
+                    .setMessage(s.message + getString(R.string.ds_coach_new_norm_fmt,
+                        (vm.calorieGoal.value ?: 2000) + s.deltaKcal))
+                    .setPositiveButton(getString(R.string.ds_coach_apply_fmt, "$sign${s.deltaKcal}")) { _, _ ->
                         prefs.calorieAdjustment += s.deltaKcal
                         com.nutritrack.app.utils.CalorieCalculator.adjustment = prefs.calorieAdjustment
                         prefs.lastCoachCheck = today.format(fmt)
                         com.nutritrack.app.utils.HapticHelper.success(view)
                         android.widget.Toast.makeText(requireContext(),
-                            "Норма обновлена", android.widget.Toast.LENGTH_SHORT).show()
+                            getString(R.string.ds_coach_updated), android.widget.Toast.LENGTH_SHORT).show()
                         requireActivity().recreate()
                     }
-                    .setNegativeButton("Не сейчас") { _, _ -> prefs.lastCoachCheck = today.format(fmt) }
+                    .setNegativeButton(getString(R.string.ds_coach_later)) { _, _ -> prefs.lastCoachCheck = today.format(fmt) }
                     .show()
             }
         }

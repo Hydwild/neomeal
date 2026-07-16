@@ -3553,4 +3553,42 @@
     <string name="whatsnew_132_title">Стабильность и стиль</string>
     <string name="whatsnew_132_1">📷 Починены сканер штрихкодов и онлайн-поиск продуктов.</string>
     <string name="whatsnew_132_2">💅 Единый стиль кнопок и чипов по всему приложению.</string>
+
+    <!-- Уведомления-напоминания (были захардкожены) -->
+    <string name="rr_water_added_fmt">💧 +%1$d мл воды записано!</string>
+    <string name="rr_water_title">💧 Время попить воды</string>
+    <string name="rr_water_msg">Не забудь про водный баланс!</string>
+    <string name="rr_snooze_30">⏰ Напомним через 30 минут</string>
+    <string name="rr_snooze_20">⏰ Напомним через 20 минут</string>
+    <string name="rr_meal_done">✅ Приём пищи отмечен!</string>
+    <string name="rr_meal_title">Приём пищи</string>
+    <string name="rr_meal_msg">Не забудь поесть!</string>
+    <string name="rr_reminder">Напоминание</string>
+    <string name="rr_act_drank_fmt">💧 Выпил %1$d мл</string>
+    <string name="rr_act_later">⏰ Позже</string>
+    <string name="rr_act_ate">✅ Поел</string>
+    <string name="rr_channel_name">Напоминания</string>
+    <string name="rr_channel_desc">Напоминания о приёмах пищи и воде</string>
+
+    <!-- Фазы голодания на главном -->
+    <string name="ds_fast_early">🍽️ Переваривание</string>
+    <string name="ds_fast_ketosis">⚡ Кетоз</string>
+    <string name="ds_fast_autophagy">🧹 Аутофагия</string>
+    <string name="ds_fast_deep">🧬 Глубокая аутофагия</string>
+    <string name="ds_fast_complete">🏆 Завершено!</string>
+
+    <!-- Умный тренер (диалог) -->
+    <string name="ds_coach_title">🤖 Умный тренер</string>
+    <string name="ds_coach_new_norm_fmt">\n\nНовая норма: %1$d ккал/день.</string>
+    <string name="ds_coach_apply_fmt">Применить %1$s ккал</string>
+    <string name="ds_coach_later">Не сейчас</string>
+    <string name="ds_coach_updated">Норма обновлена</string>
+
+    <!-- Быстрые чипы добавления еды -->
+    <string name="ds_copied_fmt">✅ Скопировано из вчера: %1$d</string>
+    <string name="ds_no_yesterday">Вчера записей нет</string>
+
+    <!-- Конструктор плана -->
+    <string name="pb_loaded_notif">✅ План загружен, напоминания установлены</string>
+    <string name="pb_loaded">✅ План загружен в план питания</string>
 </resources>

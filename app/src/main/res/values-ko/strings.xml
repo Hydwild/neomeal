@@ -3528,4 +3528,42 @@
     <string name="whatsnew_132_title">안정성과 스타일</string>
     <string name="whatsnew_132_1">📷 바코드 스캐너와 온라인 식품 검색을 고쳤어요.</string>
     <string name="whatsnew_132_2">💅 앱 전체 버튼·칩 스타일 통일.</string>
+
+    <!-- 리마인더 알림 (하드코딩 제거) -->
+    <string name="rr_water_added_fmt">💧 물 %1$dml 기록 완료!</string>
+    <string name="rr_water_title">💧 물 마실 시간</string>
+    <string name="rr_water_msg">수분 밸런스를 잊지 마세요!</string>
+    <string name="rr_snooze_30">⏰ 30분 후에 다시 알려드릴게요</string>
+    <string name="rr_snooze_20">⏰ 20분 후에 다시 알려드릴게요</string>
+    <string name="rr_meal_done">✅ 식사 기록 완료!</string>
+    <string name="rr_meal_title">식사</string>
+    <string name="rr_meal_msg">식사를 잊지 마세요!</string>
+    <string name="rr_reminder">알림</string>
+    <string name="rr_act_drank_fmt">💧 %1$dml 마심</string>
+    <string name="rr_act_later">⏰ 나중에</string>
+    <string name="rr_act_ate">✅ 먹었어요</string>
+    <string name="rr_channel_name">알림</string>
+    <string name="rr_channel_desc">식사·수분 알림</string>
+
+    <!-- 홈 화면 단식 단계 -->
+    <string name="ds_fast_early">🍽️ 소화 중</string>
+    <string name="ds_fast_ketosis">⚡ 케토시스</string>
+    <string name="ds_fast_autophagy">🧹 자가포식</string>
+    <string name="ds_fast_deep">🧬 깊은 자가포식</string>
+    <string name="ds_fast_complete">🏆 완료!</string>
+
+    <!-- 스마트 코치 -->
+    <string name="ds_coach_title">🤖 스마트 코치</string>
+    <string name="ds_coach_new_norm_fmt">\n\n새 목표: 하루 %1$d kcal.</string>
+    <string name="ds_coach_apply_fmt">%1$s kcal 적용</string>
+    <string name="ds_coach_later">나중에</string>
+    <string name="ds_coach_updated">목표 업데이트 완료</string>
+
+    <!-- 빠른 추가 칩 -->
+    <string name="ds_copied_fmt">✅ 어제에서 복사: %1$d</string>
+    <string name="ds_no_yesterday">어제 기록이 없어요</string>
+
+    <!-- 플랜 빌더 -->
+    <string name="pb_loaded_notif">✅ 플랜 로드 완료, 알림 설정됨</string>
+    <string name="pb_loaded">✅ 식단 플랜에 로드 완료</string>
 </resources>

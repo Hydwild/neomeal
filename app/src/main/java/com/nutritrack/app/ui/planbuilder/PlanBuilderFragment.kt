@@ -140,8 +140,8 @@ class PlanBuilderFragment : Fragment() {
                 }
             }
             withContext(kotlinx.coroutines.Dispatchers.Main) {
-                val msg = if (withReminders) "✅ План загружен, напоминания установлены"
-                else "✅ План загружен в план питания"
+                val msg = if (withReminders) getString(R.string.pb_loaded_notif)
+                else getString(R.string.pb_loaded)
                 android.widget.Toast.makeText(requireContext(), msg, android.widget.Toast.LENGTH_LONG).show()
             }
         }

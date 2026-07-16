@@ -328,7 +328,8 @@ class AddFoodSheet(
             // Кнопка "Повторить вчера"
             quickRow.addView(makeQuickChip(getString(R.string.ds_repeat_yesterday), accent = true) {
                 vm.repeatYesterday { count ->
-                    val msg = if (count > 0) "✅ Скопировано из вчера: $count" else "Вчера записей нет"
+                    val msg = if (count > 0) getString(R.string.ds_copied_fmt, count)
+                              else getString(R.string.ds_no_yesterday)
                     Toast.makeText(ctx, msg, Toast.LENGTH_SHORT).show()
                     onAchievementsCheck()
                 }

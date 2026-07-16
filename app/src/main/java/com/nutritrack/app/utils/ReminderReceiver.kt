@@ -50,7 +50,7 @@ class ReminderReceiver : BroadcastReceiver() {
             ACTION_WATER_YES -> {
                 addWater(context, WATER_AMOUNT_ML)
                 cancelNotification(context, intent.getIntExtra(EXTRA_NOTIF_ID, 0))
-                showToast(context, "💧 +$WATER_AMOUNT_ML мл воды записано!")
+                showToast(context, context.getString(R.string.rr_water_added_fmt, WATER_AMOUNT_ML))
             }
 
             // Нажата кнопка "⏰ Позже" (вода)
@@ -59,9 +59,9 @@ class ReminderReceiver : BroadcastReceiver() {
                 // Повторить через 30 минут
                 ReminderScheduler.scheduleSnooze(
                     context, "water", 30,
-                    "💧 Время попить воды", "Не забудь про водный баланс!"
+                    context.getString(R.string.rr_water_title), context.getString(R.string.rr_water_msg)
                 )
-                showToast(context, "⏰ Напомним через 30 минут")
+                showToast(context, context.getString(R.string.rr_snooze_30))
             }
 
             // Нажата кнопка " Поел"
@@ -69,17 +69,17 @@ class ReminderReceiver : BroadcastReceiver() {
                 val type = intent.getStringExtra(EXTRA_TYPE) ?: "meal"
                 confirmMeal(context, type)
                 cancelNotification(context, intent.getIntExtra(EXTRA_NOTIF_ID, 0))
-                showToast(context, "✅ Приём пищи отмечен!")
+                showToast(context, context.getString(R.string.rr_meal_done))
             }
 
             // Нажата кнопка "⏰ Позже" (еда)
             ACTION_MEAL_LATER -> {
                 val type  = intent.getStringExtra(EXTRA_TYPE) ?: "meal"
-                val title = intent.getStringExtra(EXTRA_TITLE) ?: "Приём пищи"
-                val msg   = intent.getStringExtra(EXTRA_MSG) ?: "Не забудь поесть!"
+                val title = intent.getStringExtra(EXTRA_TITLE) ?: context.getString(R.string.rr_meal_title)
+                val msg   = intent.getStringExtra(EXTRA_MSG) ?: context.getString(R.string.rr_meal_msg)
                 cancelNotification(context, intent.getIntExtra(EXTRA_NOTIF_ID, 0))
                 ReminderScheduler.scheduleSnooze(context, type, 20, title, msg)
-                showToast(context, "⏰ Напомним через 20 минут")
+                showToast(context, context.getString(R.string.rr_snooze_20))
             }
 
             // Умная проверка воды (по привычному времени)
@@ -90,7 +90,7 @@ class ReminderReceiver : BroadcastReceiver() {
             // Срабатывание будильника показываем уведомление
             else -> {
                 val type  = intent.getStringExtra(EXTRA_TYPE)  ?: "meal"
-                val title = intent.getStringExtra(EXTRA_TITLE) ?: "Напоминание"
+                val title = intent.getStringExtra(EXTRA_TITLE) ?: context.getString(R.string.rr_reminder)
                 val msg   = intent.getStringExtra(EXTRA_MSG)   ?: ""
                 showNotification(context, type, title, msg)
 
@@ -156,15 +156,15 @@ class ReminderReceiver : BroadcastReceiver() {
             val yesIntent = actionPending(context, ACTION_WATER_YES, type, title, msg, notifId, 1)
             val laterIntent = actionPending(context, ACTION_WATER_LATER, type, title, msg, notifId, 2)
 
-            builder.addAction(0, "💧 Выпил ${WATER_AMOUNT_ML}мл", yesIntent)
-            builder.addAction(0, "⏰ Позже", laterIntent)
+            builder.addAction(0, context.getString(R.string.rr_act_drank_fmt, WATER_AMOUNT_ML), yesIntent)
+            builder.addAction(0, context.getString(R.string.rr_act_later), laterIntent)
         } else {
             // Кнопки для приёма пищи
             val yesIntent = actionPending(context, ACTION_MEAL_YES, type, title, msg, notifId, 3)
             val laterIntent = actionPending(context, ACTION_MEAL_LATER, type, title, msg, notifId, 4)
 
-            builder.addAction(0, "✅ Поел", yesIntent)
-            builder.addAction(0, "⏰ Позже", laterIntent)
+            builder.addAction(0, context.getString(R.string.rr_act_ate), yesIntent)
+            builder.addAction(0, context.getString(R.string.rr_act_later), laterIntent)
         }
 
         val nm = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -321,10 +321,10 @@ class ReminderReceiver : BroadcastReceiver() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 CHANNEL_ID,
-                "Напоминания",
+                context.getString(R.string.rr_channel_name),
                 NotificationManager.IMPORTANCE_HIGH
             ).apply {
-                description = "Напоминания о приёмах пищи и воде"
+                description = context.getString(R.string.rr_channel_desc)
             }
             val nm = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             nm.createNotificationChannel(channel)

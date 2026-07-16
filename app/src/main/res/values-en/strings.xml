@@ -3544,4 +3544,42 @@ data class Recipe(
     <string name="whatsnew_132_title">Stability &amp; style</string>
     <string name="whatsnew_132_1">📷 Fixed the barcode scanner and online food search.</string>
     <string name="whatsnew_132_2">💅 Unified button and chip styling across the app.</string>
+
+    <!-- Reminder notifications (were hardcoded) -->
+    <string name="rr_water_added_fmt">💧 +%1$d ml of water logged!</string>
+    <string name="rr_water_title">💧 Time to drink water</string>
+    <string name="rr_water_msg">Don\'t forget your water balance!</string>
+    <string name="rr_snooze_30">⏰ We\'ll remind you in 30 minutes</string>
+    <string name="rr_snooze_20">⏰ We\'ll remind you in 20 minutes</string>
+    <string name="rr_meal_done">✅ Meal logged!</string>
+    <string name="rr_meal_title">Meal</string>
+    <string name="rr_meal_msg">Don\'t forget to eat!</string>
+    <string name="rr_reminder">Reminder</string>
+    <string name="rr_act_drank_fmt">💧 Drank %1$d ml</string>
+    <string name="rr_act_later">⏰ Later</string>
+    <string name="rr_act_ate">✅ Ate</string>
+    <string name="rr_channel_name">Reminders</string>
+    <string name="rr_channel_desc">Meal and water reminders</string>
+
+    <!-- Fasting phases on the dashboard -->
+    <string name="ds_fast_early">🍽️ Digestion</string>
+    <string name="ds_fast_ketosis">⚡ Ketosis</string>
+    <string name="ds_fast_autophagy">🧹 Autophagy</string>
+    <string name="ds_fast_deep">🧬 Deep autophagy</string>
+    <string name="ds_fast_complete">🏆 Done!</string>
+
+    <!-- Smart Coach dialog -->
+    <string name="ds_coach_title">🤖 Smart Coach</string>
+    <string name="ds_coach_new_norm_fmt">\n\nNew daily goal: %1$d kcal.</string>
+    <string name="ds_coach_apply_fmt">Apply %1$s kcal</string>
+    <string name="ds_coach_later">Not now</string>
+    <string name="ds_coach_updated">Goal updated</string>
+
+    <!-- Quick add chips -->
+    <string name="ds_copied_fmt">✅ Copied from yesterday: %1$d</string>
+    <string name="ds_no_yesterday">No entries yesterday</string>
+
+    <!-- Plan builder -->
+    <string name="pb_loaded_notif">✅ Plan loaded, reminders set</string>
+    <string name="pb_loaded">✅ Plan loaded into your meal plan</string>
 </resources>
