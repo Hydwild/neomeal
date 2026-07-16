@@ -179,6 +179,7 @@ class MealPlanFragment : Fragment() {
 
             // Генерируем рекомендацию
             val rec = MealRecommender.generate(
+                ctx           = requireContext(),
                 goalCalories  = goalCal,
                 eatenCalories = eatenCal,
                 eatenProtein  = eatenProt,
@@ -206,10 +207,11 @@ class MealPlanFragment : Fragment() {
         rec.suggestions.forEach { s ->
             val row = layoutInflater.inflate(R.layout.item_recommendation, container, false)
             row.findViewById<android.widget.TextView>(R.id.tvRecIcon).text = categoryEmoji(s.product.category)
-            row.findViewById<android.widget.TextView>(R.id.tvRecName).text   = s.product.name
+            row.findViewById<android.widget.TextView>(R.id.tvRecName).text   =
+                com.nutritrack.app.utils.ProductNameLabel.of(requireContext(), s.product.name)
             row.findViewById<android.widget.TextView>(R.id.tvRecReason).text = s.reason
-            row.findViewById<android.widget.TextView>(R.id.tvRecGrams).text  = "${s.grams} г"
-            row.findViewById<android.widget.TextView>(R.id.tvRecCal).text    = "${s.calories} ккал"
+            row.findViewById<android.widget.TextView>(R.id.tvRecGrams).text  = getString(R.string.ds_g_fmt, s.grams)
+            row.findViewById<android.widget.TextView>(R.id.tvRecCal).text    = getString(R.string.cal_kcal_fmt, s.calories)
 
             row.setOnClickListener {
                 lifecycleScope.launch(Dispatchers.IO) {
@@ -304,7 +306,7 @@ class MealPlanFragment : Fragment() {
             val prot = items.sumOf { it.protein.toDouble() }.toFloat()
             val fat  = items.sumOf { it.fat.toDouble() }.toFloat()
             val carb = items.sumOf { it.carbs.toDouble() }.toFloat()
-            b.tvMacros.text   = "Б:${prot.toInt()} Ж:${fat.toInt()} У:${carb.toInt()}"
+            b.tvMacros.text   = getString(R.string.mp_macros_fmt, prot.toInt(), fat.toInt(), carb.toInt())
             b.tvCalories.text = b.root.context.getString(R.string.mp_kcal_fmt, cal.toInt())
             b.tvEmpty.visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
         }
@@ -438,8 +440,8 @@ class MealPlanFragment : Fragment() {
         fun updateGrams() {
             val p = selectedProduct
             tvGrams.text = if (p != null) {
-                "$grams г  (~${(p.calories * grams / 100f).toInt()} ккал)"
-            } else "$grams г"
+                getString(R.string.g_kcal_fmt, grams, (p.calories * grams / 100f).toInt())
+            } else getString(R.string.ds_g_fmt, grams)
         }
         updateGrams()
 

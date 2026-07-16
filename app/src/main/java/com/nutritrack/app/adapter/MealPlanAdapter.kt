@@ -16,10 +16,16 @@ class MealItemsAdapter(
 
     inner class VH(private val b: ItemMealItemBinding) : RecyclerView.ViewHolder(b.root) {
         fun bind(item: MealItemEntity) {
-            b.tvItemName.text = b.root.context.getString(R.string.mp_item_fmt, com.nutritrack.app.utils.ProductNameLabel.of(b.root.context, item.productName), item.grams.toInt())
-            b.tvItemCal.text  = "${item.calories.toInt()} ккал"
-            b.tvItemMacros.text =
-                "Б:${item.protein.toInt()} Ж:${item.fat.toInt()} У:${item.carbs.toInt()}"
+            val ctx = b.root.context
+            // Имя: сначала словарь продуктов, затем словарь рецептов
+            // (блюда из конструктора хранятся под русским именем рецепта)
+            val viaProducts = com.nutritrack.app.utils.ProductNameLabel.of(ctx, item.productName)
+            val name = if (viaProducts != item.productName) viaProducts
+                       else com.nutritrack.app.utils.RecipeLabel.tr(ctx, item.productName)
+            b.tvItemName.text = ctx.getString(R.string.mp_item_fmt, name, item.grams.toInt())
+            b.tvItemCal.text  = ctx.getString(R.string.cal_kcal_fmt, item.calories.toInt())
+            b.tvItemMacros.text = ctx.getString(R.string.mp_macros_fmt,
+                item.protein.toInt(), item.fat.toInt(), item.carbs.toInt())
 
             // Долгое нажатие удалить
             b.root.setOnLongClickListener {

@@ -1,5 +1,6 @@
 package com.nutritrack.app.utils
 
+import com.nutritrack.app.R
 import com.nutritrack.app.data.db.entity.ProductEntity
 
 /**
@@ -55,27 +56,27 @@ object MealRecommender {
     )
 
     fun generate(
+        ctx: android.content.Context,
         goalCalories: Int,
         eatenCalories: Int,
         eatenProtein: Float,
         goal: String,
         allProducts: List<ProductEntity>
     ): Recommendation {
-
         val remaining = goalCalories - eatenCalories
         val percent   = if (goalCalories > 0)
             ((eatenCalories.toFloat() / goalCalories) * 100f).toInt() else 0
-        val progressLine = "$eatenCalories / $goalCalories ккал ($percent%)"
+        val progressLine = ctx.getString(R.string.mr_progress_fmt, eatenCalories, goalCalories, percent)
 
         if (remaining <= -50) {
             return Recommendation(
                 goalCalories, eatenCalories, remaining, percent, progressLine,
-                headline = "⚠️ Норма превышена на ${-remaining} ккал",
-                detail = when (goal) {
-                    "lose" -> "Сегодня лучше остановиться. Завтра вернись в рамки — один день не критичен."
-                    "gain" -> "Для набора профицит полезен, но не переусердствуй."
-                    else   -> "Немного превысил норму — это нормально, учти на завтра."
-                },
+                headline = ctx.getString(R.string.mr_over_fmt, -remaining),
+                detail = ctx.getString(when (goal) {
+                    "lose" -> R.string.mr_over_lose
+                    "gain" -> R.string.mr_over_gain
+                    else   -> R.string.mr_over_default
+                }),
                 suggestions = emptyList()
             )
         }
@@ -83,9 +84,9 @@ object MealRecommender {
         if (remaining in -49..120) {
             return Recommendation(
                 goalCalories, eatenCalories, remaining, percent, progressLine,
-                headline = "✅ Норма почти выполнена!",
-                detail = "Осталось $remaining ккал. Можно лёгкий перекус или просто воду.",
-                suggestions = pickProducts(remaining.coerceAtLeast(60), goal, allProducts, light = true)
+                headline = ctx.getString(R.string.mr_done),
+                detail = ctx.getString(R.string.mr_done_detail_fmt, remaining),
+                suggestions = pickProducts(ctx, remaining.coerceAtLeast(60), goal, allProducts, light = true)
             )
         }
 
@@ -93,25 +94,26 @@ object MealRecommender {
         val needMoreProtein = eatenProtein < proteinTarget * 0.6f
 
         val detail = buildString {
-            when (goal) {
-                "lose"    -> append("Для похудения упор на белок и овощи — насыщают надолго. ")
-                "gain"    -> append("Для набора добавь сытные продукты с белком и крупами. ")
-                "healthy" -> append("Выбирай мягкую, нераздражающую пищу. ")
-                else      -> append("Распредели остаток между приёмами пищи. ")
-            }
-            if (needMoreProtein) append("Белка сегодня не хватает — добавь белковые продукты.")
-            else append("Белка достаточно — можно добрать гарниром или фруктами.")
+            append(ctx.getString(when (goal) {
+                "lose"    -> R.string.mr_goal_lose
+                "gain"    -> R.string.mr_goal_gain
+                "healthy" -> R.string.mr_goal_healthy
+                else      -> R.string.mr_goal_default
+            }))
+            append(' ')
+            append(ctx.getString(if (needMoreProtein) R.string.mr_protein_low else R.string.mr_protein_ok))
         }
 
         return Recommendation(
             goalCalories, eatenCalories, remaining, percent, progressLine,
-            headline = "🍽️ Осталось $remaining ккал на сегодня",
+            headline = ctx.getString(R.string.mr_left_fmt, remaining),
             detail = detail,
-            suggestions = pickProducts(remaining, goal, allProducts, preferProtein = needMoreProtein)
+            suggestions = pickProducts(ctx, remaining, goal, allProducts, preferProtein = needMoreProtein)
         )
     }
 
     private fun pickProducts(
+        ctx: android.content.Context,
         remaining: Int,
         goal: String,
         allProducts: List<ProductEntity>,
@@ -157,15 +159,15 @@ object MealRecommender {
 
             val realCal = (product.calories * roundedGrams / 100f).toInt()
 
-            val reason = when {
-                product.protein >= 15f -> "богат белком"
-                product.category == "Овощи" -> "мало калорий, много клетчатки"
-                product.category == "Крупы" -> "медленные углеводы — энергия надолго"
-                product.category in listOf("Фрукты", "Ягоды") -> "витамины и клетчатка"
-                product.category == "Орехи" -> "полезные жиры (немного)"
-                product.category == "Молочные" -> "белок и кальций"
-                else -> "хороший выбор для твоей цели"
-            }
+            val reason = ctx.getString(when {
+                product.protein >= 15f -> com.nutritrack.app.R.string.mr_reason_protein
+                product.category == "Овощи" -> com.nutritrack.app.R.string.mr_reason_veg
+                product.category == "Крупы" -> com.nutritrack.app.R.string.mr_reason_grains
+                product.category in listOf("Фрукты", "Ягоды") -> com.nutritrack.app.R.string.mr_reason_fruit
+                product.category == "Орехи" -> com.nutritrack.app.R.string.mr_reason_nuts
+                product.category == "Молочные" -> com.nutritrack.app.R.string.mr_reason_dairy
+                else -> com.nutritrack.app.R.string.mr_reason_default
+            })
 
             result.add(Suggestion(product, roundedGrams, realCal, reason))
             usedCategories.add(product.category)

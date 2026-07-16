@@ -3657,4 +3657,31 @@ data class Recipe(
     <string name="u_pinch">pinch</string>
     <string name="amt_to_taste">to taste</string>
     <string name="amt_optional">optional</string>
+
+    <!-- Plan screen: macro lines -->
+    <string name="mp_macros_fmt">P:%1$d F:%2$d C:%3$d</string>
+    <string name="g_kcal_fmt">%1$d g  (~%2$d kcal)</string>
+
+    <!-- Product recommender -->
+    <string name="mr_progress_fmt">%1$d / %2$d kcal (%3$d%%)</string>
+    <string name="mr_over_fmt">⚠️ Goal exceeded by %1$d kcal</string>
+    <string name="mr_over_lose">Better to stop for today. Get back on track tomorrow — one day isn\'t critical.</string>
+    <string name="mr_over_gain">A surplus helps when bulking, but don\'t overdo it.</string>
+    <string name="mr_over_default">Slightly over — that\'s fine, keep it in mind for tomorrow.</string>
+    <string name="mr_done">✅ Goal almost reached!</string>
+    <string name="mr_done_detail_fmt">%1$d kcal left. A light snack or just water will do.</string>
+    <string name="mr_left_fmt">🍽️ %1$d kcal left for today</string>
+    <string name="mr_goal_lose">For weight loss, focus on protein and vegetables — they keep you full.</string>
+    <string name="mr_goal_gain">For gaining, add filling foods with protein and grains.</string>
+    <string name="mr_goal_healthy">Choose soft, non-irritating food.</string>
+    <string name="mr_goal_default">Spread the remainder across your meals.</string>
+    <string name="mr_protein_low">You\'re short on protein today — add protein-rich foods.</string>
+    <string name="mr_protein_ok">Protein is on track — finish with sides or fruit.</string>
+    <string name="mr_reason_protein">rich in protein</string>
+    <string name="mr_reason_veg">low calories, lots of fiber</string>
+    <string name="mr_reason_grains">slow carbs — long-lasting energy</string>
+    <string name="mr_reason_fruit">vitamins and fiber</string>
+    <string name="mr_reason_nuts">healthy fats (a little)</string>
+    <string name="mr_reason_dairy">protein and calcium</string>
+    <string name="mr_reason_default">a good pick for your goal</string>
 </resources>

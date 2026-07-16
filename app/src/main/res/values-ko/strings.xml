@@ -3641,4 +3641,31 @@
     <string name="u_pinch">한 꼬집</string>
     <string name="amt_to_taste">기호에 따라</string>
     <string name="amt_optional">선택</string>
+
+    <!-- 플랜 화면: 영양소 표기 -->
+    <string name="mp_macros_fmt">단:%1$d 지:%2$d 탄:%3$d</string>
+    <string name="g_kcal_fmt">%1$dg  (~%2$d kcal)</string>
+
+    <!-- 제품 추천 -->
+    <string name="mr_progress_fmt">%1$d / %2$d kcal (%3$d%%)</string>
+    <string name="mr_over_fmt">⚠️ 목표를 %1$d kcal 초과했어요</string>
+    <string name="mr_over_lose">오늘은 여기까지. 내일 다시 맞추면 돼요 — 하루쯤은 괜찮아요.</string>
+    <string name="mr_over_gain">벌크업엔 잉여가 도움되지만 과하지 않게.</string>
+    <string name="mr_over_default">조금 초과했어요 — 괜찮아요, 내일 참고하세요.</string>
+    <string name="mr_done">✅ 목표를 거의 달성했어요!</string>
+    <string name="mr_done_detail_fmt">%1$d kcal 남았어요. 가벼운 간식이나 물이면 충분해요.</string>
+    <string name="mr_left_fmt">🍽️ 오늘 %1$d kcal 남았어요</string>
+    <string name="mr_goal_lose">감량에는 단백질과 채소 위주 — 포만감이 오래가요.</string>
+    <string name="mr_goal_gain">증량에는 단백질·곡물이 든 든든한 음식을 더하세요.</string>
+    <string name="mr_goal_healthy">부드럽고 자극 없는 음식을 고르세요.</string>
+    <string name="mr_goal_default">남은 칼로리를 끼니에 나눠 드세요.</string>
+    <string name="mr_protein_low">오늘 단백질이 부족해요 — 단백질 식품을 더하세요.</string>
+    <string name="mr_protein_ok">단백질은 충분해요 — 곁들임이나 과일로 채우세요.</string>
+    <string name="mr_reason_protein">단백질이 풍부해요</string>
+    <string name="mr_reason_veg">저칼로리에 식이섬유가 많아요</string>
+    <string name="mr_reason_grains">복합 탄수화물 — 오래가는 에너지</string>
+    <string name="mr_reason_fruit">비타민과 식이섬유</string>
+    <string name="mr_reason_nuts">좋은 지방 (조금만)</string>
+    <string name="mr_reason_dairy">단백질과 칼슘</string>
+    <string name="mr_reason_default">목표에 잘 맞는 선택</string>
 </resources>

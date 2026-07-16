@@ -3666,4 +3666,31 @@
     <string name="u_pinch">щепотка</string>
     <string name="amt_to_taste">по вкусу</string>
     <string name="amt_optional">по желанию</string>
+
+    <!-- Экран плана: макро-строки -->
+    <string name="mp_macros_fmt">Б:%1$d Ж:%2$d У:%3$d</string>
+    <string name="g_kcal_fmt">%1$d г  (~%2$d ккал)</string>
+
+    <!-- Рекомендатор продуктов -->
+    <string name="mr_progress_fmt">%1$d / %2$d ккал (%3$d%%)</string>
+    <string name="mr_over_fmt">⚠️ Норма превышена на %1$d ккал</string>
+    <string name="mr_over_lose">Сегодня лучше остановиться. Завтра вернись в рамки — один день не критичен.</string>
+    <string name="mr_over_gain">Для набора профицит полезен, но не переусердствуй.</string>
+    <string name="mr_over_default">Немного превысил норму — это нормально, учти на завтра.</string>
+    <string name="mr_done">✅ Норма почти выполнена!</string>
+    <string name="mr_done_detail_fmt">Осталось %1$d ккал. Можно лёгкий перекус или просто воду.</string>
+    <string name="mr_left_fmt">🍽️ Осталось %1$d ккал на сегодня</string>
+    <string name="mr_goal_lose">Для похудения упор на белок и овощи — насыщают надолго.</string>
+    <string name="mr_goal_gain">Для набора добавь сытные продукты с белком и крупами.</string>
+    <string name="mr_goal_healthy">Выбирай мягкую, нераздражающую пищу.</string>
+    <string name="mr_goal_default">Распредели остаток между приёмами пищи.</string>
+    <string name="mr_protein_low">Белка сегодня не хватает — добавь белковые продукты.</string>
+    <string name="mr_protein_ok">Белка достаточно — можно добрать гарниром или фруктами.</string>
+    <string name="mr_reason_protein">богат белком</string>
+    <string name="mr_reason_veg">мало калорий, много клетчатки</string>
+    <string name="mr_reason_grains">медленные углеводы — энергия надолго</string>
+    <string name="mr_reason_fruit">витамины и клетчатка</string>
+    <string name="mr_reason_nuts">полезные жиры (немного)</string>
+    <string name="mr_reason_dairy">белок и кальций</string>
+    <string name="mr_reason_default">хороший выбор для твоей цели</string>
 </resources>
