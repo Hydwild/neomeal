@@ -3566,4 +3566,15 @@
     <!-- 플랜 빌더 -->
     <string name="pb_loaded_notif">✅ 플랜 로드 완료, 알림 설정됨</string>
     <string name="pb_loaded">✅ 식단 플랜에 로드 완료</string>
+
+    <!-- 백업 비밀번호 -->
+    <string name="bk_pw_title">비밀번호로 보호할까요?</string>
+    <string name="bk_pw_msg">백업에는 앱의 모든 데이터가 평문으로 들어가요. 비밀번호를 설정하면 파일이 암호화돼요. 비밀번호는 복구할 수 없으니 꼭 기억하세요.</string>
+    <string name="bk_pw_hint">비밀번호</string>
+    <string name="bk_encrypt">암호화</string>
+    <string name="bk_plain">비밀번호 없이</string>
+    <string name="bk_pw_empty">비밀번호가 비어 있어 암호화 없이 저장해요</string>
+    <string name="bk_enter_pw_title">🔒 비밀번호로 보호된 파일</string>
+    <string name="bk_wrong_pw">비밀번호가 틀렸어요</string>
+    <string name="bk_restored_fmt">✅ 복원 완료: %1$d개 기록. 앱을 다시 시작해 주세요.</string>
 </resources>

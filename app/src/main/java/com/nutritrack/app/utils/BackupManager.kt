@@ -22,6 +22,80 @@ object BackupManager {
     private const val VERSION = 1
     private val gson: Gson = GsonBuilder().setPrettyPrinting().create()
 
+    // Шифрование бэкапа (опционально, по паролю пользователя)
+
+    private const val ENC_FORMAT = "neomeal-encrypted"
+    private const val PBKDF2_ITERATIONS = 150_000
+    private const val GCM_TAG_BITS = 128
+
+ /** Неверный пароль или повреждённый зашифрованный файл. */
+    class WrongPasswordException : Exception("wrong password")
+
+ /** Файл защищён паролем, а пароль не передан. */
+    class PasswordRequiredException : Exception("password required")
+
+ /** Конверт зашифрованного бэкапа: соль/IV/данные в base64. */
+    private data class Envelope(
+        val format: String = ENC_FORMAT,
+        val version: Int = 1,
+        val salt: String = "",
+        val iv: String = "",
+        val data: String = ""
+    )
+
+    private fun deriveKey(password: CharArray, salt: ByteArray): javax.crypto.spec.SecretKeySpec {
+        val spec = javax.crypto.spec.PBEKeySpec(password, salt, PBKDF2_ITERATIONS, 256)
+        val factory = javax.crypto.SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256")
+        val key = factory.generateSecret(spec).encoded
+        return javax.crypto.spec.SecretKeySpec(key, "AES")
+    }
+
+    private fun b64(bytes: ByteArray): String =
+        android.util.Base64.encodeToString(bytes, android.util.Base64.NO_WRAP)
+
+    private fun unb64(s: String): ByteArray =
+        android.util.Base64.decode(s, android.util.Base64.NO_WRAP)
+
+    private fun encrypt(json: String, password: String): String {
+        val salt = ByteArray(16).also { java.security.SecureRandom().nextBytes(it) }
+        val iv = ByteArray(12).also { java.security.SecureRandom().nextBytes(it) }
+        val cipher = javax.crypto.Cipher.getInstance("AES/GCM/NoPadding")
+        cipher.init(
+            javax.crypto.Cipher.ENCRYPT_MODE,
+            deriveKey(password.toCharArray(), salt),
+            javax.crypto.spec.GCMParameterSpec(GCM_TAG_BITS, iv)
+        )
+        val encrypted = cipher.doFinal(json.toByteArray(Charsets.UTF_8))
+        return gson.toJson(Envelope(salt = b64(salt), iv = b64(iv), data = b64(encrypted)))
+    }
+
+    private fun decrypt(envelopeJson: String, password: String): String {
+        val env = gson.fromJson(envelopeJson, Envelope::class.java)
+        val cipher = javax.crypto.Cipher.getInstance("AES/GCM/NoPadding")
+        cipher.init(
+            javax.crypto.Cipher.DECRYPT_MODE,
+            deriveKey(password.toCharArray(), unb64(env.salt)),
+            javax.crypto.spec.GCMParameterSpec(GCM_TAG_BITS, unb64(env.iv))
+        )
+        return try {
+            cipher.doFinal(unb64(env.data)).toString(Charsets.UTF_8)
+        } catch (_: javax.crypto.AEADBadTagException) {
+            // GCM-тег не сошёлся — пароль неверный (или файл повреждён)
+            throw WrongPasswordException()
+        }
+    }
+
+ /** Быстрый признак зашифрованного файла (по заголовку конверта). */
+    fun isEncrypted(context: Context, uri: Uri): Boolean = try {
+        val head = context.contentResolver.openInputStream(uri)?.use { input ->
+            ByteArray(256).let { buf ->
+                val n = input.read(buf)
+                if (n > 0) String(buf, 0, n, Charsets.UTF_8) else ""
+            }
+        } ?: ""
+        head.contains(ENC_FORMAT)
+    } catch (_: Exception) { false }
+
  /** Полный снимок базы. */
     data class BackupData(
         val version: Int = VERSION,
@@ -53,8 +127,11 @@ object BackupManager {
         return "neomeal_backup_$ts.json"
     }
 
- /** Собрать все данные и записать JSON в выбранный uri. */
-    suspend fun export(context: Context, uri: Uri): Result<Int> = withContext(Dispatchers.IO) {
+ /**
+ * Собрать все данные и записать JSON в выбранный uri.
+ * [password] задан — файл шифруется AES-GCM (ключ из PBKDF2 по паролю).
+ */
+    suspend fun export(context: Context, uri: Uri, password: String? = null): Result<Int> = withContext(Dispatchers.IO) {
         try {
             val db = AppDatabase.getInstance(context)
             val profiles = db.profileDao().dumpAll()
@@ -101,8 +178,9 @@ object BackupManager {
                 progressPhotos = db.progressPhotoDao().dumpAll()
             )
             val json = gson.toJson(data)
+            val payload = if (password.isNullOrEmpty()) json else encrypt(json, password)
             context.contentResolver.openOutputStream(uri)?.use { out ->
-                out.write(json.toByteArray(Charsets.UTF_8))
+                out.write(payload.toByteArray(Charsets.UTF_8))
             } ?: return@withContext Result.failure(Exception("Не удалось открыть файл для записи"))
 
             // Кол-во записей всего (для сообщения)
@@ -116,12 +194,22 @@ object BackupManager {
         }
     }
 
- /** Прочитать JSON из uri и ЗАМЕНИТЬ данные в базе. */
-    suspend fun import(context: Context, uri: Uri): Result<Int> = withContext(Dispatchers.IO) {
+ /**
+ * Прочитать JSON из uri и ЗАМЕНИТЬ данные в базе.
+ * Для зашифрованного файла нужен [password]:
+ * без него — PasswordRequiredException, неверный — WrongPasswordException.
+ */
+    suspend fun import(context: Context, uri: Uri, password: String? = null): Result<Int> = withContext(Dispatchers.IO) {
         try {
-            val json = context.contentResolver.openInputStream(uri)?.use { input ->
+            var json = context.contentResolver.openInputStream(uri)?.use { input ->
                 input.readBytes().toString(Charsets.UTF_8)
             } ?: return@withContext Result.failure(Exception("Не удалось открыть файл"))
+
+            if (json.contains(ENC_FORMAT)) {
+                if (password.isNullOrEmpty())
+                    return@withContext Result.failure(PasswordRequiredException())
+                json = decrypt(json, password)
+            }
 
             val data = gson.fromJson(json, BackupData::class.java)
                 ?: return@withContext Result.failure(Exception("Файл повреждён или не является резервной копией"))

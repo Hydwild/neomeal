@@ -358,8 +358,38 @@ class SettingsFragment : Fragment() {
     }
 
     private fun doExport(uri: android.net.Uri) {
+        // Спрашиваем, защитить ли файл паролем (бэкап содержит все данные открытым текстом)
+        val input = android.widget.EditText(requireContext()).apply {
+            inputType = android.text.InputType.TYPE_CLASS_TEXT or
+                    android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
+            hint = getString(R.string.bk_pw_hint)
+        }
+        val container = android.widget.FrameLayout(requireContext()).apply {
+            val pad = (20 * resources.displayMetrics.density).toInt()
+            setPadding(pad, pad / 2, pad, 0)
+            addView(input)
+        }
+        val d = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.bk_pw_title))
+            .setMessage(getString(R.string.bk_pw_msg))
+            .setView(container)
+            .setPositiveButton(getString(R.string.bk_encrypt)) { _, _ ->
+                val pw = input.text.toString()
+                if (pw.isEmpty()) {
+                    android.widget.Toast.makeText(requireContext(),
+                        getString(R.string.bk_pw_empty), android.widget.Toast.LENGTH_SHORT).show()
+                    runExport(uri, null)
+                } else runExport(uri, pw)
+            }
+            .setNegativeButton(getString(R.string.bk_plain)) { _, _ -> runExport(uri, null) }
+            .create()
+        d.setOnShowListener { com.nutritrack.app.utils.DialogHelper.tint(d, requireContext()) }
+        d.show()
+    }
+
+    private fun runExport(uri: android.net.Uri, password: String?) {
         viewLifecycleOwner.lifecycleScope.launch {
-            val result = BackupManager.export(requireContext(), uri)
+            val result = BackupManager.export(requireContext(), uri, password)
             result.onSuccess { count ->
                 android.widget.Toast.makeText(requireContext(),
                     getString(R.string.set_imported_fmt, count), android.widget.Toast.LENGTH_LONG).show()
@@ -607,21 +637,56 @@ class SettingsFragment : Fragment() {
         androidx.appcompat.app.AlertDialog.Builder(requireContext())
             .setTitle(getString(R.string.restore_title))
             .setMessage(getString(R.string.restore_msg))
-            .setPositiveButton(getString(R.string.restore_btn)) { _, _ -> doImport(uri) }
+            .setPositiveButton(getString(R.string.restore_btn)) { _, _ ->
+                // Зашифрованный файл — сначала пароль
+                if (BackupManager.isEncrypted(requireContext(), uri)) askImportPassword(uri)
+                else doImport(uri, null)
+            }
             .setNegativeButton(getString(R.string.dlg_cancel), null)
             .show()
     }
 
-    private fun doImport(uri: android.net.Uri) {
+    private fun askImportPassword(uri: android.net.Uri) {
+        val input = android.widget.EditText(requireContext()).apply {
+            inputType = android.text.InputType.TYPE_CLASS_TEXT or
+                    android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
+            hint = getString(R.string.bk_pw_hint)
+        }
+        val container = android.widget.FrameLayout(requireContext()).apply {
+            val pad = (20 * resources.displayMetrics.density).toInt()
+            setPadding(pad, pad / 2, pad, 0)
+            addView(input)
+        }
+        val d = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.bk_enter_pw_title))
+            .setView(container)
+            .setPositiveButton(getString(R.string.restore_btn)) { _, _ ->
+                doImport(uri, input.text.toString())
+            }
+            .setNegativeButton(getString(R.string.dlg_cancel), null)
+            .create()
+        d.setOnShowListener { com.nutritrack.app.utils.DialogHelper.tint(d, requireContext()) }
+        d.show()
+    }
+
+    private fun doImport(uri: android.net.Uri, password: String?) {
         viewLifecycleOwner.lifecycleScope.launch {
-            val result = BackupManager.import(requireContext(), uri)
+            val result = BackupManager.import(requireContext(), uri, password)
             result.onSuccess { count ->
                 android.widget.Toast.makeText(requireContext(),
-                    "✅ Восстановлено: $count записей. Перезапустите приложение.",
+                    getString(R.string.bk_restored_fmt, count),
                     android.widget.Toast.LENGTH_LONG).show()
-            }.onFailure {
-                android.widget.Toast.makeText(requireContext(),
-                    getString(R.string.err_import, it.message ?: ""), android.widget.Toast.LENGTH_LONG).show()
+            }.onFailure { err ->
+                when (err) {
+                    is BackupManager.WrongPasswordException -> {
+                        android.widget.Toast.makeText(requireContext(),
+                            getString(R.string.bk_wrong_pw), android.widget.Toast.LENGTH_LONG).show()
+                        askImportPassword(uri)   // дать попробовать ещё раз
+                    }
+                    is BackupManager.PasswordRequiredException -> askImportPassword(uri)
+                    else -> android.widget.Toast.makeText(requireContext(),
+                        getString(R.string.err_import, err.message ?: ""), android.widget.Toast.LENGTH_LONG).show()
+                }
             }
         }
     }

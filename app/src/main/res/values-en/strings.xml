@@ -3582,4 +3582,15 @@ data class Recipe(
     <!-- Plan builder -->
     <string name="pb_loaded_notif">✅ Plan loaded, reminders set</string>
     <string name="pb_loaded">✅ Plan loaded into your meal plan</string>
+
+    <!-- Backup password -->
+    <string name="bk_pw_title">Protect with a password?</string>
+    <string name="bk_pw_msg">The backup contains all app data in plain text. With a password the file is encrypted; without it the file can\'t be opened and the password can\'t be recovered.</string>
+    <string name="bk_pw_hint">Password</string>
+    <string name="bk_encrypt">Encrypt</string>
+    <string name="bk_plain">No password</string>
+    <string name="bk_pw_empty">Empty password — saving unencrypted</string>
+    <string name="bk_enter_pw_title">🔒 File is password-protected</string>
+    <string name="bk_wrong_pw">Wrong password</string>
+    <string name="bk_restored_fmt">✅ Restored: %1$d records. Please restart the app.</string>
 </resources>

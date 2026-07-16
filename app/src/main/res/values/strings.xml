@@ -3591,4 +3591,15 @@
     <!-- Конструктор плана -->
     <string name="pb_loaded_notif">✅ План загружен, напоминания установлены</string>
     <string name="pb_loaded">✅ План загружен в план питания</string>
+
+    <!-- Пароль резервной копии -->
+    <string name="bk_pw_title">Защитить паролем?</string>
+    <string name="bk_pw_msg">В копии — все данные приложения в открытом виде. С паролем файл будет зашифрован; без пароля его не открыть, восстановить пароль невозможно.</string>
+    <string name="bk_pw_hint">Пароль</string>
+    <string name="bk_encrypt">Зашифровать</string>
+    <string name="bk_plain">Без пароля</string>
+    <string name="bk_pw_empty">Пароль пустой — сохраняю без шифрования</string>
+    <string name="bk_enter_pw_title">🔒 Файл защищён паролем</string>
+    <string name="bk_wrong_pw">Неверный пароль</string>
+    <string name="bk_restored_fmt">✅ Восстановлено: %1$d записей. Перезапустите приложение.</string>
 </resources>
