@@ -3628,4 +3628,17 @@
     <string name="pb_dlg_kcal_fmt">🔥 %1$d kcal · P %2$d / </string>
     <string name="pb_ingredients_hdr">🛒 재료:\n</string>
     <string name="pb_steps_hdr">\n👨‍🍳 조리법:\n</string>
+
+    <!-- 레시피 수량 단위 -->
+    <string name="u_pcs">개</string>
+    <string name="u_tbsp">큰술</string>
+    <string name="u_tsp">작은술</string>
+    <string name="u_clove">쪽</string>
+    <string name="u_slices">조각</string>
+    <string name="u_can">캔</string>
+    <string name="u_scoop">스쿱</string>
+    <string name="u_scoops">스쿱</string>
+    <string name="u_pinch">한 꼬집</string>
+    <string name="amt_to_taste">기호에 따라</string>
+    <string name="amt_optional">선택</string>
 </resources>

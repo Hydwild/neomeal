@@ -3653,4 +3653,17 @@
     <string name="pb_dlg_kcal_fmt">🔥 %1$d ккал · Б %2$d / </string>
     <string name="pb_ingredients_hdr">🛒 Ингредиенты:\n</string>
     <string name="pb_steps_hdr">\n👨‍🍳 Приготовление:\n</string>
+
+    <!-- Единицы количеств в рецептах -->
+    <string name="u_pcs">шт</string>
+    <string name="u_tbsp">ст.л.</string>
+    <string name="u_tsp">ч.л.</string>
+    <string name="u_clove">зубчик</string>
+    <string name="u_slices">ломтика</string>
+    <string name="u_can">банка</string>
+    <string name="u_scoop">мерная ложка</string>
+    <string name="u_scoops">мерные ложки</string>
+    <string name="u_pinch">щепотка</string>
+    <string name="amt_to_taste">по вкусу</string>
+    <string name="amt_optional">по желанию</string>
 </resources>

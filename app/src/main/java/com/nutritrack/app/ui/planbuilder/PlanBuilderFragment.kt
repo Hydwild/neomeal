@@ -380,7 +380,10 @@ class PlanBuilderFragment : Fragment() {
         sb.append(getString(R.string.pb_macro_serving, recipe.fatPerServing.toString(), recipe.carbsPerServing.toString()))
 
         sb.append(getString(R.string.pb_ingredients_hdr))
-        recipe.ingredients.forEach { sb.append("  • ${com.nutritrack.app.utils.RecipeLabel.tr(requireContext(), it.name)} — ${it.amount}\n") }
+        recipe.ingredients.forEach {
+            sb.append("  • ${com.nutritrack.app.utils.RecipeLabel.tr(requireContext(), it.name)}")
+            sb.append(" — ${com.nutritrack.app.utils.RecipeLabel.trAmount(requireContext(), it.amount)}\n")
+        }
 
         sb.append(getString(R.string.pb_steps_hdr))
         recipe.steps.forEachIndexed { i, step -> sb.append("  ${i + 1}. ${com.nutritrack.app.utils.RecipeLabel.tr(requireContext(), step)}\n") }

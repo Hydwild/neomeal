@@ -282,20 +282,16 @@ class ShoppingListFragment : Fragment() {
         else requireContext().getColor(R.color.card_bg)
     }
 
- /** "250 г" / "2 шт" / "по вкусу ×2" */
+ /** "250 г" / "2 шт" / "по вкусу ×2" — единицы по локали. */
     private fun amountLabel(item: Item): String {
         val q = item.qty
         return if (q != null) {
             val num = if (q % 1f == 0f) q.toInt().toString()
                       else String.format("%.1f", q)
-            val unit = when (item.unit) {
-                UNIT_G  -> getString(R.string.u_g)
-                UNIT_ML -> getString(R.string.u_ml)
-                else    -> item.unit
-            }
-            "$num $unit"
+            "$num ${RecipeLabel.trUnit(requireContext(), item.unit)}"
         } else {
-            item.unit + if (item.count > 1) " ×${item.count}" else ""
+            RecipeLabel.trUnit(requireContext(), item.unit) +
+                if (item.count > 1) " ×${item.count}" else ""
         }
     }
 

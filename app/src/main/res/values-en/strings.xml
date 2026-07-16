@@ -3644,4 +3644,17 @@ data class Recipe(
     <string name="pb_dlg_kcal_fmt">🔥 %1$d kcal · P %2$d / </string>
     <string name="pb_ingredients_hdr">🛒 Ingredients:\n</string>
     <string name="pb_steps_hdr">\n👨‍🍳 Preparation:\n</string>
+
+    <!-- Recipe amount units -->
+    <string name="u_pcs">pcs</string>
+    <string name="u_tbsp">tbsp</string>
+    <string name="u_tsp">tsp</string>
+    <string name="u_clove">clove</string>
+    <string name="u_slices">slices</string>
+    <string name="u_can">can</string>
+    <string name="u_scoop">scoop</string>
+    <string name="u_scoops">scoops</string>
+    <string name="u_pinch">pinch</string>
+    <string name="amt_to_taste">to taste</string>
+    <string name="amt_optional">optional</string>
 </resources>

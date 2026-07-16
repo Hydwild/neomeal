@@ -682,4 +682,35 @@ object RecipeLabel {
         val res = map[s] ?: return s
         return context.getString(res)
     }
+
+    // Перевод количеств ингредиентов («200 г», «2 шт», «по вкусу»)
+
+    private val unitMap = mapOf(
+        "г" to R.string.u_g,
+        "мл" to R.string.u_ml,
+        "шт" to R.string.u_pcs,
+        "ст.л." to R.string.u_tbsp,
+        "ч.л." to R.string.u_tsp,
+        "зубчик" to R.string.u_clove,
+        "ломтика" to R.string.u_slices,
+        "банка" to R.string.u_can,
+        "мерная ложка" to R.string.u_scoop,
+        "мерные ложки" to R.string.u_scoops,
+        "щепотка" to R.string.u_pinch,
+        "по вкусу" to R.string.amt_to_taste,
+        "по желанию" to R.string.amt_optional,
+    )
+
+ /** Единица измерения по локали; неизвестная возвращается как есть. */
+    fun trUnit(context: Context, unit: String): String =
+        unitMap[unit.trim()]?.let { context.getString(it) } ?: unit
+
+ /** Количество ингредиента: «200 г» → "200 g", «по вкусу» → "to taste". */
+    fun trAmount(context: Context, amount: String): String {
+        val m = Regex("""^([\d.,/]+\s*)?(.*)$""").find(amount.trim()) ?: return amount
+        val num = m.groupValues[1]
+        val unit = m.groupValues[2].trim()
+        val res = unitMap[unit] ?: return amount
+        return (num + context.getString(res)).trim()
+    }
 }
