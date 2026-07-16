@@ -98,6 +98,14 @@ class DashboardViewModel(app: Application) : AndroidViewModel(app) {
         refreshWidget()
     }
 
+ /** «Отменить» после удаления: вернуть запись (тот же timestamp — HC-запись восстановится). */
+    fun restoreDiaryEntry(entry: DiaryEntryEntity) = viewModelScope.launch {
+        val restored = entry.copy(id = 0)
+        diaryRepo.insert(restored)
+        com.nutritrack.app.utils.HealthConnectWriter.writeDiaryEntry(getApplication(), restored)
+        refreshWidget()
+    }
+
  /** Изменить количество грамм у записи дневника (КБЖУ пересчитываются). */
     fun updateDiaryEntry(entry: DiaryEntryEntity, newGrams: Float) = viewModelScope.launch {
         if (entry.grams <= 0f) return@launch
@@ -188,6 +196,14 @@ class DashboardViewModel(app: Application) : AndroidViewModel(app) {
     fun deleteWater(entry: WaterEntryEntity) = viewModelScope.launch {
         waterRepo.delete(entry)
         com.nutritrack.app.utils.HealthConnectWriter.deleteWater(getApplication(), entry)
+        refreshWidget()
+    }
+
+ /** «Отменить» после удаления воды. */
+    fun restoreWater(entry: WaterEntryEntity) = viewModelScope.launch {
+        val restored = entry.copy(id = 0)
+        waterRepo.insert(restored)
+        com.nutritrack.app.utils.HealthConnectWriter.writeWater(getApplication(), restored)
         refreshWidget()
     }
 }

@@ -3593,4 +3593,9 @@ data class Recipe(
     <string name="bk_enter_pw_title">🔒 File is password-protected</string>
     <string name="bk_wrong_pw">Wrong password</string>
     <string name="bk_restored_fmt">✅ Restored: %1$d records. Please restart the app.</string>
+
+    <!-- Undo snackbars -->
+    <string name="sb_deleted_fmt">Deleted: %1$s</string>
+    <string name="sb_water_deleted_fmt">Deleted: %1$d ml of water</string>
+    <string name="c_undo">Undo</string>
 </resources>

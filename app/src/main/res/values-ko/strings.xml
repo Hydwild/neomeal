@@ -3577,4 +3577,9 @@
     <string name="bk_enter_pw_title">🔒 비밀번호로 보호된 파일</string>
     <string name="bk_wrong_pw">비밀번호가 틀렸어요</string>
     <string name="bk_restored_fmt">✅ 복원 완료: %1$d개 기록. 앱을 다시 시작해 주세요.</string>
+
+    <!-- 실행 취소 스낵바 -->
+    <string name="sb_deleted_fmt">삭제됨: %1$s</string>
+    <string name="sb_water_deleted_fmt">물 %1$dml 삭제됨</string>
+    <string name="c_undo">실행 취소</string>
 </resources>

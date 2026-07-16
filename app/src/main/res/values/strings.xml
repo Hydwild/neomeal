@@ -3602,4 +3602,9 @@
     <string name="bk_enter_pw_title">🔒 Файл защищён паролем</string>
     <string name="bk_wrong_pw">Неверный пароль</string>
     <string name="bk_restored_fmt">✅ Восстановлено: %1$d записей. Перезапустите приложение.</string>
+
+    <!-- Undo-снекбары -->
+    <string name="sb_deleted_fmt">Удалено: %1$s</string>
+    <string name="sb_water_deleted_fmt">Удалено: %1$d мл воды</string>
+    <string name="c_undo">Отменить</string>
 </resources>

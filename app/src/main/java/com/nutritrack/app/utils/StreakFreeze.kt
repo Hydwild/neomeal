@@ -46,7 +46,7 @@ object StreakFreeze {
                 Toast.LENGTH_SHORT).show()
             return
         }
-        AlertDialog.Builder(context)
+        val d = AlertDialog.Builder(context)
             .setTitle(context.getString(R.string.freeze_title))
             .setMessage(context.getString(R.string.freeze_msg))
             .setPositiveButton(context.getString(R.string.freeze_btn)) { _, _ ->
@@ -58,6 +58,9 @@ object StreakFreeze {
                 onFrozen()
             }
             .setNegativeButton(context.getString(R.string.dlg_cancel), null)
-            .show()
+            .create()
+        // Единый стиль диалогов приложения
+        d.setOnShowListener { DialogHelper.tint(d, context) }
+        d.show()
     }
 }

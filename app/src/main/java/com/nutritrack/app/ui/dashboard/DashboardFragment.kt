@@ -340,7 +340,7 @@ class DashboardFragment : Fragment() {
 
     private fun setupDiaryList() {
         diaryAdapter = DiaryAdapter(
-            onDelete = { entry -> vm.deleteDiaryEntry(entry) },
+            onDelete = { entry -> deleteEntryWithUndo(entry) },
             onEdit   = { entry -> showEditEntryDialog(entry) },
             onRate   = { entry -> showMealFeedbackDialog(entry) }
         )
@@ -381,9 +381,24 @@ class DashboardFragment : Fragment() {
                         Toast.LENGTH_SHORT).show()
                 }
             }
-            .setNeutralButton(getString(R.string.c_delete)) { _, _ -> vm.deleteDiaryEntry(entry) }
+            .setNeutralButton(getString(R.string.c_delete)) { _, _ -> deleteEntryWithUndo(entry) }
             .setNegativeButton(getString(R.string.c_cancel), null)
             .show()
+    }
+
+ /** Удаление записи дневника со снекбаром «Отменить» (вместо подтверждения). */
+    private fun deleteEntryWithUndo(entry: com.nutritrack.app.data.db.entity.DiaryEntryEntity) {
+        vm.deleteDiaryEntry(entry)
+        val name = com.nutritrack.app.utils.ProductNameLabel.of(requireContext(), entry.productName)
+        val bar = com.google.android.material.snackbar.Snackbar.make(
+            binding.root,
+            getString(R.string.sb_deleted_fmt, name),
+            com.google.android.material.snackbar.Snackbar.LENGTH_LONG
+        ).setAction(R.string.c_undo) { vm.restoreDiaryEntry(entry) }
+        activity?.findViewById<View>(R.id.bottom_navigation)
+            ?.takeIf { it.visibility == View.VISIBLE }
+            ?.let { bar.anchorView = it }
+        bar.show()
     }
 
  /** Диалог оценки самочувствия после продукта (4 уровня). */

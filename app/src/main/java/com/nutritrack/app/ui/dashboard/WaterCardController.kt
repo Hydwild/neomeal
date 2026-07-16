@@ -107,11 +107,17 @@ class WaterCardController(
 
     private fun setupCups() {
         cupsAdapter = WaterCupsAdapter { entry ->
-            AlertDialog.Builder(ctx)
-                .setTitle(ctx.getString(R.string.ds_del_water_fmt, entry.amountMl))
-                .setPositiveButton(ctx.getString(R.string.c_delete)) { _, _ -> vm.deleteWater(entry) }
-                .setNegativeButton(ctx.getString(R.string.c_cancel), null)
-                .show()
+            // Удаляем сразу, вместо диалога — снекбар с «Отменить»
+            vm.deleteWater(entry)
+            val bar = com.google.android.material.snackbar.Snackbar.make(
+                binding.root,
+                ctx.getString(R.string.sb_water_deleted_fmt, entry.amountMl),
+                com.google.android.material.snackbar.Snackbar.LENGTH_LONG
+            ).setAction(R.string.c_undo) { vm.restoreWater(entry) }
+            fragment.activity?.findViewById<View>(R.id.bottom_navigation)
+                ?.takeIf { it.visibility == View.VISIBLE }
+                ?.let { bar.anchorView = it }
+            bar.show()
         }
         binding.rvWaterCups.apply {
             layoutManager = GridLayoutManager(ctx, 5)
