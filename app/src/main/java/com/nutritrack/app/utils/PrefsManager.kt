@@ -217,6 +217,11 @@ class PrefsManager(context: Context) {
         get() = prefs.getBoolean("dynamic_colors", false)
         set(v) = prefs.edit().putBoolean("dynamic_colors", v).apply()
 
+    // Избранные рецепты конструктора (id из RecipeData)
+    var favoriteRecipes: Set<String>
+        get() = prefs.getStringSet("favorite_recipes", emptySet()) ?: emptySet()
+        set(v) = prefs.edit().putStringSet("favorite_recipes", v).apply()
+
     // Универсальные геттеры / сеттеры
     // Используются для динамических ключей (напр. уведомления плана питания)
 

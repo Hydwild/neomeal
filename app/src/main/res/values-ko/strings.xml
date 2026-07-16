@@ -3692,4 +3692,10 @@
     <string name="csv_h_value_cm">값 (cm)</string>
     <string name="csv_h_water_ml">수분 (ml)</string>
     <string name="csv_h_weight_kg">체중 (kg)</string>
+
+    <!-- 즐겨찾는 레시피 -->
+    <string name="pb_fav_add">☆ 즐겨찾기에 추가</string>
+    <string name="pb_fav_remove">★ 즐겨찾기에서 제거</string>
+    <string name="pb_fav_added">★ 저장됨 — 메뉴에 더 자주 나와요</string>
+    <string name="pb_fav_removed">즐겨찾기에서 제거했어요</string>
 </resources>

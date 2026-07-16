@@ -32,6 +32,8 @@ class PlanBuilderFragment : Fragment() {
     private var selectedDiet: String = "none"
     private var lastPlan: MealPlanGenerator.WeekPlan? = null
 
+    private val prefs by lazy { com.nutritrack.app.utils.PrefsManager(requireContext()) }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentPlanBuilderBinding.inflate(inflater, container, false)
         return binding.root
@@ -207,7 +209,7 @@ class PlanBuilderFragment : Fragment() {
     }
 
     private fun generateWeek(goal: String) {
-        val plan = MealPlanGenerator.generate(goal, selectedDiet)
+        val plan = MealPlanGenerator.generate(goal, selectedDiet, prefs.favoriteRecipes)
         lastPlan = plan
         binding.containerWeek.removeAllViews()
 
@@ -348,7 +350,9 @@ class PlanBuilderFragment : Fragment() {
             setTypeface(typeface, android.graphics.Typeface.BOLD)
         }
         val nameTv = TextView(requireContext()).apply {
-            text = "${recipe.emoji} ${com.nutritrack.app.utils.RecipeLabel.tr(requireContext(), recipe.name)}"
+            // ★ — рецепт в избранном
+            val fav = if (recipe.id in prefs.favoriteRecipes) "★ " else ""
+            text = "$fav${recipe.emoji} ${com.nutritrack.app.utils.RecipeLabel.tr(requireContext(), recipe.name)}"
             setTextColor(android.graphics.Color.WHITE)
             textSize = 14f
         }
@@ -390,11 +394,25 @@ class PlanBuilderFragment : Fragment() {
 
         recipe.tip?.let { sb.append("\n💡 ${com.nutritrack.app.utils.RecipeLabel.tr(requireContext(), it)}") }
 
-        androidx.appcompat.app.AlertDialog.Builder(requireContext())
+        val isFav = recipe.id in prefs.favoriteRecipes
+        val d = androidx.appcompat.app.AlertDialog.Builder(requireContext())
             .setTitle("${recipe.emoji} ${com.nutritrack.app.utils.RecipeLabel.tr(requireContext(), recipe.name)}")
             .setMessage(sb.toString())
             .setPositiveButton(getString(R.string.c_close), null)
-            .show()
+            .setNeutralButton(getString(
+                if (isFav) R.string.pb_fav_remove else R.string.pb_fav_add
+            )) { _, _ ->
+                prefs.favoriteRecipes =
+                    if (isFav) prefs.favoriteRecipes - recipe.id
+                    else prefs.favoriteRecipes + recipe.id
+                com.nutritrack.app.utils.HapticHelper.tap(view)
+                android.widget.Toast.makeText(requireContext(),
+                    getString(if (isFav) R.string.pb_fav_removed else R.string.pb_fav_added),
+                    android.widget.Toast.LENGTH_SHORT).show()
+            }
+            .create()
+        d.setOnShowListener { com.nutritrack.app.utils.DialogHelper.tint(d, requireContext()) }
+        d.show()
     }
 
     private fun dp(v: Int): Int = (v * resources.displayMetrics.density).toInt()

@@ -45,15 +45,22 @@ object MealPlanGenerator {
         else    -> com.nutritrack.app.R.string.pbg_goal_default
     })
 
- /** Сгенерировать план на 7 дней под цель. */
-    fun generate(goal: String, dietKey: String = "none"): WeekPlan {
+ /**
+ * Сгенерировать план на 7 дней под цель.
+ * [favorites] — id избранных рецептов: они ставятся в начало ротации,
+ * поэтому попадают в первые дни недели.
+ */
+    fun generate(goal: String, dietKey: String = "none", favorites: Set<String> = emptySet()): WeekPlan {
         fun pick(meal: String): List<com.nutritrack.app.data.Recipe> {
             val base = RecipeData.forGoalAndMeal(goal, meal).ifEmpty { RecipeData.forGoal(goal) }
             val filtered = DietFilter.filter(base, dietKey)
             // если под диету ничего не нашлось — берём из всех рецептов, подходящих под диету
             return filtered.ifEmpty {
                 DietFilter.filter(RecipeData.forMeal(meal), dietKey)
-            }.ifEmpty { base }.shuffled()
+            }.ifEmpty { base }
+                .shuffled()
+                // стабильная сортировка: избранные вперёд, порядок внутри групп сохраняется
+                .sortedByDescending { it.id in favorites }
         }
         val breakfasts = pick("breakfast")
         val lunches    = pick("lunch")

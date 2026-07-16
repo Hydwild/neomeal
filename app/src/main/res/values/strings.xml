@@ -3717,4 +3717,10 @@
     <string name="csv_h_value_cm">Значение (см)</string>
     <string name="csv_h_water_ml">Вода (мл)</string>
     <string name="csv_h_weight_kg">Вес (кг)</string>
+
+    <!-- Избранные рецепты -->
+    <string name="pb_fav_add">☆ В избранное</string>
+    <string name="pb_fav_remove">★ Из избранного</string>
+    <string name="pb_fav_added">★ Рецепт в избранном — будет чаще попадать в меню</string>
+    <string name="pb_fav_removed">Рецепт убран из избранного</string>
 </resources>

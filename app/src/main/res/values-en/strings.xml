@@ -3708,4 +3708,10 @@ data class Recipe(
     <string name="csv_h_value_cm">Value (cm)</string>
     <string name="csv_h_water_ml">Water (ml)</string>
     <string name="csv_h_weight_kg">Weight (kg)</string>
+
+    <!-- Favorite recipes -->
+    <string name="pb_fav_add">☆ Add to favorites</string>
+    <string name="pb_fav_remove">★ Remove from favorites</string>
+    <string name="pb_fav_added">★ Saved — it will appear in your menus more often</string>
+    <string name="pb_fav_removed">Removed from favorites</string>
 </resources>
