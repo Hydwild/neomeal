@@ -102,13 +102,18 @@ class DashboardViewModel(app: Application) : AndroidViewModel(app) {
     fun updateDiaryEntry(entry: DiaryEntryEntity, newGrams: Float) = viewModelScope.launch {
         if (entry.grams <= 0f) return@launch
         val factor = newGrams / entry.grams
-        diaryRepo.update(entry.copy(
+        val updated = entry.copy(
             grams    = newGrams,
             calories = entry.calories * factor,
             protein  = entry.protein * factor,
             fat      = entry.fat * factor,
-            carbs    = entry.carbs * factor
-        ))
+            carbs    = entry.carbs * factor,
+            fiber    = entry.fiber?.times(factor),
+            sugar    = entry.sugar?.times(factor)
+        )
+        diaryRepo.update(updated)
+        // Обновляем и запись в Health Connect (тот же clientRecordId — upsert)
+        com.nutritrack.app.utils.HealthConnectWriter.writeDiaryEntry(getApplication(), updated)
         refreshWidget()
     }
 

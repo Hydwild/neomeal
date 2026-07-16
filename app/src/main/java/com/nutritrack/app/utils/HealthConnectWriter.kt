@@ -85,7 +85,12 @@ object HealthConnectWriter {
                     "snack"     -> MealType.MEAL_TYPE_SNACK
                     else        -> MealType.MEAL_TYPE_UNKNOWN
                 },
-                metadata = Metadata(clientRecordId = diaryId(entry))
+                // Версия = времени вызова: редактирование записи (те же id)
+                // обновляет её в HC, а не игнорируется как «не новее»
+                metadata = Metadata(
+                    clientRecordId = diaryId(entry),
+                    clientRecordVersion = System.currentTimeMillis()
+                )
             )))
         } catch (e: Exception) { AppLog.e("HC write nutrition failed", e) }
     }
@@ -112,7 +117,10 @@ object HealthConnectWriter {
                 endTime = start.plusSeconds(60),
                 endZoneOffset = zone,
                 volume = Volume.milliliters(entry.amountMl.toDouble()),
-                metadata = Metadata(clientRecordId = waterId(entry))
+                metadata = Metadata(
+                    clientRecordId = waterId(entry),
+                    clientRecordVersion = System.currentTimeMillis()
+                )
             )))
         } catch (e: Exception) { AppLog.e("HC write hydration failed", e) }
     }

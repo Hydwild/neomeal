@@ -664,8 +664,10 @@ class SettingsFragment : Fragment() {
                 val db  = app.database
                 val profileId = prefs.activeProfileId
                 viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
-                    db.diaryDao().deleteAll()
-                    db.waterDao().deleteAll()
+                    // Только активный профиль — раньше deleteAll() стирал
+                    // дневник и воду ВСЕХ профилей
+                    db.diaryDao().deleteAllForProfile(profileId)
+                    db.waterDao().deleteAllForProfile(profileId)
                     // Очистка серий достижений (если метод есть)
                     try { db.dailyGoalDao().deleteAllForProfile(profileId) } catch (e: Exception) { com.nutritrack.app.utils.AppLog.e("deleteAllForProfile failed", e) }
                 }

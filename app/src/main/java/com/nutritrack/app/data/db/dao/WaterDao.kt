@@ -42,6 +42,10 @@ interface WaterDao {
     @Query("DELETE FROM water_entries")
     suspend fun deleteAll()
 
+    // «Очистить данные» в настройках — только активный профиль
+    @Query("DELETE FROM water_entries WHERE profileId = :profileId")
+    suspend fun deleteAllForProfile(profileId: Long)
+
     // Прочее (для ReminderReceiver / AchievementsViewModel)
 
     @Query("SELECT * FROM water_entries WHERE date = :date AND profileId = :profileId ORDER BY timestamp ASC")

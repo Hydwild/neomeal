@@ -68,6 +68,11 @@ interface DiaryDao {
     @Query("DELETE FROM diary_entries")
     suspend fun deleteAll()
 
+    // «Очистить данные» в настройках — только активный профиль,
+    // чужие профили не трогаем
+    @Query("DELETE FROM diary_entries WHERE profileId = :profileId")
+    suspend fun deleteAllForProfile(profileId: Long)
+
     // Используется AchievementsViewModel
 
     // Количество разных дней с записями — для достижений-серий

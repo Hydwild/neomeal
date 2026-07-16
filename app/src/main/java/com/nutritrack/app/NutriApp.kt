@@ -48,9 +48,15 @@ class NutriApp : Application() {
                 val dbVersion = 6
 
                 if (count < 50 || prefs.productDbVersion < dbVersion) {
-                    // Полностью пересоздаём встроенные продукты
+                    // Полностью пересоздаём встроенные продукты.
+                    // enrich обязателен — иначе продукты теряют витамины/минералы
+                    // (первичное заполнение в AppDatabase.prepopulate тоже с enrich)
                     db.productDao().deleteNonCustomProducts()
-                    ProductDatabase.all.forEach { db.productDao().insertProduct(it) }
+                    ProductDatabase.all.forEach {
+                        db.productDao().insertProduct(
+                            com.nutritrack.app.data.MicronutrientData.enrich(it)
+                        )
+                    }
                     prefs.productDbVersion = dbVersion
                 }
 
