@@ -263,6 +263,19 @@ class DashboardFragment : Fragment() {
         // Питомец мог измениться на экране выбора — перечитываем.
         // refreshPet сам зафиксирует текущий уровень воды как базовый.
         waterCard.refreshPet()
+        // Объёмы кнопок и ручные цели могли поменяться в настройках
+        waterCard.refreshButtons()
+        vm.refreshGoals()
+        // Шорткат «Еда» с иконки приложения — открыть шторку добавления
+        if (pendingOpenAddFood) {
+            pendingOpenAddFood = false
+            view?.post { if (isResumed) showAddFoodDialog() }
+        }
+    }
+
+    companion object {
+        // Флаг шортката: MainActivity просит открыть шторку еды после навигации
+        var pendingOpenAddFood = false
     }
 
  /** Карточка голодания на главной: видна только при активной сессии. */

@@ -32,8 +32,10 @@ class NutriApp : Application() {
             fc.isCrashlyticsCollectionEnabled = true
             fc.setCustomKey("locale", com.nutritrack.app.utils.PrefsManager(this).language)
         }
-        com.nutritrack.app.utils.CalorieCalculator.adjustment =
-            com.nutritrack.app.utils.PrefsManager(this).calorieAdjustment
+        val p = com.nutritrack.app.utils.PrefsManager(this)
+        com.nutritrack.app.utils.CalorieCalculator.adjustment = p.calorieAdjustment
+        com.nutritrack.app.utils.CalorieCalculator.manualCalories = p.manualCalorieGoal
+        com.nutritrack.app.utils.CalorieCalculator.manualWater = p.manualWaterGoal
         checkAndRepopulateProducts()
     }
 

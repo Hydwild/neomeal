@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Статические шорткаты: долгое нажатие на иконку приложения -->
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <shortcut
+        android:shortcutId="add_food"
+        android:enabled="true"
+        android:icon="@drawable/ic_meal_plan"
+        android:shortcutShortLabel="@string/sc_food_short"
+        android:shortcutLongLabel="@string/sc_food_long">
+        <intent
+            android:action="com.nutritrack.app.SHORTCUT_FOOD"
+            android:targetPackage="com.nutritrack.app"
+            android:targetClass="com.nutritrack.app.MainActivity"/>
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="add_water"
+        android:enabled="true"
+        android:icon="@drawable/ic_plus"
+        android:shortcutShortLabel="@string/sc_water_short"
+        android:shortcutLongLabel="@string/sc_water_long">
+        <intent
+            android:action="com.nutritrack.app.SHORTCUT_WATER"
+            android:targetPackage="com.nutritrack.app"
+            android:targetClass="com.nutritrack.app.MainActivity"/>
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="fasting"
+        android:enabled="true"
+        android:icon="@drawable/ic_chart"
+        android:shortcutShortLabel="@string/sc_fasting_short"
+        android:shortcutLongLabel="@string/sc_fasting_long">
+        <intent
+            android:action="com.nutritrack.app.SHORTCUT_FASTING"
+            android:targetPackage="com.nutritrack.app"
+            android:targetClass="com.nutritrack.app.MainActivity"/>
+    </shortcut>
+</shortcuts>

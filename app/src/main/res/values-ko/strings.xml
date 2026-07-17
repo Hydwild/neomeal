@@ -3743,4 +3743,29 @@
     <string name="fit_min_fmt">%1$d분</string>
     <string name="mp_added_fmt">✅ 추가됨: %1$s %2$dg</string>
     <string name="mp_moved_fmt">🔔 %1$s(으)로 변경됨</string>
+
+    <!-- Пакет кастомизации: тема, кнопки воды, старт, цели, шорткаты, плитка -->
+    <string name="set_theme_mode">테마</string>
+    <string name="theme_auto">시스템 설정</string>
+    <string name="theme_light">라이트</string>
+    <string name="theme_dark">다크</string>
+    <string name="set_start_tab">시작 화면</string>
+    <string name="set_water_buttons">물 버튼</string>
+    <string name="set_water_buttons_msg">홈 화면 빠른 버튼의 용량 4가지 (ml).</string>
+    <string name="set_water_buttons_reset">초기화</string>
+    <string name="set_manual_cal">칼로리 목표 직접 설정</string>
+    <string name="set_manual_water">수분 목표 직접 설정</string>
+    <string name="goal_auto">자동</string>
+    <string name="goal_auto_hint">비우면 프로필 기준 자동</string>
+    <string name="goal_manual_msg">직접 목표를 입력하세요 (트레이너·의사 지시 등). 비워 두면 자동 계산으로 돌아가요.</string>
+    <string name="set_activity_boost">활동량만큼 목표 증가</string>
+    <string name="set_activity_boost_sub">소모 칼로리(Health Connect/피트니스)가 목표에 더해져요</string>
+    <string name="sc_food_short">식사</string>
+    <string name="sc_food_long">➕ 식사 추가</string>
+    <string name="sc_water_short">물</string>
+    <string name="sc_water_long">💧 물 추가</string>
+    <string name="sc_fasting_short">단식</string>
+    <string name="sc_fasting_long">⏱️ 단식 타이머</string>
+    <string name="qs_water_label">물 +250ml</string>
+    <string name="qs_water_total_fmt">오늘: %1$dml</string>
 </resources>

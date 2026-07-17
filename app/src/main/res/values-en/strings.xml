@@ -3759,4 +3759,29 @@ data class Recipe(
     <string name="fit_min_fmt">%1$d min</string>
     <string name="mp_added_fmt">✅ Added: %1$s %2$dg</string>
     <string name="mp_moved_fmt">🔔 Moved to %1$s</string>
+
+    <!-- Пакет кастомизации: тема, кнопки воды, старт, цели, шорткаты, плитка -->
+    <string name="set_theme_mode">Theme</string>
+    <string name="theme_auto">Follow system</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="set_start_tab">Start screen</string>
+    <string name="set_water_buttons">Water buttons</string>
+    <string name="set_water_buttons_msg">Four volumes for the quick buttons on Home, ml.</string>
+    <string name="set_water_buttons_reset">Reset</string>
+    <string name="set_manual_cal">Manual calorie goal</string>
+    <string name="set_manual_water">Manual water goal</string>
+    <string name="goal_auto">Auto</string>
+    <string name="goal_auto_hint">Empty = auto from profile</string>
+    <string name="goal_manual_msg">Set your own number (e.g. from a trainer or doctor). Leave empty to return to the automatic calculation.</string>
+    <string name="set_activity_boost">Activity raises the goal</string>
+    <string name="set_activity_boost_sub">Burned calories (Health Connect/fitness) add to the daily goal</string>
+    <string name="sc_food_short">Food</string>
+    <string name="sc_food_long">➕ Add food</string>
+    <string name="sc_water_short">Water</string>
+    <string name="sc_water_long">💧 Add water</string>
+    <string name="sc_fasting_short">Fasting</string>
+    <string name="sc_fasting_long">⏱️ Fasting timer</string>
+    <string name="qs_water_label">+250 ml water</string>
+    <string name="qs_water_total_fmt">Today: %1$d ml</string>
 </resources>

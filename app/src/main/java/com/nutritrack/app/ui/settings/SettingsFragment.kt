@@ -87,8 +87,7 @@ class SettingsFragment : Fragment() {
         // Тёмная тема — клик по всей строке + программная покраска тумблера
         setupCollapsibleSections()
 
-        binding.switchDarkTheme.isChecked = prefs.isDarkTheme
-        tintSwitch(binding.switchDarkTheme.isChecked)
+        binding.tvThemeMode.text = themeModeLabel(prefs.themeMode)
 
         // Акцентный цвет
         binding.tvCurrentAccent.text = com.nutritrack.app.utils.AccentHelper.label(requireContext())
@@ -211,16 +210,33 @@ class SettingsFragment : Fragment() {
             }
         }
 
-        binding.rowDarkTheme.setOnClickListener {
-            binding.switchDarkTheme.isChecked = !binding.switchDarkTheme.isChecked
+        // Режим темы: авто (за системой) / светлая / тёмная
+        binding.rowDarkTheme.setOnClickListener { showThemeModePicker() }
+
+        // Стартовая вкладка
+        binding.tvStartTab.text = startTabLabel(prefs.startTab)
+        binding.rowStartTab.setOnClickListener { showStartTabPicker() }
+
+        // Кнопки воды
+        binding.tvWaterButtons.text = prefs.waterButtons.joinToString("  ·  ") { "+$it" }
+        binding.rowWaterButtons.setOnClickListener { showWaterButtonsDialog() }
+
+        // Ручные цели
+        updateManualGoalLabels()
+        binding.rowManualCalories.setOnClickListener {
+            showManualGoalDialog(isWater = false)
         }
-        binding.switchDarkTheme.setOnCheckedChangeListener { _, checked ->
-            tintSwitch(checked)
-            prefs.isDarkTheme = checked
-            AppCompatDelegate.setDefaultNightMode(
-                if (checked) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
-            )
-            requireActivity().recreate()
+        binding.rowManualWater.setOnClickListener {
+            showManualGoalDialog(isWater = true)
+        }
+
+        // Активность увеличивает норму
+        binding.switchActivityBoost.isChecked = prefs.activityBoost
+        binding.rowActivityBoost.setOnClickListener {
+            binding.switchActivityBoost.isChecked = !binding.switchActivityBoost.isChecked
+        }
+        binding.switchActivityBoost.setOnCheckedChangeListener { _, checked ->
+            prefs.activityBoost = checked
         }
 
         binding.rowLanguage.setOnClickListener { showLanguagePicker() }
@@ -712,14 +728,151 @@ class SettingsFragment : Fragment() {
 
     override fun onDestroyView() { super.onDestroyView(); _binding = null }
 
-    // Программная покраска тумблера (надёжнее селекторов на тёмном фоне)
-    private fun tintSwitch(checked: Boolean) {
-        val thumbColor = if (checked) 0xFF7C4DFF.toInt() else 0xFFB0B0C0.toInt()
-        val trackColor = if (checked) 0xFF5E3DB8.toInt() else 0xFF3D3358.toInt()
-        binding.switchDarkTheme.thumbTintList =
-            android.content.res.ColorStateList.valueOf(thumbColor)
-        binding.switchDarkTheme.trackTintList =
-            android.content.res.ColorStateList.valueOf(trackColor)
+    // Режим темы
+
+    private fun themeModeLabel(mode: String): String = getString(when (mode) {
+        "dark"  -> R.string.theme_dark
+        "light" -> R.string.theme_light
+        else    -> R.string.theme_auto
+    })
+
+    private fun showThemeModePicker() {
+        val modes = listOf("auto", "light", "dark")
+        val labels = modes.map { themeModeLabel(it) }.toTypedArray()
+        val current = modes.indexOf(prefs.themeMode).coerceAtLeast(0)
+        val d = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.set_theme_mode))
+            .setSingleChoiceItems(labels, current) { dialog, which ->
+                val mode = modes[which]
+                prefs.themeMode = mode
+                // Старый флаг — для бэкапа и обратной совместимости
+                prefs.isDarkTheme = mode == "dark"
+                dialog.dismiss()
+                AppCompatDelegate.setDefaultNightMode(when (mode) {
+                    "dark"  -> AppCompatDelegate.MODE_NIGHT_YES
+                    "light" -> AppCompatDelegate.MODE_NIGHT_NO
+                    else    -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+                })
+                requireActivity().recreate()
+            }
+            .setNegativeButton(getString(R.string.dlg_cancel), null)
+            .create()
+        d.setOnShowListener { com.nutritrack.app.utils.DialogHelper.tint(d, requireContext()) }
+        d.show()
+    }
+
+    // Стартовая вкладка
+
+    private fun startTabLabel(tab: String): String = getString(when (tab) {
+        "plan"    -> R.string.nav_plan
+        "stats"   -> R.string.nav_analytics
+        "profile" -> R.string.nav_profile
+        "more"    -> R.string.nav_more
+        else      -> R.string.nav_home
+    })
+
+    private fun showStartTabPicker() {
+        val tabs = listOf("home", "plan", "stats", "profile", "more")
+        val labels = tabs.map { startTabLabel(it) }.toTypedArray()
+        val current = tabs.indexOf(prefs.startTab).coerceAtLeast(0)
+        val d = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.set_start_tab))
+            .setSingleChoiceItems(labels, current) { dialog, which ->
+                prefs.startTab = tabs[which]
+                binding.tvStartTab.text = labels[which]
+                dialog.dismiss()
+            }
+            .setNegativeButton(getString(R.string.dlg_cancel), null)
+            .create()
+        d.setOnShowListener { com.nutritrack.app.utils.DialogHelper.tint(d, requireContext()) }
+        d.show()
+    }
+
+    // Кнопки воды
+
+    private fun showWaterButtonsDialog() {
+        val ctx = requireContext()
+        val current = prefs.waterButtons
+        val col = android.widget.LinearLayout(ctx).apply {
+            orientation = android.widget.LinearLayout.VERTICAL
+            val pad = (20 * resources.displayMetrics.density).toInt()
+            setPadding(pad, pad / 2, pad, 0)
+        }
+        val inputs = current.map { v ->
+            android.widget.EditText(ctx).apply {
+                inputType = android.text.InputType.TYPE_CLASS_NUMBER
+                setText(v.toString())
+                hint = getString(R.string.u_ml)
+                col.addView(this)
+            }
+        }
+        val d = androidx.appcompat.app.AlertDialog.Builder(ctx)
+            .setTitle(getString(R.string.set_water_buttons))
+            .setMessage(getString(R.string.set_water_buttons_msg))
+            .setView(col)
+            .setPositiveButton(getString(R.string.c_save)) { _, _ ->
+                val vols = inputs.mapIndexed { i, e ->
+                    e.text.toString().toIntOrNull()?.coerceIn(10, 2000) ?: current[i]
+                }
+                prefs.waterButtons = vols
+                binding.tvWaterButtons.text = vols.joinToString("  ·  ") { "+$it" }
+            }
+            .setNeutralButton(getString(R.string.set_water_buttons_reset)) { _, _ ->
+                prefs.waterButtons = listOf(100, 200, 300, 500)
+                binding.tvWaterButtons.text =
+                    prefs.waterButtons.joinToString("  ·  ") { "+$it" }
+            }
+            .setNegativeButton(getString(R.string.dlg_cancel), null)
+            .create()
+        d.setOnShowListener { com.nutritrack.app.utils.DialogHelper.tint(d, requireContext()) }
+        d.show()
+    }
+
+    // Ручные цели калорий/воды (0 = авто по профилю)
+
+    private fun updateManualGoalLabels() {
+        binding.tvManualCalories.text =
+            if (prefs.manualCalorieGoal > 0) getString(R.string.cal_kcal_fmt, prefs.manualCalorieGoal)
+            else getString(R.string.goal_auto)
+        binding.tvManualWater.text =
+            if (prefs.manualWaterGoal > 0) "${prefs.manualWaterGoal} ${getString(R.string.u_ml)}"
+            else getString(R.string.goal_auto)
+    }
+
+    private fun showManualGoalDialog(isWater: Boolean) {
+        val ctx = requireContext()
+        val currentVal = if (isWater) prefs.manualWaterGoal else prefs.manualCalorieGoal
+        val input = android.widget.EditText(ctx).apply {
+            inputType = android.text.InputType.TYPE_CLASS_NUMBER
+            if (currentVal > 0) setText(currentVal.toString())
+            hint = getString(R.string.goal_auto_hint)
+        }
+        val container = android.widget.FrameLayout(ctx).apply {
+            val pad = (20 * resources.displayMetrics.density).toInt()
+            setPadding(pad, pad / 2, pad, 0)
+            addView(input)
+        }
+        val title = getString(if (isWater) R.string.set_manual_water else R.string.set_manual_cal)
+        val d = androidx.appcompat.app.AlertDialog.Builder(ctx)
+            .setTitle(title)
+            .setMessage(getString(R.string.goal_manual_msg))
+            .setView(container)
+            .setPositiveButton(getString(R.string.c_save)) { _, _ ->
+                val v = input.text.toString().toIntOrNull() ?: 0
+                if (isWater) {
+                    prefs.manualWaterGoal = v
+                    com.nutritrack.app.utils.CalorieCalculator.manualWater = prefs.manualWaterGoal
+                } else {
+                    prefs.manualCalorieGoal = v
+                    com.nutritrack.app.utils.CalorieCalculator.manualCalories = prefs.manualCalorieGoal
+                }
+                updateManualGoalLabels()
+                com.nutritrack.app.widget.MainWidgetProvider.updateAll(requireContext())
+            }
+            .setNegativeButton(getString(R.string.dlg_cancel), null)
+            .create()
+        d.setOnShowListener { com.nutritrack.app.utils.DialogHelper.tint(d, requireContext()) }
+        d.show()
     }
 
     private fun showLanguagePicker() {

@@ -50,7 +50,11 @@ object BackgroundHelper {
     fun syncWithTheme(context: Context) {
         val prefs = PrefsManager(context)
         if (prefs.backgroundManual) return
-        prefs.backgroundKey = if (prefs.isDarkTheme) "theme_dark" else "default"
+        // Фактический режим из конфигурации — работает и при теме «авто»
+        val night = (context.resources.configuration.uiMode and
+            android.content.res.Configuration.UI_MODE_NIGHT_MASK) ==
+            android.content.res.Configuration.UI_MODE_NIGHT_YES
+        prefs.backgroundKey = if (night) "theme_dark" else "default"
     }
 
     private fun buildGradient(colors: List<String>, angle: Int = 135): GradientDrawable {

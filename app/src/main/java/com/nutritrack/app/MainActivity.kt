@@ -49,11 +49,12 @@ class MainActivity : AppCompatActivity() {
             theme.applyStyle(R.style.ThemeOverlay_NutriTrack_Dynamic, true)
         }
 
-        // Тема до создания UI
-        AppCompatDelegate.setDefaultNightMode(
-            if (prefs.isDarkTheme) AppCompatDelegate.MODE_NIGHT_YES
-            else AppCompatDelegate.MODE_NIGHT_NO
-        )
+        // Тема до создания UI: авто (за системой) / светлая / тёмная
+        AppCompatDelegate.setDefaultNightMode(when (prefs.themeMode) {
+            "dark"  -> AppCompatDelegate.MODE_NIGHT_YES
+            "light" -> AppCompatDelegate.MODE_NIGHT_NO
+            else    -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+        })
 
         // Первый запуск онбординг
         if (prefs.isFirstLaunch) {
@@ -98,8 +99,9 @@ class MainActivity : AppCompatActivity() {
         }
         // Сама блокировка — в onStart (срабатывает и при возврате из фона)
 
-        setupNavigation()
+        setupNavigation(savedInstanceState == null)
         observeAchievementUnlocks()
+        handleShortcutIntent(intent)
 
         // Доп. проверка: если профилей нет — форсим онбординг
         lifecycleScope.launch(Dispatchers.IO) {
@@ -168,10 +170,25 @@ class MainActivity : AppCompatActivity() {
 
     // Навигация
 
-    private fun setupNavigation() {
+    private fun setupNavigation(coldStart: Boolean) {
         val navHost = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHost.navController
+
+        // Стартовая вкладка из настроек (только при холодном старте,
+        // чтобы поворот экрана не сбрасывал навигацию)
+        if (coldStart) {
+            val startId = when (prefs.startTab) {
+                "plan"    -> R.id.mealPlanFragment
+                "stats"   -> R.id.analyticsFragment
+                "profile" -> R.id.profileFragment
+                "more"    -> R.id.moreFragment
+                else      -> 0
+            }
+            if (startId != 0) binding.root.post {
+                try { navController.navigate(startId) } catch (_: Exception) {}
+            }
+        }
 
         // Разделы кастомного бара
         binding.bottomNavigation.setTabs(listOf(
@@ -281,6 +298,39 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // Шорткаты с иконки приложения (long-press → Еда / Вода / Голодание)
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        handleShortcutIntent(intent)
+    }
+
+    private fun handleShortcutIntent(intent: Intent?) {
+        if (!::binding.isInitialized) return   // ветка онбординга
+        val navHost = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment) as? NavHostFragment ?: return
+        val nav = navHost.navController
+        when (intent?.action) {
+            ACTION_SC_FOOD -> {
+                // Дашборд + сразу открыть шторку добавления еды
+                com.nutritrack.app.ui.dashboard.DashboardFragment.pendingOpenAddFood = true
+                binding.root.post {
+                    try { nav.navigate(R.id.dashboardFragment) } catch (_: Exception) {}
+                }
+            }
+            ACTION_SC_WATER -> binding.root.post {
+                try { nav.navigate(R.id.dashboardFragment) } catch (_: Exception) {}
+            }
+            ACTION_SC_FASTING -> binding.root.post {
+                try { nav.navigate(R.id.fastingFragment) } catch (_: Exception) {}
+            }
+        }
+        // Экшен одноразовый
+        if (intent?.action?.startsWith("com.nutritrack.app.SHORTCUT") == true) {
+            intent.action = null
+        }
+    }
+
     // Онбординг
 
     private fun goToOnboarding() {
@@ -322,5 +372,10 @@ class MainActivity : AppCompatActivity() {
         private var lastUnlockMs = 0L
         // Возврат из фона в течение минуты не требует повторной биометрии
         private const val LOCK_TIMEOUT_MS = 60_000L
+
+        // Экшены статических шорткатов (res/xml/shortcuts.xml)
+        const val ACTION_SC_FOOD = "com.nutritrack.app.SHORTCUT_FOOD"
+        const val ACTION_SC_WATER = "com.nutritrack.app.SHORTCUT_WATER"
+        const val ACTION_SC_FASTING = "com.nutritrack.app.SHORTCUT_FASTING"
     }
 }

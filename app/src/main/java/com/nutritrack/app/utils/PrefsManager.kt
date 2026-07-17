@@ -222,6 +222,40 @@ class PrefsManager(context: Context) {
         get() = prefs.getStringSet("favorite_recipes", emptySet()) ?: emptySet()
         set(v) = prefs.edit().putStringSet("favorite_recipes", v).apply()
 
+    // Режим темы: "auto" (за системой) | "light" | "dark".
+    // Мигрирует со старого тумблера isDarkTheme.
+    var themeMode: String
+        get() = prefs.getString("theme_mode", null)
+            ?: if (isDarkTheme) "dark" else "light"
+        set(v) = prefs.edit().putString("theme_mode", v).apply()
+
+    // Объёмы кнопок воды на главном, мл (ровно 4)
+    var waterButtons: List<Int>
+        get() = (prefs.getString("water_buttons", null) ?: "100,200,300,500")
+            .split(",").mapNotNull { it.trim().toIntOrNull() }
+            .let { if (it.size == 4) it else listOf(100, 200, 300, 500) }
+        set(v) = prefs.edit().putString("water_buttons",
+            v.take(4).joinToString(",")).apply()
+
+    // Стартовая вкладка: home | plan | stats | profile | more
+    var startTab: String
+        get() = prefs.getString("start_tab", "home") ?: "home"
+        set(v) = prefs.edit().putString("start_tab", v).apply()
+
+    // Ручные цели (0 = автоматический расчёт по профилю)
+    var manualCalorieGoal: Int
+        get() = prefs.getInt("manual_calorie_goal", 0)
+        set(v) = prefs.edit().putInt("manual_calorie_goal", v.coerceIn(0, 20000)).apply()
+
+    var manualWaterGoal: Int
+        get() = prefs.getInt("manual_water_goal", 0)
+        set(v) = prefs.edit().putInt("manual_water_goal", v.coerceIn(0, 20000)).apply()
+
+    // Активные калории (Health Connect/ручной ввод) увеличивают дневную норму
+    var activityBoost: Boolean
+        get() = prefs.getBoolean("activity_boost", false)
+        set(v) = prefs.edit().putBoolean("activity_boost", v).apply()
+
     // Универсальные геттеры / сеттеры
     // Используются для динамических ключей (напр. уведомления плана питания)
 

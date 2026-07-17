@@ -126,11 +126,24 @@ class WaterCardController(
         }
     }
 
-    private fun setupButtons() {
-        binding.btnWater100.setOnClickListener { HapticHelper.tap(it); CompanionHelper.maybeCheer(ctx, "water"); vm.addWater(100) { onAchievementCheck() } }
-        binding.btnWater200.setOnClickListener { HapticHelper.tap(it); vm.addWater(200) { onAchievementCheck() } }
-        binding.btnWater300.setOnClickListener { HapticHelper.tap(it); CompanionHelper.maybeCheer(ctx, "water"); vm.addWater(300) { onAchievementCheck() } }
-        binding.btnWater500.setOnClickListener { HapticHelper.tap(it); vm.addWater(500) { onAchievementCheck() } }
+    private fun setupButtons() = refreshButtons()
+
+ /** Объёмы кнопок настраиваются пользователем (настройки → кнопки воды). */
+    fun refreshButtons() {
+        val vols = prefs.waterButtons
+        val buttons = listOf(
+            binding.btnWater100, binding.btnWater200,
+            binding.btnWater300, binding.btnWater500
+        )
+        buttons.forEachIndexed { i, btn ->
+            val ml = vols[i]
+            btn.text = "+$ml"
+            btn.setOnClickListener {
+                HapticHelper.tap(it)
+                if (i % 2 == 0) CompanionHelper.maybeCheer(ctx, "water")
+                vm.addWater(ml) { onAchievementCheck() }
+            }
+        }
     }
 
     // Режим отображения

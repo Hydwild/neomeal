@@ -59,12 +59,37 @@ class DashboardViewModel(app: Application) : AndroidViewModel(app) {
         profile?.let { waterRepo.getWaterForDate(today, it.id) } ?: MutableLiveData(emptyList())
     }
 
-    val calorieGoal: LiveData<Int> = activeProfile.map { profile ->
-        profile?.let { CalorieCalculator.calculateDailyGoal(it) } ?: 2000
+    // Тик пересчёта целей: настройки (ручные цели, буст активности) меняются
+    // на другом экране — дашборд дёргает refreshGoals() в onResume
+    private val goalTick = MutableLiveData(Unit)
+    fun refreshGoals() { goalTick.value = Unit }
+
+    // Фитнес за сегодня — для опции «активность увеличивает норму»
+    private val todayFitness: LiveData<com.nutritrack.app.data.db.entity.FitnessDataEntity?> =
+        activeProfile.switchMap { profile ->
+            profile?.let { db.fitnessDao().getForDate(today, it.id) }
+                ?: MutableLiveData(null)
+        }
+
+    val calorieGoal: LiveData<Int> = MediatorLiveData<Int>().apply {
+        fun recompute() {
+            val profile = activeProfile.value ?: return
+            val base = CalorieCalculator.calculateDailyGoal(profile)
+            val boost = if (com.nutritrack.app.utils.PrefsManager(getApplication()).activityBoost)
+                (todayFitness.value?.caloriesBurned ?: 0f).toInt() else 0
+            value = base + boost
+        }
+        addSource(activeProfile) { recompute() }
+        addSource(todayFitness) { recompute() }
+        addSource(goalTick) { recompute() }
     }
 
-    val waterGoal: LiveData<Int> = activeProfile.map { profile ->
-        profile?.let { CalorieCalculator.calculateWaterGoal(it) } ?: 2000
+    val waterGoal: LiveData<Int> = MediatorLiveData<Int>().apply {
+        fun recompute() {
+            value = activeProfile.value?.let { CalorieCalculator.calculateWaterGoal(it) } ?: 2000
+        }
+        addSource(activeProfile) { recompute() }
+        addSource(goalTick) { recompute() }
     }
 
     val allProducts = productRepo.allProducts

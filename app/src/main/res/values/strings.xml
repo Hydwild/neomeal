@@ -3768,4 +3768,29 @@
     <string name="fit_min_fmt">%1$d мин</string>
     <string name="mp_added_fmt">✅ Добавлено: %1$s %2$dг</string>
     <string name="mp_moved_fmt">🔔 Перенесено на %1$s</string>
+
+    <!-- Пакет кастомизации: тема, кнопки воды, старт, цели, шорткаты, плитка -->
+    <string name="set_theme_mode">Тема</string>
+    <string name="theme_auto">Как в системе</string>
+    <string name="theme_light">Светлая</string>
+    <string name="theme_dark">Тёмная</string>
+    <string name="set_start_tab">Стартовый экран</string>
+    <string name="set_water_buttons">Кнопки воды</string>
+    <string name="set_water_buttons_msg">Четыре объёма для быстрых кнопок на главном, мл.</string>
+    <string name="set_water_buttons_reset">Сбросить</string>
+    <string name="set_manual_cal">Цель калорий вручную</string>
+    <string name="set_manual_water">Цель воды вручную</string>
+    <string name="goal_auto">Авто</string>
+    <string name="goal_auto_hint">Пусто = авто по профилю</string>
+    <string name="goal_manual_msg">Задай свою цифру (например, от тренера или врача). Пустое поле вернёт автоматический расчёт по профилю.</string>
+    <string name="set_activity_boost">Активность увеличивает норму</string>
+    <string name="set_activity_boost_sub">Сожжённые калории (Health Connect/фитнес) добавляются к дневной цели</string>
+    <string name="sc_food_short">Еда</string>
+    <string name="sc_food_long">➕ Добавить еду</string>
+    <string name="sc_water_short">Вода</string>
+    <string name="sc_water_long">💧 Добавить воду</string>
+    <string name="sc_fasting_short">Голодание</string>
+    <string name="sc_fasting_long">⏱️ Таймер голодания</string>
+    <string name="qs_water_label">+250 мл воды</string>
+    <string name="qs_water_total_fmt">Сегодня: %1$d мл</string>
 </resources>

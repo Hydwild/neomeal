@@ -5,7 +5,9 @@ import kotlin.math.roundToInt
 
 object CalorieCalculator {
     fun calculateDailyGoal(profile: ProfileEntity): Int =
-        calculateDailyGoal(profile, adjustment)
+        // Ручная цель пользователя (настройки) перекрывает расчёт
+        if (manualCalories > 0) manualCalories
+        else calculateDailyGoal(profile, adjustment)
 
     /**
      * Чистый расчёт дневной нормы калорий (Mifflin-St Jeor).
@@ -39,7 +41,13 @@ object CalorieCalculator {
 
     @Volatile var adjustment: Int = 0
 
+    // Ручные цели из настроек (0 = авто). Инициализируются в NutriApp,
+    // обновляются из SettingsFragment.
+    @Volatile var manualCalories: Int = 0
+    @Volatile var manualWater: Int = 0
+
     fun calculateWaterGoal(profile: ProfileEntity): Int {
+        if (manualWater > 0) return manualWater
         // \~35 мл на кг
         return (profile.weight * 35).toInt()
     }

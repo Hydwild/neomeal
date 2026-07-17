@@ -135,6 +135,7 @@
                 <View android:layout_width="match_parent" android:layout_height="1dp"
                     android:background="#2A2342" android:layout_marginStart="54dp"/>
 
+                <!-- Режим темы: авто / светлая / тёмная -->
                 <LinearLayout
                     android:id="@+id/rowDarkTheme"
                     android:layout_width="match_parent"
@@ -158,20 +159,137 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:text="@string/settings_dark_theme"
+                        android:text="@string/set_theme_mode"
                         android:textColor="?attr/appTextPrimary"
                         android:textSize="15sp"/>
 
-                    <Switch
-                        android:id="@+id/switchDarkTheme"
+                    <TextView
+                        android:id="@+id/tvThemeMode"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:minWidth="56dp"
-                        android:minHeight="32dp"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:textOn=""
-                        android:textOff=""/>
+                        android:textColor="?attr/appTextSecondary"
+                        android:textSize="13sp"
+                        android:layout_marginEnd="6dp"/>
+
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="›" android:textColor="?attr/appTextSecondary" android:textSize="22sp"/>
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp"
+                    android:background="#2A2342" android:layout_marginStart="54dp"/>
+
+                <!-- Стартовая вкладка -->
+                <LinearLayout android:id="@+id/rowStartTab"
+                    android:layout_width="match_parent" android:layout_height="60dp"
+                    android:orientation="horizontal" android:gravity="center_vertical"
+                    android:paddingStart="18dp" android:paddingEnd="18dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true" android:focusable="true">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="🚀" android:textSize="20sp" android:layout_marginEnd="16dp"/>
+                    <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
+                        android:text="@string/set_start_tab" android:textColor="?attr/appTextPrimary" android:textSize="15sp"/>
+                    <TextView android:id="@+id/tvStartTab"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:textColor="?attr/appTextSecondary" android:textSize="13sp"
+                        android:layout_marginEnd="6dp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="›" android:textColor="?attr/appTextSecondary" android:textSize="22sp"/>
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp"
+                    android:background="#2A2342" android:layout_marginStart="54dp"/>
+
+                <!-- Кнопки воды -->
+                <LinearLayout android:id="@+id/rowWaterButtons"
+                    android:layout_width="match_parent" android:layout_height="60dp"
+                    android:orientation="horizontal" android:gravity="center_vertical"
+                    android:paddingStart="18dp" android:paddingEnd="18dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true" android:focusable="true">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="🥛" android:textSize="20sp" android:layout_marginEnd="16dp"/>
+                    <LinearLayout android:layout_width="0dp" android:layout_weight="1"
+                        android:layout_height="wrap_content" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="@string/set_water_buttons" android:textColor="?attr/appTextPrimary" android:textSize="15sp"/>
+                        <TextView android:id="@+id/tvWaterButtons"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:textColor="?attr/appTextSecondary" android:textSize="11sp"/>
+                    </LinearLayout>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="›" android:textColor="?attr/appTextSecondary" android:textSize="22sp"/>
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp"
+                    android:background="#2A2342" android:layout_marginStart="54dp"/>
+
+                <!-- Ручная цель калорий -->
+                <LinearLayout android:id="@+id/rowManualCalories"
+                    android:layout_width="match_parent" android:layout_height="60dp"
+                    android:orientation="horizontal" android:gravity="center_vertical"
+                    android:paddingStart="18dp" android:paddingEnd="18dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true" android:focusable="true">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="🎯" android:textSize="20sp" android:layout_marginEnd="16dp"/>
+                    <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
+                        android:text="@string/set_manual_cal" android:textColor="?attr/appTextPrimary" android:textSize="15sp"/>
+                    <TextView android:id="@+id/tvManualCalories"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:textColor="?attr/appTextSecondary" android:textSize="13sp"
+                        android:layout_marginEnd="6dp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="›" android:textColor="?attr/appTextSecondary" android:textSize="22sp"/>
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp"
+                    android:background="#2A2342" android:layout_marginStart="54dp"/>
+
+                <!-- Ручная цель воды -->
+                <LinearLayout android:id="@+id/rowManualWater"
+                    android:layout_width="match_parent" android:layout_height="60dp"
+                    android:orientation="horizontal" android:gravity="center_vertical"
+                    android:paddingStart="18dp" android:paddingEnd="18dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true" android:focusable="true">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="💧" android:textSize="20sp" android:layout_marginEnd="16dp"/>
+                    <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
+                        android:text="@string/set_manual_water" android:textColor="?attr/appTextPrimary" android:textSize="15sp"/>
+                    <TextView android:id="@+id/tvManualWater"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:textColor="?attr/appTextSecondary" android:textSize="13sp"
+                        android:layout_marginEnd="6dp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="›" android:textColor="?attr/appTextSecondary" android:textSize="22sp"/>
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp"
+                    android:background="#2A2342" android:layout_marginStart="54dp"/>
+
+                <!-- Активность увеличивает норму -->
+                <LinearLayout android:id="@+id/rowActivityBoost"
+                    android:layout_width="match_parent" android:layout_height="60dp"
+                    android:orientation="horizontal" android:gravity="center_vertical"
+                    android:paddingStart="18dp" android:paddingEnd="18dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true" android:focusable="true">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="🏃" android:textSize="20sp" android:layout_marginEnd="16dp"/>
+                    <LinearLayout android:layout_width="0dp" android:layout_weight="1"
+                        android:layout_height="wrap_content" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="@string/set_activity_boost" android:textColor="?attr/appTextPrimary" android:textSize="15sp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="@string/set_activity_boost_sub" android:textColor="?attr/appTextSecondary"
+                            android:textSize="11sp"/>
+                    </LinearLayout>
+                    <Switch android:id="@+id/switchActivityBoost"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:minWidth="56dp" android:minHeight="32dp"
+                        android:clickable="false" android:focusable="false"
+                        android:textOn="" android:textOff=""/>
                 </LinearLayout>
 
                 <!-- Material You (только Android 12+, скрывается кодом) -->
