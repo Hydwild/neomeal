@@ -65,8 +65,8 @@ object ReminderScheduler {
         val triggerAt = System.currentTimeMillis() + seconds * 1000L
         val intent = Intent(context, ReminderReceiver::class.java).apply {
             putExtra(ReminderReceiver.EXTRA_TYPE, "meal")
-            putExtra(ReminderReceiver.EXTRA_TITLE, "🔔 Тест уведомления")
-            putExtra(ReminderReceiver.EXTRA_MSG, "Если ты это видишь — будильники работают!")
+            putExtra(ReminderReceiver.EXTRA_TITLE, context.getString(com.nutritrack.app.R.string.rs_test_title))
+            putExtra(ReminderReceiver.EXTRA_MSG, context.getString(com.nutritrack.app.R.string.rs_test_msg))
         }
         val pending = PendingIntent.getBroadcast(
             context, 777001, intent,
@@ -126,20 +126,20 @@ object ReminderScheduler {
         val prefs = PrefsManager(context)
 
         if (prefs.breakfastEnabled) {
-            schedule(context, "breakfast", prefs.breakfastTime, "Завтрак", "Время для завтрака!")
+            schedule(context, "breakfast", prefs.breakfastTime, context.getString(com.nutritrack.app.R.string.rs_breakfast), context.getString(com.nutritrack.app.R.string.rs_breakfast_msg))
         }
         if (prefs.lunchEnabled) {
-            schedule(context, "lunch", prefs.lunchTime, "Обед", "Время обедать!")
+            schedule(context, "lunch", prefs.lunchTime, context.getString(com.nutritrack.app.R.string.rs_lunch), context.getString(com.nutritrack.app.R.string.rs_lunch_msg))
         }
         if (prefs.dinnerEnabled) {
-            schedule(context, "dinner", prefs.dinnerTime, "Ужин", "Время ужинать!")
+            schedule(context, "dinner", prefs.dinnerTime, context.getString(com.nutritrack.app.R.string.rs_dinner), context.getString(com.nutritrack.app.R.string.rs_dinner_msg))
         }
         if (prefs.snackEnabled) {
-            schedule(context, "snack", prefs.snackTime, "Перекус", "Не забудь перекусить!")
+            schedule(context, "snack", prefs.snackTime, context.getString(com.nutritrack.app.R.string.rs_snack), context.getString(com.nutritrack.app.R.string.rs_snack_msg))
         }
         if (prefs.getBool("water_reminder_enabled", false)) {
             val waterTime = prefs.getString("water_reminder_time", "12:00")
-            schedule(context, "water", waterTime, "💧 Время попить воды", "Не забудь про водный баланс!")
+            schedule(context, "water", waterTime, context.getString(com.nutritrack.app.R.string.rr_water_title), context.getString(com.nutritrack.app.R.string.rr_water_msg))
         }
     }
 

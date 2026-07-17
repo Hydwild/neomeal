@@ -85,20 +85,20 @@ class ProductsAdapter(
         // Контекстное меню
         private fun showContextMenu(ctx: Context, item: ProductEntity) {
             val options = buildList {
-                add("📝 Добавить / изменить пометку")
+                add(ctx.getString(R.string.pa_note_add))
                 // Удаление доступно только для добавленных вручную продуктов
-                if (item.isCustom) add("🗑️ Удалить продукт")
+                if (item.isCustom) add(ctx.getString(R.string.pa_delete_product))
             }
 
             AlertDialog.Builder(ctx)
                 .setTitle(com.nutritrack.app.utils.ProductNameLabel.of(b.root.context, item.name))
                 .setItems(options.toTypedArray()) { _, idx ->
-                    when (options[idx]) {
-                        "📝 Добавить / изменить пометку" -> showNoteDialog(ctx, item)
-                        "🗑️ Удалить продукт"             -> confirmDelete(ctx, item)
+                    when (idx) {
+                        0 -> showNoteDialog(ctx, item)
+                        1 -> confirmDelete(ctx, item)
                     }
                 }
-                .setNegativeButton("Отмена", null)
+                .setNegativeButton(ctx.getString(R.string.c_cancel), null)
                 .show()
         }
 
@@ -106,19 +106,19 @@ class ProductsAdapter(
         private fun showNoteDialog(ctx: Context, item: ProductEntity) {
             val input = EditText(ctx).apply {
                 setText(item.manualNote ?: "")
-                hint = "Введи пометку…"
+                hint = ctx.getString(R.string.pa_note_hint)
                 setPadding(48, 24, 48, 24)
             }
             AlertDialog.Builder(ctx)
                 .setTitle(b.root.context.getString(R.string.pad_note_title_fmt, com.nutritrack.app.utils.ProductNameLabel.of(b.root.context, item.name)))
                 .setView(input)
-                .setPositiveButton("Сохранить") { _, _ ->
+                .setPositiveButton(ctx.getString(R.string.c_save)) { _, _ ->
                     onEdit(item.copy(manualNote = input.text.toString().trim().ifEmpty { null }))
                 }
-                .setNeutralButton("Удалить пометку") { _, _ ->
+                .setNeutralButton(ctx.getString(R.string.pa_note_delete)) { _, _ ->
                     onEdit(item.copy(manualNote = null))
                 }
-                .setNegativeButton("Отмена", null)
+                .setNegativeButton(ctx.getString(R.string.c_cancel), null)
                 .show()
         }
 
@@ -126,9 +126,9 @@ class ProductsAdapter(
         private fun confirmDelete(ctx: Context, item: ProductEntity) {
             AlertDialog.Builder(ctx)
                 .setTitle(b.root.context.getString(R.string.pad_delete_fmt, com.nutritrack.app.utils.ProductNameLabel.of(b.root.context, item.name)))
-                .setMessage("Продукт будет удалён из базы.")
-                .setPositiveButton("Удалить") { _, _ -> onDelete(item) }
-                .setNegativeButton("Отмена", null)
+                .setMessage(ctx.getString(R.string.pa_delete_msg))
+                .setPositiveButton(ctx.getString(R.string.c_delete)) { _, _ -> onDelete(item) }
+                .setNegativeButton(ctx.getString(R.string.c_cancel), null)
                 .show()
         }
     }

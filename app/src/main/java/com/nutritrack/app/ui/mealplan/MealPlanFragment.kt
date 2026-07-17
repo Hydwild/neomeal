@@ -56,7 +56,7 @@ class MealPlanFragment : Fragment() {
                 val currentTime = card.tvTime.text?.toString()
                     ?.takeIf { it.matches(Regex("\\d{2}:\\d{2}")) } ?: meal.time
                 ReminderScheduler.schedule(
-                    requireContext(), slot.key, currentTime, meal.name, "Время — ${meal.name}!"
+                    requireContext(), slot.key, currentTime, meal.name, getString(R.string.pb_time_for, meal.name)
                 )
                 Toast.makeText(requireContext(), getString(R.string.mp_notif_on_fmt, currentTime), Toast.LENGTH_SHORT).show()
             } else {
@@ -232,7 +232,7 @@ class MealPlanFragment : Fragment() {
                     )
                     withContext(Dispatchers.Main) {
                         android.widget.Toast.makeText(requireContext(),
-                            "✅ Добавлено: ${s.product.name} ${s.grams}г",
+                            getString(R.string.mp_added_fmt, com.nutritrack.app.utils.ProductNameLabel.of(requireContext(), s.product.name), s.grams),
                             android.widget.Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -280,8 +280,8 @@ class MealPlanFragment : Fragment() {
                 }
                 b.tvTime.text = newTime
                 if (b.switchNotif.isChecked) {
-                    ReminderScheduler.schedule(requireContext(), slot.key, newTime, meal.name, "Время — ${meal.name}!")
-                    Toast.makeText(requireContext(), "🔔 Перенесено на $newTime", Toast.LENGTH_SHORT).show()
+                    ReminderScheduler.schedule(requireContext(), slot.key, newTime, meal.name, getString(R.string.pb_time_for, meal.name))
+                    Toast.makeText(requireContext(), getString(R.string.mp_moved_fmt, newTime), Toast.LENGTH_SHORT).show()
                 }
             }
         }

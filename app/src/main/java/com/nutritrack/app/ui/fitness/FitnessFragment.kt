@@ -38,7 +38,7 @@ class FitnessFragment : Fragment() {
                 syncToday()
             } else {
                 binding.tvSyncStatus.text =
-                    "⚠️ Разрешения Health Connect не выданы. Открой Health Connect → Разрешения → NeoMeal"
+                    getString(R.string.fit_hc_perm_warn)
             }
         }
 
@@ -157,7 +157,7 @@ class FitnessFragment : Fragment() {
             binding.etHeartRate.setText("")
 
             android.widget.Toast.makeText(
-                requireContext(), "✅ Данные сохранены!",
+                requireContext(), getString(R.string.fit_saved),
                 android.widget.Toast.LENGTH_SHORT
             ).show()
         }
@@ -191,7 +191,7 @@ class FitnessFragment : Fragment() {
 
     private fun showEmptyState() {
         binding.tvSteps.text       = "0"
-        binding.tvCalBurned.text   = "0 ккал"
+        binding.tvCalBurned.text   = getString(R.string.cal_kcal_fmt, 0)
         binding.tvHeartRate.text   = "—"
         binding.tvHrZone.text      = "—"
         binding.tvDistance.text    = "—"
@@ -210,7 +210,7 @@ class FitnessFragment : Fragment() {
 
         // Калории сожжено
         binding.tvCalBurned.text = if (data.caloriesBurned > 0f)
-            "${data.caloriesBurned.toInt()} ккал" else "— ккал"
+            getString(R.string.cal_kcal_fmt, data.caloriesBurned.toInt()) else "—"
 
         // Пульс
         if (data.heartRateAvg > 0) {
@@ -224,11 +224,11 @@ class FitnessFragment : Fragment() {
 
         // Дистанция
         binding.tvDistance.text = if (data.distanceMeters > 0f)
-            String.format("%.1f км", data.distanceMeters / 1000f) else "—"
+            getString(R.string.fit_km_fmt, String.format("%.1f", data.distanceMeters / 1000f)) else "—"
 
         // Активные минуты
         binding.tvActiveMin.text = if (data.activeMinutes > 0)
-            "${data.activeMinutes} мин" else "—"
+            getString(R.string.fit_min_fmt, data.activeMinutes) else "—"
 
         // Источник данных
 

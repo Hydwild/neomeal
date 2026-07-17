@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.nutritrack.app.R
 import com.nutritrack.app.data.db.entity.DiaryEntryEntity
 import com.nutritrack.app.databinding.ItemDiaryBinding
 
@@ -44,7 +45,11 @@ class DiaryAdapter(
         fun bind(item: DiaryEntryEntity) {
             binding.apply {
                 binding.tvName.text = com.nutritrack.app.utils.ProductNameLabel.of(binding.root.context, item.productName)
-                val unit = if (isLiquidName(item.productName)) "мл" else "г"
+                val ctx = binding.root.context
+                val unit = ctx.getString(
+                    if (com.nutritrack.app.utils.ProductUnits.isLiquidName(item.productName))
+                        R.string.u_ml else R.string.u_g
+                )
 
                 // Стоимость порции, если у продукта задана цена
                 val price = priceMap[item.productId]
@@ -53,9 +58,10 @@ class DiaryAdapter(
                     "  •  ${cost.toInt()} ₽"
                 } else ""
 
-                binding.tvDetails.text = "${item.grams.toInt()}$unit  •  Б:${item.protein.toInt()} " +
-                        "Ж:${item.fat.toInt()} У:${item.carbs.toInt()}$costStr"
-                binding.tvCalories.text = "${item.calories.toInt()} ккал"
+                binding.tvDetails.text = "${item.grams.toInt()}$unit  •  " +
+                        ctx.getString(R.string.mp_macros_fmt,
+                            item.protein.toInt(), item.fat.toInt(), item.carbs.toInt()) + costStr
+                binding.tvCalories.text = ctx.getString(R.string.cal_kcal_fmt, item.calories.toInt())
 
                 // Состав комбо (если продукт — комбо)
                 val combo = comboMap[item.productId]

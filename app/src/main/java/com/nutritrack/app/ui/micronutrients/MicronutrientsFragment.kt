@@ -86,7 +86,10 @@ class MicronutrientsFragment : Fragment() {
 
             // Подпись: съедено / норма
             val detail = TextView(ctx).apply {
-                text = "${fmt(item.consumed)} / ${fmt(item.rda)} ${item.unit}"
+                text = "${fmt(item.consumed)} / ${fmt(item.rda)} " + when (item.unit) {
+                    "мкг" -> getString(R.string.unit_mcg); "мг" -> getString(R.string.unit_mg)
+                    else -> item.unit
+                }
                 textSize = 12f
                 setTextColor(Color.parseColor("#B3FFFFFF"))
             }
