@@ -41,4 +41,7 @@
     <color name="accent_orange_soft">#FFCC80</color>
     <color name="accent_orange_deep">#FF7043</color>
     <color name="ic_launcher_bg">#FFFFFF</color>
+    <!-- Альтернативные фоны иконки приложения -->
+    <color name="ic_launcher_bg_dark">#0F0A1E</color>
+    <color name="ic_launcher_bg_purple">#7C4DFF</color>
 </resources>

@@ -46,6 +46,15 @@ object CalorieCalculator {
     @Volatile var manualCalories: Int = 0
     @Volatile var manualWater: Int = 0
 
+    // Пользовательский сплит БЖУ, % (сумма 100). Дефолт 30/30/40.
+    @Volatile var proteinPct: Int = 30
+    @Volatile var fatPct: Int = 30
+    @Volatile var carbsPct: Int = 40
+
+ /** Дневная цель белка в граммах (4 ккал/г). */
+    fun proteinGoalGrams(calorieGoal: Int): Float =
+        calorieGoal * (proteinPct / 100f) / 4f
+
     fun calculateWaterGoal(profile: ProfileEntity): Int {
         if (manualWater > 0) return manualWater
         // \~35 мл на кг

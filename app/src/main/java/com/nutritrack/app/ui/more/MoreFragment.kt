@@ -20,8 +20,9 @@ class MoreFragment : Fragment() {
     private var _binding: FragmentMoreBinding? = null
     private val binding get() = _binding!!
 
-    // эмодзи, заголовок, подпись, id назначения в nav_graph
+    // ключ (для скрытия), эмодзи, заголовок, подпись, id назначения в nav_graph
     private data class Section(
+        val key: String,
         val emoji: String,
         val title: String,
         val subtitle: String,
@@ -30,19 +31,21 @@ class MoreFragment : Fragment() {
 
     private val sections by lazy {
         listOf(
-            Section("🍎", getString(R.string.sec_products), getString(R.string.sec_products_sub), R.id.productsFragment),
-            Section("💊", getString(R.string.sec_micro), getString(R.string.sec_micro_sub), R.id.micronutrientsFragment),
-            Section("🎯", getString(R.string.sec_goal), getString(R.string.sec_goal_sub), R.id.nutrientGoalFragment),
-            Section("⏱️", getString(R.string.sec_fasting), getString(R.string.sec_fasting_sub), R.id.fastingFragment),
-            Section("🕊️", getString(R.string.sec_lent), getString(R.string.sec_lent_sub), R.id.fastingModeFragment),
-            Section("🏃", getString(R.string.sec_activity), getString(R.string.sec_activity_sub), R.id.fitnessFragment),
-            Section("📐", getString(R.string.sec_measure), getString(R.string.sec_measure_sub), R.id.measurementsFragment),
-            Section("📸", getString(R.string.sec_photos), getString(R.string.sec_photos_sub), R.id.progressPhotosFragment),
-            Section("💡", getString(R.string.sec_tips), getString(R.string.sec_tips_sub), R.id.tipsFragment),
-            Section("🆕", getString(R.string.sec_whatsnew), getString(R.string.sec_whatsnew_sub), R.id.whatsNewFragment),
-            Section("❓", getString(R.string.sec_faq), getString(R.string.sec_faq_sub), R.id.faqFragment)
+            Section("products", "🍎", getString(R.string.sec_products), getString(R.string.sec_products_sub), R.id.productsFragment),
+            Section("micro", "💊", getString(R.string.sec_micro), getString(R.string.sec_micro_sub), R.id.micronutrientsFragment),
+            Section("goal", "🎯", getString(R.string.sec_goal), getString(R.string.sec_goal_sub), R.id.nutrientGoalFragment),
+            Section("fasting", "⏱️", getString(R.string.sec_fasting), getString(R.string.sec_fasting_sub), R.id.fastingFragment),
+            Section("lent", "🕊️", getString(R.string.sec_lent), getString(R.string.sec_lent_sub), R.id.fastingModeFragment),
+            Section("activity", "🏃", getString(R.string.sec_activity), getString(R.string.sec_activity_sub), R.id.fitnessFragment),
+            Section("measure", "📐", getString(R.string.sec_measure), getString(R.string.sec_measure_sub), R.id.measurementsFragment),
+            Section("photos", "📸", getString(R.string.sec_photos), getString(R.string.sec_photos_sub), R.id.progressPhotosFragment),
+            Section("tips", "💡", getString(R.string.sec_tips), getString(R.string.sec_tips_sub), R.id.tipsFragment),
+            Section("whatsnew", "🆕", getString(R.string.sec_whatsnew), getString(R.string.sec_whatsnew_sub), R.id.whatsNewFragment),
+            Section("faq", "❓", getString(R.string.sec_faq), getString(R.string.sec_faq_sub), R.id.faqFragment)
         )
     }
+
+    private val prefs by lazy { com.nutritrack.app.utils.PrefsManager(requireContext()) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentMoreBinding.inflate(inflater, container, false)
@@ -51,8 +54,48 @@ class MoreFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        renderSections()
+    }
+
+    private fun renderSections() {
+        val hidden = prefs.hiddenMoreItems
         binding.containerSections.removeAllViews()
-        sections.forEach { binding.containerSections.addView(buildRow(it)) }
+        sections.filter { it.key !in hidden }
+            .forEach { binding.containerSections.addView(buildRow(it)) }
+        binding.containerSections.addView(buildConfigureRow())
+    }
+
+ /** «Настроить разделы»: мультивыбор видимых пунктов. */
+    private fun buildConfigureRow(): View {
+        val tv = TextView(requireContext()).apply {
+            text = getString(R.string.more_configure)
+            setTextColor(requireContext().getColor(R.color.text_secondary))
+            textSize = 13f
+            gravity = android.view.Gravity.CENTER
+            setPadding(0, dp(14), 0, dp(20))
+            setOnClickListener { showConfigureDialog() }
+        }
+        return tv
+    }
+
+    private fun showConfigureDialog() {
+        val hidden = prefs.hiddenMoreItems.toMutableSet()
+        val labels = sections.map { "${it.emoji} ${it.title}" }.toTypedArray()
+        val checked = sections.map { it.key !in hidden }.toBooleanArray()
+        val d = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.more_configure_title))
+            .setMultiChoiceItems(labels, checked) { _, which, isChecked ->
+                val key = sections[which].key
+                if (isChecked) hidden.remove(key) else hidden.add(key)
+            }
+            .setPositiveButton(getString(R.string.c_save)) { _, _ ->
+                prefs.hiddenMoreItems = hidden
+                renderSections()
+            }
+            .setNegativeButton(getString(R.string.dlg_cancel), null)
+            .create()
+        d.setOnShowListener { com.nutritrack.app.utils.DialogHelper.tint(d, requireContext()) }
+        d.show()
     }
 
     private fun buildRow(section: Section): View {

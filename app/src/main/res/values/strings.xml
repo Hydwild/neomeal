@@ -3830,4 +3830,19 @@
     <string name="set_auto_backup_sub">Копия в выбранную папку; пароль — по желанию</string>
     <string name="auto_backup_pw_msg">Пароль для еженедельных копий (хранится в защищённом хранилище устройства). Пустое поле — без шифрования.</string>
     <string name="auto_backup_on">🗓️ Авто-бэкап включён: раз в неделю в выбранную папку</string>
+
+    <!-- Иконка, сплит БЖУ, настройка «Ещё» -->
+    <string name="set_app_icon">Иконка приложения</string>
+    <string name="icon_classic">Классика</string>
+    <string name="icon_dark">Тёмная</string>
+    <string name="icon_purple">Фиолетовая</string>
+    <string name="icon_changed">🖼️ Иконка изменится через пару секунд. Некоторые лаунчеры пересоздают ярлык.</string>
+    <string name="set_macro_split">Сплит БЖУ</string>
+    <string name="macro_split_msg">Проценты калорий из белков/жиров/углеводов. Сумма должна быть 100. Влияет на цель белка в отчётах и рекомендациях.</string>
+    <string name="macro_protein_lbl">Белки, %</string>
+    <string name="macro_fat_lbl">Жиры, %</string>
+    <string name="macro_carbs_lbl">Углеводы, %</string>
+    <string name="macro_split_invalid">Сумма должна быть 100% (каждый минимум 5%)</string>
+    <string name="more_configure">⚙️ Настроить разделы…</string>
+    <string name="more_configure_title">Видимые разделы</string>
 </resources>

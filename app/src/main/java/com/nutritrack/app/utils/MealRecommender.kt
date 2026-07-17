@@ -90,7 +90,7 @@ object MealRecommender {
             )
         }
 
-        val proteinTarget   = goalCalories * 0.30f / 4f
+        val proteinTarget   = CalorieCalculator.proteinGoalGrams(goalCalories)
         val needMoreProtein = eatenProtein < proteinTarget * 0.6f
 
         val detail = buildString {

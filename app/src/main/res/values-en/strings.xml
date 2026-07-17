@@ -3821,4 +3821,19 @@ data class Recipe(
     <string name="set_auto_backup_sub">A copy into your chosen folder; password optional</string>
     <string name="auto_backup_pw_msg">Password for the weekly copies (kept in the device\'s secure storage). Leave empty for no encryption.</string>
     <string name="auto_backup_on">🗓️ Auto-backup on: weekly into your folder</string>
+
+    <!-- Иконка, сплит БЖУ, настройка «Ещё» -->
+    <string name="set_app_icon">App icon</string>
+    <string name="icon_classic">Classic</string>
+    <string name="icon_dark">Dark</string>
+    <string name="icon_purple">Purple</string>
+    <string name="icon_changed">🖼️ The icon will change in a moment. Some launchers recreate the shortcut.</string>
+    <string name="set_macro_split">Macro split</string>
+    <string name="macro_split_msg">Percent of calories from protein/fat/carbs. Must sum to 100. Affects the protein goal in reports and suggestions.</string>
+    <string name="macro_protein_lbl">Protein, %</string>
+    <string name="macro_fat_lbl">Fat, %</string>
+    <string name="macro_carbs_lbl">Carbs, %</string>
+    <string name="macro_split_invalid">Must sum to 100% (each at least 5%)</string>
+    <string name="more_configure">⚙️ Customize sections…</string>
+    <string name="more_configure_title">Visible sections</string>
 </resources>

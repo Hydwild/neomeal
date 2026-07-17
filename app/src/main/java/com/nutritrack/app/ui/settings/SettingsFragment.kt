@@ -200,6 +200,14 @@ class SettingsFragment : Fragment() {
             }
         }
 
+        // Иконка приложения
+        binding.tvAppIcon.text = iconLabel(prefs.appIcon)
+        binding.rowAppIcon.setOnClickListener { showIconPicker() }
+
+        // Сплит БЖУ
+        updateMacroLabel()
+        binding.rowMacroSplit.setOnClickListener { showMacroSplitDialog() }
+
         // ПИН-код (альтернатива биометрии)
         updatePinLabel()
         binding.rowPinCode.setOnClickListener { showPinOptions() }
@@ -904,6 +912,96 @@ class SettingsFragment : Fragment() {
         _binding?.switchAutoBackup?.isChecked = true
         android.widget.Toast.makeText(requireContext(),
             getString(R.string.auto_backup_on), android.widget.Toast.LENGTH_LONG).show()
+    }
+
+    // Иконка приложения
+
+    private fun iconLabel(key: String): String = getString(when (key) {
+        "dark"   -> R.string.icon_dark
+        "purple" -> R.string.icon_purple
+        else     -> R.string.icon_classic
+    })
+
+    private fun showIconPicker() {
+        val keys = com.nutritrack.app.utils.AppIconHelper.KEYS
+        val labels = keys.map { iconLabel(it) }.toTypedArray()
+        val current = keys.indexOf(prefs.appIcon).coerceAtLeast(0)
+        val d = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.set_app_icon))
+            .setSingleChoiceItems(labels, current) { dialog, which ->
+                dialog.dismiss()
+                val key = keys[which]
+                if (key == prefs.appIcon) return@setSingleChoiceItems
+                prefs.appIcon = key
+                binding.tvAppIcon.text = labels[which]
+                com.nutritrack.app.utils.AppIconHelper.apply(requireContext(), key)
+                android.widget.Toast.makeText(requireContext(),
+                    getString(R.string.icon_changed), android.widget.Toast.LENGTH_LONG).show()
+            }
+            .setNegativeButton(getString(R.string.dlg_cancel), null)
+            .create()
+        d.setOnShowListener { com.nutritrack.app.utils.DialogHelper.tint(d, requireContext()) }
+        d.show()
+    }
+
+    // Сплит БЖУ
+
+    private fun updateMacroLabel() {
+        binding.tvMacroSplit.text =
+            "${prefs.macroProtein}/${prefs.macroFat}/${prefs.macroCarbs}"
+    }
+
+    private fun showMacroSplitDialog() {
+        val ctx = requireContext()
+        val col = android.widget.LinearLayout(ctx).apply {
+            orientation = android.widget.LinearLayout.VERTICAL
+            val pad = (20 * resources.displayMetrics.density).toInt()
+            setPadding(pad, pad / 2, pad, 0)
+        }
+        fun field(label: String, value: Int): android.widget.EditText {
+            col.addView(android.widget.TextView(ctx).apply {
+                text = label; textSize = 12f
+                setTextColor(ctx.getColor(R.color.text_secondary))
+            })
+            return android.widget.EditText(ctx).apply {
+                inputType = android.text.InputType.TYPE_CLASS_NUMBER
+                setText(value.toString())
+                col.addView(this)
+            }
+        }
+        val p = field(getString(R.string.macro_protein_lbl), prefs.macroProtein)
+        val f = field(getString(R.string.macro_fat_lbl), prefs.macroFat)
+        val c = field(getString(R.string.macro_carbs_lbl), prefs.macroCarbs)
+        val d = androidx.appcompat.app.AlertDialog.Builder(ctx)
+            .setTitle(getString(R.string.set_macro_split))
+            .setMessage(getString(R.string.macro_split_msg))
+            .setView(col)
+            .setPositiveButton(getString(R.string.c_save)) { _, _ ->
+                val pv = p.text.toString().toIntOrNull() ?: 30
+                val fv = f.text.toString().toIntOrNull() ?: 30
+                val cv = c.text.toString().toIntOrNull() ?: 40
+                if (pv + fv + cv != 100 || pv < 5 || fv < 5 || cv < 5) {
+                    android.widget.Toast.makeText(ctx,
+                        getString(R.string.macro_split_invalid), android.widget.Toast.LENGTH_LONG).show()
+                    return@setPositiveButton
+                }
+                prefs.macroProtein = pv; prefs.macroFat = fv; prefs.macroCarbs = cv
+                com.nutritrack.app.utils.CalorieCalculator.proteinPct = pv
+                com.nutritrack.app.utils.CalorieCalculator.fatPct = fv
+                com.nutritrack.app.utils.CalorieCalculator.carbsPct = cv
+                updateMacroLabel()
+            }
+            .setNeutralButton(getString(R.string.set_water_buttons_reset)) { _, _ ->
+                prefs.macroProtein = 30; prefs.macroFat = 30; prefs.macroCarbs = 40
+                com.nutritrack.app.utils.CalorieCalculator.proteinPct = 30
+                com.nutritrack.app.utils.CalorieCalculator.fatPct = 30
+                com.nutritrack.app.utils.CalorieCalculator.carbsPct = 40
+                updateMacroLabel()
+            }
+            .setNegativeButton(getString(R.string.dlg_cancel), null)
+            .create()
+        d.setOnShowListener { com.nutritrack.app.utils.DialogHelper.tint(d, ctx) }
+        d.show()
     }
 
     // Режим темы

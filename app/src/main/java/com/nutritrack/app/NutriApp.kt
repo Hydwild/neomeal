@@ -36,6 +36,9 @@ class NutriApp : Application() {
         com.nutritrack.app.utils.CalorieCalculator.adjustment = p.calorieAdjustment
         com.nutritrack.app.utils.CalorieCalculator.manualCalories = p.manualCalorieGoal
         com.nutritrack.app.utils.CalorieCalculator.manualWater = p.manualWaterGoal
+        com.nutritrack.app.utils.CalorieCalculator.proteinPct = p.macroProtein
+        com.nutritrack.app.utils.CalorieCalculator.fatPct = p.macroFat
+        com.nutritrack.app.utils.CalorieCalculator.carbsPct = p.macroCarbs
         checkAndRepopulateProducts()
     }
 

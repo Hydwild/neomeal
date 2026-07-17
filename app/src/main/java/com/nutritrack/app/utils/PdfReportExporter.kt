@@ -177,7 +177,7 @@ object PdfReportExporter {
             val insights = WeeklyReport.build(context, WeeklyReport.Input(
                 days = reportDays,
                 calorieGoal = calGoal,
-                proteinGoalG = calGoal * 0.30f / 4f,
+                proteinGoalG = CalorieCalculator.proteinGoalGrams(calGoal),
                 waterGoalMl = waterGoal,
                 weightStart = weightStart,
                 weightEnd = weightCurrent

@@ -265,6 +265,32 @@ class PrefsManager(context: Context) {
         get() = prefs.getString("auto_backup_uri", "") ?: ""
         set(v) = prefs.edit().putString("auto_backup_uri", v).apply()
 
+    // Иконка приложения: classic | dark | purple
+    var appIcon: String
+        get() = prefs.getString("app_icon", "classic") ?: "classic"
+        set(v) = prefs.edit().putString("app_icon", v).apply()
+
+    // Сплит БЖУ в процентах (сумма = 100)
+    var macroProtein: Int
+        get() = prefs.getInt("macro_protein", 30)
+        set(v) = prefs.edit().putInt("macro_protein", v).apply()
+    var macroFat: Int
+        get() = prefs.getInt("macro_fat", 30)
+        set(v) = prefs.edit().putInt("macro_fat", v).apply()
+    var macroCarbs: Int
+        get() = prefs.getInt("macro_carbs", 40)
+        set(v) = prefs.edit().putInt("macro_carbs", v).apply()
+
+    // Скрытые пункты раздела «Ещё» (ключи строк)
+    var hiddenMoreItems: Set<String>
+        get() = prefs.getStringSet("hidden_more_items", emptySet()) ?: emptySet()
+        set(v) = prefs.edit().putStringSet("hidden_more_items", v).apply()
+
+    // Скрытые карточки главного экрана: water | fasting | suggestions | streak
+    var hiddenDashboardCards: Set<String>
+        get() = prefs.getStringSet("hidden_dash_cards", emptySet()) ?: emptySet()
+        set(v) = prefs.edit().putStringSet("hidden_dash_cards", v).apply()
+
     // Универсальные геттеры / сеттеры
     // Используются для динамических ключей (напр. уведомления плана питания)
 
