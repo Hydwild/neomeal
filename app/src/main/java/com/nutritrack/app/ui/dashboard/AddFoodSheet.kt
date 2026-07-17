@@ -320,7 +320,7 @@ class AddFoodSheet(
             }
         }
 
-        // Быстрый доступ: повторить вчера + недавние/частые
+        // Быстрый доступ: повторить вчера + шаблоны + недавние/частые
         val quickRow = sheetView.findViewById<LinearLayout>(R.id.quickRow)
         fragment.viewLifecycleOwner.lifecycleScope.launch {
             quickRow.removeAllViews()
@@ -334,6 +334,33 @@ class AddFoodSheet(
                     onAchievementsCheck()
                 }
                 dialog.dismiss()
+            })
+
+            // Шаблоны приёмов («Мой завтрак»): тап — добавить, долгий тап — удалить
+            com.nutritrack.app.utils.MealTemplates.load(ctx).forEach { tpl ->
+                val chip = makeQuickChip("📁 ${tpl.name} · ${tpl.totalCalories}") {
+                    applyTemplate(tpl, dialog)
+                }
+                chip.setOnLongClickListener {
+                    val d = com.google.android.material.dialog.MaterialAlertDialogBuilder(ctx)
+                        .setTitle(tpl.name)
+                        .setMessage(getString(R.string.tpl_delete_msg))
+                        .setPositiveButton(getString(R.string.c_delete)) { _, _ ->
+                            com.nutritrack.app.utils.MealTemplates.remove(ctx, tpl.name)
+                            chip.visibility = View.GONE
+                        }
+                        .setNegativeButton(getString(R.string.c_cancel), null)
+                        .create()
+                    d.setOnShowListener { DialogHelper.tint(d, ctx) }
+                    d.show()
+                    true
+                }
+                quickRow.addView(chip)
+            }
+
+            // Сохранить текущий день как шаблон
+            quickRow.addView(makeQuickChip(getString(R.string.tpl_save_chip)) {
+                promptSaveTemplate(dialog)
             })
 
             // Недавние (последние уникальные продукты)
@@ -355,6 +382,57 @@ class AddFoodSheet(
         }
 
         dialog.show()
+    }
+
+ /** Добавить все позиции шаблона в дневник выбранной даты. */
+    private fun applyTemplate(
+        tpl: com.nutritrack.app.utils.MealTemplates.Template,
+        dialog: BottomSheetDialog
+    ) {
+        fragment.viewLifecycleOwner.lifecycleScope.launch {
+            val profileId = vm.activeProfile.value?.id ?: 1L
+            val date = vm.selectedDate.value ?: com.nutritrack.app.utils.DateUtils.today()
+            com.nutritrack.app.utils.MealTemplates.toEntries(tpl, date, profileId)
+                .forEach { vm.restoreDiaryEntry(it) }
+            onAchievementsCheck()
+            dialog.dismiss()
+            Toast.makeText(ctx,
+                getString(R.string.tpl_applied_fmt, tpl.name, tpl.items.size),
+                Toast.LENGTH_SHORT).show()
+        }
+    }
+
+ /** Диалог имени шаблона: сохраняет все записи текущего дня. */
+    private fun promptSaveTemplate(dialog: BottomSheetDialog) {
+        val entries = vm.todayEntries.value.orEmpty()
+        if (entries.isEmpty()) {
+            Toast.makeText(ctx, getString(R.string.tpl_empty_day), Toast.LENGTH_SHORT).show()
+            return
+        }
+        val input = EditText(ctx).apply {
+            hint = ctx.getString(R.string.tpl_name_hint)
+        }
+        val container = FrameLayout(ctx).apply {
+            val pad = (20 * ctx.resources.displayMetrics.density).toInt()
+            setPadding(pad, pad / 2, pad, 0)
+            addView(input)
+        }
+        val d = com.google.android.material.dialog.MaterialAlertDialogBuilder(ctx)
+            .setTitle(getString(R.string.tpl_save_title))
+            .setMessage(getString(R.string.tpl_save_msg, entries.size))
+            .setView(container)
+            .setPositiveButton(getString(R.string.c_save)) { _, _ ->
+                val name = input.text.toString().trim()
+                    .ifEmpty { ctx.getString(R.string.tpl_default_name) }
+                com.nutritrack.app.utils.MealTemplates.addFromEntries(ctx, name, entries)
+                dialog.dismiss()
+                Toast.makeText(ctx, getString(R.string.tpl_saved_fmt, name),
+                    Toast.LENGTH_SHORT).show()
+            }
+            .setNegativeButton(getString(R.string.c_cancel), null)
+            .create()
+        d.setOnShowListener { DialogHelper.tint(d, ctx) }
+        d.show()
     }
 
  /** Чип быстрого доступа. */

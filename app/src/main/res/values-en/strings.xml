@@ -3784,4 +3784,41 @@ data class Recipe(
     <string name="sc_fasting_long">⏱️ Fasting timer</string>
     <string name="qs_water_label">+250 ml water</string>
     <string name="qs_water_total_fmt">Today: %1$d ml</string>
+
+    <!-- Шаблоны приёмов пищи + годовой хитмэп -->
+    <string name="tpl_save_chip">💾 Save this day</string>
+    <string name="tpl_save_title">Save as template</string>
+    <string name="tpl_save_msg">All entries of the day (%1$d) become a template — add them later in one tap.</string>
+    <string name="tpl_name_hint">Name (e.g. “My breakfast”)</string>
+    <string name="tpl_default_name">My template</string>
+    <string name="tpl_saved_fmt">📁 Template “%1$s” saved</string>
+    <string name="tpl_applied_fmt">📁 %1$s: %2$d added</string>
+    <string name="tpl_delete_msg">Delete this template?</string>
+    <string name="tpl_empty_day">No entries today — nothing to save</string>
+    <string name="an_year_heatmap">📆 Your year at a glance</string>
+    <string name="an_year_heatmap_sub">Each cell is a day. Brighter = closer to your calorie goal.</string>
+
+    <!-- ПИН-код и авто-бэкап -->
+    <string name="set_pin">PIN code</string>
+    <string name="set_pin_sub">An alternative to biometrics for the app lock</string>
+    <string name="pin_on">On</string>
+    <string name="pin_off">Off</string>
+    <string name="pin_change">Change PIN</string>
+    <string name="pin_disable">Disable PIN</string>
+    <string name="pin_hint">PIN (4+ digits)</string>
+    <string name="pin_enter">Enter your PIN</string>
+    <string name="pin_enter_current">Current PIN</string>
+    <string name="pin_new_title">New PIN</string>
+    <string name="pin_new_msg">At least 4 digits. The PIN is stored only on this device (Keystore) and cannot be recovered.</string>
+    <string name="pin_confirm_title">Confirm PIN</string>
+    <string name="pin_saved">🔢 PIN set</string>
+    <string name="pin_mismatch">PINs don\'t match</string>
+    <string name="pin_too_short">At least 4 digits</string>
+    <string name="pin_wrong">Wrong PIN</string>
+    <string name="pin_unlock">Unlock</string>
+    <string name="pin_exit">Exit</string>
+    <string name="set_auto_backup">Weekly auto-backup</string>
+    <string name="set_auto_backup_sub">A copy into your chosen folder; password optional</string>
+    <string name="auto_backup_pw_msg">Password for the weekly copies (kept in the device\'s secure storage). Leave empty for no encryption.</string>
+    <string name="auto_backup_on">🗓️ Auto-backup on: weekly into your folder</string>
 </resources>

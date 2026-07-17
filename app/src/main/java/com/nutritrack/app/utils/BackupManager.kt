@@ -143,7 +143,8 @@ object BackupManager {
             val settings = mapOf(
                 "dark_theme" to prefs.isDarkTheme.toString(),
                 "language" to prefs.language,
-                "circular_calorie_mode" to prefs.getBool("circular_calorie_mode", true).toString()
+                "circular_calorie_mode" to prefs.getBool("circular_calorie_mode", true).toString(),
+                MealTemplates.PREFS_KEY to prefs.getString(MealTemplates.PREFS_KEY)
             )
 
             // Аватары ВСЕХ профилей base64 (profileId base64)
@@ -273,6 +274,9 @@ object BackupManager {
                 data.settings["language"]?.let { prefs.language = it }
                 data.settings["circular_calorie_mode"]?.let {
                     prefs.setBool("circular_calorie_mode", it.toBoolean())
+                }
+                data.settings[MealTemplates.PREFS_KEY]?.let {
+                    prefs.setString(MealTemplates.PREFS_KEY, it)
                 }
             }
 

@@ -256,6 +256,15 @@ class PrefsManager(context: Context) {
         get() = prefs.getBoolean("activity_boost", false)
         set(v) = prefs.edit().putBoolean("activity_boost", v).apply()
 
+    // Авто-бэкап: включён + tree-URI папки (SAF). Пароль — в SecurePrefs.
+    var autoBackupEnabled: Boolean
+        get() = prefs.getBoolean("auto_backup_enabled", false)
+        set(v) = prefs.edit().putBoolean("auto_backup_enabled", v).apply()
+
+    var autoBackupUri: String
+        get() = prefs.getString("auto_backup_uri", "") ?: ""
+        set(v) = prefs.edit().putString("auto_backup_uri", v).apply()
+
     // Универсальные геттеры / сеттеры
     // Используются для динамических ключей (напр. уведомления плана питания)
 

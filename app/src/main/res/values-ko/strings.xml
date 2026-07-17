@@ -3768,4 +3768,41 @@
     <string name="sc_fasting_long">⏱️ 단식 타이머</string>
     <string name="qs_water_label">물 +250ml</string>
     <string name="qs_water_total_fmt">오늘: %1$dml</string>
+
+    <!-- Шаблоны приёмов пищи + годовой хитмэп -->
+    <string name="tpl_save_chip">💾 오늘 저장</string>
+    <string name="tpl_save_title">템플릿으로 저장</string>
+    <string name="tpl_save_msg">오늘 기록(%1$d개)을 템플릿으로 저장해요 — 나중에 한 번에 추가할 수 있어요.</string>
+    <string name="tpl_name_hint">이름 (예: “나의 아침”)</string>
+    <string name="tpl_default_name">내 템플릿</string>
+    <string name="tpl_saved_fmt">📁 “%1$s” 템플릿 저장 완료</string>
+    <string name="tpl_applied_fmt">📁 %1$s: %2$d개 추가됨</string>
+    <string name="tpl_delete_msg">이 템플릿을 삭제할까요?</string>
+    <string name="tpl_empty_day">오늘 기록이 없어 저장할 게 없어요</string>
+    <string name="an_year_heatmap">📆 한눈에 보는 1년</string>
+    <string name="an_year_heatmap_sub">칸 하나가 하루예요. 밝을수록 목표에 가까워요.</string>
+
+    <!-- ПИН-код и авто-бэкап -->
+    <string name="set_pin">PIN 코드</string>
+    <string name="set_pin_sub">생체 인증 대신 쓰는 잠금 방법</string>
+    <string name="pin_on">켜짐</string>
+    <string name="pin_off">꺼짐</string>
+    <string name="pin_change">PIN 변경</string>
+    <string name="pin_disable">PIN 끄기</string>
+    <string name="pin_hint">PIN (4자리 이상)</string>
+    <string name="pin_enter">PIN을 입력하세요</string>
+    <string name="pin_enter_current">현재 PIN</string>
+    <string name="pin_new_title">새 PIN</string>
+    <string name="pin_new_msg">4자리 이상. PIN은 이 기기(Keystore)에만 저장되며 복구할 수 없어요.</string>
+    <string name="pin_confirm_title">PIN 확인</string>
+    <string name="pin_saved">🔢 PIN 설정 완료</string>
+    <string name="pin_mismatch">PIN이 일치하지 않아요</string>
+    <string name="pin_too_short">4자리 이상 입력하세요</string>
+    <string name="pin_wrong">PIN이 틀렸어요</string>
+    <string name="pin_unlock">잠금 해제</string>
+    <string name="pin_exit">종료</string>
+    <string name="set_auto_backup">매주 자동 백업</string>
+    <string name="set_auto_backup_sub">선택한 폴더에 백업; 비밀번호는 선택</string>
+    <string name="auto_backup_pw_msg">매주 백업에 쓸 비밀번호 (기기 보안 저장소에 보관). 비우면 암호화 없이 저장돼요.</string>
+    <string name="auto_backup_on">🗓️ 자동 백업 켜짐: 매주 선택한 폴더에 저장</string>
 </resources>

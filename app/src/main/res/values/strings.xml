@@ -3793,4 +3793,41 @@
     <string name="sc_fasting_long">⏱️ Таймер голодания</string>
     <string name="qs_water_label">+250 мл воды</string>
     <string name="qs_water_total_fmt">Сегодня: %1$d мл</string>
+
+    <!-- Шаблоны приёмов пищи + годовой хитмэп -->
+    <string name="tpl_save_chip">💾 Сохранить день</string>
+    <string name="tpl_save_title">Сохранить как шаблон</string>
+    <string name="tpl_save_msg">Все записи дня (%1$d) станут шаблоном — потом добавишь их одним тапом.</string>
+    <string name="tpl_name_hint">Название (например, «Мой завтрак»)</string>
+    <string name="tpl_default_name">Мой шаблон</string>
+    <string name="tpl_saved_fmt">📁 Шаблон «%1$s» сохранён</string>
+    <string name="tpl_applied_fmt">📁 %1$s: добавлено %2$d</string>
+    <string name="tpl_delete_msg">Удалить этот шаблон?</string>
+    <string name="tpl_empty_day">Сегодня пока нет записей — нечего сохранять</string>
+    <string name="an_year_heatmap">📆 Год в норме</string>
+    <string name="an_year_heatmap_sub">Каждая клетка — день. Ярче — ближе к норме калорий.</string>
+
+    <!-- ПИН-код и авто-бэкап -->
+    <string name="set_pin">ПИН-код</string>
+    <string name="set_pin_sub">Альтернатива биометрии для блокировки входа</string>
+    <string name="pin_on">Вкл</string>
+    <string name="pin_off">Выкл</string>
+    <string name="pin_change">Сменить ПИН</string>
+    <string name="pin_disable">Отключить ПИН</string>
+    <string name="pin_hint">ПИН (4+ цифры)</string>
+    <string name="pin_enter">Введи ПИН-код</string>
+    <string name="pin_enter_current">Текущий ПИН</string>
+    <string name="pin_new_title">Новый ПИН</string>
+    <string name="pin_new_msg">Минимум 4 цифры. ПИН хранится только на устройстве (Keystore) — восстановить его нельзя.</string>
+    <string name="pin_confirm_title">Повтори ПИН</string>
+    <string name="pin_saved">🔢 ПИН установлен</string>
+    <string name="pin_mismatch">ПИНы не совпадают</string>
+    <string name="pin_too_short">Минимум 4 цифры</string>
+    <string name="pin_wrong">Неверный ПИН</string>
+    <string name="pin_unlock">Открыть</string>
+    <string name="pin_exit">Выход</string>
+    <string name="set_auto_backup">Авто-бэкап раз в неделю</string>
+    <string name="set_auto_backup_sub">Копия в выбранную папку; пароль — по желанию</string>
+    <string name="auto_backup_pw_msg">Пароль для еженедельных копий (хранится в защищённом хранилище устройства). Пустое поле — без шифрования.</string>
+    <string name="auto_backup_on">🗓️ Авто-бэкап включён: раз в неделю в выбранную папку</string>
 </resources>

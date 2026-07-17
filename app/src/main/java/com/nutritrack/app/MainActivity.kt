@@ -140,7 +140,48 @@ class MainActivity : AppCompatActivity() {
         if (System.currentTimeMillis() - lastUnlockMs <= LOCK_TIMEOUT_MS) return
         binding.root.visibility = android.view.View.INVISIBLE
         lockPromptShowing = true
-        showAppLock()
+        // ПИН-код (если задан) имеет приоритет над биометрией
+        if (com.nutritrack.app.utils.PinLock.isSet(this)) showPinLock()
+        else showAppLock()
+    }
+
+ /** Экран ПИН-кода: диалог не закрывается при неверном вводе. */
+    private fun showPinLock() {
+        val input = android.widget.EditText(this).apply {
+            inputType = android.text.InputType.TYPE_CLASS_NUMBER or
+                android.text.InputType.TYPE_NUMBER_VARIATION_PASSWORD
+            hint = getString(R.string.pin_hint)
+        }
+        val container = android.widget.FrameLayout(this).apply {
+            val pad = (20 * resources.displayMetrics.density).toInt()
+            setPadding(pad, pad / 2, pad, 0)
+            addView(input)
+        }
+        val dialog = androidx.appcompat.app.AlertDialog.Builder(this)
+            .setTitle(getString(R.string.app_lock_title))
+            .setMessage(getString(R.string.pin_enter))
+            .setView(container)
+            .setCancelable(false)
+            .setPositiveButton(getString(R.string.pin_unlock), null)
+            .setNegativeButton(getString(R.string.pin_exit), null)
+            .create()
+        dialog.setOnShowListener {
+            dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE)
+                .setOnClickListener {
+                    if (com.nutritrack.app.utils.PinLock.check(this, input.text.toString())) {
+                        lastUnlockMs = System.currentTimeMillis()
+                        lockPromptShowing = false
+                        binding.root.visibility = android.view.View.VISIBLE
+                        dialog.dismiss()
+                    } else {
+                        input.error = getString(R.string.pin_wrong)
+                        input.setText("")
+                    }
+                }
+            dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_NEGATIVE)
+                .setOnClickListener { finish() }
+        }
+        dialog.show()
     }
 
     override fun onResume() {

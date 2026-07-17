@@ -125,6 +125,45 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
+        <!-- Годовой хитмэп: дни в норме калорий -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardBackgroundColor="?attr/appCardBg"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/an_year_heatmap"
+                    android:textColor="?attr/appTextPrimary"
+                    android:textSize="15sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/an_year_heatmap_sub"
+                    android:textColor="?attr/appTextSecondary"
+                    android:textSize="11sp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="12dp"/>
+
+                <com.nutritrack.app.ui.custom.YearHeatmapView
+                    android:id="@+id/yearHeatmap"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
         <!-- Вес -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"

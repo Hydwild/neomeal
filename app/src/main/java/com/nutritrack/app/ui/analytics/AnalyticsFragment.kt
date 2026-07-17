@@ -47,6 +47,7 @@ class AnalyticsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupCharts()
         observeData()
+        loadYearHeatmap()
 
         vm.loadWeekStats()
         vm.loadWeekCaloriesByDay()
@@ -87,6 +88,35 @@ class AnalyticsFragment : Fragment() {
     }
 
     // Графики
+
+ /** Годовой хитмэп: уровень 0–4 по попаданию дня в норму калорий. */
+    private fun loadYearHeatmap() {
+        val db = (requireActivity().application as com.nutritrack.app.NutriApp).database
+        val prefs = com.nutritrack.app.utils.PrefsManager(requireContext())
+        viewLifecycleOwner.lifecycleScope.launch(kotlinx.coroutines.Dispatchers.IO) {
+            val profile = db.profileDao().getActiveProfileSync() ?: return@launch
+            val goal = com.nutritrack.app.utils.CalorieCalculator.calculateDailyGoal(profile)
+            val end = java.time.LocalDate.now()
+            val start = end.minusDays(370)
+            val entries = db.diaryDao().getEntriesForRange(
+                start.toString(), end.toString(), prefs.activeProfileId)
+            val byDay = entries.groupBy { it.date }
+                .mapValues { (_, l) -> l.sumOf { e -> e.calories.toDouble() } }
+            val levels = byDay.mapValues { (_, cal) ->
+                val r = if (goal > 0) cal / goal else 0.0
+                when {
+                    cal <= 0.0 -> 0
+                    r < 0.5    -> 1
+                    r < 0.85   -> 2
+                    r <= 1.10  -> 4   // в коридоре нормы — максимум
+                    else       -> 3   // переел — почти
+                }
+            }
+            kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
+                _binding?.yearHeatmap?.setData(levels, end)
+            }
+        }
+    }
 
     private fun setupCharts() {
         binding.barChartCalories.apply {
