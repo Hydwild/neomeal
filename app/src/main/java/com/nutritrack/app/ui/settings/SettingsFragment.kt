@@ -208,6 +208,9 @@ class SettingsFragment : Fragment() {
         updateMacroLabel()
         binding.rowMacroSplit.setOnClickListener { showMacroSplitDialog() }
 
+        // Карточки главного экрана
+        binding.rowDashCards.setOnClickListener { showDashCardsDialog() }
+
         // ПИН-код (альтернатива биометрии)
         updatePinLabel()
         binding.rowPinCode.setOnClickListener { showPinOptions() }
@@ -1001,6 +1004,32 @@ class SettingsFragment : Fragment() {
             .setNegativeButton(getString(R.string.dlg_cancel), null)
             .create()
         d.setOnShowListener { com.nutritrack.app.utils.DialogHelper.tint(d, ctx) }
+        d.show()
+    }
+
+    // Карточки главного экрана
+
+    private fun showDashCardsDialog() {
+        val keys = listOf("water", "fasting", "suggestions", "streak")
+        val labels = arrayOf(
+            getString(R.string.dash_card_water),
+            getString(R.string.dash_card_fasting),
+            getString(R.string.dash_card_suggestions),
+            getString(R.string.dash_card_streak)
+        )
+        val hidden = prefs.hiddenDashboardCards.toMutableSet()
+        val checked = keys.map { it !in hidden }.toBooleanArray()
+        val d = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.set_dash_cards))
+            .setMultiChoiceItems(labels, checked) { _, which, isChecked ->
+                if (isChecked) hidden.remove(keys[which]) else hidden.add(keys[which])
+            }
+            .setPositiveButton(getString(R.string.c_save)) { _, _ ->
+                prefs.hiddenDashboardCards = hidden
+            }
+            .setNegativeButton(getString(R.string.dlg_cancel), null)
+            .create()
+        d.setOnShowListener { com.nutritrack.app.utils.DialogHelper.tint(d, requireContext()) }
         d.show()
     }
 

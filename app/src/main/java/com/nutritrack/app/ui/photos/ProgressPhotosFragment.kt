@@ -49,6 +49,7 @@ class ProgressPhotosFragment : Fragment() {
         binding.rvPhotos.adapter = adapter
 
         binding.btnAddPhoto.setOnClickListener { pickImage.launch("image/*") }
+        binding.btnCompare.setOnClickListener { showCompare() }
 
         loadData()
     }
@@ -60,6 +61,62 @@ class ProgressPhotosFragment : Fragment() {
             val photos = db.progressPhotoDao().getAllForProfile(profileId)
             adapter.submit(photos)
             binding.tvEmpty.visibility = if (photos.isEmpty()) View.VISIBLE else View.GONE
+            binding.btnCompare.visibility = if (photos.size >= 2) View.VISIBLE else View.GONE
+        }
+    }
+
+ /** Сравнение «до/после»: самое старое фото рядом с самым новым. */
+    private fun showCompare() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            val photos = db.progressPhotoDao().getAllForProfile(profileId)
+                .sortedBy { it.date }
+            if (photos.size < 2) return@launch
+            val first = photos.first()
+            val last = photos.last()
+
+            val ctx = requireContext()
+            fun sideColumn(p: ProgressPhotoEntity, labelRes: Int): View {
+                val col = android.widget.LinearLayout(ctx).apply {
+                    orientation = android.widget.LinearLayout.VERTICAL
+                    gravity = android.view.Gravity.CENTER_HORIZONTAL
+                    layoutParams = android.widget.LinearLayout.LayoutParams(
+                        0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
+                }
+                val iv = android.widget.ImageView(ctx).apply {
+                    layoutParams = android.widget.LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT, dp(280))
+                    scaleType = android.widget.ImageView.ScaleType.CENTER_CROP
+                }
+                com.bumptech.glide.Glide.with(this@ProgressPhotosFragment)
+                    .load(Uri.parse(p.photoUri)).into(iv)
+                col.addView(iv)
+                col.addView(android.widget.TextView(ctx).apply {
+                    text = "${getString(labelRes)}\n${p.date}"
+                    gravity = android.view.Gravity.CENTER
+                    setTextColor(android.graphics.Color.WHITE)
+                    textSize = 12f
+                    setPadding(0, dp(8), 0, 0)
+                })
+                return col
+            }
+
+            val row = android.widget.LinearLayout(ctx).apply {
+                orientation = android.widget.LinearLayout.HORIZONTAL
+                setPadding(dp(12), dp(12), dp(12), dp(4))
+                addView(sideColumn(first, R.string.photos_before))
+                addView(android.view.View(ctx).apply {
+                    layoutParams = android.widget.LinearLayout.LayoutParams(dp(8), 1)
+                })
+                addView(sideColumn(last, R.string.photos_after))
+            }
+
+            val d = androidx.appcompat.app.AlertDialog.Builder(ctx)
+                .setTitle(getString(R.string.photos_compare_title))
+                .setView(row)
+                .setPositiveButton(getString(R.string.c_close), null)
+                .create()
+            d.setOnShowListener { com.nutritrack.app.utils.DialogHelper.tint(d, ctx) }
+            d.show()
         }
     }
 
@@ -71,7 +128,7 @@ class ProgressPhotosFragment : Fragment() {
             setPadding(dp(20), dp(16), dp(20), dp(16))
         }
         androidx.appcompat.app.AlertDialog.Builder(requireContext())
-            .setTitle("📸 Новое фото")
+            .setTitle(getString(R.string.ph_new_photo))
             .setView(input)
             .setPositiveButton(getString(R.string.c_save)) { _, _ ->
                 savePhoto(source, input.text.toString().trim())

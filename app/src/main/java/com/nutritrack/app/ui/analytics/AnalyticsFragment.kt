@@ -48,6 +48,7 @@ class AnalyticsFragment : Fragment() {
         setupCharts()
         observeData()
         loadYearHeatmap()
+        binding.btnShareWeek.setOnClickListener { shareWeekCard() }
 
         vm.loadWeekStats()
         vm.loadWeekCaloriesByDay()
@@ -88,6 +89,57 @@ class AnalyticsFragment : Fragment() {
     }
 
     // Графики
+
+ /** Карточка итогов недели → системное «Поделиться». */
+    private fun shareWeekCard() {
+        val db = (requireActivity().application as com.nutritrack.app.NutriApp).database
+        val prefs = com.nutritrack.app.utils.PrefsManager(requireContext())
+        viewLifecycleOwner.lifecycleScope.launch(kotlinx.coroutines.Dispatchers.IO) {
+            val profile = db.profileDao().getActiveProfileSync() ?: return@launch
+            val goal = com.nutritrack.app.utils.CalorieCalculator.calculateDailyGoal(profile)
+            val end = java.time.LocalDate.now()
+            val start = end.minusDays(6)
+            val entries = db.diaryDao().getEntriesForRange(
+                start.toString(), end.toString(), prefs.activeProfileId)
+            val byDay = entries.groupBy { it.date }
+                .mapValues { (_, l) -> l.sumOf { e -> e.calories.toDouble() } }
+            val daysWithFood = byDay.values.count { it > 0 }
+            val avgCal = if (daysWithFood > 0)
+                (byDay.values.sum() / daysWithFood).toInt() else 0
+            val daysOnTarget = byDay.values.count { c ->
+                goal > 0 && c / goal in 0.85..1.10
+            }
+            var waterSum = 0; var waterDays = 0
+            var d = start
+            while (!d.isAfter(end)) {
+                val w = db.waterDao().getTotalWaterSync(d.toString(), prefs.activeProfileId)
+                if (w > 0) { waterSum += w; waterDays++ }
+                d = d.plusDays(1)
+            }
+            val streak = com.nutritrack.app.utils.StreakCalculator.calculate(
+                byDay = db.diaryDao().getEntriesForRange(
+                    end.minusDays(60).toString(), end.toString(), prefs.activeProfileId)
+                    .groupBy { it.date }
+                    .mapValues { (_, l) -> l.sumOf { e -> e.calories.toDouble() } },
+                goal = goal, end = end,
+                frozen = prefs.frozenDates,
+                vacationOn = prefs.vacationMode,
+                vacationStart = prefs.vacationStart
+            )
+            val stats = com.nutritrack.app.utils.WeekShareCard.Stats(
+                dateRange = "${com.nutritrack.app.utils.DateDisplay.shortDate(start)} – " +
+                    com.nutritrack.app.utils.DateDisplay.shortDate(end),
+                streakDays = streak,
+                avgCalories = avgCal,
+                avgWaterMl = if (waterDays > 0) waterSum / waterDays else 0,
+                daysOnTarget = daysOnTarget
+            )
+            kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
+                if (_binding == null) return@withContext
+                com.nutritrack.app.utils.WeekShareCard.shareCard(requireContext(), stats)
+            }
+        }
+    }
 
  /** Годовой хитмэп: уровень 0–4 по попаданию дня в норму калорий. */
     private fun loadYearHeatmap() {

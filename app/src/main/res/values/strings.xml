@@ -3845,4 +3845,44 @@
     <string name="macro_split_invalid">Сумма должна быть 100% (каждый минимум 5%)</string>
     <string name="more_configure">⚙️ Настроить разделы…</string>
     <string name="more_configure_title">Видимые разделы</string>
+
+    <!-- Свои рецепты + карточки главного -->
+    <string name="ur_add_btn">➕ Свой рецепт</string>
+    <string name="ur_title">Свой рецепт</string>
+    <string name="ur_name_hint">Название блюда</string>
+    <string name="ur_meals_lbl">Приёмы пищи</string>
+    <string name="ur_kbju_lbl">КБЖУ на порцию</string>
+    <string name="ur_cal_hint">Калории</string>
+    <string name="ur_prot_hint">Белки, г</string>
+    <string name="ur_fat_hint">Жиры, г</string>
+    <string name="ur_carb_hint">Углеводы, г</string>
+    <string name="ur_ingredients_lbl">Ингредиенты (по строке)</string>
+    <string name="ur_ingredients_hint">Овсяные хлопья — 100 г\nБанан — 1 шт</string>
+    <string name="ur_steps_lbl">Приготовление (по строке)</string>
+    <string name="ur_steps_hint">Залей хлопья молоком…</string>
+    <string name="ur_invalid">Нужны название, калории и хотя бы один приём пищи</string>
+    <string name="ur_saved_fmt">🍳 «%1$s» сохранён — участвует в меню и списке покупок</string>
+    <string name="ur_delete">🗑 Удалить рецепт</string>
+    <string name="ur_deleted">Рецепт удалён</string>
+    <string name="set_dash_cards">Карточки главного</string>
+    <string name="set_dash_cards_sub">Выбери, что показывать на главном экране</string>
+    <string name="dash_card_water">💧 Вода</string>
+    <string name="dash_card_fasting">⏱️ Голодание</string>
+    <string name="dash_card_suggestions">💡 Подсказки</string>
+    <string name="dash_card_streak">🔥 Серия дней</string>
+
+    <!-- Сравнение фото + карточка недели -->
+    <string name="photos_compare">↔️ До / после</string>
+    <string name="photos_compare_title">Твой прогресс</string>
+    <string name="photos_before">До</string>
+    <string name="photos_after">После</string>
+    <string name="ph_new_photo">📸 Новое фото</string>
+    <string name="share_week_btn">📤 Поделиться итогами недели</string>
+    <string name="share_week_title">Итоги недели</string>
+    <string name="share_streak_lbl">дней подряд в норме</string>
+    <string name="share_kcal_fmt">%1$d ккал</string>
+    <string name="share_kcal_lbl">в среднем за день</string>
+    <string name="share_water_fmt">%1$d мл</string>
+    <string name="share_water_lbl">воды в среднем за день</string>
+    <string name="share_days_fmt">✅ Дней в норме за неделю: %1$d из 7</string>
 </resources>

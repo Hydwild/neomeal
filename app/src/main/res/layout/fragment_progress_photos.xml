@@ -41,7 +41,20 @@
             android:textAllCaps="false"
             android:textSize="15sp"
             android:background="@drawable/btn_gradient"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="10dp"/>
+
+        <!-- Сравнение до/после (видна при 2+ фото) -->
+        <Button
+            android:id="@+id/btnCompare"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/photos_compare"
+            android:textColor="?attr/appTextPrimary"
+            android:textAllCaps="false"
+            android:textSize="14sp"
+            android:background="@drawable/btn_outline_accent"
+            android:layout_marginBottom="16dp"
+            android:visibility="gone"/>
 
         <!-- Пусто -->
         <TextView

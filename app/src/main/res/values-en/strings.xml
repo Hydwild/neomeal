@@ -3836,4 +3836,44 @@ data class Recipe(
     <string name="macro_split_invalid">Must sum to 100% (each at least 5%)</string>
     <string name="more_configure">⚙️ Customize sections…</string>
     <string name="more_configure_title">Visible sections</string>
+
+    <!-- Свои рецепты + карточки главного -->
+    <string name="ur_add_btn">➕ My recipe</string>
+    <string name="ur_title">My recipe</string>
+    <string name="ur_name_hint">Dish name</string>
+    <string name="ur_meals_lbl">Meals</string>
+    <string name="ur_kbju_lbl">Nutrition per serving</string>
+    <string name="ur_cal_hint">Calories</string>
+    <string name="ur_prot_hint">Protein, g</string>
+    <string name="ur_fat_hint">Fat, g</string>
+    <string name="ur_carb_hint">Carbs, g</string>
+    <string name="ur_ingredients_lbl">Ingredients (one per line)</string>
+    <string name="ur_ingredients_hint">Oats — 100 g\nBanana — 1 pcs</string>
+    <string name="ur_steps_lbl">Steps (one per line)</string>
+    <string name="ur_steps_hint">Pour milk over the oats…</string>
+    <string name="ur_invalid">Name, calories and at least one meal are required</string>
+    <string name="ur_saved_fmt">🍳 “%1$s” saved — joins your menus and shopping list</string>
+    <string name="ur_delete">🗑 Delete recipe</string>
+    <string name="ur_deleted">Recipe deleted</string>
+    <string name="set_dash_cards">Home cards</string>
+    <string name="set_dash_cards_sub">Choose what to show on the Home screen</string>
+    <string name="dash_card_water">💧 Water</string>
+    <string name="dash_card_fasting">⏱️ Fasting</string>
+    <string name="dash_card_suggestions">💡 Suggestions</string>
+    <string name="dash_card_streak">🔥 Day streak</string>
+
+    <!-- Сравнение фото + карточка недели -->
+    <string name="photos_compare">↔️ Before / after</string>
+    <string name="photos_compare_title">Your progress</string>
+    <string name="photos_before">Before</string>
+    <string name="photos_after">After</string>
+    <string name="ph_new_photo">📸 New photo</string>
+    <string name="share_week_btn">📤 Share this week</string>
+    <string name="share_week_title">Week summary</string>
+    <string name="share_streak_lbl">days on track</string>
+    <string name="share_kcal_fmt">%1$d kcal</string>
+    <string name="share_kcal_lbl">daily average</string>
+    <string name="share_water_fmt">%1$d ml</string>
+    <string name="share_water_lbl">water daily average</string>
+    <string name="share_days_fmt">✅ Days on target this week: %1$d of 7</string>
 </resources>

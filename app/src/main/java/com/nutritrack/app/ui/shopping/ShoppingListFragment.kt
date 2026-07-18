@@ -136,7 +136,7 @@ class ShoppingListFragment : Fragment() {
                 val products = db.productDao().getAllProductsSync()
                 val byId = products.associateBy { it.id }
                 val byName = products.associateBy { it.name.lowercase().trim() }
-                val recipesByName = RecipeData.all.associateBy { it.name }
+                val recipesByName = RecipeData.allRecipes().associateBy { it.name }
 
                 // Аккумулятор: (имя+единица) -> [qty, count]
                 data class Acc(var qty: Float, var parsed: Boolean, var count: Int, val category: String)

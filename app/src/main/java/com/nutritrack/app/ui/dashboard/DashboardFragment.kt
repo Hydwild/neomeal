@@ -266,6 +266,7 @@ class DashboardFragment : Fragment() {
         // Объёмы кнопок и ручные цели могли поменяться в настройках
         waterCard.refreshButtons()
         vm.refreshGoals()
+        applyCardVisibility()
         // Шорткат «Еда» с иконки приложения — открыть шторку добавления
         if (pendingOpenAddFood) {
             pendingOpenAddFood = false
@@ -278,13 +279,23 @@ class DashboardFragment : Fragment() {
         var pendingOpenAddFood = false
     }
 
+ /** Скрытие карточек главного (настройки → «Карточки главного»). */
+    private fun applyCardVisibility() {
+        val hidden = prefs.hiddenDashboardCards
+        binding.cardWater.visibility = if ("water" in hidden) View.GONE else View.VISIBLE
+        if ("suggestions" in hidden) binding.cardSuggestions.visibility = View.GONE
+        if ("fasting" in hidden) binding.cardFastingTimer.visibility = View.GONE
+        if ("streak" in hidden) binding.tvStreak.visibility = View.GONE
+    }
+
  /** Карточка голодания на главной: видна только при активной сессии. */
     private fun observeFastingTimer() {
         binding.cardFastingTimer.setOnClickListener {
             try { findNavController().navigateAnim(R.id.fastingFragment) } catch (_: Exception) {}
         }
         fastingVm.timerState.observe(viewLifecycleOwner) { state ->
-            if (state.isActive && state.protocol != null) {
+            if (state.isActive && state.protocol != null &&
+                "fasting" !in prefs.hiddenDashboardCards) {
                 binding.cardFastingTimer.visibility = View.VISIBLE
                 binding.tvFastingProtocolName.text = state.protocol.name
                 binding.tvFastingTimerBig.text = state.elapsedFormatted
@@ -689,6 +700,9 @@ class DashboardFragment : Fragment() {
 
             withContext(kotlinx.coroutines.Dispatchers.Main) {
                 val b = _binding ?: return@withContext
+                if ("streak" in prefs.hiddenDashboardCards) {
+                    b.tvStreak.visibility = View.GONE; return@withContext
+                }
                 // ❄️ показывает, что вчера уже спасён заморозкой
                 val frostMark = if (com.nutritrack.app.utils.StreakFreeze.isYesterdayFrozen(prefs)) " ❄️" else ""
                 when {
@@ -780,6 +794,9 @@ class DashboardFragment : Fragment() {
     /** Карточка подсказок: чем добить норму + усилить блюдо. */
     private fun updateSuggestions(remaining: Int, hasEntries: Boolean) {
         val b = _binding ?: return
+        if ("suggestions" in prefs.hiddenDashboardCards) {
+            b.cardSuggestions.visibility = View.GONE; return
+        }
         val profile = vm.activeProfile.value
         val allergens = com.nutritrack.app.utils.AllergenData.parse(profile?.allergens)
         val diets = profile?.diets?.split(";")?.map { it.trim() }?.filter { it.isNotEmpty() } ?: emptyList()

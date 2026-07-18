@@ -70,6 +70,8 @@ class PlanBuilderFragment : Fragment() {
                     getString(R.string.pb_new_menu), android.widget.Toast.LENGTH_SHORT).show()
             }
         }
+        // Свой рецепт (участвует в генерации и списке покупок)
+        binding.btnMyRecipe.setOnClickListener { showMyRecipeDialog() }
         binding.btnVitaminSet.setOnClickListener {
             try {
                 NavHostFragment.findNavController(this).navigateAnim(R.id.nutrientGoalFragment)
@@ -394,12 +396,21 @@ class PlanBuilderFragment : Fragment() {
 
         recipe.tip?.let { sb.append("\n💡 ${com.nutritrack.app.utils.RecipeLabel.tr(requireContext(), it)}") }
 
+        val isUser = com.nutritrack.app.utils.UserRecipes.isUserRecipe(recipe.id)
         val isFav = recipe.id in prefs.favoriteRecipes
-        val d = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+        val builder = androidx.appcompat.app.AlertDialog.Builder(requireContext())
             .setTitle("${recipe.emoji} ${com.nutritrack.app.utils.RecipeLabel.tr(requireContext(), recipe.name)}")
             .setMessage(sb.toString())
             .setPositiveButton(getString(R.string.c_close), null)
-            .setNeutralButton(getString(
+        if (isUser) {
+            // Свой рецепт: вместо избранного — удаление
+            builder.setNeutralButton(getString(R.string.ur_delete)) { _, _ ->
+                com.nutritrack.app.utils.UserRecipes.remove(requireContext(), recipe.id)
+                android.widget.Toast.makeText(requireContext(),
+                    getString(R.string.ur_deleted), android.widget.Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            builder.setNeutralButton(getString(
                 if (isFav) R.string.pb_fav_remove else R.string.pb_fav_add
             )) { _, _ ->
                 prefs.favoriteRecipes =
@@ -410,8 +421,108 @@ class PlanBuilderFragment : Fragment() {
                     getString(if (isFav) R.string.pb_fav_removed else R.string.pb_fav_added),
                     android.widget.Toast.LENGTH_SHORT).show()
             }
-            .create()
+        }
+        val d = builder.create()
         d.setOnShowListener { com.nutritrack.app.utils.DialogHelper.tint(d, requireContext()) }
+        d.show()
+    }
+
+    // ===== Свой рецепт (MVP: диалог-форма) =====
+
+    private fun showMyRecipeDialog() {
+        val ctx = requireContext()
+        val dp = { v: Int -> (v * resources.displayMetrics.density).toInt() }
+        val col = LinearLayout(ctx).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(dp(20), dp(10), dp(20), 0)
+        }
+        fun label(resId: Int) = col.addView(TextView(ctx).apply {
+            text = getString(resId); textSize = 12f
+            setTextColor(ctx.getColor(R.color.text_secondary))
+            setPadding(0, dp(8), 0, 0)
+        })
+        fun edit(hintRes: Int, number: Boolean = false, lines: Int = 1) =
+            android.widget.EditText(ctx).apply {
+                hint = getString(hintRes)
+                if (number) inputType = android.text.InputType.TYPE_CLASS_NUMBER
+                if (lines > 1) { minLines = lines; isSingleLine = false }
+                col.addView(this)
+            }
+
+        val etName = edit(R.string.ur_name_hint)
+        label(R.string.ur_meals_lbl)
+        val meals = listOf(
+            "breakfast" to R.string.meal_breakfast2,
+            "lunch" to R.string.meal_lunch2,
+            "dinner" to R.string.meal_dinner2,
+            "snack" to R.string.meal_snack2
+        )
+        val checks = meals.map { (_, res) ->
+            android.widget.CheckBox(ctx).apply {
+                text = getString(res)
+                setTextColor(ctx.getColor(R.color.white))
+                col.addView(this)
+            }
+        }
+        label(R.string.ur_kbju_lbl)
+        val etCal = edit(R.string.ur_cal_hint, number = true)
+        val etProt = edit(R.string.ur_prot_hint, number = true)
+        val etFat = edit(R.string.ur_fat_hint, number = true)
+        val etCarb = edit(R.string.ur_carb_hint, number = true)
+        label(R.string.ur_ingredients_lbl)
+        val etIngredients = edit(R.string.ur_ingredients_hint, lines = 3)
+        label(R.string.ur_steps_lbl)
+        val etSteps = edit(R.string.ur_steps_hint, lines = 3)
+
+        val scroll = android.widget.ScrollView(ctx).apply { addView(col) }
+        val d = androidx.appcompat.app.AlertDialog.Builder(ctx)
+            .setTitle(getString(R.string.ur_title))
+            .setView(scroll)
+            .setPositiveButton(getString(R.string.c_save)) { _, _ ->
+                val name = etName.text.toString().trim()
+                val cal = etCal.text.toString().toIntOrNull() ?: 0
+                val selMeals = meals.filterIndexed { i, _ -> checks[i].isChecked }.map { it.first }
+                if (name.isEmpty() || cal <= 0 || selMeals.isEmpty()) {
+                    android.widget.Toast.makeText(ctx,
+                        getString(R.string.ur_invalid), android.widget.Toast.LENGTH_LONG).show()
+                    return@setPositiveButton
+                }
+                val ingredients = etIngredients.text.toString().lines()
+                    .map { it.trim() }.filter { it.isNotEmpty() }
+                    .map { line ->
+                        // «Овсяные хлопья — 100 г» / «Банан - 1 шт»
+                        val idx = maxOf(line.lastIndexOf("—"), line.lastIndexOf(" - "))
+                        if (idx > 0) com.nutritrack.app.data.RecipeIngredient(
+                            line.substring(0, idx).trim(),
+                            line.substring(idx).trimStart('—', '-', ' ').trim()
+                        ) else com.nutritrack.app.data.RecipeIngredient(
+                            line, getString(R.string.amt_to_taste))
+                    }
+                val steps = etSteps.text.toString().lines()
+                    .map { it.trim() }.filter { it.isNotEmpty() }
+                val recipe = com.nutritrack.app.data.Recipe(
+                    id = com.nutritrack.app.utils.UserRecipes.ID_PREFIX +
+                        System.currentTimeMillis(),
+                    name = name,
+                    emoji = "🍳",
+                    goals = listOf("mass", "fit", "lose", "dry", "light"),
+                    mealTypes = selMeals,
+                    servings = 1,
+                    calories = cal,
+                    protein = etProt.text.toString().toIntOrNull() ?: 0,
+                    fat = etFat.text.toString().toIntOrNull() ?: 0,
+                    carbs = etCarb.text.toString().toIntOrNull() ?: 0,
+                    timeMinutes = 15,
+                    ingredients = ingredients,
+                    steps = steps
+                )
+                com.nutritrack.app.utils.UserRecipes.add(ctx, recipe)
+                android.widget.Toast.makeText(ctx,
+                    getString(R.string.ur_saved_fmt, name), android.widget.Toast.LENGTH_LONG).show()
+            }
+            .setNegativeButton(getString(R.string.dlg_cancel), null)
+            .create()
+        d.setOnShowListener { com.nutritrack.app.utils.DialogHelper.tint(d, ctx) }
         d.show()
     }
 

@@ -1534,21 +1534,24 @@ object RecipeData {
 
     )
 
+ /** Встроенные + пользовательские рецепты (UserRecipes.cached). */
+    fun allRecipes(): List<Recipe> = all + com.nutritrack.app.utils.UserRecipes.cached
+
  /** Рецепты под цель и тип приёма пищи. */
     fun forGoalAndMeal(goal: String, mealType: String): List<Recipe> =
-        all.filter { goal in it.goals && mealType in it.mealTypes }
+        allRecipes().filter { goal in it.goals && mealType in it.mealTypes }
 
  /** Все рецепты под цель. */
-    fun forGoal(goal: String): List<Recipe> = all.filter { goal in it.goals }
+    fun forGoal(goal: String): List<Recipe> = allRecipes().filter { goal in it.goals }
 
-    fun forMeal(mealType: String): List<Recipe> = all.filter { mealType in it.mealTypes }
+    fun forMeal(mealType: String): List<Recipe> = allRecipes().filter { mealType in it.mealTypes }
 
  /** Только постные (растительные) рецепты. */
-    fun lentenRecipes(): List<Recipe> = all.filter { it.lenten }
+    fun lentenRecipes(): List<Recipe> = allRecipes().filter { it.lenten }
 
  /** Постные рецепты по типу приёма пищи. */
     fun lentenByMeal(mealType: String): List<Recipe> =
-        all.filter { it.lenten && mealType in it.mealTypes }
+        allRecipes().filter { it.lenten && mealType in it.mealTypes }
 
-    fun byId(id: String): Recipe? = all.firstOrNull { it.id == id }
+    fun byId(id: String): Recipe? = allRecipes().firstOrNull { it.id == id }
 }

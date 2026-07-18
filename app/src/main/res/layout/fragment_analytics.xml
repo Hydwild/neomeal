@@ -164,6 +164,18 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
+        <!-- Поделиться итогами недели (картинка для соцсетей) -->
+        <Button
+            android:id="@+id/btnShareWeek"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/share_week_btn"
+            android:textColor="?attr/appTextPrimary"
+            android:textAllCaps="false"
+            android:textSize="14sp"
+            android:background="@drawable/btn_outline_accent"
+            android:layout_marginBottom="16dp"/>
+
         <!-- Вес -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"

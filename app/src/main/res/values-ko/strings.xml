@@ -3820,4 +3820,44 @@
     <string name="macro_split_invalid">합계가 100%여야 해요 (각각 최소 5%)</string>
     <string name="more_configure">⚙️ 섹션 설정…</string>
     <string name="more_configure_title">표시할 섹션</string>
+
+    <!-- Свои рецепты + карточки главного -->
+    <string name="ur_add_btn">➕ 내 레시피</string>
+    <string name="ur_title">내 레시피</string>
+    <string name="ur_name_hint">요리 이름</string>
+    <string name="ur_meals_lbl">끼니</string>
+    <string name="ur_kbju_lbl">1인분 영양 정보</string>
+    <string name="ur_cal_hint">칼로리</string>
+    <string name="ur_prot_hint">단백질, g</string>
+    <string name="ur_fat_hint">지방, g</string>
+    <string name="ur_carb_hint">탄수화물, g</string>
+    <string name="ur_ingredients_lbl">재료 (한 줄에 하나)</string>
+    <string name="ur_ingredients_hint">귀리 — 100 g\n바나나 — 1 개</string>
+    <string name="ur_steps_lbl">조리법 (한 줄에 하나)</string>
+    <string name="ur_steps_hint">귀리에 우유를 부어요…</string>
+    <string name="ur_invalid">이름, 칼로리, 끼니를 하나 이상 입력하세요</string>
+    <string name="ur_saved_fmt">🍳 “%1$s” 저장됨 — 메뉴와 쇼핑 리스트에 반영돼요</string>
+    <string name="ur_delete">🗑 레시피 삭제</string>
+    <string name="ur_deleted">레시피 삭제됨</string>
+    <string name="set_dash_cards">홈 카드</string>
+    <string name="set_dash_cards_sub">홈 화면에 표시할 항목 선택</string>
+    <string name="dash_card_water">💧 물</string>
+    <string name="dash_card_fasting">⏱️ 단식</string>
+    <string name="dash_card_suggestions">💡 추천</string>
+    <string name="dash_card_streak">🔥 연속 기록</string>
+
+    <!-- Сравнение фото + карточка недели -->
+    <string name="photos_compare">↔️ 비포 / 애프터</string>
+    <string name="photos_compare_title">나의 변화</string>
+    <string name="photos_before">비포</string>
+    <string name="photos_after">애프터</string>
+    <string name="ph_new_photo">📸 새 사진</string>
+    <string name="share_week_btn">📤 이번 주 공유하기</string>
+    <string name="share_week_title">주간 요약</string>
+    <string name="share_streak_lbl">연속 목표 달성</string>
+    <string name="share_kcal_fmt">%1$d kcal</string>
+    <string name="share_kcal_lbl">하루 평균</string>
+    <string name="share_water_fmt">%1$d ml</string>
+    <string name="share_water_lbl">하루 평균 수분</string>
+    <string name="share_days_fmt">✅ 이번 주 목표 달성: 7일 중 %1$d일</string>
 </resources>
