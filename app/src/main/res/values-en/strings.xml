@@ -3876,4 +3876,10 @@ data class Recipe(
     <string name="share_water_fmt">%1$d ml</string>
     <string name="share_water_lbl">water daily average</string>
     <string name="share_days_fmt">✅ Days on target this week: %1$d of 7</string>
+
+    <!-- Что нового 1.4.0: дополнение -->
+    <string name="whatsnew_140_7">📁 Meal templates (“My breakfast” in one tap) and your own recipes in the menu builder.</string>
+    <string name="whatsnew_140_8">📆 A year-long progress calendar in Analytics and a shareable week summary card.</string>
+    <string name="whatsnew_140_9">🔢 PIN lock and weekly auto-backup with a password.</string>
+    <string name="whatsnew_140_10">⚙️ Customization: your own water buttons, goals, start screen, app icon and Home cards.</string>
 </resources>

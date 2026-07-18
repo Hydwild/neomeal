@@ -21,9 +21,13 @@ object WhatsNewData {
             titleRes = R.string.whatsnew_140_title,
             itemRes = listOf(
                 R.string.whatsnew_140_1,
+                R.string.whatsnew_140_7,
+                R.string.whatsnew_140_8,
                 R.string.whatsnew_140_2,
                 R.string.whatsnew_140_3,
                 R.string.whatsnew_140_4,
+                R.string.whatsnew_140_9,
+                R.string.whatsnew_140_10,
                 R.string.whatsnew_140_5,
                 R.string.whatsnew_140_6
             )

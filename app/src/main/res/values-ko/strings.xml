@@ -3860,4 +3860,10 @@
     <string name="share_water_fmt">%1$d ml</string>
     <string name="share_water_lbl">하루 평균 수분</string>
     <string name="share_days_fmt">✅ 이번 주 목표 달성: 7일 중 %1$d일</string>
+
+    <!-- Что нового 1.4.0: дополнение -->
+    <string name="whatsnew_140_7">📁 식사 템플릿(“나의 아침”을 한 번에)과 메뉴 빌더의 내 레시피.</string>
+    <string name="whatsnew_140_8">📆 분석 화면의 연간 캘린더와 공유용 주간 요약 카드.</string>
+    <string name="whatsnew_140_9">🔢 PIN 잠금과 비밀번호 지원 주간 자동 백업.</string>
+    <string name="whatsnew_140_10">⚙️ 커스터마이징: 물 버튼, 목표, 시작 화면, 앱 아이콘, 홈 카드.</string>
 </resources>
