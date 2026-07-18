@@ -496,8 +496,8 @@
     <string name="diet_no_gluten">🌾 Gluten-free</string>
     <string name="diet_pregnant">🤰 Pregnant</string>
     <string name="diet_nursing">🤱 Nursing</string>
-    <string name="diet_diabetic">🩺 Diabetic</string>
-    <string name="diet_allergic">⚠️ Allergies</string>
+    <string name="diet_diabetic">🍬 Less sugar</string>
+    <string name="diet_allergic">⚠️ Fewer allergens</string>
     <string name="pb_medical_warn">⚠️ This is not medical advice. The menu follows general principles — please consult your doctor.</string>
     <string name="unit_g">g</string>
     <string name="unit_ml">ml</string>
@@ -3631,8 +3631,8 @@ data class Recipe(
     <string name="pbg_dietrec_no_gluten">Gluten-free menu. Note: traces of gluten are possible in processed foods — check the labels.</string>
     <string name="pbg_dietrec_pregnant">Pregnancy nutrition: alcohol, raw fish and potentially risky foods are excluded. Folic acid, iron and calcium matter. This is NOT medical advice — always align your diet with your doctor.</string>
     <string name="pbg_dietrec_nursing">Breastfeeding nutrition: alcohol excluded, common allergens limited. Needs are individual — this is NOT medical advice, consult your doctor.</string>
-    <string name="pbg_dietrec_diabetic">Menu limiting fast carbs and sugar. This does NOT replace your doctor\'s prescriptions — with diabetes, only a specialist determines your diet.</string>
-    <string name="pbg_dietrec_allergic">The most common allergens are removed (nuts, seafood, eggs, milk, soy and others). This is NOT a safety guarantee — always check ingredients and consult your allergist.</string>
+    <string name="pbg_dietrec_diabetic">A menu that favours complex carbs with less sugar and fast carbs. This is a food preference, not a therapeutic diet.</string>
+    <string name="pbg_dietrec_allergic">Common allergens (nuts, seafood, eggs, milk, soy and others) appear less often. This is not a guarantee they\'re absent — always check the ingredients yourself.</string>
 
     <!-- Plan builder: week screen -->
     <string name="pb_week_menu_fmt">📅 Weekly menu — %1$s</string>

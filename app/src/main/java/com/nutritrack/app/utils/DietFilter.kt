@@ -15,9 +15,14 @@ object DietFilter {
     data class Diet(
         val key: String,
         val emoji: String,
-        val medical: Boolean   // требуется ли дисклеймер о враче
+        val medical: Boolean   // историческое поле; медрежимы убраны, всегда false
     )
 
+    // Только пищевые предпочтения — без медицинских режимов.
+    // Беременность и ГВ убраны (нельзя честно подать как «предпочтение»);
+    // «diabetic»/«allergic» оставлены под нейтральными подписями
+    // («Меньше сахара» / «Реже частые аллергены») — ключи не меняем,
+    // чтобы не терять уже выбранное в профилях.
     val DIETS = listOf(
         Diet("none",       "🍽️", false),
         Diet("vegan",      "🌱", false),
@@ -25,10 +30,8 @@ object DietFilter {
         Diet("no_pork",    "🍖", false),
         Diet("no_lactose", "🥛", false),
         Diet("no_gluten",  "🌾", false),
-        Diet("pregnant",   "🤰", true),
-        Diet("nursing",    "🤱", true),
-        Diet("diabetic",   "🩺", true),
-        Diet("allergic",   "⚠️", true),
+        Diet("diabetic",   "🍬", false),   // «Меньше сахара»
+        Diet("allergic",   "⚠️", false),   // «Реже частые аллергены»
     )
 
     fun byKey(key: String): Diet = DIETS.firstOrNull { it.key == key } ?: DIETS.first()
@@ -62,13 +65,10 @@ object DietFilter {
             "no_pork"    -> !containsAny(t, PORK)
             "no_lactose" -> !containsAny(t, DAIRY)
             "no_gluten"  -> !containsAny(t, GLUTEN)
-            // медицинские: подбор по общим принципам (не строгая гарантия)
-            "pregnant"   -> !containsAny(t, listOf("алкогол","вино","пиво","сырая рыб","суши","ролл","непастеризов")) &&
-                    !containsAny(t, FISH.filter { it in listOf("тунец") })   // тунец — много ртути
-            "nursing"    -> !containsAny(t, listOf("алкогол","вино","пиво")) &&
-                    !containsAny(t, COMMON_ALLERGENS.take(5))                // меньше острых аллергенов
-            "diabetic"   -> !containsAny(t, HIGH_SUGAR)                              // ограничиваем быстрые углеводы
-            "allergic"   -> !containsAny(t, COMMON_ALLERGENS)                        // убираем топ-аллергены
+            // предпочтения (не гарантия): меньше сахара / реже частые аллергены
+            "diabetic"   -> !containsAny(t, HIGH_SUGAR)
+            "allergic"   -> !containsAny(t, COMMON_ALLERGENS)
+            // pregnant/nursing больше не поддерживаются — старый ключ вернёт всё
             else         -> true
         }
     }
@@ -100,10 +100,6 @@ object DietFilter {
             "no_pork"    -> !containsAny(t, PORK)
             "no_lactose" -> !containsAny(t, DAIRY)
             "no_gluten"  -> !containsAny(t, GLUTEN)
-            "pregnant"   -> !containsAny(t, listOf("алкогол","вино","пиво","сырая рыб","суши","ролл","непастеризов")) &&
-                    !containsAny(t, listOf("тунец"))
-            "nursing"    -> !containsAny(t, listOf("алкогол","вино","пиво")) &&
-                    !containsAny(t, COMMON_ALLERGENS.take(5))
             "diabetic"   -> !containsAny(t, HIGH_SUGAR)
             "allergic"   -> !containsAny(t, COMMON_ALLERGENS)
             else         -> true

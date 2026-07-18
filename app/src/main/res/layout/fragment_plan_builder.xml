@@ -105,10 +105,6 @@
                 <Space android:layout_width="8dp" android:layout_height="1dp"/>
                 <TextView android:id="@+id/dietNoGluten"   style="@style/DietChip" android:text="@string/diet_no_gluten"/>
                 <Space android:layout_width="8dp" android:layout_height="1dp"/>
-                <TextView android:id="@+id/dietPregnant"   style="@style/DietChip" android:text="@string/diet_pregnant"/>
-                <Space android:layout_width="8dp" android:layout_height="1dp"/>
-                <TextView android:id="@+id/dietNursing"    style="@style/DietChip" android:text="@string/diet_nursing"/>
-                <Space android:layout_width="8dp" android:layout_height="1dp"/>
                 <TextView android:id="@+id/dietDiabetic"   style="@style/DietChip" android:text="@string/diet_diabetic"/>
                 <Space android:layout_width="8dp" android:layout_height="1dp"/>
                 <TextView android:id="@+id/dietAllergic"   style="@style/DietChip" android:text="@string/diet_allergic"/>

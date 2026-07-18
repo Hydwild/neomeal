@@ -54,8 +54,6 @@ class PlanBuilderFragment : Fragment() {
         binding.dietNoPork.setOnClickListener     { selectDiet("no_pork") }
         binding.dietNoLactose.setOnClickListener  { selectDiet("no_lactose") }
         binding.dietNoGluten.setOnClickListener   { selectDiet("no_gluten") }
-        binding.dietPregnant.setOnClickListener   { selectDiet("pregnant") }
-        binding.dietNursing.setOnClickListener    { selectDiet("nursing") }
         binding.dietDiabetic.setOnClickListener   { selectDiet("diabetic") }
         binding.dietAllergic.setOnClickListener   { selectDiet("allergic") }
         selectDiet("none")
@@ -177,7 +175,6 @@ class PlanBuilderFragment : Fragment() {
             "none" to binding.dietNone, "vegan" to binding.dietVegan,
             "vegetarian" to binding.dietVegetarian, "no_pork" to binding.dietNoPork,
             "no_lactose" to binding.dietNoLactose, "no_gluten" to binding.dietNoGluten,
-            "pregnant" to binding.dietPregnant, "nursing" to binding.dietNursing,
             "diabetic" to binding.dietDiabetic, "allergic" to binding.dietAllergic
         )
         chips.forEach { (d, chip) ->

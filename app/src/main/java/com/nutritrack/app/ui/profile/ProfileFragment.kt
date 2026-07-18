@@ -200,8 +200,6 @@ class ProfileFragment : Fragment() {
         "no_pork" -> R.string.diet_no_pork
         "no_lactose" -> R.string.diet_no_lactose
         "no_gluten" -> R.string.diet_no_gluten
-        "pregnant" -> R.string.diet_pregnant
-        "nursing" -> R.string.diet_nursing
         "diabetic" -> R.string.diet_diabetic
         "allergic" -> R.string.diet_allergic
         else -> R.string.diet_none

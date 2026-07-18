@@ -87,8 +87,6 @@ object MealPlanGenerator {
         "no_pork" -> com.nutritrack.app.R.string.diet_no_pork
         "no_lactose" -> com.nutritrack.app.R.string.diet_no_lactose
         "no_gluten" -> com.nutritrack.app.R.string.diet_no_gluten
-        "pregnant" -> com.nutritrack.app.R.string.diet_pregnant
-        "nursing" -> com.nutritrack.app.R.string.diet_nursing
         "diabetic" -> com.nutritrack.app.R.string.diet_diabetic
         "allergic" -> com.nutritrack.app.R.string.diet_allergic
         else -> com.nutritrack.app.R.string.diet_none
@@ -101,8 +99,6 @@ object MealPlanGenerator {
             "no_pork"    -> com.nutritrack.app.R.string.pbg_dietrec_no_pork
             "no_lactose" -> com.nutritrack.app.R.string.pbg_dietrec_no_lactose
             "no_gluten"  -> com.nutritrack.app.R.string.pbg_dietrec_no_gluten
-            "pregnant"   -> com.nutritrack.app.R.string.pbg_dietrec_pregnant
-            "nursing"    -> com.nutritrack.app.R.string.pbg_dietrec_nursing
             "diabetic"   -> com.nutritrack.app.R.string.pbg_dietrec_diabetic
             "allergic"   -> com.nutritrack.app.R.string.pbg_dietrec_allergic
             else -> return ""

@@ -472,8 +472,8 @@
     <string name="diet_no_gluten">🌾 글루텐 제외</string>
     <string name="diet_pregnant">🤰 임신</string>
     <string name="diet_nursing">🤱 수유</string>
-    <string name="diet_diabetic">💉 당뇨</string>
-    <string name="diet_allergic">🤧 알레르기</string>
+    <string name="diet_diabetic">🍬 저당</string>
+    <string name="diet_allergic">⚠️ 알레르겐 줄이기</string>
     <string name="pb_medical_warn">⚠️ 이것은 치료용 식단이 아닙니다. 통증, 불편함 또는 만성 소화 문제가 있다면 반드시 의사와 상담하세요. 식이로 자가 치료하는 것은 위험할 수 있습니다.</string>
     <string name="pf_cant_delete_active">활성 프로필은 삭제할 수 없습니다</string>
     <string name="pf_delete_fmt">프로필 「%1$s」을(를) 삭제할까요?</string>
@@ -3615,8 +3615,8 @@
     <string name="pbg_dietrec_no_gluten">글루텐 프리 메뉴. 주의: 가공식품에는 글루텐 흔적이 있을 수 있어요 — 라벨을 확인하세요.</string>
     <string name="pbg_dietrec_pregnant">임신 중 식사: 알코올, 날생선, 위험 가능성이 있는 식품 제외. 엽산·철분·칼슘이 중요해요. 의학적 조언이 아니에요 — 반드시 의사와 상의하세요.</string>
     <string name="pbg_dietrec_nursing">수유 중 식사: 알코올 제외, 흔한 알레르겐 제한. 필요량은 개인차가 커요 — 의학적 조언이 아니니 의사와 상담하세요.</string>
-    <string name="pbg_dietrec_diabetic">당질과 설탕을 제한한 메뉴. 의사 처방을 대신하지 않아요 — 당뇨는 전문가만 식단을 결정해요.</string>
-    <string name="pbg_dietrec_allergic">가장 흔한 알레르겐(견과, 해산물, 달걀, 우유, 콩 등)을 뺀 메뉴. 안전 보장이 아니에요 — 성분을 직접 확인하고 알레르기 전문의와 상의하세요.</string>
+    <string name="pbg_dietrec_diabetic">복합 탄수화물 위주에 당·단순 탄수화물을 줄인 메뉴예요. 치료용 식단이 아니라 식성 선택이에요.</string>
+    <string name="pbg_dietrec_allergic">흔한 알레르겐(견과·해산물·달걀·우유·콩 등)이 덜 나오게 했어요. 완전히 없다는 보장은 아니니 성분을 직접 확인하세요.</string>
 
     <!-- 플랜 빌더: 주간 화면 -->
     <string name="pb_week_menu_fmt">📅 주간 메뉴 — %1$s</string>
