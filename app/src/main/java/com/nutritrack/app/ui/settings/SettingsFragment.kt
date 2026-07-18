@@ -21,8 +21,9 @@ class SettingsFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var prefs: PrefsManager
 
-    // Экспорт/импорт данных вынесен в контроллер (инициализируется в onViewCreated)
+    // Экспорт/импорт данных и ПИН вынесены в контроллеры (инициализируются в onViewCreated)
     private lateinit var dataExport: DataExportController
+    private lateinit var pinSettings: PinSettingsController
 
     // Лаунчеры для выбора файла (Storage Access Framework) — делегируют контроллеру
     private val createBackupLauncher = registerForActivityResult(
@@ -213,9 +214,10 @@ class SettingsFragment : Fragment() {
         binding.tvAppVersion.text = getString(R.string.app_version_fmt,
             com.nutritrack.app.BuildConfig.VERSION_NAME)
 
-        // ПИН-код (альтернатива биометрии)
-        updatePinLabel()
-        binding.rowPinCode.setOnClickListener { showPinOptions() }
+        // ПИН-код (альтернатива биометрии) — логика в контроллере
+        pinSettings = PinSettingsController(this, binding.tvPinState)
+        pinSettings.refreshLabel()
+        binding.rowPinCode.setOnClickListener { pinSettings.onRowClicked() }
 
         // Авто-бэкап раз в неделю
         binding.switchAutoBackup.isChecked = prefs.autoBackupEnabled
@@ -640,116 +642,10 @@ class SettingsFragment : Fragment() {
 
     // ПИН-код
 
-    private fun updatePinLabel() {
-        binding.tvPinState.text = getString(
-            if (com.nutritrack.app.utils.PinLock.isSet(requireContext())) R.string.pin_on
-            else R.string.pin_off
-        )
-    }
 
-    private fun showPinOptions() {
-        val ctx = requireContext()
-        if (!com.nutritrack.app.utils.PinLock.isSet(ctx)) {
-            promptNewPin()
-            return
-        }
-        val d = androidx.appcompat.app.AlertDialog.Builder(ctx)
-            .setTitle(getString(R.string.set_pin))
-            .setItems(arrayOf(
-                getString(R.string.pin_change),
-                getString(R.string.pin_disable)
-            )) { _, which ->
-                // Обе операции требуют текущий ПИН
-                promptCurrentPin { ok ->
-                    if (!ok) return@promptCurrentPin
-                    if (which == 0) promptNewPin()
-                    else {
-                        com.nutritrack.app.utils.PinLock.clear(ctx)
-                        updatePinLabel()
-                    }
-                }
-            }
-            .setNegativeButton(getString(R.string.dlg_cancel), null)
-            .create()
-        d.setOnShowListener { com.nutritrack.app.utils.DialogHelper.tint(d, ctx) }
-        d.show()
-    }
 
-    private fun pinInput(): android.widget.EditText =
-        android.widget.EditText(requireContext()).apply {
-            inputType = android.text.InputType.TYPE_CLASS_NUMBER or
-                android.text.InputType.TYPE_NUMBER_VARIATION_PASSWORD
-            hint = getString(R.string.pin_hint)
-        }
 
-    private fun wrap(v: android.view.View) = android.widget.FrameLayout(requireContext()).apply {
-        val pad = (20 * resources.displayMetrics.density).toInt()
-        setPadding(pad, pad / 2, pad, 0)
-        addView(v)
-    }
 
-    private fun promptCurrentPin(onResult: (Boolean) -> Unit) {
-        val input = pinInput()
-        val d = androidx.appcompat.app.AlertDialog.Builder(requireContext())
-            .setTitle(getString(R.string.pin_enter_current))
-            .setView(wrap(input))
-            .setPositiveButton(getString(R.string.c_save)) { _, _ ->
-                val pin = input.text.toString()
-                // PBKDF2 в фоне, чтобы не подвешивать UI при проверке
-                viewLifecycleOwner.lifecycleScope.launch {
-                    val ok = withContext(Dispatchers.Default) {
-                        com.nutritrack.app.utils.PinLock.check(requireContext(), pin)
-                    }
-                    if (!ok) android.widget.Toast.makeText(requireContext(),
-                        getString(R.string.pin_wrong), android.widget.Toast.LENGTH_SHORT).show()
-                    onResult(ok)
-                }
-            }
-            .setNegativeButton(getString(R.string.dlg_cancel)) { _, _ -> onResult(false) }
-            .create()
-        d.setOnShowListener { com.nutritrack.app.utils.DialogHelper.tint(d, requireContext()) }
-        d.show()
-    }
-
-    private fun promptNewPin() {
-        val input = pinInput()
-        val d = androidx.appcompat.app.AlertDialog.Builder(requireContext())
-            .setTitle(getString(R.string.pin_new_title))
-            .setMessage(getString(R.string.pin_new_msg))
-            .setView(wrap(input))
-            .setPositiveButton(getString(R.string.c_save)) { _, _ ->
-                val pin = input.text.toString()
-                if (pin.length < 4) {
-                    android.widget.Toast.makeText(requireContext(),
-                        getString(R.string.pin_too_short), android.widget.Toast.LENGTH_SHORT).show()
-                    return@setPositiveButton
-                }
-                // Подтверждение
-                val confirm = pinInput()
-                val d2 = androidx.appcompat.app.AlertDialog.Builder(requireContext())
-                    .setTitle(getString(R.string.pin_confirm_title))
-                    .setView(wrap(confirm))
-                    .setPositiveButton(getString(R.string.c_save)) { _, _ ->
-                        if (confirm.text.toString() == pin) {
-                            com.nutritrack.app.utils.PinLock.set(requireContext(), pin)
-                            updatePinLabel()
-                            android.widget.Toast.makeText(requireContext(),
-                                getString(R.string.pin_saved), android.widget.Toast.LENGTH_SHORT).show()
-                        } else {
-                            android.widget.Toast.makeText(requireContext(),
-                                getString(R.string.pin_mismatch), android.widget.Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                    .setNegativeButton(getString(R.string.dlg_cancel), null)
-                    .create()
-                d2.setOnShowListener { com.nutritrack.app.utils.DialogHelper.tint(d2, requireContext()) }
-                d2.show()
-            }
-            .setNegativeButton(getString(R.string.dlg_cancel), null)
-            .create()
-        d.setOnShowListener { com.nutritrack.app.utils.DialogHelper.tint(d, requireContext()) }
-        d.show()
-    }
 
     // Авто-бэкап: опциональный пароль (хранится в Keystore-хранилище)
 
