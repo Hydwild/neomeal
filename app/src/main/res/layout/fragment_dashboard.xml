@@ -123,8 +123,8 @@
                         android:layout_height="34dp"
                         android:background="@drawable/btn_round"
                         android:src="@drawable/ic_settings"
-                        android:tint="?attr/appTextSecondary"
-                        android:contentDescription="Режим"/>
+                        app:tint="?attr/appTextSecondary"
+                        android:contentDescription="@string/cd_mode"/>
                 </LinearLayout>
 
                 <!-- Круговой режим -->

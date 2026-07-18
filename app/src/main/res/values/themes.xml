@@ -11,7 +11,7 @@
 
         <item name="bottomNavigationStyle">@style/BottomNavStyle</item>
         <item name="chipStyle">@style/ChipStyle</item>
-        <item name="switchStyle">@style/SwitchStyle</item>
+        <!-- switchStyle задан выше (Widget.NeoMeal.Switch) — дубль убран -->
 
         <!-- Семантические токены (см. attrs.xml) -->
         <item name="appCardBg">@color/card_bg</item>

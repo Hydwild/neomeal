@@ -23,10 +23,10 @@
                 android:textColor="?attr/appTextPrimary" android:textSize="16sp" android:textStyle="bold"/>
             <ImageButton android:id="@+id/btnEdit" android:contentDescription="@string/cd_edit" android:layout_width="30dp"
                 android:layout_height="30dp" android:background="@android:color/transparent"
-                android:src="@drawable/ic_edit" android:tint="?attr/appTextSecondary"/>
+                android:src="@drawable/ic_edit" app:tint="?attr/appTextSecondary"/>
             <ImageButton android:id="@+id/btnDelete" android:contentDescription="@string/cd_delete" android:layout_width="30dp"
                 android:layout_height="30dp" android:background="@android:color/transparent"
-                android:src="@drawable/ic_delete" android:tint="?attr/appTextSecondary"/>
+                android:src="@drawable/ic_delete" app:tint="?attr/appTextSecondary"/>
         </LinearLayout>
 
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"

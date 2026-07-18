@@ -522,18 +522,18 @@
     <string name="unit_kcal">ккал</string>
     <!-- AnalyticsFragment -->
     <string name="an_weight_saved_fmt">Вес %1$s сохранён</string>
-    <string name="an_kcal_day_fmt">%1$s ккал/день</string>
-    <string name="an_budget_row_fmt">%1$s: %2$s</string>
+    <string name="an_kcal_day_fmt">%1$d ккал/день</string>
+    <string name="an_budget_row_fmt">%1$s: %2$d (~%3$d/день)</string>
     <string name="an_macro_detail_fmt">%1$s: %2$s г</string>
 
     <!-- CircularCalorieView -->
-    <string name="cv_goal_fmt">Цель: %1$s</string>
+    <string name="cv_goal_fmt">Цель: %1$d</string>
     <string name="cv_protein">Белки</string>
     <string name="cv_fat">Жиры</string>
     <string name="cv_carbs">Углеводы</string>
 
     <!-- FastingFragment -->
-    <string name="f_protocol_title_fmt">Протокол: %1$s</string>
+    <string name="f_protocol_title_fmt">%1$s Протокол: %2$s</string>
     <string name="f_warning_title">Предупреждение</string>
 
     <!-- FastingModeFragment -->
@@ -543,7 +543,7 @@
     <string name="fm_finished_big">Завершено!</string>
     <string name="fm_finished_sub">Голодание завершено</string>
     <string name="fm_day_of_fmt">День %1$d из %2$d</string>
-    <string name="fm_macro_serving_fmt">%1$s порций</string>
+    <string name="fm_macro_serving_fmt">Ж %1$s / У %2$s</string>
     <string name="c_close2">Закрыть</string>
 
     <!-- FitnessFragment -->
@@ -552,7 +552,7 @@
     <string name="fit_enter_value">Введите значение</string>
     <string name="fit_avg_steps_fmt">Среднее: %1$s шагов</string>
     <string name="fit_total_steps_fmt">Всего: %1$s шагов</string>
-    <string name="fit_bpm_fmt">%1$s уд/мин</string>
+    <string name="fit_bpm_fmt">%1$d уд/мин</string>
     <string name="fit_hr_rest">Покой</string>
     <string name="fit_hr_norm">Норма</string>
     <string name="fit_hr_warmup">Разминка</string>
@@ -3903,4 +3903,8 @@
     <string name="whatsnew_141_1">🖼️ Тяжёлые фото для фона теперь сжимаются — приложение не тормозит.</string>
     <string name="whatsnew_141_2">🔢 Разблокировка по ПИН-коду стала мгновенной.</string>
     <string name="whatsnew_141_3">⚙️ Настройки удобнее: разделы «Оформление» и «Питание и цели».</string>
+
+    <!-- Стабилизация 1.4.2 -->
+    <string name="app_version_fmt">NeoMeal v%1$s</string>
+    <string name="cd_mode">Режим отображения</string>
 </resources>

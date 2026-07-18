@@ -508,14 +508,14 @@
     <string name="unit_ml">ml</string>
     <string name="unit_kcal">kcal</string>
     <string name="an_weight_saved_fmt">체중 %1$s 저장됨</string>
-    <string name="an_kcal_day_fmt">%1$s kcal/일</string>
-    <string name="an_budget_row_fmt">%1$s: %2$s</string>
+    <string name="an_kcal_day_fmt">%1$d kcal/일</string>
+    <string name="an_budget_row_fmt">%1$s: %2$d (~%3$d/일)</string>
     <string name="an_macro_detail_fmt">%1$s: %2$s g</string>
-    <string name="cv_goal_fmt">목표: %1$s</string>
+    <string name="cv_goal_fmt">목표: %1$d</string>
     <string name="cv_protein">단백질</string>
     <string name="cv_fat">지방</string>
     <string name="cv_carbs">탄수화물</string>
-    <string name="f_protocol_title_fmt">프로토콜: %1$s</string>
+    <string name="f_protocol_title_fmt">%1$s 프로토콜: %2$s</string>
     <string name="f_warning_title">경고</string>
     <string name="fm_enabled">켜짐</string>
     <string name="fm_disabled">꺼짐</string>
@@ -523,14 +523,14 @@
     <string name="fm_finished_big">완료!</string>
     <string name="fm_finished_sub">단식 완료</string>
     <string name="fm_day_of_fmt">%2$d일 중 %1$d일</string>
-    <string name="fm_macro_serving_fmt">%1$s인분</string>
+    <string name="fm_macro_serving_fmt">지방 %1$s / 탄수 %2$s</string>
     <string name="c_close2">닫기</string>
     <string name="fit_syncing">동기화 중…</string>
     <string name="fit_synced">동기화됨</string>
     <string name="fit_enter_value">값을 입력하세요</string>
     <string name="fit_avg_steps_fmt">평균: %1$s걸음</string>
     <string name="fit_total_steps_fmt">합계: %1$s걸음</string>
-    <string name="fit_bpm_fmt">%1$s bpm</string>
+    <string name="fit_bpm_fmt">%1$d bpm</string>
     <string name="fit_hr_rest">안정</string>
     <string name="fit_hr_norm">정상</string>
     <string name="fit_hr_warmup">워밍업</string>
@@ -3878,4 +3878,15 @@
     <string name="whatsnew_141_1">🖼️ 배경 사진이 자동 압축돼요 — 이제 버벅이지 않아요.</string>
     <string name="whatsnew_141_2">🔢 PIN 잠금 해제가 즉시 이루어져요.</string>
     <string name="whatsnew_141_3">⚙️ 더 깔끔한 설정: “디자인”, “영양·목표” 섹션 추가.</string>
+    <!-- Множественные числа (корейский: только other) -->
+    <plurals name="days_streak">
+        <item quantity="other">일</item>
+    </plurals>
+    <plurals name="tips_count">
+        <item quantity="other">개</item>
+    </plurals>
+
+    <!-- Стабилизация 1.4.2 -->
+    <string name="app_version_fmt">NeoMeal v%1$s</string>
+    <string name="cd_mode">표시 모드</string>
 </resources>

@@ -504,18 +504,18 @@
     <string name="unit_kcal">kcal</string>
     <!-- AnalyticsFragment -->
     <string name="an_weight_saved_fmt">Weight %1$s saved</string>
-    <string name="an_kcal_day_fmt">%1$s kcal/day</string>
-    <string name="an_budget_row_fmt">%1$s: %2$s</string>
+    <string name="an_kcal_day_fmt">%1$d kcal/day</string>
+    <string name="an_budget_row_fmt">%1$s: %2$d (~%3$d/day)</string>
     <string name="an_macro_detail_fmt">%1$s: %2$s g</string>
 
     <!-- CircularCalorieView -->
-    <string name="cv_goal_fmt">Goal: %1$s</string>
+    <string name="cv_goal_fmt">Goal: %1$d</string>
     <string name="cv_protein">Protein</string>
     <string name="cv_fat">Fat</string>
     <string name="cv_carbs">Carbs</string>
 
     <!-- FastingFragment -->
-    <string name="f_protocol_title_fmt">Protocol: %1$s</string>
+    <string name="f_protocol_title_fmt">%1$s Protocol: %2$s</string>
     <string name="f_warning_title">Warning</string>
 
     <!-- FastingModeFragment -->
@@ -525,7 +525,7 @@
     <string name="fm_finished_big">Finished!</string>
     <string name="fm_finished_sub">Fasting completed</string>
     <string name="fm_day_of_fmt">Day %1$d of %2$d</string>
-    <string name="fm_macro_serving_fmt">%1$s servings</string>
+    <string name="fm_macro_serving_fmt">F %1$s / C %2$s</string>
     <string name="c_close2">Close</string>
 
     <!-- FitnessFragment -->
@@ -534,7 +534,7 @@
     <string name="fit_enter_value">Enter value</string>
     <string name="fit_avg_steps_fmt">Avg: %1$s steps</string>
     <string name="fit_total_steps_fmt">Total: %1$s steps</string>
-    <string name="fit_bpm_fmt">%1$s bpm</string>
+    <string name="fit_bpm_fmt">%1$d bpm</string>
     <string name="fit_hr_rest">Rest</string>
     <string name="fit_hr_norm">Normal</string>
     <string name="fit_hr_warmup">Warm-up</string>
@@ -3894,4 +3894,8 @@ data class Recipe(
     <string name="whatsnew_141_1">🖼️ Heavy background photos are now compressed — no more lag.</string>
     <string name="whatsnew_141_2">🔢 PIN unlock is now instant.</string>
     <string name="whatsnew_141_3">⚙️ Tidier settings: new “Appearance” and “Nutrition &amp; goals” sections.</string>
+
+    <!-- Стабилизация 1.4.2 -->
+    <string name="app_version_fmt">NeoMeal v%1$s</string>
+    <string name="cd_mode">Display mode</string>
 </resources>

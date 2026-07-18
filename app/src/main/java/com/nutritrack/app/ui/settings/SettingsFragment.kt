@@ -211,6 +211,10 @@ class SettingsFragment : Fragment() {
         // Карточки главного экрана
         binding.rowDashCards.setOnClickListener { showDashCardsDialog() }
 
+        // Версия — из BuildConfig, а не хардкод
+        binding.tvAppVersion.text = getString(R.string.app_version_fmt,
+            com.nutritrack.app.BuildConfig.VERSION_NAME)
+
         // ПИН-код (альтернатива биометрии)
         updatePinLabel()
         binding.rowPinCode.setOnClickListener { showPinOptions() }

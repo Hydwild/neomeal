@@ -1152,8 +1152,9 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
+            android:id="@+id/tvAppVersion"
             android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:text="NeoMeal v1.3" android:textColor="?attr/appTextSecondary"
+            android:textColor="?attr/appTextSecondary"
             android:textSize="12sp" android:gravity="center" android:layout_marginTop="8dp"/>
 
     </LinearLayout>

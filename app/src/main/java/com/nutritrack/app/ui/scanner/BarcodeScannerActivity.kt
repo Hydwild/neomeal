@@ -21,6 +21,9 @@ import java.util.concurrent.Executors
  * Экран сканирования штрихкода через камеру (CameraX + ML Kit).
  * Возвращает найденный штрихкод в Intent с ключом "barcode".
  */
+// CameraX ExperimentalGetImage (proxy.image) — opt-in на весь класс,
+// чтобы не пропагировать маркер по всей цепочке вызовов
+@androidx.annotation.OptIn(androidx.camera.core.ExperimentalGetImage::class)
 class BarcodeScannerActivity : AppCompatActivity() {
 
     override fun attachBaseContext(newBase: android.content.Context) {
@@ -93,7 +96,6 @@ class BarcodeScannerActivity : AppCompatActivity() {
         }, ContextCompat.getMainExecutor(this))
     }
 
-    @androidx.camera.core.ExperimentalGetImage
     private fun analyze(proxy: ImageProxy) {
         if (handled) { proxy.close(); return }
         val media = proxy.image

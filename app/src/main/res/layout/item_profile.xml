@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
@@ -22,7 +23,7 @@
                 android:textSize="15sp" android:textStyle="bold"/>
             <ImageView android:id="@+id/ivActive" android:layout_width="16dp"
                 android:layout_height="16dp" android:src="@drawable/ic_check"
-                android:tint="@color/color_success" android:layout_marginStart="6dp"
+                app:tint="@color/color_success" android:layout_marginStart="6dp"
                 android:visibility="gone"/>
         </LinearLayout>
         <TextView android:id="@+id/tvGoal" android:layout_width="wrap_content"
@@ -32,8 +33,8 @@
 
     <ImageButton android:id="@+id/btnEdit" android:contentDescription="@string/cd_edit" android:layout_width="30dp"
         android:layout_height="30dp" android:background="@android:color/transparent"
-        android:src="@drawable/ic_edit" android:tint="?attr/appTextSecondary"/>
+        android:src="@drawable/ic_edit" app:tint="?attr/appTextSecondary"/>
     <ImageButton android:id="@+id/btnDelete" android:contentDescription="@string/cd_delete" android:layout_width="30dp"
         android:layout_height="30dp" android:background="@android:color/transparent"
-        android:src="@drawable/ic_delete" android:tint="?attr/appTextSecondary"/>
+        android:src="@drawable/ic_delete" app:tint="?attr/appTextSecondary"/>
 </LinearLayout>

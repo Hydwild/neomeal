@@ -112,7 +112,7 @@
                 android:layout_height="36dp"
                 android:background="@android:color/transparent"
                 android:src="@drawable/ic_add_circle"
-                android:tint="@color/color_accent"
+                app:tint="@color/color_accent"
                 android:contentDescription="Добавить в дневник"/>
 
             <!-- Редактировать -->
@@ -122,7 +122,7 @@
                 android:layout_height="36dp"
                 android:background="@android:color/transparent"
                 android:src="@drawable/ic_edit"
-                android:tint="?attr/appTextSecondary"
+                app:tint="?attr/appTextSecondary"
                 android:contentDescription="Редактировать"/>
 
         </LinearLayout>

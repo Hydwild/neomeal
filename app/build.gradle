@@ -62,6 +62,14 @@ android {
         viewBinding = true
         buildConfig = true   // BuildConfig.VERSION_NAME для User-Agent сети
     }
+    lint {
+        // Старые некритичные предупреждения зафиксированы в baseline;
+        // сборка падает на ЛЮБОЙ ошибке и на НОВЫХ предупреждениях сверх baseline.
+        baseline = file("lint-baseline.xml")
+        warningsAsErrors = false
+        abortOnError = true
+        checkReleaseBuilds = true
+    }
     sourceSets {
         // JSON-схемы Room доступны инструментальным тестам миграций
         androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
