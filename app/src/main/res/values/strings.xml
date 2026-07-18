@@ -2135,34 +2135,34 @@
     <string name="dl_324">Запасы гликогена в печени истощаются. Организм начинает переключаться на жировое топливо.</string>
     <string name="dl_325">Жировое топливо</string>
     <string name="dl_326">Тело активно переходит на сжигание жирных кислот. Кетоновые тела начинают вырабатываться.</string>
-    <string name="dl_327">Аутофагия начинается</string>
-    <string name="dl_328">Запускается процесс клеточного «самоочищения» (аутофагия). Клетки утилизируют повреждённые белки.</string>
+    <string name="dl_327">Долгое голодание</string>
+    <string name="dl_328">При долгом голодании тело активнее использует запасы и обновляет клетки. Точные сроки индивидуальны.</string>
     <string name="dl_329">Начни с окна 12–14 ч и постепенно увеличивай</string>
     <string name="dl_330">Пей воду, чёрный кофе или зелёный чай в окне голодания</string>
     <string name="dl_331">Не считай калории — просто не ешь в период голодания</string>
     <string name="dl_332">Оптимальное окно питания: 12:00–20:00 или 13:00–21:00</string>
-    <string name="dl_333">Более интенсивный протокол для активной аутофагии.</string>
-    <string name="dl_334">Активная аутофагия</string>
-    <string name="dl_335">Аутофагия значительно усиливается. Организм интенсивно утилизирует старые и повреждённые клетки.</string>
-    <string name="dl_336">Повышение BDNF</string>
-    <string name="dl_337">Увеличивается выработка нейротрофического фактора мозга (BDNF) — улучшается память и когнитивные функции.</string>
+    <string name="dl_333">Более длительный протокол голодания.</string>
+    <string name="dl_334">Обновление клеток</string>
+    <string name="dl_335">Организм активнее перерабатывает запасы. Данные о клеточном обновлении у человека пока предварительны.</string>
+    <string name="dl_336">Возможная польза для мозга</string>
+    <string name="dl_337">Некоторые исследования связывают голодание с работой мозга. Данные предварительны.</string>
     <string name="dl_338">Окно питания: 14:00–20:00 (пропусти завтрак и обед)</string>
     <string name="dl_339">Хорошо сочетается с тренировками в 12–14 ч (натощак)</string>
     <string name="dl_340">Электролиты (натрий, калий) помогут избежать слабости</string>
     <string name="dl_341">20:4 (Воин)</string>
     <string name="dl_342">Протокол «Воин». Один большой приём пищи и небольшой перекус.</string>
-    <string name="dl_343">Глубокая аутофагия</string>
-    <string name="dl_344" formatted="false">Аутофагия на пике. Гормон роста повышается до 500% от нормы.</string>
-    <string name="dl_345">Противовоспалительный эффект</string>
-    <string name="dl_346">Значительное снижение маркеров воспаления. Укрепляется иммунная система.</string>
+    <string name="dl_343">Глубокий этап</string>
+    <string name="dl_344" formatted="false">Организм продолжает использовать запасы жира. Гормональные эффекты у человека изучены не полностью.</string>
+    <string name="dl_345">Возможный эффект на воспаление</string>
+    <string name="dl_346">Некоторые исследования отмечают снижение маркеров воспаления. Данные предварительны.</string>
     <string name="dl_347">Можно есть сырые овощи и фрукты в дневное время</string>
     <string name="dl_348">Основной приём пищи вечером (17:00–21:00)</string>
     <string name="dl_349">Не для новичков — переходи постепенно с 16:8</string>
     <string name="dl_350">Особенно эффективно для похудения</string>
     <string name="dl_351">24 часа (OMAD)</string>
     <string name="dl_352">One Meal A Day. Один приём пищи в сутки.</string>
-    <string name="dl_353">Максимальная аутофагия</string>
-    <string name="dl_354">Наивысший уровень аутофагии. Организм полностью очищает старые клетки.</string>
+    <string name="dl_353">Длительный этап</string>
+    <string name="dl_354">Организм долго обходится без пищи. Длительное голодание требует осторожности — при хронических заболеваниях сначала посоветуйся с врачом.</string>
     <string name="dl_355">Метаболический сброс</string>
     <string name="dl_356">Полный метаболический перезапуск. Инсулиновая чувствительность достигает максимума.</string>
     <string name="dl_357">Только для опытных практиков интервального голодания</string>
@@ -3490,9 +3490,9 @@
     <string name="wf_phase_digest">Старт · переваривание</string>
     <string name="wf_phase_sugar">Снижение сахара</string>
     <string name="wf_phase_fat">Переход на жиры</string>
-    <string name="wf_phase_ketosis">🔥 Кетоз</string>
-    <string name="wf_phase_autophagy">♻️ Аутофагия</string>
-    <string name="wf_phase_deep">💪 Глубокая аутофагия</string>
+    <string name="wf_phase_ketosis">🔥 Жировой режим</string>
+    <string name="wf_phase_autophagy">♻️ Обновление клеток</string>
+    <string name="wf_phase_deep">💪 Глубокий этап</string>
     <string name="wf_title_default">⏱️ Голодание</string>
     <string name="wf_no_session">Нет активного голодания</string>
     <string name="premium_free_badge">⭐ временно бесплатно</string>
@@ -3572,9 +3572,9 @@
 
     <!-- Фазы голодания на главном -->
     <string name="ds_fast_early">🍽️ Переваривание</string>
-    <string name="ds_fast_ketosis">⚡ Кетоз</string>
-    <string name="ds_fast_autophagy">🧹 Аутофагия</string>
-    <string name="ds_fast_deep">🧬 Глубокая аутофагия</string>
+    <string name="ds_fast_ketosis">⚡ Жировой режим</string>
+    <string name="ds_fast_autophagy">🧹 Обновление клеток</string>
+    <string name="ds_fast_deep">🧬 Глубокий этап</string>
     <string name="ds_fast_complete">🏆 Завершено!</string>
 
     <!-- Умный тренер (диалог) -->
@@ -3907,4 +3907,5 @@
     <!-- Стабилизация 1.4.2 -->
     <string name="app_version_fmt">NeoMeal v%1$s</string>
     <string name="cd_mode">Режим отображения</string>
+    <string name="f_effects_note">\n\n⚠️ Этапы ориентировочны и основаны на предварительных исследованиях; сроки индивидуальны.</string>
 </resources>

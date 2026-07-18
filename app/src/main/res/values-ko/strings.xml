@@ -2624,34 +2624,34 @@
     <string name="dl_324">간의 글리코겐 저장이 고갈돼요. 몸이 지방 연료로 전환하기 시작해요.</string>
     <string name="dl_325">지방 연료</string>
     <string name="dl_326">몸이 지방산 연소로 본격 전환해요. 케톤체가 생성되기 시작해요.</string>
-    <string name="dl_327">오토파지 시작</string>
-    <string name="dl_328">세포 「자가 정화」(오토파지)가 시작돼요. 세포가 손상된 단백질을 처리해요.</string>
+    <string name="dl_327">긴 단식</string>
+    <string name="dl_328">긴 단식에서는 몸이 저장 에너지를 더 쓰고 세포를 재생해요. 정확한 시점은 사람마다 달라요.</string>
     <string name="dl_329">12~14시간 창에서 시작해 점차 늘리세요</string>
     <string name="dl_330">단식 시간에는 물, 블랙커피, 녹차를 마시세요</string>
     <string name="dl_331">칼로리를 세지 마세요 — 단식 시간에 그냥 안 먹으면 돼요</string>
     <string name="dl_332">최적의 식사 창: 12:00~20:00 또는 13:00~21:00</string>
-    <string name="dl_333">활발한 오토파지를 위한 더 강한 프로토콜.</string>
-    <string name="dl_334">활발한 오토파지</string>
-    <string name="dl_335">오토파지가 크게 강해져요. 몸이 낡고 손상된 세포를 활발히 처리해요.</string>
-    <string name="dl_336">BDNF 증가</string>
-    <string name="dl_337">뇌 신경영양인자(BDNF) 생성이 늘어요 — 기억력과 인지 기능이 개선돼요.</string>
+    <string name="dl_333">더 긴 단식 프로토콜.</string>
+    <string name="dl_334">세포 재생</string>
+    <string name="dl_335">몸이 저장 에너지를 더 활발히 써요. 사람 대상 세포 재생 근거는 아직 예비 단계예요.</string>
+    <string name="dl_336">뇌에 도움이 될 수 있어요</string>
+    <string name="dl_337">일부 연구는 단식과 뇌 기능을 연결해요. 근거는 예비 단계예요.</string>
     <string name="dl_338">식사 창: 14:00~20:00 (아침과 점심 거르기)</string>
     <string name="dl_339">12~14시 공복 운동과 잘 어울려요</string>
     <string name="dl_340">전해질(나트륨, 칼륨)이 무기력을 막아줘요</string>
     <string name="dl_341">20:4 (워리어)</string>
     <string name="dl_342">「워리어」 프로토콜. 큰 식사 한 끼와 가벼운 간식.</string>
-    <string name="dl_343">깊은 오토파지</string>
-    <string name="dl_344">오토파지가 정점에 달해요. 성장호르몬이 정상의 500%까지 올라가요.</string>
-    <string name="dl_345">항염 효과</string>
-    <string name="dl_346">염증 지표가 크게 줄어요. 면역 체계가 강화돼요.</string>
+    <string name="dl_343">깊은 단계</string>
+    <string name="dl_344">몸이 지방 저장분을 계속 사용해요. 사람에 대한 호르몬 효과는 완전히 밝혀지지 않았어요.</string>
+    <string name="dl_345">염증에 영향이 있을 수 있어요</string>
+    <string name="dl_346">일부 연구는 염증 지표 감소를 보고해요. 근거는 예비 단계예요.</string>
     <string name="dl_347">낮 동안 생채소와 과일을 먹을 수 있어요</string>
     <string name="dl_348">주요 식사는 저녁(17:00~21:00)</string>
     <string name="dl_349">초보자용 아님 — 16:8에서 점차 넘어오세요</string>
     <string name="dl_350">감량에 특히 효과적이에요</string>
     <string name="dl_351">24시간 (OMAD)</string>
     <string name="dl_352">One Meal A Day. 하루 한 끼.</string>
-    <string name="dl_353">최대 오토파지</string>
-    <string name="dl_354">오토파지 최고 수준. 몸이 낡은 세포를 완전히 정화해요.</string>
+    <string name="dl_353">장시간 단계</string>
+    <string name="dl_354">몸이 오래 음식 없이 지내요. 장시간 단식은 주의가 필요해요 — 만성 질환이 있다면 먼저 의사와 상담하세요.</string>
     <string name="dl_355">대사 리셋</string>
     <string name="dl_356">완전한 대사 재시작. 인슐린 감수성이 최고에 달해요.</string>
     <string name="dl_357">숙련된 간헐적 단식 실천자만</string>
@@ -3465,9 +3465,9 @@
     <string name="wf_phase_digest">시작 · 소화</string>
     <string name="wf_phase_sugar">혈당 감소</string>
     <string name="wf_phase_fat">지방 전환</string>
-    <string name="wf_phase_ketosis">🔥 케토시스</string>
-    <string name="wf_phase_autophagy">♻️ 자가포식</string>
-    <string name="wf_phase_deep">💪 깊은 자가포식</string>
+    <string name="wf_phase_ketosis">🔥 지방 연소</string>
+    <string name="wf_phase_autophagy">♻️ 세포 재생</string>
+    <string name="wf_phase_deep">💪 깊은 단계</string>
     <string name="wf_title_default">⏱️ 단식</string>
     <string name="wf_no_session">활성 단식 없음</string>
     <string name="premium_free_badge">⭐ 한시적 무료</string>
@@ -3547,9 +3547,9 @@
 
     <!-- 홈 화면 단식 단계 -->
     <string name="ds_fast_early">🍽️ 소화 중</string>
-    <string name="ds_fast_ketosis">⚡ 케토시스</string>
-    <string name="ds_fast_autophagy">🧹 자가포식</string>
-    <string name="ds_fast_deep">🧬 깊은 자가포식</string>
+    <string name="ds_fast_ketosis">⚡ 지방 연소</string>
+    <string name="ds_fast_autophagy">🧹 세포 재생</string>
+    <string name="ds_fast_deep">🧬 깊은 단계</string>
     <string name="ds_fast_complete">🏆 완료!</string>
 
     <!-- 스마트 코치 -->
@@ -3889,4 +3889,5 @@
     <!-- Стабилизация 1.4.2 -->
     <string name="app_version_fmt">NeoMeal v%1$s</string>
     <string name="cd_mode">표시 모드</string>
+    <string name="f_effects_note">\n\n⚠️ 단계는 대략적이며 예비 연구에 기반해요. 시점은 사람마다 달라요.</string>
 </resources>

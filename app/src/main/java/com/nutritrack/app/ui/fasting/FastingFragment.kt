@@ -172,6 +172,8 @@ class FastingFragment : Fragment() {
             protocol.benefits.forEach {
                 sb.append(getString(R.string.f_effect_line_fmt, it.icon, it.hoursFrom, com.nutritrack.app.utils.DataLabel.tr(requireContext(), it.title)))
             }
+            // Оговорка: этапы ориентировочны (аудит — маркировать силу доказательств)
+            sb.append(getString(R.string.f_effects_note))
         }
         if (protocol.tips.isNotEmpty()) {
             sb.append(getString(R.string.f_tips_header))

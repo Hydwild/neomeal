@@ -2803,34 +2803,34 @@ data class Recipe(
     <string name="dl_324">Liver glycogen stores deplete. The body starts switching to fat fuel.</string>
     <string name="dl_325">Fat fuel</string>
     <string name="dl_326">The body actively switches to burning fatty acids. Ketone bodies start to form.</string>
-    <string name="dl_327">Autophagy begins</string>
-    <string name="dl_328">Cellular "self-cleaning" (autophagy) starts. Cells recycle damaged proteins.</string>
+    <string name="dl_327">Longer fast</string>
+    <string name="dl_328">During a longer fast the body draws more on its reserves and renews cells. Exact timing varies by person.</string>
     <string name="dl_329">Start with a 12–14 h window and gradually increase</string>
     <string name="dl_330">Drink water, black coffee or green tea during the fast</string>
     <string name="dl_331">Don\'t count calories — just don\'t eat during the fasting period</string>
     <string name="dl_332">Optimal eating window: 12:00–20:00 or 13:00–21:00</string>
-    <string name="dl_333">A more intense protocol for active autophagy.</string>
-    <string name="dl_334">Active autophagy</string>
-    <string name="dl_335">Autophagy significantly intensifies. The body intensively recycles old and damaged cells.</string>
-    <string name="dl_336">BDNF boost</string>
-    <string name="dl_337">Production of brain-derived neurotrophic factor (BDNF) increases — improving memory and cognition.</string>
+    <string name="dl_333">A longer fasting protocol.</string>
+    <string name="dl_334">Cell renewal</string>
+    <string name="dl_335">The body processes its reserves more actively. Evidence on cell renewal in humans is still preliminary.</string>
+    <string name="dl_336">Possible brain benefits</string>
+    <string name="dl_337">Some studies link fasting to brain function. The evidence is preliminary.</string>
     <string name="dl_338">Eating window: 14:00–20:00 (skip breakfast and lunch)</string>
     <string name="dl_339">Pairs well with workouts at 12–14h (fasted)</string>
     <string name="dl_340">Electrolytes (sodium, potassium) help avoid weakness</string>
     <string name="dl_341">20:4 (Warrior)</string>
     <string name="dl_342">The "Warrior" protocol. One large meal and a small snack.</string>
-    <string name="dl_343">Deep autophagy</string>
-    <string name="dl_344" formatted="false">Autophagy at its peak. Growth hormone rises up to 500% of normal.</string>
-    <string name="dl_345">Anti-inflammatory effect</string>
-    <string name="dl_346">A significant drop in inflammation markers. The immune system strengthens.</string>
+    <string name="dl_343">Deep stage</string>
+    <string name="dl_344" formatted="false">The body keeps using its fat stores. Hormonal effects in humans are not fully understood.</string>
+    <string name="dl_345">Possible effect on inflammation</string>
+    <string name="dl_346">Some studies note lower inflammation markers. The evidence is preliminary.</string>
     <string name="dl_347">You may eat raw vegetables and fruit during the day</string>
     <string name="dl_348">Main meal in the evening (17:00–21:00)</string>
     <string name="dl_349">Not for beginners — transition gradually from 16:8</string>
     <string name="dl_350">Especially effective for weight loss</string>
     <string name="dl_351">24 hours (OMAD)</string>
     <string name="dl_352">One Meal A Day. One meal per day.</string>
-    <string name="dl_353">Maximum autophagy</string>
-    <string name="dl_354">The highest level of autophagy. The body fully cleans out old cells.</string>
+    <string name="dl_353">Extended stage</string>
+    <string name="dl_354">The body goes a long time without food. Extended fasting calls for caution — consult a doctor first if you have chronic conditions.</string>
     <string name="dl_355">Metabolic reset</string>
     <string name="dl_356">A full metabolic restart. Insulin sensitivity reaches its maximum.</string>
     <string name="dl_357">Only for experienced intermittent fasting practitioners</string>
@@ -3481,9 +3481,9 @@ data class Recipe(
     <string name="wf_phase_digest">Start · digestion</string>
     <string name="wf_phase_sugar">Blood sugar dropping</string>
     <string name="wf_phase_fat">Switching to fat</string>
-    <string name="wf_phase_ketosis">🔥 Ketosis</string>
-    <string name="wf_phase_autophagy">♻️ Autophagy</string>
-    <string name="wf_phase_deep">💪 Deep autophagy</string>
+    <string name="wf_phase_ketosis">🔥 Fat-burning</string>
+    <string name="wf_phase_autophagy">♻️ Cell renewal</string>
+    <string name="wf_phase_deep">💪 Deep stage</string>
     <string name="wf_title_default">⏱️ Fasting</string>
     <string name="wf_no_session">No active fast</string>
     <string name="premium_free_badge">⭐ free for now</string>
@@ -3563,9 +3563,9 @@ data class Recipe(
 
     <!-- Fasting phases on the dashboard -->
     <string name="ds_fast_early">🍽️ Digestion</string>
-    <string name="ds_fast_ketosis">⚡ Ketosis</string>
-    <string name="ds_fast_autophagy">🧹 Autophagy</string>
-    <string name="ds_fast_deep">🧬 Deep autophagy</string>
+    <string name="ds_fast_ketosis">⚡ Fat-burning</string>
+    <string name="ds_fast_autophagy">🧹 Cell renewal</string>
+    <string name="ds_fast_deep">🧬 Deep stage</string>
     <string name="ds_fast_complete">🏆 Done!</string>
 
     <!-- Smart Coach dialog -->
@@ -3898,4 +3898,5 @@ data class Recipe(
     <!-- Стабилизация 1.4.2 -->
     <string name="app_version_fmt">NeoMeal v%1$s</string>
     <string name="cd_mode">Display mode</string>
+    <string name="f_effects_note">\n\n⚠️ Stages are approximate and based on preliminary research; timing varies by person.</string>
 </resources>
