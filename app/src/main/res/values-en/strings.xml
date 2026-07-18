@@ -3888,4 +3888,10 @@ data class Recipe(
     <string name="set_sub_look">Theme, icon, screens</string>
     <string name="set_sec_nutrition">Nutrition &amp; goals</string>
     <string name="set_sub_nutrition">Water buttons, goals, macros</string>
+
+    <!-- Что нового 1.4.1 -->
+    <string name="whatsnew_141_title">Stability &amp; polish</string>
+    <string name="whatsnew_141_1">🖼️ Heavy background photos are now compressed — no more lag.</string>
+    <string name="whatsnew_141_2">🔢 PIN unlock is now instant.</string>
+    <string name="whatsnew_141_3">⚙️ Tidier settings: new “Appearance” and “Nutrition &amp; goals” sections.</string>
 </resources>

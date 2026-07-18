@@ -3872,4 +3872,10 @@
     <string name="set_sub_look">테마·아이콘·화면</string>
     <string name="set_sec_nutrition">영양·목표</string>
     <string name="set_sub_nutrition">물 버튼·목표·영양소</string>
+
+    <!-- Что нового 1.4.1 -->
+    <string name="whatsnew_141_title">안정성과 편의성</string>
+    <string name="whatsnew_141_1">🖼️ 배경 사진이 자동 압축돼요 — 이제 버벅이지 않아요.</string>
+    <string name="whatsnew_141_2">🔢 PIN 잠금 해제가 즉시 이루어져요.</string>
+    <string name="whatsnew_141_3">⚙️ 더 깔끔한 설정: “디자인”, “영양·목표” 섹션 추가.</string>
 </resources>

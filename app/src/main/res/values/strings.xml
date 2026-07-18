@@ -3897,4 +3897,10 @@
     <string name="set_sub_look">Тема, иконка, экраны</string>
     <string name="set_sec_nutrition">Питание и цели</string>
     <string name="set_sub_nutrition">Кнопки воды, цели, БЖУ</string>
+
+    <!-- Что нового 1.4.1 -->
+    <string name="whatsnew_141_title">Стабильность и удобство</string>
+    <string name="whatsnew_141_1">🖼️ Тяжёлые фото для фона теперь сжимаются — приложение не тормозит.</string>
+    <string name="whatsnew_141_2">🔢 Разблокировка по ПИН-коду стала мгновенной.</string>
+    <string name="whatsnew_141_3">⚙️ Настройки удобнее: разделы «Оформление» и «Питание и цели».</string>
 </resources>

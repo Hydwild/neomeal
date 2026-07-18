@@ -17,6 +17,15 @@ object WhatsNewData {
 
     val versions: List<Release> = listOf(
         Release(
+            version = "1.4.1",
+            titleRes = R.string.whatsnew_141_title,
+            itemRes = listOf(
+                R.string.whatsnew_141_1,
+                R.string.whatsnew_141_2,
+                R.string.whatsnew_141_3
+            )
+        ),
+        Release(
             version = "1.4.0",
             titleRes = R.string.whatsnew_140_title,
             itemRes = listOf(
