@@ -12,7 +12,6 @@ import com.nutritrack.app.MainActivity
 import com.nutritrack.app.NutriApp
 import com.nutritrack.app.databinding.FragmentSettingsBinding
 import com.nutritrack.app.utils.PrefsManager
-import com.nutritrack.app.utils.BackupManager
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.*
 
@@ -22,20 +21,21 @@ class SettingsFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var prefs: PrefsManager
 
-    // Лаунчеры для выбора файла (Storage Access Framework)
+    // Экспорт/импорт данных вынесен в контроллер (инициализируется в onViewCreated)
+    private lateinit var dataExport: DataExportController
+
+    // Лаунчеры для выбора файла (Storage Access Framework) — делегируют контроллеру
     private val createBackupLauncher = registerForActivityResult(
         androidx.activity.result.contract.ActivityResultContracts.CreateDocument("application/json")
-    ) { uri -> uri?.let { doExport(it) } }
+    ) { uri -> uri?.let { dataExport.onBackupFileCreated(it) } }
 
     private val openBackupLauncher = registerForActivityResult(
         androidx.activity.result.contract.ActivityResultContracts.OpenDocument()
-    ) { uri -> uri?.let { confirmImport(it) } }
+    ) { uri -> uri?.let { dataExport.onBackupFilePicked(it) } }
 
-    // Что экспортируем в CSV: "diary" или "measures"
-    private var csvType: String = "diary"
     private val createCsvLauncher = registerForActivityResult(
         androidx.activity.result.contract.ActivityResultContracts.CreateDocument("text/csv")
-    ) { uri -> uri?.let { doExportCsv(it) } }
+    ) { uri -> uri?.let { dataExport.onCsvFileCreated(it) } }
 
     private val pickBackgroundLauncher = registerForActivityResult(
         androidx.activity.result.contract.ActivityResultContracts.GetContent()
@@ -45,17 +45,8 @@ class SettingsFragment : Fragment() {
     private val autoBackupFolderLauncher = registerForActivityResult(
         androidx.activity.result.contract.ActivityResultContracts.OpenDocumentTree()
     ) { uri ->
-        if (uri == null) {
-            _binding?.switchAutoBackup?.isChecked = false
-            return@registerForActivityResult
-        }
-        requireContext().contentResolver.takePersistableUriPermission(
-            uri,
-            android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION or
-                android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION
-        )
-        prefs.autoBackupUri = uri.toString()
-        askAutoBackupPassword()
+        if (uri == null) { _binding?.switchAutoBackup?.isChecked = false; return@registerForActivityResult }
+        dataExport.onBackupFolderPicked(uri)
     }
 
     // Запрос write-разрешений Health Connect (для тумблера «Запись в HC»)
@@ -98,6 +89,13 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         prefs = PrefsManager(requireContext())
+
+        dataExport = DataExportController(
+            fragment = this,
+            prefs = prefs,
+            launchCsvSave = { name -> createCsvLauncher.launch(name) },
+            onAutoBackupEnabled = { _binding?.switchAutoBackup?.isChecked = true }
+        )
 
         binding.tvCurrentLang.text = languages.firstOrNull { it.first == prefs.language }?.second ?: getString(R.string.set_lang_auto)
 
@@ -289,7 +287,7 @@ class SettingsFragment : Fragment() {
         }
 
         binding.rowLanguage.setOnClickListener { showLanguagePicker() }
-        binding.rowExportPdf.setOnClickListener { showPdfExportDialog() }
+        binding.rowExportPdf.setOnClickListener { dataExport.showPdfExportDialog() }
 
         // Начало недели
         binding.tvCurrentWeekStart.text = if (prefs.weekStartMonday) getString(R.string.week_monday) else getString(R.string.week_sunday)
@@ -406,107 +404,21 @@ class SettingsFragment : Fragment() {
         binding.rowFont.setOnClickListener { showFontPicker() }
 
         binding.rowExport.setOnClickListener {
-            createBackupLauncher.launch(BackupManager.defaultFileName())
+            createBackupLauncher.launch(com.nutritrack.app.utils.BackupManager.defaultFileName())
         }
         binding.rowImport.setOnClickListener {
             openBackupLauncher.launch(arrayOf("application/json"))
         }
         binding.rowClearData.setOnClickListener { confirmClearData() }
-        binding.rowExportDiaryCsv.setOnClickListener { showCsvPicker() }
+        binding.rowExportDiaryCsv.setOnClickListener { dataExport.showCsvPicker() }
         binding.rowRate.setOnClickListener { openRate() }
         binding.rowFeedback.setOnClickListener { openFeedback() }
         binding.rowPrivacy.setOnClickListener { openPrivacyPolicy() }
     }
 
-    private fun doExport(uri: android.net.Uri) {
-        // Спрашиваем, защитить ли файл паролем (бэкап содержит все данные открытым текстом)
-        val input = android.widget.EditText(requireContext()).apply {
-            inputType = android.text.InputType.TYPE_CLASS_TEXT or
-                    android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
-            hint = getString(R.string.bk_pw_hint)
-        }
-        val container = android.widget.FrameLayout(requireContext()).apply {
-            val pad = (20 * resources.displayMetrics.density).toInt()
-            setPadding(pad, pad / 2, pad, 0)
-            addView(input)
-        }
-        val d = androidx.appcompat.app.AlertDialog.Builder(requireContext())
-            .setTitle(getString(R.string.bk_pw_title))
-            .setMessage(getString(R.string.bk_pw_msg))
-            .setView(container)
-            .setPositiveButton(getString(R.string.bk_encrypt)) { _, _ ->
-                val pw = input.text.toString()
-                if (pw.isEmpty()) {
-                    android.widget.Toast.makeText(requireContext(),
-                        getString(R.string.bk_pw_empty), android.widget.Toast.LENGTH_SHORT).show()
-                    runExport(uri, null)
-                } else runExport(uri, pw)
-            }
-            .setNegativeButton(getString(R.string.bk_plain)) { _, _ -> runExport(uri, null) }
-            .create()
-        d.setOnShowListener { com.nutritrack.app.utils.DialogHelper.tint(d, requireContext()) }
-        d.show()
-    }
 
-    private fun runExport(uri: android.net.Uri, password: String?) {
-        viewLifecycleOwner.lifecycleScope.launch {
-            val result = BackupManager.export(requireContext(), uri, password)
-            result.onSuccess { count ->
-                android.widget.Toast.makeText(requireContext(),
-                    getString(R.string.set_imported_fmt, count), android.widget.Toast.LENGTH_LONG).show()
-            }.onFailure {
-                android.widget.Toast.makeText(requireContext(),
-                    getString(R.string.err_export, it.message ?: ""), android.widget.Toast.LENGTH_LONG).show()
-            }
-        }
-    }
 
- /** Выбор набора данных для CSV: дневник / вода / вес / замеры. */
-    private fun showCsvPicker() {
-        val types  = listOf("diary", "water", "weight", "measures")
-        val labels = arrayOf(
-            getString(R.string.csv_diary), getString(R.string.csv_water),
-            getString(R.string.csv_weight), getString(R.string.csv_measures)
-        )
-        val d = androidx.appcompat.app.AlertDialog.Builder(requireContext())
-            .setTitle(getString(R.string.csv_pick_title))
-            .setItems(labels) { _, which ->
-                csvType = types[which]
-                createCsvLauncher.launch(
-                    "neomeal_${csvType}_${com.nutritrack.app.utils.DateUtils.today()}.csv")
-            }
-            .setNegativeButton(getString(R.string.dlg_cancel), null)
-            .create()
-        d.setOnShowListener { com.nutritrack.app.utils.DialogHelper.tint(d, requireContext()) }
-        d.show()
-    }
 
-    private fun doExportCsv(uri: android.net.Uri) {
-        viewLifecycleOwner.lifecycleScope.launch {
-            try {
-                val db = (requireActivity().application as com.nutritrack.app.NutriApp).database
-                val prefs = com.nutritrack.app.utils.PrefsManager(requireContext())
-                val pid = prefs.activeProfileId
-                val ctx = requireContext()
-                val csv = when (csvType) {
-                    "measures" -> com.nutritrack.app.utils.CsvExporter.measurementsCsv(ctx, db, pid)
-                    "water"    -> com.nutritrack.app.utils.CsvExporter.waterCsv(ctx, db, pid)
-                    "weight"   -> com.nutritrack.app.utils.CsvExporter.weightCsv(ctx, db, pid)
-                    else       -> com.nutritrack.app.utils.CsvExporter.diaryCsv(ctx, db, pid)
-                }
-                requireContext().contentResolver.openOutputStream(uri)?.use { out ->
-                    // BOM для корректной кириллицы в Excel
-                    out.write(0xEF); out.write(0xBB); out.write(0xBF)
-                    out.write(csv.toByteArray(Charsets.UTF_8))
-                }
-                android.widget.Toast.makeText(requireContext(),
-                    getString(R.string.set_csv_saved), android.widget.Toast.LENGTH_LONG).show()
-            } catch (e: Exception) {
-                android.widget.Toast.makeText(requireContext(),
-                    getString(R.string.err_export, e.message ?: ""), android.widget.Toast.LENGTH_LONG).show()
-            }
-        }
-    }
 
     private fun fontLabel(key: String): String = when (key) {
         "inter"      -> "Inter"
@@ -721,63 +633,8 @@ class SettingsFragment : Fragment() {
             .show()
     }
 
-    private fun confirmImport(uri: android.net.Uri) {
-        androidx.appcompat.app.AlertDialog.Builder(requireContext())
-            .setTitle(getString(R.string.restore_title))
-            .setMessage(getString(R.string.restore_msg))
-            .setPositiveButton(getString(R.string.restore_btn)) { _, _ ->
-                // Зашифрованный файл — сначала пароль
-                if (BackupManager.isEncrypted(requireContext(), uri)) askImportPassword(uri)
-                else doImport(uri, null)
-            }
-            .setNegativeButton(getString(R.string.dlg_cancel), null)
-            .show()
-    }
 
-    private fun askImportPassword(uri: android.net.Uri) {
-        val input = android.widget.EditText(requireContext()).apply {
-            inputType = android.text.InputType.TYPE_CLASS_TEXT or
-                    android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
-            hint = getString(R.string.bk_pw_hint)
-        }
-        val container = android.widget.FrameLayout(requireContext()).apply {
-            val pad = (20 * resources.displayMetrics.density).toInt()
-            setPadding(pad, pad / 2, pad, 0)
-            addView(input)
-        }
-        val d = androidx.appcompat.app.AlertDialog.Builder(requireContext())
-            .setTitle(getString(R.string.bk_enter_pw_title))
-            .setView(container)
-            .setPositiveButton(getString(R.string.restore_btn)) { _, _ ->
-                doImport(uri, input.text.toString())
-            }
-            .setNegativeButton(getString(R.string.dlg_cancel), null)
-            .create()
-        d.setOnShowListener { com.nutritrack.app.utils.DialogHelper.tint(d, requireContext()) }
-        d.show()
-    }
 
-    private fun doImport(uri: android.net.Uri, password: String?) {
-        viewLifecycleOwner.lifecycleScope.launch {
-            val result = BackupManager.import(requireContext(), uri, password)
-            result.onSuccess { count ->
-                android.widget.Toast.makeText(requireContext(),
-                    getString(R.string.bk_restored_fmt, count),
-                    android.widget.Toast.LENGTH_LONG).show()
-            }.onFailure { err ->
-                when (err) {
-                    is BackupManager.WrongPasswordException -> {
-                        android.widget.Toast.makeText(requireContext(),
-                            getString(R.string.bk_wrong_pw), android.widget.Toast.LENGTH_LONG).show()
-                        askImportPassword(uri)   // дать попробовать ещё раз
-                    }
-                    is BackupManager.PasswordRequiredException -> askImportPassword(uri)
-                    else -> android.widget.Toast.makeText(requireContext(),
-                        getString(R.string.err_import, err.message ?: ""), android.widget.Toast.LENGTH_LONG).show()
-                }
-            }
-        }
-    }
 
     override fun onDestroyView() { super.onDestroyView(); _binding = null }
 
@@ -896,40 +753,6 @@ class SettingsFragment : Fragment() {
 
     // Авто-бэкап: опциональный пароль (хранится в Keystore-хранилище)
 
-    private fun askAutoBackupPassword() {
-        val ctx = requireContext()
-        val input = android.widget.EditText(ctx).apply {
-            inputType = android.text.InputType.TYPE_CLASS_TEXT or
-                android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
-            hint = getString(R.string.bk_pw_hint)
-        }
-        val d = androidx.appcompat.app.AlertDialog.Builder(ctx)
-            .setTitle(getString(R.string.bk_pw_title))
-            .setMessage(getString(R.string.auto_backup_pw_msg))
-            .setView(wrap(input))
-            .setPositiveButton(getString(R.string.bk_encrypt)) { _, _ ->
-                com.nutritrack.app.utils.SecurePrefs.setString(ctx,
-                    com.nutritrack.app.utils.AutoBackupWorker.KEY_PASSWORD,
-                    input.text.toString().ifEmpty { null })
-                enableAutoBackup()
-            }
-            .setNegativeButton(getString(R.string.bk_plain)) { _, _ ->
-                com.nutritrack.app.utils.SecurePrefs.setString(ctx,
-                    com.nutritrack.app.utils.AutoBackupWorker.KEY_PASSWORD, null)
-                enableAutoBackup()
-            }
-            .create()
-        d.setOnShowListener { com.nutritrack.app.utils.DialogHelper.tint(d, ctx) }
-        d.show()
-    }
-
-    private fun enableAutoBackup() {
-        prefs.autoBackupEnabled = true
-        com.nutritrack.app.utils.AutoBackupWorker.schedule(requireContext())
-        _binding?.switchAutoBackup?.isChecked = true
-        android.widget.Toast.makeText(requireContext(),
-            getString(R.string.auto_backup_on), android.widget.Toast.LENGTH_LONG).show()
-    }
 
     // Иконка приложения
 
@@ -1253,82 +1076,8 @@ class SettingsFragment : Fragment() {
         }
     }
 
-    private fun showPdfExportDialog() {
-        if (!com.nutritrack.app.utils.PremiumManager.gate(requireContext(),
-                com.nutritrack.app.utils.PremiumManager.Feature.PDF_REPORTS)) return
-        // Шаг 1 — какие разделы включить
-        val sectionLabels = arrayOf(
-            getString(R.string.pdf_sec_nutrition),
-            getString(R.string.pdf_sec_water),
-            getString(R.string.pdf_sec_weight),
-            getString(R.string.pdf_sec_cost),
-            getString(R.string.pdf_sec_micro),
-            getString(R.string.pdf_sec_measurements)
-        )
-        val checked = booleanArrayOf(true, true, true, true, true, true)
-        androidx.appcompat.app.AlertDialog.Builder(requireContext())
-            .setTitle(getString(R.string.pdf_choose_sections))
-            .setMultiChoiceItems(sectionLabels, checked) { _, which, isChecked ->
-                checked[which] = isChecked
-            }
-            .setPositiveButton(getString(R.string.c_next)) { _, _ ->
-                val sections = com.nutritrack.app.utils.PdfReportExporter.Sections(
-                    nutrition = checked[0], water = checked[1], weight = checked[2],
-                    cost = checked[3], micro = checked[4], measurements = checked[5]
-                )
-                showPdfPeriodDialog(sections)
-            }
-            .setNegativeButton(getString(R.string.dlg_cancel), null)
-            .show()
-    }
 
-    private fun showPdfPeriodDialog(sections: com.nutritrack.app.utils.PdfReportExporter.Sections) {
-        val labels = arrayOf(getString(R.string.pdf_period_week), getString(R.string.pdf_period_month))
-        androidx.appcompat.app.AlertDialog.Builder(requireContext())
-            .setTitle(getString(R.string.pdf_choose_period))
-            .setItems(labels) { _, which ->
-                val days = if (which == 0) 7 else 30
-                generateAndSharePdf(days, sections)
-            }
-            .setNegativeButton(getString(R.string.dlg_cancel), null)
-            .show()
-    }
 
-    private fun generateAndSharePdf(
-        days: Int,
-        sections: com.nutritrack.app.utils.PdfReportExporter.Sections
-    ) {
-        // Оборачиваем в выбранную локаль, чтобы PDF был на языке интерфейса,
-        // а не на системном/дефолтном (applicationContext локаль не наследует).
-        val ctx = com.nutritrack.app.utils.LocaleHelper.wrap(requireContext().applicationContext)
-        android.widget.Toast.makeText(requireContext(), getString(R.string.pdf_generating), android.widget.Toast.LENGTH_SHORT).show()
-        viewLifecycleOwner.lifecycleScope.launch {
-            val result = withContext(Dispatchers.IO) {
-                com.nutritrack.app.utils.PdfReportExporter.export(ctx, days, sections)
-            }
-            val file = result.file
-            if (file == null || !file.exists()) {
-                android.widget.Toast.makeText(requireContext(),
-                    getString(R.string.pdf_err_fmt, result.error ?: "?"), android.widget.Toast.LENGTH_LONG).show()
-                return@launch
-            }
-            try {
-                val uri = androidx.core.content.FileProvider.getUriForFile(
-                    requireContext(), "${requireContext().packageName}.provider", file
-                )
-                val intent = Intent(Intent.ACTION_SEND).apply {
-                    type = "application/pdf"
-                    putExtra(Intent.EXTRA_STREAM, uri)
-                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                }
-                startActivity(Intent.createChooser(intent, getString(R.string.pdf_export_title)))
-            } catch (e: Exception) {
-                com.nutritrack.app.utils.AppLog.e("pdf share failed", e)
-                android.widget.Toast.makeText(requireContext(),
-                    getString(R.string.pdf_err_fmt, e.message ?: "?"), android.widget.Toast.LENGTH_LONG).show()
-            }
-        }
-    }
 
     private fun openPrivacyPolicy() {
         val url = getString(R.string.privacy_policy_url)
