@@ -3866,4 +3866,10 @@
     <string name="whatsnew_140_8">📆 분석 화면의 연간 캘린더와 공유용 주간 요약 카드.</string>
     <string name="whatsnew_140_9">🔢 PIN 잠금과 비밀번호 지원 주간 자동 백업.</string>
     <string name="whatsnew_140_10">⚙️ 커스터마이징: 물 버튼, 목표, 시작 화면, 앱 아이콘, 홈 카드.</string>
+
+    <!-- Заголовки новых секций настроек -->
+    <string name="set_sec_look">디자인</string>
+    <string name="set_sub_look">테마·아이콘·화면</string>
+    <string name="set_sec_nutrition">영양·목표</string>
+    <string name="set_sub_nutrition">물 버튼·목표·영양소</string>
 </resources>

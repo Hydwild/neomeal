@@ -3891,4 +3891,10 @@
     <string name="whatsnew_140_8">📆 Годовой календарь прогресса в Аналитике и карточка итогов недели для соцсетей.</string>
     <string name="whatsnew_140_9">🔢 ПИН-код для входа и еженедельный авто-бэкап с паролем.</string>
     <string name="whatsnew_140_10">⚙️ Кастомизация: свои кнопки воды, цели, стартовый экран, иконка приложения и карточки главного.</string>
+
+    <!-- Заголовки новых секций настроек -->
+    <string name="set_sec_look">Оформление</string>
+    <string name="set_sub_look">Тема, иконка, экраны</string>
+    <string name="set_sec_nutrition">Питание и цели</string>
+    <string name="set_sub_nutrition">Кнопки воды, цели, БЖУ</string>
 </resources>

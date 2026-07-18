@@ -166,9 +166,17 @@ class MainActivity : AppCompatActivity() {
             .setNegativeButton(getString(R.string.pin_exit), null)
             .create()
         dialog.setOnShowListener {
-            dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE)
-                .setOnClickListener {
-                    if (com.nutritrack.app.utils.PinLock.check(this, input.text.toString())) {
+            val btn = dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE)
+            btn.setOnClickListener {
+                val pin = input.text.toString()
+                btn.isEnabled = false
+                // PBKDF2 (120k итераций) — тяжёлый, считаем в фоне, чтобы не морозить UI
+                lifecycleScope.launch {
+                    val ok = withContext(Dispatchers.Default) {
+                        com.nutritrack.app.utils.PinLock.check(this@MainActivity, pin)
+                    }
+                    btn.isEnabled = true
+                    if (ok) {
                         lastUnlockMs = System.currentTimeMillis()
                         lockPromptShowing = false
                         binding.root.visibility = android.view.View.VISIBLE
@@ -178,6 +186,7 @@ class MainActivity : AppCompatActivity() {
                         input.setText("")
                     }
                 }
+            }
             dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_NEGATIVE)
                 .setOnClickListener { finish() }
         }

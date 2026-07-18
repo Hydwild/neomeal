@@ -132,8 +132,42 @@
                         android:text="›" android:textColor="?attr/appTextSecondary" android:textSize="22sp"/>
                 </LinearLayout>
 
-                <View android:layout_width="match_parent" android:layout_height="1dp"
-                    android:background="#2A2342" android:layout_marginStart="54dp"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- set_sec_look -->
+        <LinearLayout android:id="@+id/secHeaderLook"
+            android:layout_width="match_parent" android:layout_height="64dp"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:paddingStart="18dp" android:paddingEnd="18dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/section_header_bg"
+            android:clickable="true" android:focusable="true">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="🎨" android:textSize="18sp" android:layout_marginEnd="14dp"/>
+            <LinearLayout android:layout_width="0dp" android:layout_weight="1"
+                android:layout_height="wrap_content" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="@string/set_sec_look" android:textColor="?attr/appTextPrimary"
+                    android:textSize="15sp" android:textStyle="bold"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="@string/set_sub_look" android:textColor="?attr/appTextSecondary"
+                    android:textSize="12sp" android:layout_marginTop="1dp"/>
+            </LinearLayout>
+            <TextView android:id="@+id/tvChevronLook"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="▸" android:textColor="?attr/appTextSecondary" android:textSize="18sp"/>
+        </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/secCardLook"
+            android:visibility="gone"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardBackgroundColor="?attr/appCardBg" app:cardCornerRadius="20dp" app:cardElevation="0dp">
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <!-- Режим темы: авто / светлая / тёмная -->
                 <LinearLayout
@@ -199,6 +233,137 @@
 
                 <View android:layout_width="match_parent" android:layout_height="1dp"
                     android:background="#2A2342" android:layout_marginStart="54dp"/>
+
+                <!-- Material You (только Android 12+, скрывается кодом) -->
+                <LinearLayout
+                    android:id="@+id/rowDynamicColors"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="18dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🎨"
+                        android:textSize="20sp"
+                        android:layout_marginEnd="16dp"/>
+
+                    <LinearLayout android:layout_width="0dp" android:layout_weight="1"
+                        android:layout_height="wrap_content" android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/set_dynamic_colors"
+                            android:textColor="?attr/appTextPrimary"
+                            android:textSize="15sp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/set_dynamic_colors_sub"
+                            android:textColor="?attr/appTextSecondary"
+                            android:textSize="11sp"/>
+                    </LinearLayout>
+
+                    <Switch
+                        android:id="@+id/switchDynamicColors"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="56dp"
+                        android:minHeight="32dp"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:textOn=""
+                        android:textOff=""/>
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp"
+                    android:background="#2A2342" android:layout_marginStart="54dp"/>
+
+                <!-- Иконка приложения -->
+                <LinearLayout android:id="@+id/rowAppIcon"
+                    android:layout_width="match_parent" android:layout_height="60dp"
+                    android:orientation="horizontal" android:gravity="center_vertical"
+                    android:paddingStart="18dp" android:paddingEnd="18dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true" android:focusable="true">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="🖼️" android:textSize="20sp" android:layout_marginEnd="16dp"/>
+                    <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
+                        android:text="@string/set_app_icon" android:textColor="?attr/appTextPrimary" android:textSize="15sp"/>
+                    <TextView android:id="@+id/tvAppIcon"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:textColor="?attr/appTextSecondary" android:textSize="13sp"
+                        android:layout_marginEnd="6dp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="›" android:textColor="?attr/appTextSecondary" android:textSize="22sp"/>
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp"
+                    android:background="#2A2342" android:layout_marginStart="54dp"/>
+
+                <!-- Карточки главного экрана -->
+                <LinearLayout android:id="@+id/rowDashCards"
+                    android:layout_width="match_parent" android:layout_height="60dp"
+                    android:orientation="horizontal" android:gravity="center_vertical"
+                    android:paddingStart="18dp" android:paddingEnd="18dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true" android:focusable="true">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="🧩" android:textSize="20sp" android:layout_marginEnd="16dp"/>
+                    <LinearLayout android:layout_width="0dp" android:layout_weight="1"
+                        android:layout_height="wrap_content" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="@string/set_dash_cards" android:textColor="?attr/appTextPrimary" android:textSize="15sp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="@string/set_dash_cards_sub" android:textColor="?attr/appTextSecondary"
+                            android:textSize="11sp"/>
+                    </LinearLayout>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="›" android:textColor="?attr/appTextSecondary" android:textSize="22sp"/>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- set_sec_nutrition -->
+        <LinearLayout android:id="@+id/secHeaderNutrition"
+            android:layout_width="match_parent" android:layout_height="64dp"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:paddingStart="18dp" android:paddingEnd="18dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/section_header_bg"
+            android:clickable="true" android:focusable="true">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="🍽️" android:textSize="18sp" android:layout_marginEnd="14dp"/>
+            <LinearLayout android:layout_width="0dp" android:layout_weight="1"
+                android:layout_height="wrap_content" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="@string/set_sec_nutrition" android:textColor="?attr/appTextPrimary"
+                    android:textSize="15sp" android:textStyle="bold"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="@string/set_sub_nutrition" android:textColor="?attr/appTextSecondary"
+                    android:textSize="12sp" android:layout_marginTop="1dp"/>
+            </LinearLayout>
+            <TextView android:id="@+id/tvChevronNutrition"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="▸" android:textColor="?attr/appTextSecondary" android:textSize="18sp"/>
+        </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/secCardNutrition"
+            android:visibility="gone"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardBackgroundColor="?attr/appCardBg" app:cardCornerRadius="20dp" app:cardElevation="0dp">
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <!-- Кнопки воды -->
                 <LinearLayout android:id="@+id/rowWaterButtons"
@@ -310,101 +475,6 @@
                         android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:textColor="?attr/appTextSecondary" android:textSize="13sp"
                         android:layout_marginEnd="6dp"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="›" android:textColor="?attr/appTextSecondary" android:textSize="22sp"/>
-                </LinearLayout>
-
-                <!-- Material You (только Android 12+, скрывается кодом) -->
-                <LinearLayout
-                    android:id="@+id/rowDynamicColors"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:paddingStart="18dp"
-                    android:paddingEnd="18dp"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="🎨"
-                        android:textSize="20sp"
-                        android:layout_marginEnd="16dp"/>
-
-                    <LinearLayout android:layout_width="0dp" android:layout_weight="1"
-                        android:layout_height="wrap_content" android:orientation="vertical">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/set_dynamic_colors"
-                            android:textColor="?attr/appTextPrimary"
-                            android:textSize="15sp"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/set_dynamic_colors_sub"
-                            android:textColor="?attr/appTextSecondary"
-                            android:textSize="11sp"/>
-                    </LinearLayout>
-
-                    <Switch
-                        android:id="@+id/switchDynamicColors"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:minWidth="56dp"
-                        android:minHeight="32dp"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:textOn=""
-                        android:textOff=""/>
-                </LinearLayout>
-
-                <View android:layout_width="match_parent" android:layout_height="1dp"
-                    android:background="#2A2342" android:layout_marginStart="54dp"/>
-
-                <!-- Иконка приложения -->
-                <LinearLayout android:id="@+id/rowAppIcon"
-                    android:layout_width="match_parent" android:layout_height="60dp"
-                    android:orientation="horizontal" android:gravity="center_vertical"
-                    android:paddingStart="18dp" android:paddingEnd="18dp"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:clickable="true" android:focusable="true">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="🖼️" android:textSize="20sp" android:layout_marginEnd="16dp"/>
-                    <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content"
-                        android:text="@string/set_app_icon" android:textColor="?attr/appTextPrimary" android:textSize="15sp"/>
-                    <TextView android:id="@+id/tvAppIcon"
-                        android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:textColor="?attr/appTextSecondary" android:textSize="13sp"
-                        android:layout_marginEnd="6dp"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="›" android:textColor="?attr/appTextSecondary" android:textSize="22sp"/>
-                </LinearLayout>
-
-                <View android:layout_width="match_parent" android:layout_height="1dp"
-                    android:background="#2A2342" android:layout_marginStart="54dp"/>
-
-                <!-- Карточки главного экрана -->
-                <LinearLayout android:id="@+id/rowDashCards"
-                    android:layout_width="match_parent" android:layout_height="60dp"
-                    android:orientation="horizontal" android:gravity="center_vertical"
-                    android:paddingStart="18dp" android:paddingEnd="18dp"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:clickable="true" android:focusable="true">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="🧩" android:textSize="20sp" android:layout_marginEnd="16dp"/>
-                    <LinearLayout android:layout_width="0dp" android:layout_weight="1"
-                        android:layout_height="wrap_content" android:orientation="vertical">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="@string/set_dash_cards" android:textColor="?attr/appTextPrimary" android:textSize="15sp"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="@string/set_dash_cards_sub" android:textColor="?attr/appTextSecondary"
-                            android:textSize="11sp"/>
-                    </LinearLayout>
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="›" android:textColor="?attr/appTextSecondary" android:textSize="22sp"/>
                 </LinearLayout>

@@ -3882,4 +3882,10 @@ data class Recipe(
     <string name="whatsnew_140_8">📆 A year-long progress calendar in Analytics and a shareable week summary card.</string>
     <string name="whatsnew_140_9">🔢 PIN lock and weekly auto-backup with a password.</string>
     <string name="whatsnew_140_10">⚙️ Customization: your own water buttons, goals, start screen, app icon and Home cards.</string>
+
+    <!-- Заголовки новых секций настроек -->
+    <string name="set_sec_look">Appearance</string>
+    <string name="set_sub_look">Theme, icon, screens</string>
+    <string name="set_sec_nutrition">Nutrition &amp; goals</string>
+    <string name="set_sub_nutrition">Water buttons, goals, macros</string>
 </resources>

@@ -678,10 +678,17 @@ class SettingsFragment : Fragment() {
     }
 
     private fun applyCustomImage(uri: android.net.Uri) {
-        try {
-            val dest = java.io.File(requireContext().filesDir, "custom_bg.jpg")
-            requireContext().contentResolver.openInputStream(uri)?.use { input ->
-                dest.outputStream().use { output -> input.copyTo(output) }
+        val ctx = requireContext().applicationContext
+        val dest = java.io.File(ctx.filesDir, "custom_bg.jpg")
+        viewLifecycleOwner.lifecycleScope.launch {
+            // Декодирование и сжатие большого фото — в фоновом потоке
+            val ok = withContext(Dispatchers.IO) {
+                com.nutritrack.app.utils.ImageDownscaler.saveScaled(ctx, uri, dest)
+            }
+            if (!ok) {
+                android.widget.Toast.makeText(requireContext(),
+                    getString(R.string.bg_image_error), android.widget.Toast.LENGTH_SHORT).show()
+                return@launch
             }
             val prefs = com.nutritrack.app.utils.PrefsManager(requireContext())
             prefs.customImagePath = dest.absolutePath
@@ -691,9 +698,6 @@ class SettingsFragment : Fragment() {
             (activity as? MainActivity)?.let {
                 com.nutritrack.app.utils.BackgroundHelper.apply(it.findViewById(R.id.rootBackground))
             }
-        } catch (e: Exception) {
-            com.nutritrack.app.utils.AppLog.e("custom bg image failed", e)
-            android.widget.Toast.makeText(requireContext(), getString(R.string.bg_image_error), android.widget.Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -829,10 +833,16 @@ class SettingsFragment : Fragment() {
             .setTitle(getString(R.string.pin_enter_current))
             .setView(wrap(input))
             .setPositiveButton(getString(R.string.c_save)) { _, _ ->
-                val ok = com.nutritrack.app.utils.PinLock.check(requireContext(), input.text.toString())
-                if (!ok) android.widget.Toast.makeText(requireContext(),
-                    getString(R.string.pin_wrong), android.widget.Toast.LENGTH_SHORT).show()
-                onResult(ok)
+                val pin = input.text.toString()
+                // PBKDF2 в фоне, чтобы не подвешивать UI при проверке
+                viewLifecycleOwner.lifecycleScope.launch {
+                    val ok = withContext(Dispatchers.Default) {
+                        com.nutritrack.app.utils.PinLock.check(requireContext(), pin)
+                    }
+                    if (!ok) android.widget.Toast.makeText(requireContext(),
+                        getString(R.string.pin_wrong), android.widget.Toast.LENGTH_SHORT).show()
+                    onResult(ok)
+                }
             }
             .setNegativeButton(getString(R.string.dlg_cancel)) { _, _ -> onResult(false) }
             .create()
@@ -1371,7 +1381,9 @@ class SettingsFragment : Fragment() {
     // Сворачиваемые секции настроек
     private fun setupCollapsibleSections() {
         val sections = listOf(
-            Triple(binding.secHeaderMain,   binding.secCardMain,   binding.tvChevronMain),
+            Triple(binding.secHeaderMain,      binding.secCardMain,      binding.tvChevronMain),
+            Triple(binding.secHeaderLook,      binding.secCardLook,      binding.tvChevronLook),
+            Triple(binding.secHeaderNutrition, binding.secCardNutrition, binding.tvChevronNutrition),
             Triple(binding.secHeaderUi,     binding.secCardUi,     binding.tvChevronUi),
             Triple(binding.secHeaderStreak, binding.secCardStreak, binding.tvChevronStreak),
             Triple(binding.secHeaderCoach,  binding.secCardCoach,  binding.tvChevronCoach),
