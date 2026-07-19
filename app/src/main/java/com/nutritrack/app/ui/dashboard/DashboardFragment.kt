@@ -2,7 +2,6 @@ package com.nutritrack.app.ui.dashboard
 import com.nutritrack.app.utils.navigateAnim
 
 import android.os.Bundle
-import android.text.InputType
 import android.view.*
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
@@ -17,16 +16,12 @@ import com.nutritrack.app.NutriApp
 import com.nutritrack.app.R
 import com.nutritrack.app.adapter.DiaryAdapter
 import com.nutritrack.app.data.db.entity.DiaryEntryEntity
-import com.nutritrack.app.data.db.entity.ProductEntity
 import com.nutritrack.app.databinding.FragmentDashboardBinding
 import com.nutritrack.app.ui.scanner.BarcodeScannerActivity
-import com.nutritrack.app.utils.DateUtils
 import com.nutritrack.app.utils.PrefsManager
 import com.nutritrack.app.viewmodel.AchievementsViewModel
 import com.nutritrack.app.viewmodel.DashboardViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class DashboardFragment : Fragment() {
 
@@ -41,6 +36,10 @@ class DashboardFragment : Fragment() {
     private lateinit var diaryAdapter: DiaryAdapter
     private lateinit var prefs: PrefsManager
     private lateinit var waterCard: WaterCardController
+    private lateinit var smartInsights: SmartInsightsController
+    private lateinit var diaryEntries: DiaryEntryController
+    private lateinit var scanner: ScannerResultController
+    private lateinit var suggestions: SuggestionsController
 
     private var isCircularMode = true
 
@@ -50,7 +49,7 @@ class DashboardFragment : Fragment() {
     ) { result ->
         if (result.resultCode == android.app.Activity.RESULT_OK) {
             val barcode = result.data?.getStringExtra("barcode")
-            if (!barcode.isNullOrBlank()) lookupBarcode(barcode)
+            if (!barcode.isNullOrBlank()) scanner.lookupBarcode(barcode)
         }
     }
 
@@ -134,6 +133,9 @@ class DashboardFragment : Fragment() {
         )
         applyDisplayMode(animate = false)
         waterCard.setup()
+        smartInsights = SmartInsightsController(this, { _binding }, vm)
+        scanner = ScannerResultController(this) { achievementsVm.checkAchievements() }
+        suggestions = SuggestionsController(this, { _binding }, vm)
         observeData()
         observeFastingTimer()
 
@@ -369,10 +371,11 @@ class DashboardFragment : Fragment() {
     }
 
     private fun setupDiaryList() {
+        diaryEntries = DiaryEntryController(this, vm, { _binding }, { diaryAdapter })
         diaryAdapter = DiaryAdapter(
-            onDelete = { entry -> deleteEntryWithUndo(entry) },
-            onEdit   = { entry -> showEditEntryDialog(entry) },
-            onRate   = { entry -> showMealFeedbackDialog(entry) }
+            onDelete = { entry -> diaryEntries.deleteEntryWithUndo(entry) },
+            onEdit   = { entry -> diaryEntries.showEditEntryDialog(entry) },
+            onRate   = { entry -> diaryEntries.showMealFeedbackDialog(entry) }
         )
         binding.rvDiary.apply {
             layoutManager = LinearLayoutManager(requireContext())
@@ -381,126 +384,10 @@ class DashboardFragment : Fragment() {
         }
     }
 
- /** Диалог изменения количества грамм у записи дневника. */
-    private fun showEditEntryDialog(entry: com.nutritrack.app.data.db.entity.DiaryEntryEntity) {
-        // Определяем единицу по названию (напиток мл)
-        val isLiquid = com.nutritrack.app.utils.ProductUnits.isLiquidName(entry.productName)
-        val unit = getString(if (isLiquid) R.string.u_ml else R.string.u_g)
 
-        val input = android.widget.EditText(requireContext()).apply {
-            inputType = android.text.InputType.TYPE_CLASS_NUMBER or
-                    android.text.InputType.TYPE_NUMBER_FLAG_DECIMAL
-            setText(entry.grams.toInt().toString())
-            setSelection(text.length)
-        }
-        val container = android.widget.FrameLayout(requireContext()).apply {
-            val pad = (16 * resources.displayMetrics.density).toInt()
-            setPadding(pad, pad, pad, 0)
-            addView(input)
-        }
-        androidx.appcompat.app.AlertDialog.Builder(requireContext())
-            .setTitle(getString(R.string.ds_edit_title_fmt, entry.productName))
-            .setMessage(if (isLiquid) getString(R.string.ds_how_much_ml) else getString(R.string.ds_how_much_g))
-            .setView(container)
-            .setPositiveButton(getString(R.string.c_save)) { _, _ ->
-                val newGrams = input.text.toString().toFloatOrNull()
-                if (newGrams != null && newGrams > 0f) {
-                    vm.updateDiaryEntry(entry, newGrams)
-                    Toast.makeText(requireContext(),
-                        "✅ ${entry.productName} — ${newGrams.toInt()}$unit",
-                        Toast.LENGTH_SHORT).show()
-                }
-            }
-            .setNeutralButton(getString(R.string.c_delete)) { _, _ -> deleteEntryWithUndo(entry) }
-            .setNegativeButton(getString(R.string.c_cancel), null)
-            .show()
-    }
 
- /** Удаление записи дневника со снекбаром «Отменить» (вместо подтверждения). */
-    private fun deleteEntryWithUndo(entry: com.nutritrack.app.data.db.entity.DiaryEntryEntity) {
-        vm.deleteDiaryEntry(entry)
-        val name = com.nutritrack.app.utils.ProductNameLabel.of(requireContext(), entry.productName)
-        val bar = com.google.android.material.snackbar.Snackbar.make(
-            binding.root,
-            getString(R.string.sb_deleted_fmt, name),
-            com.google.android.material.snackbar.Snackbar.LENGTH_LONG
-        ).setAction(R.string.c_undo) { vm.restoreDiaryEntry(entry) }
-        activity?.findViewById<View>(R.id.bottom_navigation)
-            ?.takeIf { it.visibility == View.VISIBLE }
-            ?.let { bar.anchorView = it }
-        bar.show()
-    }
 
- /** Диалог оценки самочувствия после продукта (4 уровня). */
-    private fun showMealFeedbackDialog(entry: com.nutritrack.app.data.db.entity.DiaryEntryEntity) {
-        val ratings = listOf(
-            "great" to getString(R.string.feedback_great),
-            "ok" to getString(R.string.feedback_ok),
-            "discomfort" to getString(R.string.feedback_discomfort),
-            "bad" to getString(R.string.feedback_bad)
-        )
-        val labels = ratings.map { it.second }.toTypedArray()
-        val name = com.nutritrack.app.utils.ProductNameLabel.of(requireContext(), entry.productName)
-        androidx.appcompat.app.AlertDialog.Builder(requireContext())
-            .setTitle(getString(R.string.feedback_title_fmt, name))
-            .setItems(labels) { _, which ->
-                val rating = ratings[which].first
-                saveMealFeedback(entry, rating)
-            }
-            .setNegativeButton(getString(R.string.c_cancel), null)
-            .show()
-    }
 
-    private fun saveMealFeedback(entry: com.nutritrack.app.data.db.entity.DiaryEntryEntity, rating: String) {
-        val ctx = requireContext().applicationContext
-        val profileId = prefs.activeProfileId
-        viewLifecycleOwner.lifecycleScope.launch {
-            withContext(Dispatchers.IO) {
-                (ctx as NutriApp).database.mealFeedbackDao().insert(
-                    com.nutritrack.app.data.db.entity.MealFeedbackEntity(
-                        productId = entry.productId,
-                        productName = entry.productName,
-                        rating = rating,
-                        date = com.nutritrack.app.utils.DateUtils.today(),
-                        profileId = profileId
-                    )
-                )
-            }
-            android.widget.Toast.makeText(requireContext(),
-                getString(R.string.feedback_saved), android.widget.Toast.LENGTH_SHORT).show()
-            // Сразу обновим подсказки
-            vm.todayEntries.value?.let { refreshDiaryWarnings(it) }
-        }
-    }
-
- /** Собирает предупреждения: превышение нормы (как раньше) + проблемные продукты. */
-    private fun refreshDiaryWarnings(entries: List<com.nutritrack.app.data.db.entity.DiaryEntryEntity>) {
-        val base = com.nutritrack.app.utils.NutritionWarnings.analyze(requireContext(), entries).toMutableMap()
-        val ctx = requireContext().applicationContext
-        val profileId = prefs.activeProfileId
-        viewLifecycleOwner.lifecycleScope.launch {
-            val problemEntryIds = withContext(Dispatchers.IO) {
-                val dao = (ctx as NutriApp).database.mealFeedbackDao()
-                val result = mutableListOf<Long>()
-                // Уникальные продукты в списке проверяем число негативных оценок
-                val byProduct = entries.groupBy { it.productId }
-                for ((pid, group) in byProduct) {
-                    if (pid <= 0) continue
-                    if (dao.negativeCountForProduct(pid, profileId) >= 2) {
-                        group.forEach { result.add(it.id) }
-                    }
-                }
-                result
-            }
-            val warningText = getString(R.string.feedback_problem_hint)
-            problemEntryIds.forEach { id ->
-                val existing = base[id]
-                // Не перезаписываем предупреждение о норме, а дополняем его
-                base[id] = if (existing.isNullOrBlank()) warningText else "$existing\n$warningText"
-            }
-            diaryAdapter.setWarnings(base)
-        }
-    }
 
  /** Открыть новый экран календаря-истории. Дата вернётся через savedStateHandle. */
     private fun showDatePicker() {
@@ -534,9 +421,9 @@ class DashboardFragment : Fragment() {
     private fun observeData() {
         vm.activeProfile.observe(viewLifecycleOwner) { profile ->
             updateHeader(profile?.name, profile?.photoUri)
-            loadStreak()
-            loadSmartGreeting()
-            checkSmartCoach()
+            smartInsights.loadStreak()
+            smartInsights.loadSmartGreeting()
+            smartInsights.checkSmartCoach()
         }
         vm.calorieGoal.observe(viewLifecycleOwner) { goal ->
             binding.progressCalories.max = goal
@@ -556,7 +443,7 @@ class DashboardFragment : Fragment() {
             binding.tvDiaryEmpty.visibility = if (entries.isEmpty()) View.VISIBLE else View.GONE
             binding.rvDiary.visibility      = if (entries.isEmpty()) View.GONE else View.VISIBLE
             binding.tvDiaryHint.visibility  = if (entries.isEmpty()) View.GONE else View.VISIBLE
-            refreshDiaryWarnings(entries)
+            diaryEntries.refreshDiaryWarnings(entries)
 
             val cal   = entries.sumOf { it.calories.toDouble() }.toFloat()
             val prot  = entries.sumOf { it.protein.toDouble() }.toFloat()
@@ -581,7 +468,7 @@ class DashboardFragment : Fragment() {
             }
             binding.tvFiberSugar.visibility = if (parts.isEmpty()) View.GONE else View.VISIBLE
             binding.tvFiberSugar.text = parts.joinToString("  ·  ")
-            updateSuggestions((goal - cal.toInt()), entries.isNotEmpty())
+            suggestions.update((goal - cal.toInt()), entries.isNotEmpty())
             updateDayCost(entries)
         }
 
@@ -675,103 +562,8 @@ class DashboardFragment : Fragment() {
         }
     }
 
-    // Стрик с учётом заморозок и отпуска
-    private fun loadStreak() {
-        val db = (requireActivity().application as com.nutritrack.app.NutriApp).database
-        val prefs = com.nutritrack.app.utils.PrefsManager(requireContext())
-        val profileId = prefs.activeProfileId
-        val goal = vm.calorieGoal.value ?: 2000
 
-        viewLifecycleOwner.lifecycleScope.launch(kotlinx.coroutines.Dispatchers.IO) {
-            val fmt = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd")
-            val end = java.time.LocalDate.now()
-            val start = end.minusDays(60)
-            val entries = db.diaryDao().getEntriesForRange(start.format(fmt), end.format(fmt), profileId)
-            val byDay = entries.groupBy { it.date }.mapValues { (_, l) -> l.sumOf { e -> e.calories.toDouble() } }
 
-            val frozen = prefs.frozenDates
-            val vacationOn = prefs.vacationMode
-            val vacStart = prefs.vacationStart
-
-            val shown = com.nutritrack.app.utils.StreakCalculator.calculate(
-                byDay = byDay, goal = goal, end = end,
-                frozen = frozen, vacationOn = vacationOn, vacationStart = vacStart
-            )
-
-            withContext(kotlinx.coroutines.Dispatchers.Main) {
-                val b = _binding ?: return@withContext
-                if ("streak" in prefs.hiddenDashboardCards) {
-                    b.tvStreak.visibility = View.GONE; return@withContext
-                }
-                // ❄️ показывает, что вчера уже спасён заморозкой
-                val frostMark = if (com.nutritrack.app.utils.StreakFreeze.isYesterdayFrozen(prefs)) " ❄️" else ""
-                when {
-                    vacationOn -> {
-                        b.tvStreak.visibility = View.VISIBLE
-                        b.tvStreak.text = getString(R.string.ds_streak_vac)
-                    }
-                    shown >= 2 -> {
-                        b.tvStreak.visibility = View.VISIBLE
-                        b.tvStreak.text = getString(R.string.ds_streak_fmt, shown, daysWord(shown)) + frostMark
-                    }
-                    else -> b.tvStreak.visibility = View.GONE
-                }
-                // Тап по стрику — заморозка вчерашнего дня прямо с главного
-                b.tvStreak.setOnClickListener {
-                    if (prefs.vacationMode) return@setOnClickListener
-                    com.nutritrack.app.utils.StreakFreeze.requestFreeze(
-                        requireContext(), prefs, it
-                    ) { loadStreak() }
-                }
-            }
-        }
-    }
-
-    private fun daysWord(n: Int): String {
-        val m10 = n % 10; val m100 = n % 100
-        return when {
-            m10 == 1 && m100 != 11 -> getString(R.string.ds_day1)
-            m10 in 2..4 && m100 !in 12..14 -> getString(R.string.ds_day24)
-            else -> getString(R.string.ds_day5)
-        }
-    }
-
-    // Умное приветствие по вчерашним данным
-    private fun loadSmartGreeting() {
-        val db = (requireActivity().application as com.nutritrack.app.NutriApp).database
-        val prefs = com.nutritrack.app.utils.PrefsManager(requireContext())
-        val profileId = prefs.activeProfileId
-        val calGoal = vm.calorieGoal.value ?: 2000
-        val waterGoal = vm.waterGoal.value ?: 2000
-
-        viewLifecycleOwner.lifecycleScope.launch(kotlinx.coroutines.Dispatchers.IO) {
-            val fmt = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd")
-            val yesterday = java.time.LocalDate.now().minusDays(1).format(fmt)
-            val entries = db.diaryDao().getEntriesForDateAndProfile(yesterday, profileId)
-            val yCal = entries.sumOf { it.calories.toDouble() }
-            val yWater = try {
-                db.waterDao().getWaterForDateSync(yesterday, profileId).sumOf { it.amountMl }
-            } catch (_: Exception) { -1 }
-
-            val insight: String? = when {
-                entries.isEmpty() -> null
-                yWater in 1 until (waterGoal * 0.6).toInt() ->
-                    getString(R.string.ds_y_water_low)
-                yCal > 0 && (yCal / calGoal) in 0.85..1.10 ->
-                    getString(R.string.ds_y_ok)
-                yCal > calGoal * 1.25 ->
-                    getString(R.string.ds_y_much)
-                yCal in 1.0..(calGoal * 0.6) ->
-                    getString(R.string.ds_y_low)
-                else -> null
-            }
-
-            withContext(kotlinx.coroutines.Dispatchers.Main) {
-                val b = _binding ?: return@withContext
-                if (insight != null) b.tvGreetingSub.text = insight
-            }
-        }
-    }
 
  /** Bottom-sheet добавления еды — логика вынесена в AddFoodSheet. */
     private fun showAddFoodDialog() {
@@ -790,194 +582,5 @@ class DashboardFragment : Fragment() {
     }
 
     private fun dp(v: Int): Int = (v * resources.displayMetrics.density).toInt()
-
-    /** Карточка подсказок: чем добить норму + усилить блюдо. */
-    private fun updateSuggestions(remaining: Int, hasEntries: Boolean) {
-        val b = _binding ?: return
-        if ("suggestions" in prefs.hiddenDashboardCards) {
-            b.cardSuggestions.visibility = View.GONE; return
-        }
-        val profile = vm.activeProfile.value
-        val allergens = com.nutritrack.app.utils.AllergenData.parse(profile?.allergens)
-        val diets = profile?.diets?.split(";")?.map { it.trim() }?.filter { it.isNotEmpty() } ?: emptyList()
-
-        val fill = com.nutritrack.app.utils.CalorieSuggester.fillGap(requireContext(), remaining, allergens, diets)
-        val boost = com.nutritrack.app.utils.CalorieSuggester.boosters(requireContext(), allergens, diets)
-
-        // Показываем добор, если есть заметный остаток; иначе усилители (если уже ел)
-        val (list, subtitle) = when {
-            remaining > 150 -> fill to getString(R.string.sug_sub_fill_fmt, remaining)
-            hasEntries -> boost to getString(R.string.sug_sub_boost)
-            else -> emptyList<com.nutritrack.app.utils.CalorieSuggester.Suggestion>() to ""
-        }
-        if (list.isEmpty()) { b.cardSuggestions.visibility = View.GONE; return }
-
-        b.cardSuggestions.visibility = View.VISIBLE
-        b.tvSuggestSub.text = subtitle
-        val container = b.containerSuggest
-        container.removeAllViews()
-        list.take(5).forEach { s -> container.addView(buildSuggestionRow(s)) }
-
-        // Сворачивание/разворачивание по нажатию на заголовок (по умолчанию свёрнуто)
-        b.rowSuggestHeader.setOnClickListener {
-            val show = b.suggestBody.visibility != View.VISIBLE
-            b.suggestBody.visibility = if (show) View.VISIBLE else View.GONE
-            b.tvSuggestArrow.text = if (show) "▾" else "▸"
-        }
-    }
-
-    private fun buildSuggestionRow(s: com.nutritrack.app.utils.CalorieSuggester.Suggestion): View {
-        val ctx = requireContext()
-        val row = android.widget.LinearLayout(ctx).apply {
-            orientation = android.widget.LinearLayout.HORIZONTAL
-            gravity = android.view.Gravity.CENTER_VERTICAL
-            setPadding(0, dp(6), 0, dp(6))
-        }
-        row.addView(android.widget.TextView(ctx).apply {
-            text = s.emoji; textSize = 18f; setPadding(0, 0, dp(12), 0)
-        })
-        val mid = android.widget.LinearLayout(ctx).apply {
-            orientation = android.widget.LinearLayout.VERTICAL
-            layoutParams = android.widget.LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
-        }
-        mid.addView(android.widget.TextView(ctx).apply {
-            text = s.title
-            setTextColor(ctx.getColor(R.color.white)); textSize = 14f
-        })
-        if (s.conflict && s.conflictReason != null) {
-            mid.addView(android.widget.TextView(ctx).apply {
-                text = "⚠ " + s.conflictReason
-                setTextColor(android.graphics.Color.parseColor("#FFB74D")); textSize = 11f
-                setPadding(0, dp(1), 0, 0)
-            })
-        }
-        row.addView(mid)
-        row.addView(android.widget.TextView(ctx).apply {
-            text = getString(R.string.sug_kcal_prot_fmt, s.kcal, s.proteinG)
-            setTextColor(ctx.getColor(R.color.color_accent)); textSize = 13f
-            setTypeface(typeface, android.graphics.Typeface.BOLD)
-        })
-        return row
-    }
-
-    // Сканер штрихкодов: поиск в Open Food Facts
-
-    private fun lookupBarcode(barcode: String) {
-        viewLifecycleOwner.lifecycleScope.launch {
-            try {
-                val p = com.nutritrack.app.data.repository.FoodSearchRepository.byBarcode(barcode)
-                val n = p?.nutriments
-                if (p != null && n != null) {
-                    showFoundProductDialog(
-                        name     = p.bestName(),
-                        calories = (n.energyKcal100g ?: 0.0).toFloat(),
-                        protein  = (n.proteins100g ?: 0.0).toFloat(),
-                        fat      = (n.fat100g ?: 0.0).toFloat(),
-                        carbs    = (n.carbs100g ?: 0.0).toFloat(),
-                        fiber    = n.fiber100g?.toFloat(),
-                        sugar    = n.sugars100g?.toFloat(),
-                        startGrams = p.servingGrams() ?: 100
-                    )
-                } else {
-                    Toast.makeText(requireContext(),
-                        getString(R.string.ds_not_in_base), Toast.LENGTH_LONG).show()
-                }
-            } catch (e: Exception) {
-                com.nutritrack.app.utils.AppLog.e("barcode lookup failed", e)
-                Toast.makeText(requireContext(),
-                    getString(R.string.ds_net_error), Toast.LENGTH_LONG).show()
-            }
-        }
-    }
-
-    private fun showFoundProductDialog(
-        name: String, calories: Float, protein: Float, fat: Float, carbs: Float,
-        fiber: Float? = null, sugar: Float? = null,
-        startGrams: Int = 100
-    ) {
-        val input = EditText(requireContext()).apply {
-            inputType = InputType.TYPE_CLASS_NUMBER
-            hint = getString(R.string.ds_grams_hint)
-            setText(startGrams.toString())
-            setPadding(50, 30, 50, 30)
-        }
-        AlertDialog.Builder(requireContext())
-            .setTitle(name)
-            .setMessage(getString(R.string.ds_per100_fmt, calories.toInt(), protein.toInt(), fat.toInt(), carbs.toInt()))
-            .setView(input)
-            .setPositiveButton(getString(R.string.c_add)) { _, _ ->
-                val grams = input.text.toString().toFloatOrNull() ?: 100f
-                lifecycleScope.launch(Dispatchers.IO) {
-                    val db = (requireActivity().application as NutriApp).database
-                    val profile = db.profileDao().getActiveProfileSync() ?: return@launch
-                    val factor = grams / 100f
-
-                    // Сохраняем в свою базу как кастомный продукт
-                    db.productDao().insertProduct(
-                        ProductEntity(
-                            name = name, calories = calories, protein = protein,
-                            fat = fat, carbs = carbs, category = "Сканер", isCustom = true,
-                            fiber = fiber, sugar = sugar
-                        )
-                    )
-                    // Пишем в дневник (+ дублируем в Health Connect, если включено)
-                    val entry = DiaryEntryEntity(
-                        productId = 0, productName = name, grams = grams,
-                        calories = calories * factor, protein = protein * factor,
-                        fat = fat * factor, carbs = carbs * factor,
-                        fiber = fiber?.times(factor), sugar = sugar?.times(factor),
-                        date = DateUtils.today(), profileId = profile.id
-                    )
-                    db.diaryDao().insert(entry)
-                    com.nutritrack.app.utils.HealthConnectWriter.writeDiaryEntry(requireContext().applicationContext, entry)
-                    withContext(Dispatchers.Main) {
-                        Toast.makeText(requireContext(),
-                            getString(R.string.ds_added2_fmt, name, grams.toInt()), Toast.LENGTH_SHORT).show()
-                        achievementsVm.checkAchievements()
-                    }
-                }
-            }
-            .setNegativeButton(getString(R.string.c_cancel), null)
-            .show()
-    }
-
-    //  Умный тренер
-    private fun checkSmartCoach() {
-        val prefs = com.nutritrack.app.utils.PrefsManager(requireContext())
-        if (!prefs.smartCoachEnabled) return
-        val fmt = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd")
-        val today = java.time.LocalDate.now()
-        val last = prefs.lastCoachCheck
-        if (last.isNotEmpty() &&
-            java.time.temporal.ChronoUnit.DAYS.between(java.time.LocalDate.parse(last, fmt), today) < 14) return
-
-        val profile = vm.activeProfile.value ?: return
-        val db = (requireActivity().application as com.nutritrack.app.NutriApp).database
-
-        viewLifecycleOwner.lifecycleScope.launch(kotlinx.coroutines.Dispatchers.IO) {
-            val history = db.weightDao().getAllWeightSync(profile.id)
-            val s = com.nutritrack.app.utils.SmartCoach.suggest(requireContext(), profile.goal, history)
-            withContext(kotlinx.coroutines.Dispatchers.Main) {
-                if (_binding == null) return@withContext
-                if (s == null) { prefs.lastCoachCheck = today.format(fmt); return@withContext }
-                val sign = if (s.deltaKcal > 0) "+" else ""
-                androidx.appcompat.app.AlertDialog.Builder(requireContext())
-                    .setTitle(getString(R.string.ds_coach_title))
-                    .setMessage(s.message + getString(R.string.ds_coach_new_norm_fmt,
-                        (vm.calorieGoal.value ?: 2000) + s.deltaKcal))
-                    .setPositiveButton(getString(R.string.ds_coach_apply_fmt, "$sign${s.deltaKcal}")) { _, _ ->
-                        prefs.calorieAdjustment += s.deltaKcal
-                        com.nutritrack.app.utils.CalorieCalculator.adjustment = prefs.calorieAdjustment
-                        prefs.lastCoachCheck = today.format(fmt)
-                        com.nutritrack.app.utils.HapticHelper.success(view)
-                        android.widget.Toast.makeText(requireContext(),
-                            getString(R.string.ds_coach_updated), android.widget.Toast.LENGTH_SHORT).show()
-                        requireActivity().recreate()
-                    }
-                    .setNegativeButton(getString(R.string.ds_coach_later)) { _, _ -> prefs.lastCoachCheck = today.format(fmt) }
-                    .show()
-            }
-        }
-    }
 
 }
