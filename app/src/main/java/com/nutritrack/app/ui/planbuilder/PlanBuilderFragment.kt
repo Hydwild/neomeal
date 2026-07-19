@@ -31,6 +31,8 @@ class PlanBuilderFragment : Fragment() {
     private var selectedGoal: String? = null
     private var selectedDiet: String = "none"
     private var lastPlan: MealPlanGenerator.WeekPlan? = null
+    // Дневная норма калорий для подгонки меню: ручная цель либо расчёт по профилю.
+    private var calorieTarget: Int? = null
 
     private val prefs by lazy { com.nutritrack.app.utils.PrefsManager(requireContext()) }
 
@@ -57,6 +59,18 @@ class PlanBuilderFragment : Fragment() {
         binding.dietDiabetic.setOnClickListener   { selectDiet("diabetic") }
         binding.dietAllergic.setOnClickListener   { selectDiet("allergic") }
         selectDiet("none")
+
+        // Считаем дневную норму заранее (ручная цель или расчёт по активному профилю),
+        // чтобы генератор подгонял калорийность меню под неё.
+        viewLifecycleOwner.lifecycleScope.launch {
+            val manual = prefs.manualCalorieGoal
+            calorieTarget = if (manual > 0) manual else withContext(kotlinx.coroutines.Dispatchers.IO) {
+                val db = (requireActivity().application as com.nutritrack.app.NutriApp).database
+                db.profileDao().getActiveProfileSync()?.let {
+                    com.nutritrack.app.utils.CalorieCalculator.calculateDailyGoal(it, prefs.calorieAdjustment)
+                }
+            }
+        }
 
         binding.btnGenerate.setOnClickListener {
             selectedGoal?.let { generateWeek(it) }
@@ -208,7 +222,7 @@ class PlanBuilderFragment : Fragment() {
     }
 
     private fun generateWeek(goal: String) {
-        val plan = MealPlanGenerator.generate(goal, selectedDiet, prefs.favoriteRecipes)
+        val plan = MealPlanGenerator.generate(goal, selectedDiet, prefs.favoriteRecipes, calorieTarget)
         lastPlan = plan
         binding.containerWeek.removeAllViews()
 

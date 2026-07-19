@@ -45,13 +45,31 @@ object MealPlanGenerator {
         else    -> com.nutritrack.app.R.string.pbg_goal_default
     })
 
+    // Доли дневной нормы калорий по слотам (используются, если задан [dailyCalorieTarget]).
+    private const val SHARE_BREAKFAST = 0.25
+    private const val SHARE_LUNCH = 0.35
+    private const val SHARE_DINNER = 0.30
+    private const val SHARE_SNACK = 0.10
+
  /**
  * Сгенерировать план на 7 дней под цель.
+ *
  * [favorites] — id избранных рецептов: они ставятся в начало ротации,
  * поэтому попадают в первые дни недели.
+ * [dailyCalorieTarget] — если задан, блюда в каждом слоте подбираются так,
+ * чтобы день был ближе к дневной норме (по долям слотов). Если null —
+ * прежняя ротация без калорийной подгонки.
+ *
+ * Разнообразие: блюдо не повторяется в течение недели, пока в пуле есть
+ * неиспользованные варианты; ужин не совпадает с обедом того же дня.
  */
-    fun generate(goal: String, dietKey: String = "none", favorites: Set<String> = emptySet()): WeekPlan {
-        fun pick(meal: String): List<com.nutritrack.app.data.Recipe> {
+    fun generate(
+        goal: String,
+        dietKey: String = "none",
+        favorites: Set<String> = emptySet(),
+        dailyCalorieTarget: Int? = null
+    ): WeekPlan {
+        fun pool(meal: String): List<com.nutritrack.app.data.Recipe> {
             val base = RecipeData.forGoalAndMeal(goal, meal).ifEmpty { RecipeData.forGoal(goal) }
             val filtered = DietFilter.filter(base, dietKey)
             // если под диету ничего не нашлось — берём из всех рецептов, подходящих под диету
@@ -62,19 +80,55 @@ object MealPlanGenerator {
                 // стабильная сортировка: избранные вперёд, порядок внутри групп сохраняется
                 .sortedByDescending { it.id in favorites }
         }
-        val breakfasts = pick("breakfast")
-        val lunches    = pick("lunch")
-        val dinners    = pick("dinner")
-        val snacks     = pick("snack")
+        val breakfasts = pool("breakfast")
+        val lunches    = pool("lunch")
+        val dinners    = pool("dinner")
+        val snacks     = pool("snack")
+
+        // Использованные за неделю id — отдельно по каждому приёму, чтобы блюда,
+        // помеченные несколькими типами, не «съедали» свежесть чужого слота.
+        val usedBreakfast = mutableSetOf<String>()
+        val usedLunch = mutableSetOf<String>()
+        val usedDinner = mutableSetOf<String>()
+        val usedSnack = mutableSetOf<String>()
+
+        fun choose(
+            pool: List<com.nutritrack.app.data.Recipe>,
+            used: MutableSet<String>,
+            slotTarget: Int?,
+            dayIndex: Int,
+            avoid: com.nutritrack.app.data.Recipe? = null
+        ): com.nutritrack.app.data.Recipe? {
+            if (pool.isEmpty()) return null
+            // Избранное — в первые дни: на день 0 отдаём ещё не использованное избранное из пула.
+            if (dayIndex == 0) {
+                pool.firstOrNull { it.id in favorites && it.id !in used }?.let {
+                    used.add(it.id); return it
+                }
+            }
+            // Свежие (не повторявшиеся) кандидаты; если исчерпаны — весь пул (кроме avoid).
+            val fresh = pool.filter { it.id !in used && it.id != avoid?.id }
+            val candidates = fresh.ifEmpty {
+                pool.filter { it.id != avoid?.id }.ifEmpty { pool }
+            }
+            val chosen = if (slotTarget != null) {
+                candidates.minByOrNull { kotlin.math.abs(it.caloriesPerServing - slotTarget) }!!
+            } else {
+                candidates[dayIndex % candidates.size]
+            }
+            used.add(chosen.id)
+            return chosen
+        }
+
+        fun slot(share: Double) = dailyCalorieTarget?.let { (it * share).toInt() }
 
         val days = (0 until 7).map { i ->
-            DayPlan(
-                dayName   = DAY_NAMES[i],
-                breakfast = breakfasts.getOrNull(i % breakfasts.size.coerceAtLeast(1)),
-                lunch     = lunches.getOrNull(i % lunches.size.coerceAtLeast(1)),
-                dinner    = dinners.getOrNull((i + 1) % dinners.size.coerceAtLeast(1)),  // сдвиг чтобы обед≠ужин
-                snack     = if (snacks.isNotEmpty()) snacks[i % snacks.size] else null
-            )
+            val breakfast = choose(breakfasts, usedBreakfast, slot(SHARE_BREAKFAST), i)
+            val lunch     = choose(lunches, usedLunch, slot(SHARE_LUNCH), i)
+            // ужин ≠ обед того же дня
+            val dinner    = choose(dinners, usedDinner, slot(SHARE_DINNER), i, avoid = lunch)
+            val snack     = choose(snacks, usedSnack, slot(SHARE_SNACK), i)
+            DayPlan(DAY_NAMES[i], breakfast, lunch, dinner, snack)
         }
 
         return WeekPlan(goal, days)

@@ -50,14 +50,47 @@ class MealPlanGeneratorTest {
         }
     }
 
-    @Test fun `обед и ужин первого дня различаются`() {
-        // Сдвиг индексов в генераторе должен разводить обед и ужин
+    @Test fun `обед и ужин различаются каждый день`() {
+        // avoid=lunch в генераторе должен разводить обед и ужин во все дни
         repeat(5) {
             val plan = MealPlanGenerator.generate("lose")
-            val day = plan.days.first()
-            if (day.lunch != null && day.dinner != null) {
-                assertTrue(day.lunch!!.id != day.dinner!!.id)
+            plan.days.forEach { day ->
+                if (day.lunch != null && day.dinner != null) {
+                    assertTrue("Обед==ужин в дне ${day.dayName}", day.lunch!!.id != day.dinner!!.id)
+                }
             }
+        }
+    }
+
+    @Test fun `с целью — структура сохраняется`() {
+        val plan = MealPlanGenerator.generate("fit", dailyCalorieTarget = 2000)
+        assertEquals(7, plan.days.size)
+        plan.days.forEach { day ->
+            assertNotNull(day.breakfast)
+            assertNotNull(day.lunch)
+            assertNotNull(day.dinner)
+        }
+    }
+
+    @Test fun `высокая цель тянет к самому калорийному блюду слота`() {
+        // При огромной норме подбор минимизирует |кал − доля|, т.е. берёт максимум пула
+        val pool = RecipeData.forGoalAndMeal("fit", "breakfast")
+            .ifEmpty { RecipeData.forGoal("fit") }
+        val maxCal = pool.maxOf { it.caloriesPerServing }
+        repeat(5) {
+            val plan = MealPlanGenerator.generate("fit", dailyCalorieTarget = 100_000)
+            assertEquals(maxCal, plan.days.first().breakfast!!.caloriesPerServing)
+        }
+    }
+
+    @Test fun `завтрак не повторяется, пока в пуле есть свежие блюда`() {
+        // Первые N дней (N = размер пула завтраков) не должны повторять рецепт
+        val poolSize = RecipeData.forGoalAndMeal("mass", "breakfast")
+            .ifEmpty { RecipeData.forGoal("mass") }.size
+        repeat(5) {
+            val plan = MealPlanGenerator.generate("mass")
+            val firstN = plan.days.take(poolSize).mapNotNull { it.breakfast?.id }
+            assertEquals("Повтор завтрака в пределах свежего пула", firstN.size, firstN.toSet().size)
         }
     }
 }
