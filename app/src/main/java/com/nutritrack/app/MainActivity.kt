@@ -284,23 +284,54 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Скрытие бара при клавиатуре — в общем insets-листенере в onCreate
-        maybeShowWhatsNew(navController)
+        val showedWhatsNew = maybeShowWhatsNew(navController)
+        // Согласие на отчёты о сбоях спрашиваем, когда не показываем «Что нового»
+        // в этот запуск (иначе два окна разом); иначе — при следующем запуске.
+        if (!showedWhatsNew) maybeAskCrashConsent()
     }
 
- /** Показывает «Что нового» один раз после обновления (не на первом запуске). */
-    private fun maybeShowWhatsNew(navController: androidx.navigation.NavController) {
+ /** Показывает «Что нового» один раз после обновления (не на первом запуске). Вернёт true, если показал. */
+    private fun maybeShowWhatsNew(navController: androidx.navigation.NavController): Boolean {
         val prefs = com.nutritrack.app.utils.PrefsManager(this)
         val latest = com.nutritrack.app.utils.WhatsNewData.latestVersion()
         val seen = prefs.lastSeenChangelog
-        when {
+        return when {
             seen.isEmpty() -> {
                 // Первый запуск приложения — не показываем, просто фиксируем версию
                 prefs.lastSeenChangelog = latest
+                false
             }
             seen != latest -> {
                 // Было обновление — покажем экран после отрисовки
                 binding.root.post { navController.navigate(R.id.whatsNewFragment) }
+                true
             }
+            else -> false
+        }
+    }
+
+ /** Разовый запрос согласия на отправку отчётов о сбоях (Crashlytics). По умолчанию сбор выключен. */
+    private fun maybeAskCrashConsent() {
+        val prefs = com.nutritrack.app.utils.PrefsManager(this)
+        if (prefs.crashConsentAsked) return
+        fun apply(enabled: Boolean) {
+            prefs.crashConsentAsked = true
+            prefs.crashReportsConsent = enabled
+            runCatching {
+                com.google.firebase.crashlytics.FirebaseCrashlytics.getInstance()
+                    .isCrashlyticsCollectionEnabled = enabled
+            }
+        }
+        binding.root.post {
+            val d = androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle(getString(R.string.crash_consent_title))
+                .setMessage(getString(R.string.crash_consent_msg))
+                .setCancelable(false)
+                .setPositiveButton(getString(R.string.crash_consent_allow)) { _, _ -> apply(true) }
+                .setNegativeButton(getString(R.string.crash_consent_deny)) { _, _ -> apply(false) }
+                .create()
+            d.setOnShowListener { com.nutritrack.app.utils.DialogHelper.tint(d, this) }
+            d.show()
         }
     }
 

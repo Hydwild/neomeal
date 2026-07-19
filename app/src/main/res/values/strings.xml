@@ -3520,6 +3520,12 @@
     <!-- Запись в Health Connect -->
     <string name="set_hc_write">Запись в Health Connect</string>
     <string name="set_hc_write_sub">Еда, вода и вес будут видны другим приложениям здоровья</string>
+    <string name="set_crash_reports">Отчёты о сбоях</string>
+    <string name="set_crash_reports_sub">Анонимные отчёты о падениях помогают чинить ошибки</string>
+    <string name="crash_consent_title">Помочь с ошибками?</string>
+    <string name="crash_consent_msg">Можно отправлять анонимные отчёты о сбоях приложения — это помогает быстрее находить и чинить ошибки. Личные данные (дневник, вес, продукты) не передаются. Включить можно позже в «Настройки → Данные».</string>
+    <string name="crash_consent_allow">Отправлять</string>
+    <string name="crash_consent_deny">Не отправлять</string>
     <string name="set_hc_write_denied">Нет разрешений на запись — включить не удалось</string>
     <string name="set_hc_unavailable">Health Connect недоступен на этом устройстве</string>
 
@@ -3899,6 +3905,10 @@
     <string name="set_sub_nutrition">Кнопки воды, цели, БЖУ</string>
 
     <!-- Что нового 1.4.1 -->
+    <string name="whatsnew_142_title">Умное меню и порядок в данных</string>
+    <string name="whatsnew_142_1">🍽️ Конструктор меню подбирает блюда под вашу дневную норму калорий и реже повторяется.</string>
+    <string name="whatsnew_142_2">🔎 База продуктов почищена от дублей — поиск чище.</string>
+    <string name="whatsnew_142_3">🛡️ Отчёты о сбоях теперь только с вашего согласия (спросим при первом запуске, тумблер в «Настройки → Данные»).</string>
     <string name="whatsnew_141_title">Стабильность и удобство</string>
     <string name="whatsnew_141_1">🖼️ Тяжёлые фото для фона теперь сжимаются — приложение не тормозит.</string>
     <string name="whatsnew_141_2">🔢 Разблокировка по ПИН-коду стала мгновенной.</string>

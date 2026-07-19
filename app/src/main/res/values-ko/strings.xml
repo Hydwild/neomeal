@@ -3495,6 +3495,12 @@
     <!-- Health Connect 기록 -->
     <string name="set_hc_write">Health Connect에 기록</string>
     <string name="set_hc_write_sub">식사·수분·체중을 다른 건강 앱에서 볼 수 있어요</string>
+    <string name="set_crash_reports">오류 보고서</string>
+    <string name="set_crash_reports_sub">익명 오류 보고서는 버그 수정에 도움이 돼요</string>
+    <string name="crash_consent_title">버그 수정을 도와줄까요?</string>
+    <string name="crash_consent_msg">앱 오류에 대한 익명 보고서를 보낼 수 있어요 — 버그를 더 빨리 찾아 고치는 데 도움이 돼요. 개인 데이터(일지·체중·제품)는 전송되지 않아요. 나중에 설정 → 데이터에서 변경할 수 있어요.</string>
+    <string name="crash_consent_allow">보내기</string>
+    <string name="crash_consent_deny">보내지 않기</string>
     <string name="set_hc_write_denied">쓰기 권한이 없어 켤 수 없었어요</string>
     <string name="set_hc_unavailable">이 기기에서는 Health Connect를 사용할 수 없어요</string>
 
@@ -3874,6 +3880,10 @@
     <string name="set_sub_nutrition">물 버튼·목표·영양소</string>
 
     <!-- Что нового 1.4.1 -->
+    <string name="whatsnew_142_title">똑똑한 식단, 깔끔한 데이터</string>
+    <string name="whatsnew_142_1">🍽️ 식단 구성기가 하루 칼로리 목표에 맞춰 메뉴를 고르고 덜 반복돼요.</string>
+    <string name="whatsnew_142_2">🔎 제품 데이터베이스의 중복을 정리했어요 — 검색이 더 깔끔해요.</string>
+    <string name="whatsnew_142_3">🛡️ 오류 보고서는 이제 동의 기반이에요 — 첫 실행 시 물어보고 설정 → 데이터에서 켜고 끌 수 있어요.</string>
     <string name="whatsnew_141_title">안정성과 편의성</string>
     <string name="whatsnew_141_1">🖼️ 배경 사진이 자동 압축돼요 — 이제 버벅이지 않아요.</string>
     <string name="whatsnew_141_2">🔢 PIN 잠금 해제가 즉시 이루어져요.</string>

@@ -949,6 +949,33 @@
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <!-- Отчёты о сбоях (Crashlytics) — по согласию -->
+                <LinearLayout android:id="@+id/rowCrashReports"
+                    android:layout_width="match_parent" android:layout_height="60dp"
+                    android:orientation="horizontal" android:gravity="center_vertical"
+                    android:paddingStart="18dp" android:paddingEnd="18dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true" android:focusable="true">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="🐞" android:textSize="20sp" android:layout_marginEnd="16dp"/>
+                    <LinearLayout android:layout_width="0dp" android:layout_weight="1"
+                        android:layout_height="wrap_content" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="@string/set_crash_reports" android:textColor="?attr/appTextPrimary" android:textSize="15sp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="@string/set_crash_reports_sub" android:textColor="?attr/appTextPrimary"
+                            android:textSize="11sp" android:alpha="0.7"/>
+                    </LinearLayout>
+                    <Switch android:id="@+id/switchCrashReports"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:minWidth="56dp" android:minHeight="32dp"
+                        android:clickable="false" android:focusable="false"
+                        android:textOn="" android:textOff=""/>
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="1dp"
+                    android:background="#2A2342" android:layout_marginStart="54dp"/>
+
                 <!-- Запись в Health Connect -->
                 <LinearLayout android:id="@+id/rowHcWrite"
                     android:layout_width="match_parent" android:layout_height="60dp"

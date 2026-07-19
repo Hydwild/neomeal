@@ -26,11 +26,13 @@ class NutriApp : Application() {
         // Нативные библиотеки SQLCipher — до первого обращения к БД
         net.sqlcipher.database.SQLiteDatabase.loadLibs(this)
         com.nutritrack.app.utils.AppLog.init(this)
-        // Crashlytics: помечаем версию встроенной базы и собираем краши
+        // Crashlytics: сбор отчётов о сбоях ТОЛЬКО при явном согласии пользователя
+        // (по умолчанию выключен; запрос согласия — при первом запуске в MainActivity).
         runCatching {
             val fc = com.google.firebase.crashlytics.FirebaseCrashlytics.getInstance()
-            fc.isCrashlyticsCollectionEnabled = true
-            fc.setCustomKey("locale", com.nutritrack.app.utils.PrefsManager(this).language)
+            val consent = com.nutritrack.app.utils.PrefsManager(this).crashReportsConsent
+            fc.isCrashlyticsCollectionEnabled = consent
+            if (consent) fc.setCustomKey("locale", com.nutritrack.app.utils.PrefsManager(this).language)
         }
         val p = com.nutritrack.app.utils.PrefsManager(this)
         com.nutritrack.app.utils.CalorieCalculator.adjustment = p.calorieAdjustment

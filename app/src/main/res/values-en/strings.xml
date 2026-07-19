@@ -3511,6 +3511,12 @@ data class Recipe(
     <!-- Health Connect write -->
     <string name="set_hc_write">Write to Health Connect</string>
     <string name="set_hc_write_sub">Meals, water and weight become visible to other health apps</string>
+    <string name="set_crash_reports">Crash reports</string>
+    <string name="set_crash_reports_sub">Anonymous crash reports help us fix bugs</string>
+    <string name="crash_consent_title">Help fix bugs?</string>
+    <string name="crash_consent_msg">You can send anonymous crash reports — this helps us find and fix bugs faster. No personal data (diary, weight, products) is shared. You can change this later in Settings → Data.</string>
+    <string name="crash_consent_allow">Send reports</string>
+    <string name="crash_consent_deny">Don\'t send</string>
     <string name="set_hc_write_denied">Write permissions not granted — could not enable</string>
     <string name="set_hc_unavailable">Health Connect is not available on this device</string>
 
@@ -3890,6 +3896,10 @@ data class Recipe(
     <string name="set_sub_nutrition">Water buttons, goals, macros</string>
 
     <!-- Что нового 1.4.1 -->
+    <string name="whatsnew_142_title">Smarter menu, tidier data</string>
+    <string name="whatsnew_142_1">🍽️ The meal planner now fits dishes to your daily calorie goal and repeats less.</string>
+    <string name="whatsnew_142_2">🔎 The product database was cleaned of duplicates — cleaner search.</string>
+    <string name="whatsnew_142_3">🛡️ Crash reports are now opt-in — we ask on first launch; toggle in Settings → Data.</string>
     <string name="whatsnew_141_title">Stability &amp; polish</string>
     <string name="whatsnew_141_1">🖼️ Heavy background photos are now compressed — no more lag.</string>
     <string name="whatsnew_141_2">🔢 PIN unlock is now instant.</string>

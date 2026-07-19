@@ -255,6 +255,20 @@ class SettingsFragment : Fragment() {
             }
         }
 
+        // Отчёты о сбоях (Crashlytics) — по согласию, по умолчанию выключено
+        binding.switchCrashReports.isChecked = prefs.crashReportsConsent
+        binding.rowCrashReports.setOnClickListener {
+            binding.switchCrashReports.isChecked = !binding.switchCrashReports.isChecked
+        }
+        binding.switchCrashReports.setOnCheckedChangeListener { _, checked ->
+            prefs.crashReportsConsent = checked
+            prefs.crashConsentAsked = true
+            runCatching {
+                com.google.firebase.crashlytics.FirebaseCrashlytics.getInstance()
+                    .isCrashlyticsCollectionEnabled = checked
+            }
+        }
+
         // Режим темы: авто (за системой) / светлая / тёмная
         binding.rowDarkTheme.setOnClickListener { dc.showThemeModePicker() }
 

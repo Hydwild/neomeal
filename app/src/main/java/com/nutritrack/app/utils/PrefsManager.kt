@@ -86,6 +86,17 @@ class PrefsManager(context: Context) {
         get() = prefs.getBoolean("smart_coach_enabled", false)
         set(v) = prefs.edit().putBoolean("smart_coach_enabled", v).apply()
 
+    // Согласие на отправку отчётов о сбоях (Crashlytics). По умолчанию ВЫКЛ —
+    // сбор не идёт, пока пользователь не согласится.
+    var crashReportsConsent: Boolean
+        get() = prefs.getBoolean("crash_reports_consent", false)
+        set(v) = prefs.edit().putBoolean("crash_reports_consent", v).apply()
+
+    // Показывали ли уже запрос согласия на отчёты о сбоях (чтобы не спрашивать повторно).
+    var crashConsentAsked: Boolean
+        get() = prefs.getBoolean("crash_consent_asked", false)
+        set(v) = prefs.edit().putBoolean("crash_consent_asked", v).apply()
+
     var calorieAdjustment: Int
         get() = prefs.getInt("calorie_adjustment", 0)
         set(v) = prefs.edit().putInt("calorie_adjustment", v).apply()
