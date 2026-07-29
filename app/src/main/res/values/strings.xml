@@ -3567,6 +3567,8 @@
     <string name="rr_snooze_30">⏰ Напомним через 30 минут</string>
     <string name="rr_snooze_20">⏰ Напомним через 20 минут</string>
     <string name="rr_meal_done">✅ Приём пищи отмечен!</string>
+    <string name="rr_meal_added_fmt">✅ Добавлено в дневник: %d</string>
+    <string name="rr_meal_marked_empty">✅ Приём отмечен. В плане на сегодня не было продуктов — добавьте их вручную</string>
     <string name="rr_meal_title">Приём пищи</string>
     <string name="rr_meal_msg">Не забудь поесть!</string>
     <string name="rr_reminder">Напоминание</string>

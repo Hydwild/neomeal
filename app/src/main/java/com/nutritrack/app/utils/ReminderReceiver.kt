@@ -67,9 +67,10 @@ class ReminderReceiver : BroadcastReceiver() {
             // Нажата кнопка " Поел"
             ACTION_MEAL_YES -> {
                 val type = intent.getStringExtra(EXTRA_TYPE) ?: "meal"
-                confirmMeal(context, type)
                 cancelNotification(context, intent.getIntExtra(EXTRA_NOTIF_ID, 0))
-                showToast(context, context.getString(R.string.rr_meal_done))
+                // Тост показывает confirmMeal — только после того, как станет известно,
+                // добавились ли продукты в дневник (раньше он врал при пустом плане).
+                confirmMeal(context, type)
             }
 
             // Нажата кнопка "⏰ Позже" (еда)
@@ -92,6 +93,16 @@ class ReminderReceiver : BroadcastReceiver() {
                 val type  = intent.getStringExtra(EXTRA_TYPE)  ?: "meal"
                 val title = intent.getStringExtra(EXTRA_TITLE) ?: context.getString(R.string.rr_reminder)
                 val msg   = intent.getStringExtra(EXTRA_MSG)   ?: ""
+
+                // Напоминание о еде показываем, только если пользователь его включил.
+                // Гасит «фантомные» будильники, оставшиеся в системе от старых версий:
+                // такой будильник не покажет уведомление и не переставит себя на завтра.
+                val isMealSlot = ReminderScheduler.MEAL_SLOTS.any { it.first == type }
+                if (isMealSlot && !PrefsManager(context).mealNotifEnabled(type)) {
+                    ReminderScheduler.cancel(context, type)
+                    return
+                }
+
                 showNotification(context, type, title, msg)
 
                 // Еженедельное напоминание (замеры) — переустановить на +7 дней
@@ -272,9 +283,12 @@ class ReminderReceiver : BroadcastReceiver() {
         // goAsync: дождаться записи в дневник до завершения ресивера
         val pending = goAsync()
         CoroutineScope(Dispatchers.IO).launch {
+            var added = 0
             try {
-                val db        = app.database
-                val profileId = db.profileDao().getActiveProfileSync()?.id ?: 1L
+                val db = app.database
+                // Профиль берём так же, как его читают экраны приложения (prefs),
+                // иначе записи уйдут в чужой профиль и дневник будет выглядеть пустым.
+                val profileId = prefs.activeProfileId
                 val meal      = db.mealPlanDao().getMealPlanByKey(type, DateUtils.today(), profileId)
                 meal?.let { m ->
                     // Получаем продукты приёма пищи и добавляем в дневник
@@ -294,11 +308,17 @@ class ReminderReceiver : BroadcastReceiver() {
                                 mealType    = type
                             )
                         )
+                        added++
                     }
                 }
             } catch (e: Exception) {
-                e.printStackTrace()
+                AppLog.e("confirmMeal failed", e)
             } finally {
+                // Честное сообщение: «добавлено в дневник» — только если реально добавили
+                showToast(context, if (added > 0)
+                    context.getString(R.string.rr_meal_added_fmt, added)
+                else
+                    context.getString(R.string.rr_meal_marked_empty))
                 pending.finish()
             }
         }

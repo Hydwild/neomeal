@@ -170,43 +170,29 @@ class PrefsManager(context: Context) {
         get() = prefs.getString("last_seen_changelog", "") ?: ""
         set(v) = prefs.edit().putString("last_seen_changelog", v).apply()
 
-    // Напоминания (стандартные)
-    var breakfastEnabled: Boolean
-        get() = prefs.getBoolean("reminder_breakfast", true)
-        set(v) = prefs.edit().putBoolean("reminder_breakfast", v).apply()
+    // Напоминания о приёмах пищи.
+    // ЕДИНСТВЕННЫЙ источник правды — ключи meal_notif_<slot>, их ставит ползунок
+    // в «Плане питания». По умолчанию ВЫКЛ: без явного включения пользователем
+    // никаких уведомлений о еде быть не должно.
+    // Время дублируется в meal_notif_time_<slot>, чтобы восстановить будильники
+    // после перезагрузки, не читая БД в BootReceiver.
+    // (Раньше здесь жили отдельные reminder_breakfast/lunch/dinner с default=true,
+    // которые не выключались ни из одного экрана — источник фантомных уведомлений.)
 
-    var breakfastTime: String
-        get() = prefs.getString("reminder_breakfast_time", "08:00") ?: "08:00"
-        set(v) = prefs.edit().putString("reminder_breakfast_time", v).apply()
+    fun mealNotifEnabled(slot: String): Boolean = getBool("meal_notif_$slot", false)
 
-    var lunchEnabled: Boolean
-        get() = prefs.getBoolean("reminder_lunch", true)
-        set(v) = prefs.edit().putBoolean("reminder_lunch", v).apply()
+    fun mealNotifTime(slot: String, default: String): String =
+        getString("meal_notif_time_$slot", default).ifBlank { default }
 
-    var lunchTime: String
-        get() = prefs.getString("reminder_lunch_time", "13:00") ?: "13:00"
-        set(v) = prefs.edit().putString("reminder_lunch_time", v).apply()
-
-    var dinnerEnabled: Boolean
-        get() = prefs.getBoolean("reminder_dinner", true)
-        set(v) = prefs.edit().putBoolean("reminder_dinner", v).apply()
-
-    var dinnerTime: String
-        get() = prefs.getString("reminder_dinner_time", "19:00") ?: "19:00"
-        set(v) = prefs.edit().putString("reminder_dinner_time", v).apply()
+    fun setMealNotif(slot: String, enabled: Boolean, time: String? = null) {
+        setBool("meal_notif_$slot", enabled)
+        if (enabled && !time.isNullOrBlank()) setString("meal_notif_time_$slot", time)
+    }
 
     // Версия встроенной базы продуктов
     var productDbVersion: Int
         get() = prefs.getInt("product_db_version", 0)
         set(v) = prefs.edit().putInt("product_db_version", v).apply()
-    var snackEnabled: Boolean
-        get() = prefs.getBoolean("reminder_snack", false)
-        set(v) = prefs.edit().putBoolean("reminder_snack", v).apply()
-
-
-    var snackTime: String
-        get() = prefs.getString("reminder_snack_time", "16:00") ?: "16:00"
-        set(v) = prefs.edit().putString("reminder_snack_time", v).apply()
 
     // Выбранный питомец (id из PetCatalog, по умолчанию panda)
     var selectedPet: String

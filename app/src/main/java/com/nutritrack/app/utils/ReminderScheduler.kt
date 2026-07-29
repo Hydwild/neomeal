@@ -122,21 +122,51 @@ object ReminderScheduler {
         am.cancel(pending)
     }
 
+    // Слоты приёмов пищи и их время по умолчанию
+    val MEAL_SLOTS = listOf(
+        "breakfast" to "08:00",
+        "lunch"     to "13:00",
+        "dinner"    to "19:00",
+        "snack"     to "16:00"
+    )
+
+    private fun mealTitle(context: Context, slot: String): String = context.getString(when (slot) {
+        "breakfast" -> com.nutritrack.app.R.string.rs_breakfast
+        "lunch"     -> com.nutritrack.app.R.string.rs_lunch
+        "dinner"    -> com.nutritrack.app.R.string.rs_dinner
+        else        -> com.nutritrack.app.R.string.rs_snack
+    })
+
+    private fun mealMsg(context: Context, slot: String): String = context.getString(when (slot) {
+        "breakfast" -> com.nutritrack.app.R.string.rs_breakfast_msg
+        "lunch"     -> com.nutritrack.app.R.string.rs_lunch_msg
+        "dinner"    -> com.nutritrack.app.R.string.rs_dinner_msg
+        else        -> com.nutritrack.app.R.string.rs_snack_msg
+    })
+
+ /**
+ * Привести будильники приёмов пищи в соответствие с ползунками пользователя:
+ * включённые — поставить, выключенные — снять. Вызывается при старте приложения
+ * и после перезагрузки, поэтому же чистит «фантомные» будильники, оставшиеся
+ * от старых версий (там напоминания включались сами по умолчанию).
+ */
+    fun syncMealReminders(context: Context) {
+        val prefs = PrefsManager(context)
+        MEAL_SLOTS.forEach { (slot, defaultTime) ->
+            if (prefs.mealNotifEnabled(slot)) {
+                schedule(context, slot, prefs.mealNotifTime(slot, defaultTime),
+                    mealTitle(context, slot), mealMsg(context, slot))
+            } else {
+                cancel(context, slot)
+            }
+        }
+    }
+
     fun scheduleAll(context: Context) {
         val prefs = PrefsManager(context)
 
-        if (prefs.breakfastEnabled) {
-            schedule(context, "breakfast", prefs.breakfastTime, context.getString(com.nutritrack.app.R.string.rs_breakfast), context.getString(com.nutritrack.app.R.string.rs_breakfast_msg))
-        }
-        if (prefs.lunchEnabled) {
-            schedule(context, "lunch", prefs.lunchTime, context.getString(com.nutritrack.app.R.string.rs_lunch), context.getString(com.nutritrack.app.R.string.rs_lunch_msg))
-        }
-        if (prefs.dinnerEnabled) {
-            schedule(context, "dinner", prefs.dinnerTime, context.getString(com.nutritrack.app.R.string.rs_dinner), context.getString(com.nutritrack.app.R.string.rs_dinner_msg))
-        }
-        if (prefs.snackEnabled) {
-            schedule(context, "snack", prefs.snackTime, context.getString(com.nutritrack.app.R.string.rs_snack), context.getString(com.nutritrack.app.R.string.rs_snack_msg))
-        }
+        syncMealReminders(context)
+
         if (prefs.getBool("water_reminder_enabled", false)) {
             val waterTime = prefs.getString("water_reminder_time", "12:00")
             schedule(context, "water", waterTime, context.getString(com.nutritrack.app.R.string.rr_water_title), context.getString(com.nutritrack.app.R.string.rr_water_msg))

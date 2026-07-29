@@ -51,10 +51,10 @@ class MealPlanFragment : Fragment() {
             val (slot, meal, card) = pendingNotif ?: return@registerForActivityResult
             pendingNotif = null
             if (granted) {
-                prefs.setBool("meal_notif_${slot.key}", true)
                 // Берём актуальное время из UI, а не из захваченного meal
                 val currentTime = card.tvTime.text?.toString()
                     ?.takeIf { it.matches(Regex("\\d{2}:\\d{2}")) } ?: meal.time
+                prefs.setMealNotif(slot.key, true, currentTime)
                 ReminderScheduler.schedule(
                     requireContext(), slot.key, currentTime, meal.name, getString(R.string.pb_time_for, meal.name)
                 )
@@ -270,7 +270,7 @@ class MealPlanFragment : Fragment() {
         refreshDishSubtitle(emptyList())
         b.tvTime.text     = meal.time
 
-        b.switchNotif.isChecked = prefs.getBool("meal_notif_${slot.key}", false)
+        b.switchNotif.isChecked = prefs.mealNotifEnabled(slot.key)
         bindNotifSwitch(b, slot, meal)
 
         b.tvTime.setOnClickListener {
@@ -333,8 +333,8 @@ class MealPlanFragment : Fragment() {
                         requestNotifPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
                     }
                 } else {
-                    prefs.setBool("meal_notif_${slot.key}", true)
-                    ReminderScheduler.schedule(requireContext(), slot.key, currentTime, meal.name, "Время — ${meal.name}!")
+                    prefs.setMealNotif(slot.key, true, currentTime)
+                    ReminderScheduler.schedule(requireContext(), slot.key, currentTime, meal.name, getString(R.string.pb_time_for, meal.name))
                     val now = java.util.Calendar.getInstance()
                     val target = java.util.Calendar.getInstance().apply {
                         val (h, m) = currentTime.split(":").let {
@@ -351,7 +351,7 @@ class MealPlanFragment : Fragment() {
                         "🔔 Напоминание $whenStr", Toast.LENGTH_LONG).show()
                 }
             } else {
-                prefs.setBool("meal_notif_${slot.key}", false)
+                prefs.setMealNotif(slot.key, false)
                 ReminderScheduler.cancel(requireContext(), slot.key)
             }
         }

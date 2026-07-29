@@ -151,8 +151,9 @@ class PlanBuilderFragment : Fragment() {
                     com.nutritrack.app.utils.ReminderScheduler.schedule(
                         requireContext(), key, time, recipe.name, getString(R.string.pb_time_for, recipe.name)
                     )
-                    // Сохраняем флаг — чтобы ползунок в плане питания отобразился включённым
-                    prefs.setBool("meal_notif_$key", true)
+                    // Сохраняем флаг и время — ползунок в плане питания отобразится
+                    // включённым, а будильник переживёт перезагрузку
+                    prefs.setMealNotif(key, true, time)
                 }
             }
             withContext(kotlinx.coroutines.Dispatchers.Main) {

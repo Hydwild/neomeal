@@ -3558,6 +3558,8 @@ data class Recipe(
     <string name="rr_snooze_30">⏰ We\'ll remind you in 30 minutes</string>
     <string name="rr_snooze_20">⏰ We\'ll remind you in 20 minutes</string>
     <string name="rr_meal_done">✅ Meal logged!</string>
+    <string name="rr_meal_added_fmt">✅ Added to diary: %d</string>
+    <string name="rr_meal_marked_empty">✅ Meal marked. Today\'s plan had no items — add them manually</string>
     <string name="rr_meal_title">Meal</string>
     <string name="rr_meal_msg">Don\'t forget to eat!</string>
     <string name="rr_reminder">Reminder</string>

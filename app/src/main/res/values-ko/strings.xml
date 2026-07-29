@@ -3542,6 +3542,8 @@
     <string name="rr_snooze_30">⏰ 30분 후에 다시 알려드릴게요</string>
     <string name="rr_snooze_20">⏰ 20분 후에 다시 알려드릴게요</string>
     <string name="rr_meal_done">✅ 식사 기록 완료!</string>
+    <string name="rr_meal_added_fmt">✅ 일지에 추가됨: %d</string>
+    <string name="rr_meal_marked_empty">✅ 식사를 체크했어요. 오늘 계획에 항목이 없어요 — 직접 추가해 주세요</string>
     <string name="rr_meal_title">식사</string>
     <string name="rr_meal_msg">식사를 잊지 마세요!</string>
     <string name="rr_reminder">알림</string>

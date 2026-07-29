@@ -42,6 +42,11 @@ class NutriApp : Application() {
         com.nutritrack.app.utils.CalorieCalculator.fatPct = p.macroFat
         com.nutritrack.app.utils.CalorieCalculator.carbsPct = p.macroCarbs
         com.nutritrack.app.utils.UserRecipes.load(this)
+        // Приводим будильники приёмов пищи в соответствие с ползунками пользователя.
+        // Снимает «фантомные» напоминания, которые старые версии ставили сами
+        // (reminder_breakfast/lunch/dinner были включены по умолчанию и не
+        // выключались ни из одного экрана).
+        runCatching { com.nutritrack.app.utils.ReminderScheduler.syncMealReminders(this) }
         checkAndRepopulateProducts()
     }
 
