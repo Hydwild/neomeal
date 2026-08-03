@@ -105,7 +105,6 @@ class PlanBuilderFragment : Fragment() {
     private fun loadToPlan(day: MealPlanGenerator.DayPlan, withReminders: Boolean) {
         val db = (requireActivity().application as com.nutritrack.app.NutriApp).database
         val prefs = com.nutritrack.app.utils.PrefsManager(requireContext())
-        val profileId = prefs.activeProfileId
         val today = com.nutritrack.app.utils.DateUtils.today()
 
         // Слот: ключ, дефолтное время, блюдо
@@ -117,6 +116,7 @@ class PlanBuilderFragment : Fragment() {
         )
 
         viewLifecycleOwner.lifecycleScope.launch(kotlinx.coroutines.Dispatchers.IO) {
+            val profileId = com.nutritrack.app.utils.ActiveProfile.id(requireContext(), db)
             mapping.forEach { (key, defTime, recipe) ->
                 if (recipe == null) return@forEach
                 val existing = db.mealPlanDao().getMealPlanByKey(key, today, profileId)

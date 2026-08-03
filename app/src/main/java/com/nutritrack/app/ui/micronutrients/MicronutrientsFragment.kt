@@ -31,8 +31,9 @@ class MicronutrientsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val db = AppDatabase.getInstance(requireContext())
-        val prefs = PrefsManager(requireContext())
-        val profileId = prefs.activeProfileId
+        // Фабрика ViewModel строится синхронно, suspend здесь невозможен —
+        // берём кэш (он синхронизируется при старте и после смены профиля)
+        val profileId = com.nutritrack.app.utils.ActiveProfile.cachedId(requireContext())
 
         vm = androidx.lifecycle.ViewModelProvider(
             this, MicronutrientViewModel.Factory(db, profileId)

@@ -8,6 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import com.nutritrack.app.NutriApp
 import com.nutritrack.app.R
 import com.nutritrack.app.databinding.FragmentDashboardBinding
+import com.nutritrack.app.utils.ActiveProfile
 import com.nutritrack.app.utils.CalorieCalculator
 import com.nutritrack.app.utils.DialogHelper
 import com.nutritrack.app.utils.HapticHelper
@@ -46,9 +47,9 @@ class SmartInsightsController(
     // Серия дней в норме калорий
 
     fun loadStreak() {
-        val profileId = prefs.activeProfileId
         val goal = vm.calorieGoal.value ?: 2000
         scope.launch(Dispatchers.IO) {
+            val profileId = ActiveProfile.id(ctx, db)
             val end = LocalDate.now()
             val start = end.minusDays(60)
             val entries = db.diaryDao().getEntriesForRange(start.format(fmt), end.format(fmt), profileId)
@@ -92,10 +93,10 @@ class SmartInsightsController(
     // Умное приветствие по вчерашним данным
 
     fun loadSmartGreeting() {
-        val profileId = prefs.activeProfileId
         val calGoal = vm.calorieGoal.value ?: 2000
         val waterGoal = vm.waterGoal.value ?: 2000
         scope.launch(Dispatchers.IO) {
+            val profileId = ActiveProfile.id(ctx, db)
             val yesterday = LocalDate.now().minusDays(1).format(fmt)
             val entries = db.diaryDao().getEntriesForDateAndProfile(yesterday, profileId)
             val yCal = entries.sumOf { it.calories.toDouble() }

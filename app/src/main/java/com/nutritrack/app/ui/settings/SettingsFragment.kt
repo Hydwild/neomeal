@@ -493,8 +493,10 @@ class SettingsFragment : Fragment() {
             .setPositiveButton(getString(R.string.clear_btn)) { _, _ ->
                 val app = requireActivity().application as NutriApp
                 val db  = app.database
-                val profileId = prefs.activeProfileId
                 viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+                    // Активный профиль берём из БД: удаление — необратимая
+                    // операция, промахнуться профилем нельзя
+                    val profileId = com.nutritrack.app.utils.ActiveProfile.id(requireContext(), db)
                     // Только активный профиль — раньше deleteAll() стирал
                     // дневник и воду ВСЕХ профилей
                     db.diaryDao().deleteAllForProfile(profileId)

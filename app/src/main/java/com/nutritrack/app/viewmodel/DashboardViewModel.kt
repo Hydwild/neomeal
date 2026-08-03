@@ -165,6 +165,9 @@ class DashboardViewModel(app: Application) : AndroidViewModel(app) {
     fun switchProfile(id: Long, onDone: (() -> Unit)? = null) = viewModelScope.launch {
         db.profileDao().deactivateAll()
         db.profileDao().activateProfile(id)
+        // Освежаем кэш активного профиля, иначе экраны, читающие его синхронно,
+        // остались бы на прежнем профиле
+        com.nutritrack.app.utils.ActiveProfile.sync(getApplication(), db)
         onDone?.invoke()
     }
 

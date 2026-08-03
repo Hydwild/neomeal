@@ -20,10 +20,15 @@ class ProfileViewModel(app: Application) : AndroidViewModel(app) {
         profile?.let { repo.getWeightHistory(it.id) } ?: MutableLiveData(emptyList())
     }
 
-    fun switchProfile(id: Long) = viewModelScope.launch { repo.switchProfile(id) }
-    fun insertProfile(profile: ProfileEntity, onDone: (() -> Unit)? = null) = viewModelScope.launch { repo.insert(profile); onDone?.invoke() }
-    fun updateProfile(profile: ProfileEntity, onDone: (() -> Unit)? = null) = viewModelScope.launch { repo.update(profile); onDone?.invoke() }
-    fun deleteProfile(profile: ProfileEntity) = viewModelScope.launch { repo.delete(profile) }
+    // После любой смены состава/активности профилей освежаем кэш активного id,
+    // иначе экраны, читающие его синхронно, останутся на прежнем профиле
+    private suspend fun syncActive() =
+        com.nutritrack.app.utils.ActiveProfile.sync(getApplication(), db)
+
+    fun switchProfile(id: Long) = viewModelScope.launch { repo.switchProfile(id); syncActive() }
+    fun insertProfile(profile: ProfileEntity, onDone: (() -> Unit)? = null) = viewModelScope.launch { repo.insert(profile); syncActive(); onDone?.invoke() }
+    fun updateProfile(profile: ProfileEntity, onDone: (() -> Unit)? = null) = viewModelScope.launch { repo.update(profile); syncActive(); onDone?.invoke() }
+    fun deleteProfile(profile: ProfileEntity) = viewModelScope.launch { repo.delete(profile); syncActive() }
 
     fun saveWeight(weight: Float, onDone: (() -> Unit)? = null) = viewModelScope.launch {
         val profile = repo.getActiveSync() ?: return@launch

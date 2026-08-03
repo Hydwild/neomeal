@@ -286,9 +286,9 @@ class ReminderReceiver : BroadcastReceiver() {
             var added = 0
             try {
                 val db = app.database
-                // Профиль берём так же, как его читают экраны приложения (prefs),
-                // иначе записи уйдут в чужой профиль и дневник будет выглядеть пустым.
-                val profileId = prefs.activeProfileId
+                // Активный профиль — только из БД (флаг isActive): это то, что
+                // меняет переключение профиля и что читает список дневника.
+                val profileId = ActiveProfile.id(context, db)
                 val meal      = db.mealPlanDao().getMealPlanByKey(type, DateUtils.today(), profileId)
                 meal?.let { m ->
                     // Получаем продукты приёма пищи и добавляем в дневник

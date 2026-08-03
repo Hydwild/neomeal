@@ -100,7 +100,7 @@ class AnalyticsFragment : Fragment() {
             val end = java.time.LocalDate.now()
             val start = end.minusDays(6)
             val entries = db.diaryDao().getEntriesForRange(
-                start.toString(), end.toString(), prefs.activeProfileId)
+                start.toString(), end.toString(), profile.id)
             val byDay = entries.groupBy { it.date }
                 .mapValues { (_, l) -> l.sumOf { e -> e.calories.toDouble() } }
             val daysWithFood = byDay.values.count { it > 0 }
@@ -112,13 +112,13 @@ class AnalyticsFragment : Fragment() {
             var waterSum = 0; var waterDays = 0
             var d = start
             while (!d.isAfter(end)) {
-                val w = db.waterDao().getTotalWaterSync(d.toString(), prefs.activeProfileId)
+                val w = db.waterDao().getTotalWaterSync(d.toString(), profile.id)
                 if (w > 0) { waterSum += w; waterDays++ }
                 d = d.plusDays(1)
             }
             val streak = com.nutritrack.app.utils.StreakCalculator.calculate(
                 byDay = db.diaryDao().getEntriesForRange(
-                    end.minusDays(60).toString(), end.toString(), prefs.activeProfileId)
+                    end.minusDays(60).toString(), end.toString(), profile.id)
                     .groupBy { it.date }
                     .mapValues { (_, l) -> l.sumOf { e -> e.calories.toDouble() } },
                 goal = goal, end = end,
@@ -151,7 +151,7 @@ class AnalyticsFragment : Fragment() {
             val end = java.time.LocalDate.now()
             val start = end.minusDays(370)
             val entries = db.diaryDao().getEntriesForRange(
-                start.toString(), end.toString(), prefs.activeProfileId)
+                start.toString(), end.toString(), profile.id)
             val byDay = entries.groupBy { it.date }
                 .mapValues { (_, l) -> l.sumOf { e -> e.calories.toDouble() } }
             val levels = byDay.mapValues { (_, cal) ->

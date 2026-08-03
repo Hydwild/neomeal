@@ -52,6 +52,9 @@ class NutriApp : Application() {
 
     private fun checkAndRepopulateProducts() {
         appScope.launch {
+            // Кэш активного профиля мог разъехаться с БД (в старых версиях он
+            // вообще не записывался) — чиним при каждом запуске
+            runCatching { com.nutritrack.app.utils.ActiveProfile.sync(this@NutriApp, database) }
             try {
                 val db    = database
                 val prefs = PrefsManager(this@NutriApp)

@@ -126,9 +126,9 @@ class ShoppingListFragment : Fragment() {
 
     private fun loadItems() {
         val db = (requireActivity().application as NutriApp).database
-        val profileId = prefs.activeProfileId
         viewLifecycleOwner.lifecycleScope.launch {
             val list = withContext(Dispatchers.IO) {
+                val profileId = com.nutritrack.app.utils.ActiveProfile.id(requireContext(), db)
                 val plans = db.mealPlanDao().getPlansForRange(periodStart, periodEnd, profileId)
                 if (plans.isEmpty()) return@withContext emptyList()
                 val mealItems = db.mealPlanDao().getItemsForPlansSync(plans.map { it.id })

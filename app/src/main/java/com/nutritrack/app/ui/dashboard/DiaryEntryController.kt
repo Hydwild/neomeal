@@ -12,6 +12,7 @@ import com.nutritrack.app.adapter.DiaryAdapter
 import com.nutritrack.app.data.db.entity.DiaryEntryEntity
 import com.nutritrack.app.data.db.entity.MealFeedbackEntity
 import com.nutritrack.app.databinding.FragmentDashboardBinding
+import com.nutritrack.app.utils.ActiveProfile
 import com.nutritrack.app.utils.DateUtils
 import com.nutritrack.app.utils.NutritionWarnings
 import com.nutritrack.app.utils.PrefsManager
@@ -103,9 +104,9 @@ class DiaryEntryController(
 
     private fun saveMealFeedback(entry: DiaryEntryEntity, rating: String) {
         val app = ctx.applicationContext as NutriApp
-        val profileId = prefs.activeProfileId
         scope.launch {
             withContext(Dispatchers.IO) {
+                val profileId = ActiveProfile.id(ctx, app.database)
                 app.database.mealFeedbackDao().insert(
                     MealFeedbackEntity(
                         productId = entry.productId,
@@ -125,9 +126,9 @@ class DiaryEntryController(
     fun refreshDiaryWarnings(entries: List<DiaryEntryEntity>) {
         val base = NutritionWarnings.analyze(ctx, entries).toMutableMap()
         val app = ctx.applicationContext as NutriApp
-        val profileId = prefs.activeProfileId
         scope.launch {
             val problemEntryIds = withContext(Dispatchers.IO) {
+                val profileId = ActiveProfile.id(ctx, app.database)
                 val dao = app.database.mealFeedbackDao()
                 val result = mutableListOf<Long>()
                 val byProduct = entries.groupBy { it.productId }

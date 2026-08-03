@@ -117,7 +117,10 @@ class PrefsManager(context: Context) {
         set(v) = prefs.edit().putString("language", v).apply()
 
     // Активный профиль
-    var activeProfileId: Long
+    // КЭШ id активного профиля. Источник правды — флаг isActive в БД.
+    // Читать и писать только через ActiveProfile: прямое обращение отсюда
+    // приводило к тому, что часть экранов работала с чужим профилем.
+    var activeProfileIdCache: Long
         get() = prefs.getLong("active_profile_id", 1L)
         set(v) = prefs.edit().putLong("active_profile_id", v).apply()
 

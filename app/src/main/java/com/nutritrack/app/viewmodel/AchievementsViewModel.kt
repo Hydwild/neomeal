@@ -40,7 +40,9 @@ class AchievementsViewModel(app: Application) : AndroidViewModel(app) {
 
     init { loadAchievements() }
 
-    private fun activeProfileId(): Long = prefs.activeProfileId
+    // Активный профиль — из БД (см. ActiveProfile), а не из кэша prefs
+    private suspend fun activeProfileId(): Long =
+        com.nutritrack.app.utils.ActiveProfile.id(getApplication(), db)
 
     fun loadAchievements() {
         viewModelScope.launch(Dispatchers.IO) {

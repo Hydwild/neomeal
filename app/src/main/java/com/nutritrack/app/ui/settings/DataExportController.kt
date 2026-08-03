@@ -157,7 +157,8 @@ class DataExportController(
         scope.launch {
             try {
                 val db = (fragment.requireActivity().application as NutriApp).database
-                val pid = prefs.activeProfileId
+                // Экспортируем именно активный профиль, а не кэш
+                val pid = com.nutritrack.app.utils.ActiveProfile.id(ctx, db)
                 val csv = when (csvType) {
                     "measures" -> CsvExporter.measurementsCsv(ctx, db, pid)
                     "water"    -> CsvExporter.waterCsv(ctx, db, pid)
