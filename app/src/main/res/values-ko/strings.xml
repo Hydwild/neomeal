@@ -692,6 +692,15 @@
     <string name="u_ml">ml</string>
     <string name="u_g">g</string>
     <string name="u_kcal">kcal</string>
+    <string name="cal_day_kcal_fmt">%1$d\nkcal</string>
+    <string name="water_cup_ml_fmt">%1$dml</string>
+    <string name="fh_dur_hm_fmt">%1$d시간 %2$d분</string>
+    <string name="fh_dur_m_fmt">%1$d분</string>
+    <string name="fasting_status_done">✅ 완료</string>
+    <string name="fasting_status_broken">❌ 중단됨</string>
+    <string name="pet_err_unsafe_path">아카이브에 안전하지 않은 경로가 있어요</string>
+    <string name="pet_err_no_frames">팩에 프레임이 없어요</string>
+    <string name="pet_err_download">다운로드에 실패했어요</string>
     <string name="u_kg">kg</string>
     <string name="ds_water_value_fmt">%1$d ml</string>
     <string name="ds_water_goal_fmt"> / %1$d ml</string>

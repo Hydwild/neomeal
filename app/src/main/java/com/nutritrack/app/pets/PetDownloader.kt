@@ -16,6 +16,7 @@ class PetDownloader(context: Context) {
 
     private val storage = PetStorage(context)
     private val cacheDir = context.cacheDir
+    private val appCtx = context.applicationContext
 
     sealed class Result {
         object Success : Result()
@@ -72,7 +73,7 @@ class PetDownloader(context: Context) {
                     val outFile = File(unpackDir, entry.name)
                     // Защита от path traversal (zip slip)
                     if (!outFile.canonicalPath.startsWith(unpackDir.canonicalPath + File.separator)) {
-                        return@withContext Result.Error("Небезопасный путь в архиве")
+                        return@withContext Result.Error(appCtx.getString(com.nutritrack.app.R.string.pet_err_unsafe_path))
                     }
                     if (entry.isDirectory) {
                         outFile.mkdirs()
@@ -97,14 +98,14 @@ class PetDownloader(context: Context) {
             // 4. Проверка, что распаковались реальные кадры хотя бы для idle
             if (!storage.hasAction(pet.id, "idle")) {
                 finalDir.deleteRecursively()
-                return@withContext Result.Error("В паке нет кадров")
+                return@withContext Result.Error(appCtx.getString(com.nutritrack.app.R.string.pet_err_no_frames))
             }
 
             storage.markInstalled(pet.id)
             onProgress(100)
             Result.Success
         } catch (e: Exception) {
-            Result.Error(e.message ?: "Ошибка загрузки")
+            Result.Error(e.message ?: appCtx.getString(com.nutritrack.app.R.string.pet_err_download))
         } finally {
             tmpZip.delete()
         }

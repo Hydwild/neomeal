@@ -24,7 +24,8 @@ class CalendarWeekAdapter(
             val goal = item.calorieGoal
             val deficit = goal - consumed
 
-            b.tvConsumed.text = "${consumed}\nккал"
+            b.tvConsumed.text = b.root.context.getString(
+                com.nutritrack.app.R.string.cal_day_kcal_fmt, consumed)
 
             // Deficit/surplus display
             when {

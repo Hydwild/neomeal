@@ -153,7 +153,8 @@ class ShoppingListFragment : Fragment() {
 
                 // Граммы/миллилитры обычного продукта или компонента комбо
                 fun addProductGrams(name: String, grams: Float) {
-                    val unit = if (ProductUnits.isLiquidName(name)) UNIT_ML else UNIT_G
+                    val unit = getString(
+                        if (ProductUnits.isLiquidName(name)) R.string.u_ml else R.string.u_g)
                     add(name, unit, grams)
                 }
 
@@ -381,7 +382,7 @@ class ShoppingListFragment : Fragment() {
         private const val KEY_CHECKED = "shopping_checked"
         // Разделитель имён в prefs — управляющий символ, в названиях не встречается
         private const val SEP = "\u001F"
-        private const val UNIT_G = "г"
-        private const val UNIT_ML = "мл"
+        // Единицы берутся из ресурсов (R.string.u_g / u_ml) — они показываются
+        // пользователю и должны переводиться
     }
 }

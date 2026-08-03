@@ -29,7 +29,8 @@ class WaterCupsAdapter(
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = getItem(position)
-        holder.tvAmount.text = "${item.amountMl}мл"
+        holder.tvAmount.text = holder.itemView.context.getString(
+            com.nutritrack.app.R.string.water_cup_ml_fmt, item.amountMl)
 
         // Уровень наполнения стакана зависит от объёма (250мл = полный)
         val level = (item.amountMl / 250f).coerceIn(0.25f, 1f)

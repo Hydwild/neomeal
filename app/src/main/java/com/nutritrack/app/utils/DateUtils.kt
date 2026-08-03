@@ -42,14 +42,27 @@ object DateUtils {
     fun parse(dateStr: String): Date =
         SimpleDateFormat(DB_FORMAT, DB_LOCALE).parse(dateStr) ?: Date()
 
-    fun getWeekDates(offsetWeeks: Int = 0): List<String> {
-        val cal = Calendar.getInstance()
-        cal.add(Calendar.WEEK_OF_YEAR, offsetWeeks)
-        cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
-        return (0..6).map { i ->
-            val d = cal.clone() as Calendar
-            d.add(Calendar.DAY_OF_WEEK, i)
-            format(d.time, DB_FORMAT)
+ /**
+ * Семь дат недели (понедельник … воскресенье) в формате БД.
+ * [offsetWeeks] сдвигает на N недель: 0 — текущая неделя, -1 — прошлая.
+ *
+ * Начало недели считается явно от понедельника. Прежняя реализация делала
+ * `Calendar.set(DAY_OF_WEEK, MONDAY)`, а он резолвится относительно
+ * locale-зависимого firstDayOfWeek: в en-US и ko-KR неделя начинается с
+ * воскресенья, поэтому по воскресеньям возвращалась СЛЕДУЮЩАЯ (пустая) неделя
+ * вместо завершившейся.
+ */
+    fun getWeekDates(offsetWeeks: Int = 0): List<String> =
+        getWeekDates(offsetWeeks, java.time.LocalDate.now())
+
+ /** Версия с явной датой — для тестов (иначе поведение зависит от дня запуска). */
+    internal fun getWeekDates(offsetWeeks: Int, today: java.time.LocalDate): List<String> {
+        val monday = today
+            .plusWeeks(offsetWeeks.toLong())
+            .with(java.time.temporal.TemporalAdjusters.previousOrSame(java.time.DayOfWeek.MONDAY))
+        // ISO_LOCAL_DATE — ровно yyyy-MM-dd, без влияния локали
+        return (0..6).map {
+            monday.plusDays(it.toLong()).format(java.time.format.DateTimeFormatter.ISO_LOCAL_DATE)
         }
     }
 }

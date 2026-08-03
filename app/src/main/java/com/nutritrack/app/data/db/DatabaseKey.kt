@@ -37,9 +37,13 @@ object DatabaseKey {
         }
 
         val random = ByteArray(32).also { SecureRandom().nextBytes(it) }
+        // commit(), а не apply(): ключ обязан лечь на диск ДО того, как им будет
+        // создана база. С асинхронным apply() процесс, убитый в этом окне,
+        // оставил бы зашифрованную базу без ключа — данные не восстановить.
+        // Выполняется один раз за установку, стоимость незаметна.
         prefs.edit()
             .putString(KEY_NAME, android.util.Base64.encodeToString(random, android.util.Base64.NO_WRAP))
-            .apply()
+            .commit()
         return random
     }
 }

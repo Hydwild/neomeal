@@ -20,7 +20,8 @@ class CalendarDayAdapter : ListAdapter<DayStatus, CalendarDayAdapter.VH>(DIFF) {
 
             b.tvDayName.text = dayName
             b.tvDayNum.text = dayNum
-            b.tvCalories.text = "${item.calories.toInt()}\nккал"
+            b.tvCalories.text = b.root.context.getString(
+                com.nutritrack.app.R.string.cal_day_kcal_fmt, item.calories.toInt())
 
             val calPercent = (item.calories / item.calorieGoal).coerceIn(0f, 1f)
             val waterPercent = (item.water.toFloat() / item.waterGoal).coerceIn(0f, 1f)

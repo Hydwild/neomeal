@@ -3075,6 +3075,15 @@ data class Recipe(
     <string name="u_ml">ml</string>
     <string name="u_g">g</string>
     <string name="u_kcal">kcal</string>
+    <string name="cal_day_kcal_fmt">%1$d\nkcal</string>
+    <string name="water_cup_ml_fmt">%1$d ml</string>
+    <string name="fh_dur_hm_fmt">%1$dh %2$dm</string>
+    <string name="fh_dur_m_fmt">%1$d min</string>
+    <string name="fasting_status_done">✅ Completed</string>
+    <string name="fasting_status_broken">❌ Interrupted</string>
+    <string name="pet_err_unsafe_path">Unsafe path inside the archive</string>
+    <string name="pet_err_no_frames">No frames in the pack</string>
+    <string name="pet_err_download">Download failed</string>
     <string name="u_kg">kg</string>
     <string name="ds_water_value_fmt">%1$d ml</string>
     <string name="ds_water_goal_fmt"> / %1$d ml</string>

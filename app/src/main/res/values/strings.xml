@@ -3083,6 +3083,15 @@
     <string name="u_ml">мл</string>
     <string name="u_g">г</string>
     <string name="u_kcal">ккал</string>
+    <string name="cal_day_kcal_fmt">%1$d\nккал</string>
+    <string name="water_cup_ml_fmt">%1$dмл</string>
+    <string name="fh_dur_hm_fmt">%1$dч %2$dмин</string>
+    <string name="fh_dur_m_fmt">%1$d мин</string>
+    <string name="fasting_status_done">✅ Выполнено</string>
+    <string name="fasting_status_broken">❌ Прервано</string>
+    <string name="pet_err_unsafe_path">Небезопасный путь в архиве</string>
+    <string name="pet_err_no_frames">В паке нет кадров</string>
+    <string name="pet_err_download">Ошибка загрузки</string>
     <string name="u_kg">кг</string>
     <string name="ds_water_value_fmt">%1$d мл</string>
     <string name="ds_water_goal_fmt"> / %1$d мл</string>
