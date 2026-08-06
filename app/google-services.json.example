@@ -1,0 +1,42 @@
+{
+  "_comment": [
+    "Шаблон. Настоящий google-services.json в репозиторий не попадает —",
+    "он привязан к конкретному проекту Firebase и расходует его квоты.",
+    "",
+    "Чтобы собрать приложение:",
+    "1. Создайте проект на console.firebase.google.com",
+    "2. Добавьте Android-приложение с applicationId из app/build.gradle",
+    "3. Скачайте google-services.json и положите рядом с этим файлом",
+    "",
+    "Firebase нужен только для Crashlytics — отчётов о падениях, и то",
+    "с согласия пользователя (см. раздел о приватности в README).",
+    "Без него приложение собирается и работает, отключается в build.gradle."
+  ],
+  "project_info": {
+    "project_number": "000000000000",
+    "project_id": "your-firebase-project",
+    "storage_bucket": "your-firebase-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:000000000000:android:0000000000000000000000",
+        "android_client_info": {
+          "package_name": "com.nutritrack.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "REPLACE_WITH_YOUR_FIREBASE_API_KEY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

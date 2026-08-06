@@ -70,7 +70,14 @@ Health Connect · Material Components
 ```
 
 Для сборки нужны `google-services.json` (Firebase) и `keystore.properties`
-(release-подпись) — в репозитории их нет, см. `keystore.properties.example`.
+(release-подпись) — в репозитории их нет, оба привязаны к конкретному
+аккаунту. Рядом лежат шаблоны с пояснениями:
+`app/google-services.json.example` и `keystore.properties.example`.
+
+Firebase используется **только** для Crashlytics и только с согласия
+пользователя; без него debug-сборка работает — достаточно убрать плагин
+в `app/build.gradle`. Release-подпись нужна лишь для сборки APK на
+публикацию, для чтения кода и debug-сборки она не требуется.
 
 ## Лицензия
 
