@@ -3908,11 +3908,15 @@ data class Recipe(
     <string name="set_sub_nutrition">Water buttons, goals, macros</string>
 
     <!-- Что нового 1.4.1 -->
-    <string name="whatsnew_142_title">Important fixes</string>
-    <string name="whatsnew_142_1">🔄 Restoring from a backup works again.</string>
-    <string name="whatsnew_142_2">🔔 Meal reminders no longer fire on their own — only when you turn them on in Meal plan.</string>
-    <string name="whatsnew_142_3">🍽️ The meal planner fits dishes to your calorie goal and repeats less.</string>
-    <string name="whatsnew_142_4">🛡️ Crash reports are opt-in (Settings → Data).</string>
+    <string name="whatsnew_143_title">Important fixes</string>
+    <string name="whatsnew_143_1">🔄 Restoring from a backup works again.</string>
+    <string name="whatsnew_143_2">🔔 Meal reminders no longer fire on their own — only when you turn them on in Meal plan.</string>
+    <string name="whatsnew_143_3">👥 With several profiles, analytics and export no longer show another profile’s data.</string>
+    <string name="whatsnew_143_4">📅 Weekly stats no longer jump to the next week on Sundays.</string>
+    <string name="whatsnew_142_title">Smarter menu, tidier data</string>
+    <string name="whatsnew_142_1">🍽️ The meal planner fits dishes to your daily calorie goal and repeats less.</string>
+    <string name="whatsnew_142_2">🔎 The product database was cleaned of duplicates — cleaner search.</string>
+    <string name="whatsnew_142_3">🛡️ Crash reports are now opt-in (we ask on first launch).</string>
     <string name="whatsnew_141_title">Stability &amp; polish</string>
     <string name="whatsnew_141_1">🖼️ Heavy background photos are now compressed — no more lag.</string>
     <string name="whatsnew_141_2">🔢 PIN unlock is now instant.</string>

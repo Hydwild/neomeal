@@ -3892,11 +3892,15 @@
     <string name="set_sub_nutrition">물 버튼·목표·영양소</string>
 
     <!-- Что нового 1.4.1 -->
-    <string name="whatsnew_142_title">중요한 수정</string>
-    <string name="whatsnew_142_1">🔄 백업 복원이 다시 정상 작동해요.</string>
-    <string name="whatsnew_142_2">🔔 식사 알림이 임의로 오지 않아요 — «식단» 화면에서 켤 때만 울려요.</string>
-    <string name="whatsnew_142_3">🍽️ 식단 구성기가 칼로리 목표에 맞춰 메뉴를 고르고 덜 반복돼요.</string>
-    <string name="whatsnew_142_4">🛡️ 오류 보고서는 동의할 때만 전송돼요 (설정 → 데이터).</string>
+    <string name="whatsnew_143_title">중요한 수정</string>
+    <string name="whatsnew_143_1">🔄 백업 복원이 다시 정상 작동해요.</string>
+    <string name="whatsnew_143_2">🔔 식사 알림이 임의로 오지 않아요 — «식단» 화면에서 켤 때만 울려요.</string>
+    <string name="whatsnew_143_3">👥 프로필이 여러 개일 때 분석·내보내기가 다른 프로필 데이터를 보여주지 않아요.</string>
+    <string name="whatsnew_143_4">📅 일요일에 주간 통계가 다음 주로 넘어가지 않아요.</string>
+    <string name="whatsnew_142_title">똑똑한 식단, 깔끔한 데이터</string>
+    <string name="whatsnew_142_1">🍽️ 식단 구성기가 하루 칼로리 목표에 맞춰 메뉴를 고르고 덜 반복돼요.</string>
+    <string name="whatsnew_142_2">🔎 제품 데이터베이스의 중복을 정리했어요 — 검색이 더 깔끔해요.</string>
+    <string name="whatsnew_142_3">🛡️ 오류 보고서는 이제 동의 기반이에요 (첫 실행 시 물어봐요).</string>
     <string name="whatsnew_141_title">안정성과 편의성</string>
     <string name="whatsnew_141_1">🖼️ 배경 사진이 자동 압축돼요 — 이제 버벅이지 않아요.</string>
     <string name="whatsnew_141_2">🔢 PIN 잠금 해제가 즉시 이루어져요.</string>
