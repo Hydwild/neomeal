@@ -3081,6 +3081,7 @@ data class Recipe(
     <string name="fh_dur_m_fmt">%1$d min</string>
     <string name="fasting_status_done">✅ Completed</string>
     <string name="fasting_status_broken">❌ Interrupted</string>
+    <string name="backup_unrecognized">This file is not a NeoMeal backup. Your data was left unchanged.</string>
     <string name="pet_err_unsafe_path">Unsafe path inside the archive</string>
     <string name="pet_err_no_frames">No frames in the pack</string>
     <string name="pet_err_download">Download failed</string>
@@ -3907,10 +3908,11 @@ data class Recipe(
     <string name="set_sub_nutrition">Water buttons, goals, macros</string>
 
     <!-- Что нового 1.4.1 -->
-    <string name="whatsnew_142_title">Smarter menu, tidier data</string>
-    <string name="whatsnew_142_1">🍽️ The meal planner now fits dishes to your daily calorie goal and repeats less.</string>
-    <string name="whatsnew_142_2">🔎 The product database was cleaned of duplicates — cleaner search.</string>
-    <string name="whatsnew_142_3">🛡️ Crash reports are now opt-in — we ask on first launch; toggle in Settings → Data.</string>
+    <string name="whatsnew_142_title">Important fixes</string>
+    <string name="whatsnew_142_1">🔄 Restoring from a backup works again.</string>
+    <string name="whatsnew_142_2">🔔 Meal reminders no longer fire on their own — only when you turn them on in Meal plan.</string>
+    <string name="whatsnew_142_3">🍽️ The meal planner fits dishes to your calorie goal and repeats less.</string>
+    <string name="whatsnew_142_4">🛡️ Crash reports are opt-in (Settings → Data).</string>
     <string name="whatsnew_141_title">Stability &amp; polish</string>
     <string name="whatsnew_141_1">🖼️ Heavy background photos are now compressed — no more lag.</string>
     <string name="whatsnew_141_2">🔢 PIN unlock is now instant.</string>

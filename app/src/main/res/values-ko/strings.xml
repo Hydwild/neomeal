@@ -698,6 +698,7 @@
     <string name="fh_dur_m_fmt">%1$d분</string>
     <string name="fasting_status_done">✅ 완료</string>
     <string name="fasting_status_broken">❌ 중단됨</string>
+    <string name="backup_unrecognized">NeoMeal 백업 파일이 아니에요. 데이터는 변경되지 않았어요.</string>
     <string name="pet_err_unsafe_path">아카이브에 안전하지 않은 경로가 있어요</string>
     <string name="pet_err_no_frames">팩에 프레임이 없어요</string>
     <string name="pet_err_download">다운로드에 실패했어요</string>
@@ -3891,10 +3892,11 @@
     <string name="set_sub_nutrition">물 버튼·목표·영양소</string>
 
     <!-- Что нового 1.4.1 -->
-    <string name="whatsnew_142_title">똑똑한 식단, 깔끔한 데이터</string>
-    <string name="whatsnew_142_1">🍽️ 식단 구성기가 하루 칼로리 목표에 맞춰 메뉴를 고르고 덜 반복돼요.</string>
-    <string name="whatsnew_142_2">🔎 제품 데이터베이스의 중복을 정리했어요 — 검색이 더 깔끔해요.</string>
-    <string name="whatsnew_142_3">🛡️ 오류 보고서는 이제 동의 기반이에요 — 첫 실행 시 물어보고 설정 → 데이터에서 켜고 끌 수 있어요.</string>
+    <string name="whatsnew_142_title">중요한 수정</string>
+    <string name="whatsnew_142_1">🔄 백업 복원이 다시 정상 작동해요.</string>
+    <string name="whatsnew_142_2">🔔 식사 알림이 임의로 오지 않아요 — «식단» 화면에서 켤 때만 울려요.</string>
+    <string name="whatsnew_142_3">🍽️ 식단 구성기가 칼로리 목표에 맞춰 메뉴를 고르고 덜 반복돼요.</string>
+    <string name="whatsnew_142_4">🛡️ 오류 보고서는 동의할 때만 전송돼요 (설정 → 데이터).</string>
     <string name="whatsnew_141_title">안정성과 편의성</string>
     <string name="whatsnew_141_1">🖼️ 배경 사진이 자동 압축돼요 — 이제 버벅이지 않아요.</string>
     <string name="whatsnew_141_2">🔢 PIN 잠금 해제가 즉시 이루어져요.</string>

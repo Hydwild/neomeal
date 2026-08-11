@@ -47,6 +47,15 @@
 -keep class com.nutritrack.app.data.db.entity.** { *; }
 -keep class com.nutritrack.app.data.** { *; }
 
+# --- Формат файла бэкапа ---
+# BackupData и Envelope лежат в utils и под правила выше НЕ подпадали: R8
+# переименовывал их поля (products → c, avatars → o, salt → c), и именно эти
+# буквы Gson писал в файл. Формат бэкапа оказывался завязан на обфускацию —
+# файл, созданный одной сборкой, мог не прочитаться другой, и пользователь
+# терял данные при восстановлении. Имена полей обязаны быть стабильными.
+-keep class com.nutritrack.app.utils.BackupManager$BackupData { *; }
+-keep class com.nutritrack.app.utils.BackupManager$Envelope { *; }
+
 # --- Kotlin корутины / метаданные ---
 -keepclassmembers class kotlin.Metadata { *; }
 -dontwarn kotlinx.coroutines.**

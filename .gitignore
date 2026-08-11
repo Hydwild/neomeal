@@ -31,3 +31,7 @@ local.properties
 
 # Claude Code локальные настройки
 .claude/settings.local.json
+
+# Демо-данные для скриншотов витрины: генерируются docs/store/gen-demo-backup.py,
+# привязаны к дате запуска и устаревают — храним генератор, не результат.
+docs/store/demo-backup.json

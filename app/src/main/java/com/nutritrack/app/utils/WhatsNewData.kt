@@ -22,7 +22,8 @@ object WhatsNewData {
             itemRes = listOf(
                 R.string.whatsnew_142_1,
                 R.string.whatsnew_142_2,
-                R.string.whatsnew_142_3
+                R.string.whatsnew_142_3,
+                R.string.whatsnew_142_4
             )
         ),
         Release(

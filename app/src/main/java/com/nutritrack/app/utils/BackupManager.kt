@@ -43,6 +43,53 @@ object BackupManager {
         val data: String = ""
     )
 
+    // Совместимость со старым форматом файла
+
+ /**
+ * До 1.4.2 классы [BackupData] и [Envelope] не были защищены от R8: их поля
+ * переименовывались в a, b, c… и именно эти буквы попадали в файл, потому что
+ * Gson пишет JSON по именам полей. Формат бэкапа оказывался завязан на
+ * обфускацию — файл одной сборки мог не прочитаться другой (все поля
+ * становились null). Теперь классы под -keep, а старые файлы разбираем по
+ * таблицам ниже.
+ */
+    private val LEGACY_BACKUP_KEYS = mapOf(
+        "a" to "version", "b" to "exportedAt", "c" to "products", "d" to "diary",
+        "e" to "water", "f" to "weight", "g" to "profiles", "h" to "achievements",
+        "i" to "fasting", "j" to "mealPlans", "k" to "mealItems", "l" to "dailyGoals",
+        "m" to "fitness", "n" to "settings", "o" to "avatars", "p" to "measurements",
+        "q" to "progressPhotos"
+    )
+
+    private val LEGACY_ENVELOPE_KEYS = mapOf(
+        "a" to "format", "b" to "version", "c" to "salt", "d" to "iv", "e" to "data"
+    )
+
+    // Доступ для юнит-тестов (BackupLegacyFormatTest)
+    internal fun legacyBackupKeysForTest(): Map<String, String> = LEGACY_BACKUP_KEYS
+    internal fun legacyEnvelopeKeysForTest(): Map<String, String> = LEGACY_ENVELOPE_KEYS
+
+ /**
+ * Переименовать обфусцированные ключи старого формата в настоящие.
+ * [marker] — поле, которое есть только в новом формате: если оно на месте,
+ * файл уже нормальный и трогать его не нужно.
+ */
+    internal fun normalizeKeys(json: String, table: Map<String, String>, marker: String): String = try {
+        val root = com.google.gson.JsonParser.parseString(json)
+        if (!root.isJsonObject || root.asJsonObject.has(marker)) {
+            json
+        } else {
+            val fixed = com.google.gson.JsonObject()
+            root.asJsonObject.entrySet().forEach { (k, v) -> fixed.add(table[k] ?: k, v) }
+            gson.toJson(fixed)
+        }
+    } catch (_: Exception) { json }
+
+ // Gson кладёт null в non-null поля Kotlin, если имя в файле не совпало —
+ // читаем коллекции только через эти помощники, иначе NPE.
+    private fun <T> List<T>?.orEmptySafe(): List<T> = this ?: emptyList()
+    private fun <K, V> Map<K, V>?.orEmptySafe(): Map<K, V> = this ?: emptyMap()
+
     private fun deriveKey(password: CharArray, salt: ByteArray): javax.crypto.spec.SecretKeySpec {
         val spec = javax.crypto.spec.PBEKeySpec(password, salt, PBKDF2_ITERATIONS, 256)
         val factory = javax.crypto.SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256")
@@ -72,7 +119,9 @@ object BackupManager {
     }
 
     internal fun decrypt(envelopeJson: String, password: String): String {
-        val env = gson.fromJson(envelopeJson, Envelope::class.java)
+        // Старые файлы содержат обфусцированные ключи конверта (salt → c и т.д.)
+        val normalized = normalizeKeys(envelopeJson, LEGACY_ENVELOPE_KEYS, "salt")
+        val env = gson.fromJson(normalized, Envelope::class.java)
         val cipher = javax.crypto.Cipher.getInstance("AES/GCM/NoPadding")
         cipher.init(
             javax.crypto.Cipher.DECRYPT_MODE,
@@ -214,17 +263,46 @@ object BackupManager {
                 json = decrypt(json, password)
             }
 
+            // Файл мог быть создан сборкой, где поля BackupData были обфусцированы
+            json = normalizeKeys(json, LEGACY_BACKUP_KEYS, "diary")
+
             val data = gson.fromJson(json, BackupData::class.java)
                 ?: return@withContext Result.failure(Exception("Файл повреждён или не является резервной копией"))
+
+            // Коллекции читаем через orEmptySafe: при незнакомой раскладке ключей
+            // Gson оставляет в них null, и обращение уронило бы импорт.
+            val inProducts     = data.products.orEmptySafe()
+            val inDiary        = data.diary.orEmptySafe()
+            val inWater        = data.water.orEmptySafe()
+            val inWeight       = data.weight.orEmptySafe()
+            val inProfiles     = data.profiles.orEmptySafe()
+            val inAchievements = data.achievements.orEmptySafe()
+            val inFasting      = data.fasting.orEmptySafe()
+            val inMealPlans    = data.mealPlans.orEmptySafe()
+            val inMealItems    = data.mealItems.orEmptySafe()
+            val inDailyGoals   = data.dailyGoals.orEmptySafe()
+            val inFitness      = data.fitness.orEmptySafe()
+            val inSettings     = data.settings.orEmptySafe()
+            val inAvatars      = data.avatars.orEmptySafe()
+            val inMeasurements = data.measurements.orEmptySafe()
+            val inPhotos       = data.progressPhotos.orEmptySafe()
+
+            // Ниже идёт ПОЛНАЯ ЗАМЕНА данных. Если файл не распознан (ни профилей,
+            // ни дневника), выходим ДО удаления — иначе пустой разбор стёр бы
+            // дневник пользователя и ничего не записал взамен.
+            if (inProfiles.isEmpty() && inDiary.isEmpty()) {
+                return@withContext Result.failure(
+                    Exception(context.getString(com.nutritrack.app.R.string.backup_unrecognized)))
+            }
 
             val db = AppDatabase.getInstance(context)
 
             // Восстанавливаем аватары всех профилей из base64 в файлы (profileId путь)
             val restoredPaths = HashMap<Long, String>()
-            if (data.avatars.isNotEmpty()) {
+            if (inAvatars.isNotEmpty()) {
                 val dir = java.io.File(context.filesDir, "avatars")
                 if (!dir.exists()) dir.mkdirs()
-                data.avatars.forEach { (pidStr, b64) ->
+                inAvatars.forEach { (pidStr, b64) ->
                     try {
                         val bytes = android.util.Base64.decode(b64, android.util.Base64.DEFAULT)
                         val dest = java.io.File(dir, "avatar_restored_${pidStr}_${System.currentTimeMillis()}.jpg")
@@ -239,51 +317,51 @@ object BackupManager {
             with(db) {
                 // products
                 productDao().deleteAll()
-                productDao().insertAll(data.products)
+                productDao().insertAll(inProducts)
                 // diary
                 diaryDao().deleteAll()
-                diaryDao().insertAll(data.diary)
+                diaryDao().insertAll(inDiary)
                 // профили — заменяем; подставляем восстановленный путь аватара по id
-                data.profiles.forEach { p ->
+                inProfiles.forEach { p ->
                     val fixed = restoredPaths[p.id]?.let { p.copy(photoUri = it) } ?: p
                     profileDao().insertAll(listOf(fixed))
                 }
                 // вода
-                waterDao().insertAll(data.water)
+                waterDao().insertAll(inWater)
                 // вес
-                weightDao().insertAll(data.weight)
+                weightDao().insertAll(inWeight)
                 // достижения
-                achievementDao().insertAll(data.achievements)
+                achievementDao().insertAll(inAchievements)
                 // голодание
-                fastingDao().insertAll(data.fasting)
+                fastingDao().insertAll(inFasting)
                 // планы питания
-                mealPlanDao().insertAllPlans(data.mealPlans)
-                mealPlanDao().insertAllItems(data.mealItems)
+                mealPlanDao().insertAllPlans(inMealPlans)
+                mealPlanDao().insertAllItems(inMealItems)
                 // цели
-                dailyGoalDao().insertAll(data.dailyGoals)
+                dailyGoalDao().insertAll(inDailyGoals)
                 // фитнес
-                fitnessDao().insertAll(data.fitness)
-                measurementDao().insertAll(data.measurements)
-                progressPhotoDao().insertAll(data.progressPhotos)
+                fitnessDao().insertAll(inFitness)
+                measurementDao().insertAll(inMeasurements)
+                progressPhotoDao().insertAll(inPhotos)
             }
 
             // Восстанавливаем настройки
-            if (data.settings.isNotEmpty()) {
+            if (inSettings.isNotEmpty()) {
                 val prefs = PrefsManager(context)
-                data.settings["dark_theme"]?.let { prefs.isDarkTheme = it.toBoolean() }
-                data.settings["language"]?.let { prefs.language = it }
-                data.settings["circular_calorie_mode"]?.let {
+                inSettings["dark_theme"]?.let { prefs.isDarkTheme = it.toBoolean() }
+                inSettings["language"]?.let { prefs.language = it }
+                inSettings["circular_calorie_mode"]?.let {
                     prefs.setBool("circular_calorie_mode", it.toBoolean())
                 }
-                data.settings[MealTemplates.PREFS_KEY]?.let {
+                inSettings[MealTemplates.PREFS_KEY]?.let {
                     prefs.setString(MealTemplates.PREFS_KEY, it)
                 }
             }
 
-            val total = data.products.size + data.diary.size + data.water.size +
-                    data.weight.size + data.profiles.size + data.achievements.size +
-                    data.fasting.size + data.mealPlans.size + data.mealItems.size +
-                    data.dailyGoals.size + data.fitness.size
+            val total = inProducts.size + inDiary.size + inWater.size +
+                    inWeight.size + inProfiles.size + inAchievements.size +
+                    inFasting.size + inMealPlans.size + inMealItems.size +
+                    inDailyGoals.size + inFitness.size
             Result.success(total)
         } catch (e: Exception) {
             Result.failure(e)
