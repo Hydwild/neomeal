@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Полный вид виджета: две ячейки в высоту (см. widget_info.xml).
+     Компактный вариант на одну ячейку — widget_main_small.xml, провайдер
+     выбирает его по фактическому размеру. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/widgetRoot"
     android:layout_width="match_parent"
@@ -6,14 +9,14 @@
     android:orientation="horizontal"
     android:gravity="center_vertical"
     android:background="@drawable/widget_bg"
-    android:padding="8dp">
+    android:padding="10dp">
 
     <!-- Питомец (поза зависит от прогресса) -->
     <ImageView
         android:id="@+id/widgetPet"
-        android:layout_width="44dp"
-        android:layout_height="44dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="46dp"
+        android:layout_height="46dp"
+        android:layout_marginEnd="10dp"
         android:scaleType="fitCenter"
         android:visibility="gone"
         android:contentDescription="@null"/>
@@ -24,97 +27,99 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-    <!-- Калории -->
-    <TextView
-        android:id="@+id/widgetCalories"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="🔥 0 / 2000"
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
-        android:maxLines="1"
-        android:ellipsize="end"
-        android:layout_marginBottom="2dp"/>
-    <ProgressBar
-        android:id="@+id/widgetCalProgress"
-        style="@android:style/Widget.ProgressBar.Horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="4dp"
-        android:max="100"
-        android:progress="0"
-        android:progressTint="#FF7043"
-        android:layout_marginBottom="5dp"/>
-
-    <!-- Вода -->
-    <TextView
-        android:id="@+id/widgetWater"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="💧 0 / 2000"
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
-        android:maxLines="1"
-        android:ellipsize="end"
-        android:layout_marginBottom="2dp"/>
-    <ProgressBar
-        android:id="@+id/widgetWaterProgress"
-        style="@android:style/Widget.ProgressBar.Horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="4dp"
-        android:max="100"
-        android:progress="0"
-        android:progressTint="#4FC3F7"
-        android:layout_marginBottom="6dp"/>
-
-    <!-- Кнопки -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
+        <!-- Калории -->
         <TextView
-            android:id="@+id/btnAddWater"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="32dp"
-            android:gravity="center"
-            android:text="💧+250"
+            android:id="@+id/widgetCalories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🔥 0 / 2000 ккал"
             android:textColor="#FFFFFF"
-            android:textSize="11sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             android:maxLines="1"
             android:ellipsize="end"
-            android:background="@drawable/widget_btn_water"
-            android:layout_marginEnd="4dp"/>
+            android:layout_marginBottom="4dp"/>
+        <ProgressBar
+            android:id="@+id/widgetCalProgress"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="7dp"
+            android:max="100"
+            android:progress="0"
+            android:progressDrawable="@drawable/widget_progress_cal"
+            android:layout_marginBottom="9dp"/>
 
+        <!-- Вода -->
         <TextView
-            android:id="@+id/btnAddWater500"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="32dp"
-            android:gravity="center"
-            android:text="💧+500"
+            android:id="@+id/widgetWater"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="💧 0 / 2000 мл"
             android:textColor="#FFFFFF"
-            android:textSize="11sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             android:maxLines="1"
             android:ellipsize="end"
-            android:background="@drawable/widget_btn_water"
-            android:layout_marginEnd="4dp"/>
+            android:layout_marginBottom="4dp"/>
+        <ProgressBar
+            android:id="@+id/widgetWaterProgress"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="7dp"
+            android:max="100"
+            android:progress="0"
+            android:progressDrawable="@drawable/widget_progress_water"
+            android:layout_marginBottom="10dp"/>
 
-        <TextView
-            android:id="@+id/btnOpenFood"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="32dp"
-            android:gravity="center"
-            android:text="@string/lay_food"
-            android:textColor="#FFFFFF"
-            android:textSize="11sp"
-            android:textStyle="bold"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:background="@drawable/widget_btn_food"/>
-    </LinearLayout>
+        <!-- Кнопки -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/btnAddWater"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="34dp"
+                android:gravity="center"
+                android:text="💧 +250"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:background="@drawable/widget_btn_water"
+                android:layout_marginEnd="5dp"/>
+
+            <TextView
+                android:id="@+id/btnAddWater500"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="34dp"
+                android:gravity="center"
+                android:text="💧 +500"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:background="@drawable/widget_btn_water"
+                android:layout_marginEnd="5dp"/>
+
+            <TextView
+                android:id="@+id/btnOpenFood"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="34dp"
+                android:gravity="center"
+                android:text="@string/lay_food"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:background="@drawable/widget_btn_food"/>
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

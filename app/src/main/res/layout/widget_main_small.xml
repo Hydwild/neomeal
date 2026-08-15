@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Компактный вид: одна ячейка в высоту. Кнопок нет намеренно — вместе с
+     ними содержимое не помещалось и обрезалось. Тап по виджету открывает
+     приложение. Полный вид с кнопками — widget_main.xml. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widgetRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:background="@drawable/widget_bg"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/widgetPet"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginEnd="8dp"
+        android:scaleType="fitCenter"
+        android:visibility="gone"
+        android:contentDescription="@null"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/widgetCalories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🔥 0 / 2000 ккал"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_marginBottom="3dp"/>
+        <ProgressBar
+            android:id="@+id/widgetCalProgress"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:max="100"
+            android:progress="0"
+            android:progressDrawable="@drawable/widget_progress_cal"
+            android:layout_marginBottom="7dp"/>
+
+        <TextView
+            android:id="@+id/widgetWater"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="💧 0 / 2000 мл"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_marginBottom="3dp"/>
+        <ProgressBar
+            android:id="@+id/widgetWaterProgress"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:max="100"
+            android:progress="0"
+            android:progressDrawable="@drawable/widget_progress_water"/>
+    </LinearLayout>
+</LinearLayout>

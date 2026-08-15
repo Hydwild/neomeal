@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/widget_bg"
-    android:padding="14dp"
+    android:padding="10dp"
     android:gravity="center_vertical">
 
     <TextView
@@ -13,6 +13,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/lay_fasting"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:textColor="#FFFFFF"
         android:textSize="13sp"
         android:textStyle="bold"/>
@@ -23,7 +25,7 @@
         android:layout_height="wrap_content"
         android:text="--:--:--"
         android:textColor="#40C4FF"
-        android:textSize="26sp"
+        android:textSize="22sp"
         android:textStyle="bold"
         android:layout_marginTop="2dp"/>
 
@@ -32,6 +34,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/widget_no_fasting"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:textColor="#9E9EB0"
         android:textSize="11sp"
         android:layout_marginTop="2dp"/>
@@ -41,8 +45,8 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="6dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="8dp"
         android:max="100"
         android:progress="0"
-        android:progressTint="#7C4DFF"/>
+        android:progressDrawable="@drawable/widget_progress_fast"/>
 </LinearLayout>

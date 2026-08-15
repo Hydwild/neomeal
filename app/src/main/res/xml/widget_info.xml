@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Размеры честные: содержимое полного вида (две строки с прогрессом +
+     ряд кнопок + отступы) требует ~115dp, поэтому targetCellHeight=2.
+     Раньше стояло 1 и minHeight=90dp — на одной ячейке (~70dp у большинства
+     лаунчеров) кнопки просто срезало.
+     minResizeHeight=70dp оставляет возможность сжать до компактного вида:
+     провайдер подставит widget_main_small.xml. -->
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:minWidth="140dp"
-    android:minHeight="90dp"
+    android:minWidth="180dp"
+    android:minHeight="115dp"
     android:minResizeWidth="140dp"
-    android:minResizeHeight="90dp"
-    android:maxResizeWidth="300dp"
-    android:maxResizeHeight="140dp"
-    android:targetCellWidth="2"
-    android:targetCellHeight="1"
+    android:minResizeHeight="70dp"
+    android:maxResizeWidth="320dp"
+    android:maxResizeHeight="180dp"
+    android:targetCellWidth="3"
+    android:targetCellHeight="2"
     android:updatePeriodMillis="1800000"
     android:initialLayout="@layout/widget_main"
     android:previewLayout="@layout/widget_main"

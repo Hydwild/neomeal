@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Размеры честные: заголовок + крупный таймер + фаза + прогресс с отступами
+     занимают ~95dp. Раньше стояло targetCellHeight=1 и minHeight=90dp — на
+     одной ячейке (~70dp у большинства лаунчеров) фазу и полосу прогресса
+     срезало. -->
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:minWidth="180dp"
-    android:minHeight="90dp"
+    android:minHeight="100dp"
     android:minResizeWidth="140dp"
-    android:minResizeHeight="90dp"
-    android:maxResizeWidth="300dp"
-    android:maxResizeHeight="140dp"
-    android:targetCellWidth="2"
-    android:targetCellHeight="1"
+    android:minResizeHeight="100dp"
+    android:maxResizeWidth="320dp"
+    android:maxResizeHeight="180dp"
+    android:targetCellWidth="3"
+    android:targetCellHeight="2"
     android:updatePeriodMillis="1800000"
     android:initialLayout="@layout/widget_fasting"
     android:previewLayout="@layout/widget_fasting"
