@@ -207,6 +207,50 @@ class OnboardingActivity : AppCompatActivity() {
         v.findViewById<android.widget.TextView>(R.id.tvResultWater)?.text = "$water " + getString(R.string.ml_unit)
     }
 
+ /**
+ * Напоминания о воде включаются сразу после онбординга: каждые 1.5 часа
+ * с 09:00 до 21:00. Значения кладём в те же ключи, что читает экран
+ * «Напоминания о воде», поэтому тумблер и интервал там показываются
+ * выбранными, и пользователь может всё выключить в один тап.
+ */
+    private fun enableWaterRemindersDefaults() {
+        val p = PrefsManager(this)
+        p.setBool("water_reminder_enabled", true)
+        p.setString("water_interval_min", "90")   // 1.5 часа
+        p.setString("water_start_time", "09:00")
+        p.setString("water_end_time", "21:00")
+    }
+
+    private fun scheduleWaterReminders() {
+        val p = PrefsManager(this)
+        com.nutritrack.app.utils.WaterReminderScheduler.schedule(
+            context = this,
+            intervalMin = p.getString("water_interval_min", "90").toIntOrNull() ?: 90,
+            startTime = p.getString("water_start_time", "09:00"),
+            endTime = p.getString("water_end_time", "21:00")
+        )
+    }
+
+ /**
+ * Разрешение на уведомления (Android 13+). При отказе НЕ оставляем включённый
+ * тумблер: иначе в настройках значилось бы «включено», а уведомления бы не
+ * приходили. Пользователь сможет включить их позже вручную.
+ */
+    private val notifPermissionLauncher =
+        registerForActivityResult(androidx.activity.result.contract.ActivityResultContracts.RequestPermission()) { granted ->
+            if (granted) {
+                scheduleWaterReminders()
+            } else {
+                PrefsManager(this).setBool("water_reminder_enabled", false)
+            }
+            goToMain()
+        }
+
+    private fun goToMain() {
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
+    }
+
     private fun finishOnboarding() {
         lifecycleScope.launch(Dispatchers.IO) {
             // Проверяем, существует ли уже профиль (создан в prepopulate)
@@ -261,8 +305,20 @@ class OnboardingActivity : AppCompatActivity() {
             PrefsManager(this@OnboardingActivity).isFirstLaunch = false
 
             withContext(Dispatchers.Main) {
-                startActivity(Intent(this@OnboardingActivity, MainActivity::class.java))
-                finish()
+                enableWaterRemindersDefaults()
+                val needsPermission =
+                    android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU &&
+                        androidx.core.content.ContextCompat.checkSelfPermission(
+                            this@OnboardingActivity,
+                            android.Manifest.permission.POST_NOTIFICATIONS
+                        ) != android.content.pm.PackageManager.PERMISSION_GRANTED
+                if (needsPermission) {
+                    // Дальше на главный экран уйдём из колбэка разрешения
+                    notifPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+                } else {
+                    scheduleWaterReminders()
+                    goToMain()
+                }
             }
         }
     }
