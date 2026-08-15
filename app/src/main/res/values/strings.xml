@@ -13,7 +13,6 @@
     <!-- Dashboard -->
     <string name="calories_today">Калории сегодня</string>
     <string name="water_today">Вода</string>
-    <string name="add_food">+ Добавить еду</string>
     <string name="eaten_today">Съедено сегодня</string>
 
     <!-- Macros -->
@@ -119,7 +118,6 @@
     <string name="dash_protein">Белки</string>
     <string name="dash_fat">Жиры</string>
     <string name="dash_carbs">Углеводы</string>
-    <string name="dash_add_food">+ Добавить еду</string>
     <string name="dash_eaten_today">📋 Съедено сегодня</string>
     <string name="dash_calendar">Календарь</string>
     <string name="dash_hold_glass">🥛 Удерживай стакан для удаления</string>
@@ -2969,7 +2967,7 @@
     <string name="bg_grad_invalid">Неверный цвет — используй формат #RRGGBB</string>
     <string name="bg_image_error">Не удалось загрузить изображение</string>
     <string name="lay_water_goal_ml"> / 2000 мл</string>
-    <string name="lay_add_food">+ Добавить еду</string>
+    <string name="lay_add_food">Добавить в дневник</string>
     <string name="lay_dash_kg">-- кг</string>
     <string name="lay_cal_0_2000">0 / 2000 ккал</string>
     <string name="lay_ach_0_40">0 / 40 достижений</string>

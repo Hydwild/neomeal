@@ -13,7 +13,6 @@
     <!-- Dashboard -->
     <string name="calories_today">오늘의 칼로리</string>
     <string name="water_today">물</string>
-    <string name="add_food">+ 음식 추가</string>
     <string name="eaten_today">오늘 먹은 양</string>
 
     <!-- Macros -->
@@ -119,7 +118,6 @@
     <string name="dash_protein">단백질</string>
     <string name="dash_fat">지방</string>
     <string name="dash_carbs">탄수화물</string>
-    <string name="dash_add_food">+ 음식 추가</string>
     <string name="dash_eaten_today">오늘 먹은 양</string>
     <string name="dash_calendar">캘린더</string>
     <string name="dash_hold_glass">🥛 컵을 길게 눌러 삭제</string>
@@ -807,7 +805,7 @@
     <string name="acc_pink">🩷 분홍색</string>
     <string name="acc_teal">🩵 청록색</string>
     <string name="lay_water_goal_ml"> / 2000 ml</string>
-    <string name="lay_add_food">+ 음식 추가</string>
+    <string name="lay_add_food">일지에 추가</string>
     <string name="lay_dash_kg">-- kg</string>
     <string name="lay_cal_0_2000">0 / 2000 kcal</string>
     <string name="lay_ach_0_40">업적 0 / 40</string>

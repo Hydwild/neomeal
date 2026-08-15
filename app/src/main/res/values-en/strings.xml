@@ -86,7 +86,6 @@
     <string name="dash_protein">Protein</string>
     <string name="dash_fat">Fat</string>
     <string name="dash_carbs">Carbs</string>
-    <string name="dash_add_food">+ Add food</string>
     <string name="dash_eaten_today">📋 Eaten today</string>
     <string name="dash_calendar">Calendar</string>
     <string name="dash_hold_glass">🥛 Hold a glass to delete</string>
@@ -160,7 +159,6 @@
     <string name="cal_yesterday_date">Yesterday · %1$s</string>
     <string name="calories_today">Calories today</string>
     <string name="water_today">Water</string>
-    <string name="add_food">+ Add food</string>
     <string name="eaten_today">Eaten today</string>
     <string name="protein">Protein</string>
     <string name="fat">Fat</string>
@@ -2961,7 +2959,7 @@ data class Recipe(
     <string name="bg_grad_invalid">Invalid color — use #RRGGBB format</string>
     <string name="bg_image_error">Failed to load image</string>
     <string name="lay_water_goal_ml"> / 2000 ml</string>
-    <string name="lay_add_food">+ Add food</string>
+    <string name="lay_add_food">Add to diary</string>
     <string name="lay_dash_kg">-- kg</string>
     <string name="lay_cal_0_2000">0 / 2000 kcal</string>
     <string name="lay_ach_0_40">0 / 40 achievements</string>

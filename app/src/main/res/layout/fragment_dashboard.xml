@@ -694,17 +694,34 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Кнопка добавить еду -->
-        <Button
+        <!-- Кнопка добавить еду.
+             MaterialButton, а не обычный Button: нужен app:iconGravity="textStart",
+             который ставит «+» вплотную к тексту. У обычного Button составной
+             drawable прижимается к краю view, и иконка отъезжала бы влево от
+             центрированной надписи.
+             backgroundTint="@null" — чтобы сохранить фирменный градиент;
+             stateListAnimator="@null" — системная тень спорила с градиентом. -->
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAddFood"
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:layout_marginBottom="12dp"
             android:background="@drawable/btn_gradient"
+            app:backgroundTint="@null"
+            android:stateListAnimator="@null"
+            android:insetTop="0dp" android:insetBottom="0dp"
             android:text="@string/lay_add_food"
             android:textColor="?attr/appTextPrimary"
             android:textSize="16sp"
-            android:textStyle="bold"/>
+            android:letterSpacing="0.02"
+            app:icon="@drawable/ic_plus"
+            app:iconGravity="textStart"
+            app:iconPadding="10dp"
+            app:iconSize="20dp"
+            app:iconTint="?attr/appTextPrimary"
+            app:cornerRadius="12dp"
+            app:elevation="0dp"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"/>
 
         <!-- ДНЕВНИК (фикс. высота + свой скролл) -->
         <androidx.cardview.widget.CardView
