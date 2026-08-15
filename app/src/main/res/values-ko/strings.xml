@@ -3892,6 +3892,9 @@
     <string name="set_sub_nutrition">물 버튼·목표·영양소</string>
 
     <!-- Что нового 1.4.1 -->
+    <string name="whatsnew_144_title">불편했던 작은 것들</string>
+    <string name="whatsnew_144_1">💧 물 빠른 추가 버튼이 잘리지 않아요.</string>
+    <string name="whatsnew_144_2">🔔 가입 직후부터 물 알림이 켜져요 — 1.5시간마다. «물 알림»에서 끌 수 있어요.</string>
     <string name="whatsnew_143_title">중요한 수정</string>
     <string name="whatsnew_143_1">🔄 백업 복원이 다시 정상 작동해요.</string>
     <string name="whatsnew_143_2">🔔 식사 알림이 임의로 오지 않아요 — «식단» 화면에서 켤 때만 울려요.</string>

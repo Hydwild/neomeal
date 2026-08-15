@@ -3908,6 +3908,9 @@ data class Recipe(
     <string name="set_sub_nutrition">Water buttons, goals, macros</string>
 
     <!-- Что нового 1.4.1 -->
+    <string name="whatsnew_144_title">Small things that got in the way</string>
+    <string name="whatsnew_144_1">💧 Quick-add water buttons are no longer clipped.</string>
+    <string name="whatsnew_144_2">🔔 Water reminders now start right after sign-up — every 1.5 hours. You can turn them off in Water reminders.</string>
     <string name="whatsnew_143_title">Important fixes</string>
     <string name="whatsnew_143_1">🔄 Restoring from a backup works again.</string>
     <string name="whatsnew_143_2">🔔 Meal reminders no longer fire on their own — only when you turn them on in Meal plan.</string>
