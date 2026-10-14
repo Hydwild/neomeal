@@ -56,6 +56,26 @@
 -keep class com.nutritrack.app.utils.BackupManager$BackupData { *; }
 -keep class com.nutritrack.app.utils.BackupManager$Envelope { *; }
 
+# --- Gson TypeToken в полном режиме R8 ---
+# Gson 2.10.1 не приносит своих R8-правил (они появились в 2.11). Без них
+# полный режим R8 (по умолчанию в AGP 8) срезал generic-сигнатуру у анонимных
+# `object : TypeToken<List<X>>() {}` и вдобавок слил наследников из
+# MealTemplates и UserRecipes в один класс. Gson на таком TypeToken бросает
+# исключение, load() молча возвращал пустой список: шаблоны приёмов не
+# появлялись, свои рецепты пропадали после перезапуска, а следующее
+# сохранение затирало прежние. Правила ниже — те же, что Gson 2.11 кладёт в
+# META-INF/proguard/gson.pro. keep заодно запрещает слияние классов.
+-keepattributes Signature
+-keep,allowobfuscation class com.google.gson.reflect.TypeToken
+-keep,allowobfuscation class * extends com.google.gson.reflect.TypeToken
+
+# --- Шаблоны приёмов пищи (JSON в prefs и в бэкапе) ---
+# Лежат в utils и под правила data.** не подпадали: R8 переименовывал поля
+# (name → a, items → b, calories → d…), и эти буквы попадали в сохранённый JSON.
+# Старые записи читает MealTemplates.parse по таблице прежних имён.
+-keep class com.nutritrack.app.utils.MealTemplates$Template { *; }
+-keep class com.nutritrack.app.utils.MealTemplates$Item { *; }
+
 # --- Kotlin корутины / метаданные ---
 -keepclassmembers class kotlin.Metadata { *; }
 -dontwarn kotlinx.coroutines.**

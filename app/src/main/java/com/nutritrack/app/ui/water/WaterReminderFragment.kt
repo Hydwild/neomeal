@@ -168,15 +168,8 @@ class WaterReminderFragment : Fragment() {
         updateSummary()
     }
 
-    private fun reschedule() {
-        if (!prefs.getBool("water_reminder_enabled", false)) return
-        WaterReminderScheduler.schedule(
-            requireContext(),
-            intervalMin = prefs.getString("water_interval_min", "120").toIntOrNull() ?: 120,
-            startTime   = prefs.getString("water_start_time", "09:00"),
-            endTime     = prefs.getString("water_end_time", "21:00")
-        )
-    }
+    // Единый путь планирования воды — тот же, что после перезагрузки и при старте
+    private fun reschedule() = WaterReminderScheduler.syncFromPrefs(requireContext())
 
     private fun updateSummary() {
         if (!binding.switchWaterReminder.isChecked) { binding.tvSummary.text = ""; return }

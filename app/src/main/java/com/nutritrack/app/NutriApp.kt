@@ -47,6 +47,10 @@ class NutriApp : Application() {
         // (reminder_breakfast/lunch/dinner были включены по умолчанию и не
         // выключались ни из одного экрана).
         runCatching { com.nutritrack.app.utils.ReminderScheduler.syncMealReminders(this) }
+        // То же для воды: будильники сбрасываются при перезагрузке и при
+        // принудительной остановке (агрессивные оптимизаторы батареи), а
+        // BOOT_COMPLETED во втором случае не приходит.
+        runCatching { com.nutritrack.app.utils.WaterReminderScheduler.syncFromPrefs(this) }
         checkAndRepopulateProducts()
     }
 

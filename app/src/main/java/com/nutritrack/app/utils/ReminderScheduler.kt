@@ -163,14 +163,13 @@ object ReminderScheduler {
     }
 
     fun scheduleAll(context: Context) {
-        val prefs = PrefsManager(context)
-
         syncMealReminders(context)
 
-        if (prefs.getBool("water_reminder_enabled", false)) {
-            val waterTime = prefs.getString("water_reminder_time", "12:00")
-            schedule(context, "water", waterTime, context.getString(com.nutritrack.app.R.string.rr_water_title), context.getString(com.nutritrack.app.R.string.rr_water_msg))
-        }
+        // Вода — интервальные напоминания, восстанавливаются тем же планировщиком,
+        // что их ставит. Раньше здесь читался ключ water_reminder_time, который
+        // не записывал ни один экран: после перезагрузки вместо «каждые N минут»
+        // ставилось одно уведомление в 12:00, без перепостановки на завтра.
+        WaterReminderScheduler.syncFromPrefs(context)
     }
 
     // Создание PendingIntent

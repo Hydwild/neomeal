@@ -35,13 +35,62 @@ object MealTemplates {
 
     private val gson = Gson()
 
-    fun load(context: Context): List<Template> = try {
-        val json = PrefsManager(context).getString(PREFS_KEY)
-        if (json.isEmpty()) emptyList()
-        else gson.fromJson(json, object : TypeToken<List<Template>>() {}.type) ?: emptyList()
-    } catch (e: Exception) {
-        AppLog.e("meal templates load failed", e); emptyList()
+    // Раскладка ключей, которую писали релизные сборки до 1.4.4: классы не были
+    // под keep, и R8 переименовывал поля (снято с mapping.txt релизной сборки).
+    private val LEGACY_TEMPLATE_KEYS = mapOf("a" to "name", "b" to "items")
+    private val LEGACY_ITEM_KEYS = mapOf(
+        "a" to "productId", "b" to "productName", "c" to "grams", "d" to "calories",
+        "e" to "protein", "f" to "fat", "g" to "carbs", "h" to "fiber", "i" to "sugar"
+    )
+
+    private fun renameKeys(obj: com.google.gson.JsonObject, table: Map<String, String>) =
+        com.google.gson.JsonObject().also { out ->
+            obj.entrySet().forEach { (k, v) -> out.add(table[k] ?: k, v) }
+        }
+
+ /**
+ * Разбор сохранённого JSON. Понимает обе раскладки: нормальную и старую
+ * буквенную. Выбрасывает исключение на нечитаемых данных — решение, что с
+ * ними делать, принимает [load].
+ */
+    internal fun parse(json: String): List<Template> {
+        if (json.isBlank()) return emptyList()
+        val root = com.google.gson.JsonParser.parseString(json)
+        val normalized = if (!root.isJsonArray) root else com.google.gson.JsonArray().also { arr ->
+            root.asJsonArray.forEach { el ->
+                if (!el.isJsonObject || el.asJsonObject.has("name")) { arr.add(el); return@forEach }
+                val tpl = renameKeys(el.asJsonObject, LEGACY_TEMPLATE_KEYS)
+                val items = tpl.get("items")
+                if (items != null && items.isJsonArray) {
+                    tpl.add("items", com.google.gson.JsonArray().also { fixed ->
+                        items.asJsonArray.forEach { item ->
+                            fixed.add(if (item.isJsonObject && !item.asJsonObject.has("calories"))
+                                renameKeys(item.asJsonObject, LEGACY_ITEM_KEYS) else item)
+                        }
+                    })
+                }
+                arr.add(tpl)
+            }
+        }
+        return gson.fromJson<List<Template>>(
+            normalized, object : TypeToken<List<Template>>() {}.type) ?: emptyList()
     }
+
+    fun load(context: Context): List<Template> {
+        val prefs = PrefsManager(context)
+        val json = prefs.getString(PREFS_KEY)
+        return try {
+            parse(json)
+        } catch (e: Exception) {
+            AppLog.e("meal templates load failed", e)
+            // Страховка: следующее сохранение пишет «прочитанное + новое» и
+            // затёрло бы эти данные. Откладываем исходник в отдельный ключ.
+            if (prefs.getString(UNREADABLE_KEY).isEmpty()) prefs.setString(UNREADABLE_KEY, json)
+            emptyList()
+        }
+    }
+
+    private const val UNREADABLE_KEY = "meal_templates_json_unreadable"
 
     fun save(context: Context, templates: List<Template>) {
         PrefsManager(context).setString(PREFS_KEY, gson.toJson(templates.take(MAX_TEMPLATES)))

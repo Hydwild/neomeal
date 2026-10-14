@@ -21,6 +21,34 @@ object WaterReminderScheduler {
     const val EXTRA_MINUTE = "extra_minute"
     const val EXTRA_IDX = "extra_idx"
 
+ /**
+ * Привести будильники воды в соответствие с настройками экрана «Напоминания
+ * о воде» (те же ключи пишет онбординг). Единственный путь восстановления:
+ * вызывается после перезагрузки (BootReceiver → ReminderScheduler.scheduleAll)
+ * и при каждом старте приложения — будильники Android сбрасываются и при
+ * перезагрузке, и при принудительной остановке.
+ *
+ * Идемпотентно: schedule() сначала снимает все слоты, а прошедшее сегодня
+ * время переносит на завтра — повторный вызов не вызывает залпа уведомлений.
+ *
+ * Раньше после перезагрузки вода восстанавливалась другим путём — по ключу
+ * water_reminder_time, который не записывал ни один экран: вместо интервала
+ * ставилось одно уведомление в 12:00 без перепостановки.
+ */
+    fun syncFromPrefs(context: Context) {
+        val p = PrefsManager(context)
+        if (!p.getBool("water_reminder_enabled", false)) {
+            cancelAll(context)
+            return
+        }
+        schedule(
+            context,
+            intervalMin = p.getString("water_interval_min", "120").toIntOrNull() ?: 120,
+            startTime = p.getString("water_start_time", "09:00"),
+            endTime = p.getString("water_end_time", "21:00")
+        )
+    }
+
     fun schedule(context: Context, intervalMin: Int, startTime: String, endTime: String) {
         cancelAll(context)
         val (sh, sm) = parse(startTime)
@@ -53,8 +81,12 @@ object WaterReminderScheduler {
         val intent = Intent(context, ReminderReceiver::class.java).apply {
             action = "com.nutritrack.app.WATER_FIRE_$idx"   // уникальный action на слот
             putExtra(ReminderReceiver.EXTRA_TYPE, "water")
-            putExtra(ReminderReceiver.EXTRA_TITLE, "💧 Время попить воды")
-            putExtra(ReminderReceiver.EXTRA_MSG, "Не забудь про водный баланс!")
+            // Тексты из ресурсов: раньше были захардкожены по-русски и
+            // приходили так же пользователям EN/KO
+            putExtra(ReminderReceiver.EXTRA_TITLE,
+                context.getString(com.nutritrack.app.R.string.rr_water_title))
+            putExtra(ReminderReceiver.EXTRA_MSG,
+                context.getString(com.nutritrack.app.R.string.rr_water_msg))
             // данные для переустановки на следующий день
             putExtra(EXTRA_HOUR, hour)
             putExtra(EXTRA_MINUTE, minute)

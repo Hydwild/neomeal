@@ -38,3 +38,13 @@ jobs:
 
       - name: Assemble debug
         run: ./gradlew assembleDebug --stacktrace
+
+      # R8 ломает рефлексию Gson незаметно для юнит-тестов и debug-сборки:
+      # так в релиз уходило сломанное восстановление из бэкапа, а затем
+      # шаблоны приёмов и свои рецепты. Собираем минифицированный код и
+      # проверяем, что Gson сможет прочитать данные. Выгрузку mapping в
+      # Crashlytics исключаем — с заглушкой google-services она упадёт.
+      - name: Release R8 check (Gson)
+        run: |
+          ./gradlew :app:minifyReleaseWithR8 -x uploadCrashlyticsMappingFileRelease --stacktrace
+          python3 scripts/check_r8_gson.py

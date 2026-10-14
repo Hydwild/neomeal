@@ -24,15 +24,23 @@ object UserRecipes {
     private val gson = Gson()
 
     fun load(context: Context) {
+        val prefs = PrefsManager(context)
+        val json = prefs.getString(PREFS_KEY)
         cached = try {
-            val json = PrefsManager(context).getString(PREFS_KEY)
             if (json.isEmpty()) emptyList()
             else gson.fromJson<List<Recipe>>(
                 json, object : TypeToken<List<Recipe>>() {}.type) ?: emptyList()
         } catch (e: Exception) {
-            AppLog.e("user recipes load failed", e); emptyList()
+            AppLog.e("user recipes load failed", e)
+            // Страховка: add() пишет «прочитанное + новое» и при пустом чтении
+            // затёр бы все прежние рецепты. Откладываем исходник в отдельный ключ.
+            // (До 1.4.4 так и происходило в релизе — см. TypeToken в proguard-rules.)
+            if (prefs.getString(UNREADABLE_KEY).isEmpty()) prefs.setString(UNREADABLE_KEY, json)
+            emptyList()
         }
     }
+
+    private const val UNREADABLE_KEY = "user_recipes_json_unreadable"
 
     fun isUserRecipe(id: String) = id.startsWith(ID_PREFIX)
 

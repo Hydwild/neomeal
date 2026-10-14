@@ -221,15 +221,9 @@ class OnboardingActivity : AppCompatActivity() {
         p.setString("water_end_time", "21:00")
     }
 
-    private fun scheduleWaterReminders() {
-        val p = PrefsManager(this)
-        com.nutritrack.app.utils.WaterReminderScheduler.schedule(
-            context = this,
-            intervalMin = p.getString("water_interval_min", "90").toIntOrNull() ?: 90,
-            startTime = p.getString("water_start_time", "09:00"),
-            endTime = p.getString("water_end_time", "21:00")
-        )
-    }
+    // Единый путь планирования воды — тот же, что после перезагрузки и при старте
+    private fun scheduleWaterReminders() =
+        com.nutritrack.app.utils.WaterReminderScheduler.syncFromPrefs(this)
 
  /**
  * Разрешение на уведомления (Android 13+). При отказе НЕ оставляем включённый

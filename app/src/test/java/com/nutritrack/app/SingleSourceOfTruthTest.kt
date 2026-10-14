@@ -89,4 +89,35 @@ class SingleSourceOfTruthTest {
             offenders.isEmpty()
         )
     }
+
+    @Test fun `вода планируется только через WaterReminderScheduler_syncFromPrefs`() {
+        // Раньше после перезагрузки вода восстанавливалась по ключу
+        // water_reminder_time, который не записывал ни один экран: вместо
+        // интервала ставилось одно уведомление в 12:00 без перепостановки.
+        val files = kotlinFiles()
+        val phantom = files.filter { f ->
+            f.readLines().any { it.substringBefore("//").contains("\"water_reminder_time\"") }
+        }.map { it.name }
+        assertTrue("Вернулся фантомный ключ water_reminder_time: $phantom", phantom.isEmpty())
+
+        // Прямой вызов schedule(interval, …) — только внутри самого планировщика;
+        // все остальные (экран, онбординг, перезагрузка, старт) идут через syncFromPrefs.
+        val directCallers = files
+            .filter { it.name != "WaterReminderScheduler.kt" }
+            .filter { f ->
+                f.readLines().any { it.substringBefore("//").contains("WaterReminderScheduler.schedule(") }
+            }
+            .map { it.name }
+        assertTrue(
+            "Вода планируется в обход syncFromPrefs: $directCallers — " +
+                "второй путь чтения настроек рано или поздно разойдётся с первым.",
+            directCallers.isEmpty()
+        )
+
+        val scheduler = files.first { it.name == "ReminderScheduler.kt" }.readText()
+        assertTrue(
+            "После перезагрузки вода должна восстанавливаться (scheduleAll → syncFromPrefs)",
+            scheduler.contains("WaterReminderScheduler.syncFromPrefs(context)")
+        )
+    }
 }

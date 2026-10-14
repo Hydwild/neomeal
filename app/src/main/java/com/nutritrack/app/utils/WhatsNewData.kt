@@ -20,8 +20,10 @@ object WhatsNewData {
             version = "1.4.4",
             titleRes = R.string.whatsnew_144_title,
             itemRes = listOf(
+                R.string.whatsnew_144_3,
                 R.string.whatsnew_144_1,
-                R.string.whatsnew_144_2
+                R.string.whatsnew_144_2,
+                R.string.whatsnew_144_4
             )
         ),
         Release(
